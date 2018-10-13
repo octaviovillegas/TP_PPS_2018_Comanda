@@ -1,0 +1,65 @@
+<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+
+<div id="custom-overlay" [style.display]="splash ? 'flex': 'none'">
+  <div class="flb">
+    <div class="Aligner-item Aligner-item--top">
+    </div>
+    <img src="assets/imgs/logoFondo.png">
+    <div class="Aligner-item Aligner-item--bottom">
+    </div>
+  </div>
+</div>
+
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon color="dark" name="menu"></ion-icon>
+    </button>
+    <ion-title>Comanda</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label floating>Correo Electrónico</ion-label>
+        <ion-input type="email" required name="email" [(ngModel)]="user.name"></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label floating>Contraseña</ion-label>
+        <ion-input type="password" required name="password" [(ngModel)]="user.pass"></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label floating>Seleccionar Usuario</ion-label>
+        <ion-select [(ngModel)]="userSelect" [selectOptions]="selectUserOptions" (ionChange)="userSelectChange()"  >
+            <ion-option value="admin">Administrador</ion-option>
+            <ion-option value="invitado">Invitado</ion-option>
+            <ion-option value="usuario">Usuario</ion-option>
+            <ion-option value="anonimo">Anónimo</ion-option>
+            <ion-option value="tester">Tester</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+
+  <ion-row>
+    <ion-col>
+      <button ion-button block color="dark" (click)="singIn()">Iniciar Sesión</button>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <button ion-button block color="light" (click)="registerUser()">Registrarse</button>
+    </ion-col>
+  </ion-row>
+</ion-content>

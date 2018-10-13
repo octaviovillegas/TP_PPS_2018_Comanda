@@ -1,0 +1,37 @@
+$font-path: "../assets/fonts";
+
+$app-direction: ltr;
+
+$first-detail-color: #007c96;
+$second-detail-color:#dde9de;
+$third-detail-color: #444d54;
+$background-color: white;
+$error-color: #d22c0e;
+$success-color: rgb(20, 170, 20) ;
+
+@import "ionic.globals";
+
+.loading-md .loading-wrapper{
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  background: none;
+  //transform: scale(2) !important;
+}
+
+$loading-md-spinner-color	: $first-detail-color;
+
+
+
+$colors: (
+  primary:    $first-detail-color,
+  secondary:  #005263,
+  danger:     #f53d3d,
+  light:      #f4f4f4,
+  dark:       #222
+);
+
+
+@import "ionic.theme.default";
+@import "ionic.ionicons";
+@import "roboto";
+@import "noto-sans";

@@ -31,12 +31,12 @@ import {NativeAudio} from '@ionic-native/native-audio';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyBL7LrUdPL17ifVhMLBA0Rsu0-RLn81hF4",
-  authDomain: "logueo-ffa46.firebaseapp.com",
-  databaseURL: "https://logueo-ffa46.firebaseio.com",
-  projectId: 'logueo-ffa46',
-  storageBucket: "logueo-ffa46.appspot.com",
-  messagingSenderId: "799164691041",
+  apiKey: "AIzaSyDsDUoXfo8kvkYOm9Q8DzWHF82QVGltwo4",
+  authDomain: "equipo3-74752.firebaseapp.com",
+  databaseURL: "https://equipo3-74752.firebaseio.com",
+  projectId: 'equipo3-74752',
+  storageBucket: "equipo3-74752.appspot.com",
+  messagingSenderId: "418317265409",
   automaticDataCollectionEnabled: false
 };
 @NgModule({

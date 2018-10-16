@@ -19,9 +19,10 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
 
 
-      
-      this.screen.lock(this.screen.ORIENTATIONS.PORTRAIT)
-      .then(()=>{});
+      if(platform.is('cordova')){
+        this.screen.lock(this.screen.ORIENTATIONS.PORTRAIT)
+        .then(()=>{});
+      }
       statusBar.styleDefault();
       splashScreen.hide();
     });

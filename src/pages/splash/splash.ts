@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import {NativeAudio} from '@ionic-native/native-audio';
 /**
@@ -16,20 +16,30 @@ import {NativeAudio} from '@ionic-native/native-audio';
 })
 export class SplashPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public audioNativo:NativeAudio) {
-    this.audioNativo.preloadSimple('intro', 'assets/sonidos/intro.mp3')
-    .then(()=>{});
+  constructor(public navCtrl: NavController, public navParams: NavParams, public audioNativo:NativeAudio, public platform: Platform) {
+    if(this.platform.is('cordova')){
+      this.audioNativo.preloadSimple('intro', 'assets/sonidos/intro.mp3')
+      .then(()=>{});
+    }
   }
 
   ionViewDidLoad() {
-    setTimeout(() => {
-      this.audioNativo.play('intro')
-      .then(()=>{
-        setTimeout(() => {
-          this.navCtrl.setRoot(LoginPage)
-        }, 7000);
-      })
-    }, 2000);
+    if(this.platform.is('cordova')){
+      setTimeout(() => {
+        this.audioNativo.play('intro')
+        .then(()=>{
+          setTimeout(() => {
+            this.navCtrl.setRoot(LoginPage)
+          }, 7000);
+        })
+      }, 2000);
+    }
+    else{
+      setTimeout(() => {
+        this.navCtrl.setRoot(LoginPage);
+      }, 7000);
+    }
   }
+
 
 }

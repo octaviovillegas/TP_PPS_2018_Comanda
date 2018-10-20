@@ -15,7 +15,17 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class MesasPage {
 
+  public listaMesas = [];
+  estados: string = "6";
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    let obj1 = { "id": 1, "numero": 1, "estado": "Abierta" };
+    let obj2 = { "id": 2, "numero": 2, "estado": "Comiendo" };
+    let obj3 = { "id": 3, "numero": 3, "estado": "Esperando pedido" };
+    let obj4 = { "id": 4, "numero": 4, "estado": "Esperando cobro" };
+    this.listaMesas.push(obj1);
+    this.listaMesas.push(obj2);
+    this.listaMesas.push(obj3);
+    this.listaMesas.push(obj4);
   }
 
   ionViewDidLoad() {

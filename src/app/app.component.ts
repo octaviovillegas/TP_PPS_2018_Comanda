@@ -21,9 +21,16 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
 
 
+<<<<<<< HEAD
 
       this.screen.lock(this.screen.ORIENTATIONS.PORTRAIT)
         .then(() => { });
+=======
+      if(platform.is('cordova')){
+        this.screen.lock(this.screen.ORIENTATIONS.PORTRAIT)
+        .then(()=>{});
+      }
+>>>>>>> petruzzi
       statusBar.styleDefault();
       splashScreen.hide();
     });

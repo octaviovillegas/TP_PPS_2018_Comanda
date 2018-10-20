@@ -1,3 +1,4 @@
+import { MesasPage } from './../pages/mesas/mesas';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule, Modal } from 'ionic-angular';
@@ -47,7 +48,8 @@ export const firebaseConfig = {
     SplashPage,
     LindasPage,
     FeasPage,
-    ModalPage
+    ModalPage,
+    MesasPage
   ],
   imports: [
     BrowserModule,
@@ -71,7 +73,8 @@ export const firebaseConfig = {
     SplashPage,
     LindasPage,
     FeasPage,
-    ModalPage
+    ModalPage,
+    MesasPage
   ],
   providers: [
     StatusBar,

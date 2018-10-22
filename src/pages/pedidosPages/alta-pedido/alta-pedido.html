@@ -1,0 +1,191 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>MESA {{ mesa.numero }} - NUEVO PEDIDO</ion-title>
+  </ion-navbar>
+  <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="tipomenu">
+      <ion-segment-button value="minutas">
+        Minutas
+      </ion-segment-button>
+      <ion-segment-button value="frios">
+        Fríos
+      </ion-segment-button>
+      <ion-segment-button value="calientes">
+        Calientes
+      </ion-segment-button>
+      <ion-segment-button value="postres">
+        Postres
+      </ion-segment-button>
+      <ion-segment-button value="bebidas">
+        Bebidas
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding [ngSwitch]="tipomenu">
+  <button ion-button block color='secondary' (click)='agregarPedido()'>AGREGAR</button>
+
+  <ion-grid *ngSwitchCase="'minutas'">
+    <ion-row>
+      <ion-col col-4>
+        NOMBRE
+      </ion-col>
+      <ion-col col-5>
+        DESCRIPCIÓN
+      </ion-col>
+      <ion-col col-2>
+        CANT
+      </ion-col>
+      <ion-col col-1>
+        S
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let item of menuPlatos">
+      <ion-col col-4>
+        {{item.nombre}}
+      </ion-col>
+      <ion-col col-5>
+        {{item.descripcion}}
+      </ion-col>
+      <ion-col col-2>
+        <ion-input type="text" value="0"></ion-input>
+      </ion-col>
+      <ion-col col-1>
+        <ion-checkbox color="primary" [(ngModel)]="item.pedido" (ionChange)="seleccionarPedido(item)"></ion-checkbox>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+  <ion-grid *ngSwitchCase="'frios'">
+    <ion-row>
+      <ion-col col-4>
+        NOMBRE
+      </ion-col>
+      <ion-col col-5>
+        DESCRIPCIÓN
+      </ion-col>
+      <ion-col col-2>
+        CANT
+      </ion-col>
+      <ion-col col-1>
+        S
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let item of menuFrios">
+      <ion-col col-4>
+        {{item.nombre}}
+      </ion-col>
+      <ion-col col-5>
+        {{item.descripcion}}
+      </ion-col>
+      <ion-col col-2>
+        <ion-input type="text" value="0"></ion-input>
+      </ion-col>
+      <ion-col col-1>
+        <ion-checkbox color="primary" [(ngModel)]="item.pedido" (ionChange)="seleccionarPedido(item)"></ion-checkbox>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid *ngSwitchCase="'calientes'">
+    <ion-row>
+      <ion-col col-4>
+        NOMBRE
+      </ion-col>
+      <ion-col col-5>
+        DESCRIPCIÓN
+      </ion-col>
+      <ion-col col-2>
+        CANT
+      </ion-col>
+      <ion-col col-1>
+        S
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngFor="let item of menuPlatos">
+      <ion-col col-4>
+        {{item.nombre}}
+      </ion-col>
+      <ion-col col-5>
+        {{item.descripcion}}
+      </ion-col>
+      <ion-col col-2>
+        <ion-input type="text" value="0"></ion-input>
+      </ion-col>
+      <ion-col col-1>
+        <ion-checkbox color="primary" [(ngModel)]="item.pedido" (ionChange)="seleccionarPedido(item)"></ion-checkbox>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+  <ion-grid *ngSwitchCase="'postres'">
+    <ion-row>
+      <ion-col col-4>
+        NOMBRE
+      </ion-col>
+      <ion-col col-5>
+        DESCRIPCIÓN
+      </ion-col>
+      <ion-col col-2>
+        CANT
+      </ion-col>
+      <ion-col col-1>
+        S
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let item of menuPlatos">
+      <ion-col col-4>
+        {{item.nombre}}
+      </ion-col>
+      <ion-col col-5>
+        {{item.descripcion}}
+      </ion-col>
+      <ion-col col-2>
+        <ion-input type="text" value="0"></ion-input>
+      </ion-col>
+      <ion-col col-1>
+        <ion-checkbox color="primary" [(ngModel)]="item.pedido" (ionChange)="seleccionarPedido(item)"></ion-checkbox>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+  <ion-grid *ngSwitchCase="'bebidas'">
+    <ion-row>
+      <ion-col col-4>
+        NOMBRE
+      </ion-col>
+      <ion-col col-5>
+        DESCRIPCIÓN
+      </ion-col>
+      <ion-col col-2>
+        CANT
+      </ion-col>
+      <ion-col col-1>
+        S
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let item of menuPlatos">
+      <ion-col col-4>
+        {{item.nombre}}
+      </ion-col>
+      <ion-col col-5>
+        {{item.descripcion}}
+      </ion-col>
+      <ion-col col-2>
+        <ion-input type="text" #input value="0"></ion-input>
+      </ion-col>
+      <ion-col col-1>
+        <ion-checkbox color="primary" [(ngModel)]="item.pedido" (ionChange)="seleccionarPedido(item,input.value)"></ion-checkbox>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+
+</ion-content>

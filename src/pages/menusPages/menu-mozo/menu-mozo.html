@@ -1,0 +1,12 @@
+
+<ion-content>
+  <ion-list>
+    <!-- <button menuClose ion-item></button> -->
+    <button menuClose ion-item *ngFor="let p of pages" (click)="enviarPage(p.component)">
+      {{p.title}}
+    </button>
+    <button ion-item (click)="logoutApp()">
+      Salir
+    </button>
+  </ion-list>
+</ion-content>

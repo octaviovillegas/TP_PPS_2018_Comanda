@@ -1,0 +1,97 @@
+<!-- <ion-header>
+  <ion-navbar>
+    <ion-title>GESTIÓN MESAS</ion-title>
+  </ion-navbar>
+</ion-header> -->
+
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      MESAS
+    </ion-title>
+    <ion-buttons right>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name='menu'></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<menu></menu>
+
+
+<ion-content class="outer-content">
+  <ion-list class="chat-sliding-demo">
+    <ion-list-header>
+      MESAS OCUPADAS
+    </ion-list-header>
+    <ion-item-sliding *ngFor="let mesa of listaMesas" #item>
+
+      <ion-item *ngIf="mesa.estado != 'Libre' && mesa.estado!='Bloqueada'" (click)="abrirPedidos(mesa)">
+        <ion-avatar item-start>
+          <img [src]="mesa.img">
+        </ion-avatar>
+        <p>MESA {{mesa.numero}}</p>
+        <ion-note item-end>
+          {{mesa.estado}}
+        </ion-note>
+      </ion-item>
+
+      <ion-item-options side="right" (ionSwipe)="cerrar(mesa, item)">
+        <button ion-button color="primary" (click)="cerrar(mesa, item)">
+          <ion-icon name="close" class="expand-hide"></ion-icon>
+          <div class="expand-hide"></div>
+          <!-- <ion-spinner id="archive-spinner"></ion-spinner> -->
+        </button>
+      </ion-item-options>
+
+      <ion-item-options side="left" (ionSwipe)="abrirPedidos(mesa, item)">
+        <button ion-button color="s_light" (click)="abrirPedidos(mesa, item)" expandable>
+          <ion-icon name="share-alt" class="expand-hide"></ion-icon>
+          <div class="expand-hide"></div>
+          <!-- <ion-spinner id="archive-spinner"></ion-spinner> -->
+        </button>
+      </ion-item-options>
+
+    </ion-item-sliding>
+  </ion-list>
+
+
+
+  <ion-list class="login-sliding-demo">
+    <ion-list-header>
+      MESAS LIBRES
+    </ion-list-header>
+    <ion-item-sliding *ngFor="let mesa of listaMesas" #item>
+
+      <ion-item *ngIf="mesa.estado == 'Libre' || mesa.estado == 'Bloqueada'">
+        <ion-avatar item-start>
+          <img [src]="mesa.img">
+        </ion-avatar>
+        <p>MESA {{mesa.numero}}</p>
+        <ion-note item-end>
+          {{mesa.estado}}
+        </ion-note>
+      </ion-item>
+
+      <ion-item-options side="left" (ionSwipe)="abrir(mesa, item)">
+        <button ion-button color="secondary" click="abrir(mesa, item)" expandable>Abrir
+          <ion-icon name="arrow-round-forward"></ion-icon>
+        </button>
+      </ion-item-options>
+
+      <ion-item-options (ionSwipe)="bloquear(mesa, item)" icon-start *ngIf="mesa.estado!='Bloqueada'">
+        <button ion-button color="dark" (click)="bloquear(mesa, item)">
+          <ion-icon name="remove-circle"></ion-icon>
+        </button>
+      </ion-item-options>
+
+      <ion-item-options (ionSwipe)="desbloquear(mesa, item)" icon-start *ngIf="mesa.estado=='Bloqueada'">
+        <button ion-button color="light" (click)="desbloquear(mesa, item)" *ngIf="mesa.estado=='Bloqueada'">
+          <ion-icon name="radio-button-off"></ion-icon>
+        </button>
+      </ion-item-options>
+
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

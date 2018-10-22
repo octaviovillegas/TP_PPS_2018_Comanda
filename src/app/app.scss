@@ -18,6 +18,11 @@
         background:#f2d8ff;
     }
 
+    ion-menu {
+        background-color: transparent !important;
+        z-index: -1;
+    }
+
 *{
     font-family: $font-family-base;
 }

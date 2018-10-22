@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Loading, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, Loading, LoadingController, MenuController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { usuario } from '../../clases/usuario';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
@@ -29,7 +29,10 @@ export class LoginPage {
     public navParams: NavParams,
     private loadingCtrl: LoadingController,
     private angularFire: AngularFireAuth,
-    private firestore: AngularFirestore) {
+    private firestore: AngularFirestore,
+    public menuCtrl: MenuController) {
+
+    this.menuCtrl.enable(false, 'menu');
 
   }
   coleccionTipada: AngularFirestoreCollection<usuario>;

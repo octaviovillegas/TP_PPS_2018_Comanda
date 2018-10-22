@@ -1,9 +1,20 @@
-import { MesasPage } from './../pages/mesas/mesas';
+import { MenuComponent } from './../components/menu/menu';
+import { EncuestaEnstradaSalidaPage } from '../pages/encuestasPages/encuesta-enstrada-salida/encuesta-enstrada-salida';
+import { EncuestaSupervisorPage } from '../pages/encuestasPages/encuesta-supervisor/encuesta-supervisor';
+import { AltaPedidoPage } from './../pages/pedidosPages/alta-pedido/alta-pedido';
+import { AltaClientePage } from '../pages/altasPages/alta-cliente/alta-cliente';
+import { MenuMozoPage } from './../pages/menusPages/menu-mozo/menu-mozo';
+import { PedidosPage } from '../pages/pedidosPages/pedidos/pedidos';
+import { MesasPage } from './../pages/mesasPages/mesas/mesas';
+
+
+
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule, Modal } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -18,18 +29,20 @@ import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
-import { AngularFirestore,AngularFirestoreCollection } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { AngularFireStorageModule } from 'angularfire2/storage';
 // CAMERA
 import { Camera } from '@ionic-native/camera';
-import { HttpClientModule } from '@angular/common/http'; 
+import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
-import {ChartModule} from 'primeng/chart';
+import { ChartModule } from 'primeng/chart';
 
 //import { ImgPreloadDirective } from '../directives/img-preload/img-preload';
 import { IonicImageLoader } from 'ionic-image-loader';
-import {NativeAudio} from '@ionic-native/native-audio';
+import { NativeAudio } from '@ionic-native/native-audio';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { ComponentsModule } from '../components/components.module';
+
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDsDUoXfo8kvkYOm9Q8DzWHF82QVGltwo4",
@@ -49,7 +62,13 @@ export const firebaseConfig = {
     LindasPage,
     FeasPage,
     ModalPage,
-    MesasPage
+    MesasPage,
+    PedidosPage,
+    AltaPedidoPage,
+    AltaClientePage,
+    EncuestaEnstradaSalidaPage,
+    EncuestaSupervisorPage,
+    MenuMozoPage
   ],
   imports: [
     BrowserModule,
@@ -61,11 +80,12 @@ export const firebaseConfig = {
     HttpClientModule,
     HttpModule,
     IonicImageLoader.forRoot(),
-    ChartModule
-    
-
+    ChartModule,
+    ComponentsModule
   ],
-  bootstrap: [IonicApp],
+  bootstrap: [
+    IonicApp
+  ],
   entryComponents: [
     MyApp,
     HomePage,
@@ -74,20 +94,26 @@ export const firebaseConfig = {
     LindasPage,
     FeasPage,
     ModalPage,
-    MesasPage
+    MesasPage,
+    PedidosPage,
+    AltaPedidoPage,
+    AltaClientePage,
+    EncuestaEnstradaSalidaPage,
+    EncuestaSupervisorPage,
+    MenuMozoPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     AngularFireDatabase,
     AngularFirestore,
     Camera,
     DeviceMotion,
     NativeAudio,
     ScreenOrientation
-    
-    
+
+
   ]
 })
-export class AppModule {}
+export class AppModule { }

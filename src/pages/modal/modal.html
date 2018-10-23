@@ -1,0 +1,14 @@
+<ion-content  class="modal">
+  <ion-grid>
+    <ion-row>
+      <ion-col text-center>
+        <h3 ion-text color="light" >{{ usuario }}</h3>
+        <h3 ion-text color="light" >{{ nombre }}</h3>
+        <img #photo [src]="url">
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-fab bottom center>
+    <button ion-fab (click)="cerrar()">  <ion-icon name="close"></ion-icon></button>
+  </ion-fab>
+</ion-content>

@@ -42,6 +42,7 @@ export class LoginPage {
   pass: string;
   clave: string;
   valido: Boolean = false;
+  perfil:string;
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
@@ -72,17 +73,23 @@ export class LoginPage {
       case 'admin@gmail.com':
         this.clave = '111111';
         break;
-      case 'invitado@gmail.com':
+      case 'supervisor@gmail.com':
         this.clave = '222222';
         break;
-      case 'usuario@gmail.com':
+      case 'cliente@gmail.com':
         this.clave = '333333';
         break;
-      case 'anonimo@gmail.com':
+      case 'cocinero@gmail.com':
         this.clave = '444444';
         break;
-      case 'tester@gmail.com':
+      case 'bartender@gmail.com':
         this.clave = '555555';
+        break;
+      case 'mozo@gmail.com':
+        this.clave = '666666';
+        break;
+      case 'mestre@gmail.com':
+        this.clave = '777777';
         break;
       default:
         this.clave = this.pass;
@@ -102,9 +109,44 @@ export class LoginPage {
         let logueado: Loading = this.esperar(this.creaFondo("Ingreso correcto", "assets/imgs/logueado.png"))
         logueado.present();
         logueado.onDidDismiss(alto => {
-          this.navCtrl.push(HomePage, {
-            usuario: this.usuario.nombre
-          })
+          switch (this.usuario.perfil) {
+            case 'dueño':
+              this.navCtrl.push(HomePage,{
+                usuario: this.usuario.usuario
+              });
+              break;
+            case 'supervisor':
+              this.navCtrl.push(HomePage,{
+                usuario: this.usuario.usuario
+              });
+              break;
+            case 'cliente':
+              this.navCtrl.push(HomePage,{
+                usuario: this.usuario.usuario
+              });
+              break;
+            case 'cocinero':
+              this.navCtrl.push(HomePage,{
+                usuario: this.usuario.usuario
+              });
+              break;
+            case 'bartender':
+              this.navCtrl.push(HomePage,{
+                usuario: this.usuario.usuario
+              });
+              break;
+            case 'mozo':
+              this.navCtrl.push(HomePage,{
+                usuario: this.usuario.usuario
+              });
+              break;
+            case 'mestre':
+              this.navCtrl.push(HomePage,{
+                usuario:this.usuario.usuario
+              })
+            default:
+              break;
+          }
         })
         //logueado.dismiss();
         this.coleccionTipada = this.firestore.collection<usuario>('usuarios');
@@ -119,7 +161,7 @@ export class LoginPage {
           })
         });
         this.listadoUsuarios.map(datos => {
-          return datos.filter(usuarios => usuarios.nombre == this.nombre);
+          return datos.filter(usuarios => usuarios.usuario == this.nombre);
         }).subscribe(res => {
 
           this.usuario = res[0];

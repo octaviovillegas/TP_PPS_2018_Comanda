@@ -26,80 +26,83 @@ export class AltaPedidoPage {
 
     this.mesa = this.navParams.get("mesa");
     this.tipomenu = "minutas";
+    this.pedido = [];
+
 
 
     this.menuFrios = [
-      {
-        "id": 1,
-        "nombre": "Vitel tone",
-        "descripcion": "Peceto con salsa de atun",
-        "cantidad": 0,
-        "pedido": true
-      },
-      {
-        "id": 2,
-        "nombre": "Ensalada rusa",
-        "descripcion": "Zanahoria, Papa y arvejas con mayonesa",
-        "cantidad": 1,
-        "pedido": false
-      }];
+    ];
 
     this.menuPlatos = [
       {
         "id": 1,
         "nombre": "Milanesas con pure",
         "descripcion": "Ternera rebozada con pure de papa",
-        "cantidad": 0,
-        "pedido": true
+        "precio": 20,
+        "categoria": 1
       },
       {
         "id": 2,
         "nombre": "Suprema con papas",
         "descripcion": "Pechuga de pollo rebozada con papas fritas",
-        "cantidad": 1,
-        "pedido": false
+        "precio": 20,
+        "categoria": 1
       },
       {
         "id": 3,
         "nombre": "Ensalada cesar",
         "descripcion": "Ensalada de lechuga, pollo con salsa",
-        "cantidad": 0,
-        "pedido": true
+        "precio": 20,
+        "categoria": 1
       },
       {
         "id": 4,
         "nombre": "Mozzarella individual",
         "descripcion": "Ternera empanada con pure de papa",
-        "cantidad": 0,
-        "pedido": false
+        "precio": 20,
+        "categoria": 1
       },
       {
         "id": 5,
-        "nombre": "Filez de merluza con pure",
+        "nombre": "Filet de merluza con pure",
         "descripcion": "Merluza empanada con pure de papa",
-        "cantidad": 0,
-        "pedido": false
+        "precio": 20,
+        "categoria": 1
       },
       {
         "id": 6,
         "nombre": "Ravioles",
         "descripcion": "Ternera empanada con pure de papa",
-        "cantidad": 0,
-        "pedido": true
+        "precio": 20,
+        "categoria": 1
       },
       {
         "id": 7,
-        "nombre": "Milanesas con pure",
-        "descripcion": "Ternera empanada con pure de papa",
-        "cantidad": 0,
-        "pedido": false
+        "nombre": "Coca Cola",
+        "descripcion": "Cocacola 330 ml",
+        "precio": 20,
+        "categoria": 3
       },
       {
         "id": 8,
-        "nombre": "Milanesas con pure",
-        "descripcion": "Ternera empanada con pure de papa",
-        "cantidad": 0,
-        "pedido": true
+        "nombre": "Pepsi",
+        "descripcion": "Pepsi 330ml",
+        "precio": 20,
+        "categoria": 3
+      },
+      {
+        "id": 9,
+        "nombre": "Vitel tone",
+        "descripcion": "Peceto con salsa de atun",
+        "precio": 20,
+        "categoria": 2
+      },
+      {
+        "id": 10,
+        "nombre": "Ensalada rusa",
+        "descripcion": "Zanahoria, Papa y arvejas con mayonesa",
+        "precio": 20,
+        "categoria": 2
       }
     ];
   }
@@ -108,14 +111,35 @@ export class AltaPedidoPage {
     console.log('ionViewDidLoad AltaPedidoPage');
   }
 
-  seleccionarPedido(item: any, cantidad: any) {
-    console.log('Seleccionado ');
-    console.log(item.pedido);
-    console.log('Cantidad ');
-    console.log(cantidad);
+  seleccionarPedido(item: any, value: number) {
+  
+    if (this.pedido.some(p => p.id === item.id)) {
+      for (var i = 0; i < this.pedido.length; i++) {
+        if (this.pedido[i].id === item.id) {
+          this.pedido[i].cantidad += value;
+          if(this.pedido[i].cantidad == 0) {
+            this.pedido.splice(i,1);
+          }
+          break;
+        }
+      }
+    }
+    else {
+      this.pedido.push({
+        "id": item.id,
+        "nombre:": item.nombre,
+        "descripcion": item.descripcion,
+        "cantidad": 1
+      })
+    }
+
+    console.log(this.pedido);
+
 
   }
 
+  agregarPedido() {
 
+  }
 
 }

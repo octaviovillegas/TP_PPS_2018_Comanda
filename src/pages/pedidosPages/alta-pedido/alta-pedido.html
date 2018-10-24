@@ -28,13 +28,13 @@
   <button ion-button block color='secondary' (click)='agregarPedido()'>AGREGAR</button>
 
   <ion-grid *ngSwitchCase="'minutas'">
-    <ion-row>
-      <ion-col col-4>
+    <ion-row text-center>
+      <ion-col col-9>
         NOMBRE
       </ion-col>
-      <ion-col col-5>
+      <!-- <ion-col col-5>
         DESCRIPCIÓN
-      </ion-col>
+      </ion-col> -->
       <ion-col col-2>
         CANT
       </ion-col>
@@ -42,18 +42,24 @@
         S
       </ion-col>
     </ion-row>
-    <ion-row *ngFor="let item of menuPlatos">
-      <ion-col col-4>
+    <ion-row text-center *ngFor="let item of menuPlatos">
+      <ion-col col-9 text-center>
         {{item.nombre}}
       </ion-col>
-      <ion-col col-5>
+      <!-- <ion-col col-5>
         {{item.descripcion}}
-      </ion-col>
-      <ion-col col-2>
-        <ion-input type="text" value="0"></ion-input>
+      </ion-col> -->
+      <ion-col col-2 >
+        <label for="" ></label>
       </ion-col>
       <ion-col col-1>
-        <ion-checkbox color="primary" [(ngModel)]="item.pedido" (ionChange)="seleccionarPedido(item)"></ion-checkbox>
+
+        <div>
+          <ion-icon name="arrow-round-up" color="primary" (click)="seleccionarPedido(item, 1)"></ion-icon>
+          <br><br>
+          <ion-icon name="arrow-round-down" color="primary" (click)="seleccionarPedido(item, -1)"></ion-icon>
+        </div>
+        <!-- <ion-checkbox color="primary" [(ngModel)]="item.pedido" (ionChange)="seleccionarPedido(item)"></ion-checkbox> -->
       </ion-col>
     </ion-row>
   </ion-grid>

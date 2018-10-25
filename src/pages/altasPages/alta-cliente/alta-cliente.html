@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <ion-header>
   <ion-navbar>
     <ion-title>FORMULARIO NUEVO CLIENTE</ion-title>
@@ -98,6 +99,135 @@
 
 
 
+=======
+<!--
+  Generated template for the AltaClientePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+
+<ion-content class="home">
+
+<ion-slides #Slides  (ionSlideDrag)="onIonDrag()">
+  <ion-slide>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <h1> ¡Bienvenido!</h1>
+          <h2> Registrate para continuar</h2>           
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col text-center>
+          <img src="assets/imgs/calavera.png" class="registroImg">
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col text-center>
+          <button ion-button block (click)="siguiente()"> Iniciar registro</button>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+  </ion-slide>
+  <ion-slide>
+    <ion-grid>
+      <ion-row>
+        <ion-col margin class="comoCol" (click)="iniciar('anonimo')" >
+          <img src="assets/imgs/calavera.png"  class="como">
+          <h3>Registrate anonimamente</h3>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col margin class="comoCol" (click)="iniciar('cliente')" >
+          <img src="assets/imgs/calavera.png"  class="como">
+          <h3>Registrate como cliente</h3>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-slide>
+  <ion-slide>
+    <ion-grid>
+      <ion-row>
+        <ion-col [hidden]="!registroAnonimo">
+          <img [src]="imagenTomada" class="tomadaAnonImg">
+          <h2> Registrate anonimamente</h2>
+          <ion-fab top left>
+            <button ion-fab color="primary" (click)="anterior()" ><ion-icon name="arrow-back"></ion-icon></button>
+          </ion-fab>
+          <ion-fab top right>
+              <button ion-fab color="primary" (click)="principal()" ><ion-icon name="home"></ion-icon></button>
+          </ion-fab>
+          <form (ngSubmit)="registrarseAnon()" #registroForm="ngForm">
+            <ion-item class="rounded">
+              <ion-label stacked> Nombre</ion-label>
+              <ion-input  type="text" [(ngModel)]="nombre" name="Nombre" class="item" required >  <ion-icon name="person"></ion-icon></ion-input>
+            </ion-item>
+            <button ion-button round block [disabled]="!registroForm.form.valid && !tomoFoto"> Registrarse</button>
+          </form>
+          <button ion-button round block (click)="tomarFoto()"> Tomarse una foto</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-slide>
+  <ion-slide>
+    <ion-grid>
+      <ion-row>
+        <ion-col [hidden]="registroAnonimo">
+          <ion-fab top left edge mini>
+              <button ion-fab color="primary" (click)="anteriorCliente()" ><ion-icon name="arrow-back"></ion-icon></button>
+          </ion-fab>
+          <ion-fab top right edge mini>
+              <button ion-fab color="primary" (click)="principal()" ><ion-icon name="home"></ion-icon></button>
+          </ion-fab>
+          <h3>Registrate como cliente</h3>
+          <form  #registroForm="ngForm">
+            <ion-item class="rounded">
+              <ion-label stacked> Nombre</ion-label>
+              <ion-input  type="text" [(ngModel)]="nombre" name="Nombre" class="item" required >  </ion-input>
+            </ion-item>            
+            <ion-item class="rounded">
+              <ion-label stacked> Apellido </ion-label>
+              <ion-input type="text" [(ngModel)]="apellido" name="Apellido" class="item" required></ion-input>
+            </ion-item>
+            <ion-item class="rounded">
+              <ion-label stacked> Dni</ion-label>
+              <ion-input type="text" [(ngModel)]="dni" name="Dni" class="item" required></ion-input>
+            </ion-item>
+            <ion-item class="rounded">
+                <ion-label stacked> Email</ion-label>
+                <ion-input type="email" [(ngModel)]="email" name="Email" class="item" required></ion-input>
+              </ion-item>
+              <ion-item class="rounded">
+                  <ion-label stacked> Contraseña</ion-label>
+                  <ion-input type="password" [(ngModel)]="password" name="password" class="item" required></ion-input>
+                </ion-item>
+            <button ion-button block round (click)="siguiente()" [disabled]="!registroForm.form.valid">Siguiente</button>
+          </form>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-slide>
+  <ion-slide>
+    <ion-row>
+      <ion-col>
+        <ion-fab top left>
+            <button ion-fab color="primary" (click)="anterior()" ><ion-icon name="arrow-back"></ion-icon></button>
+        </ion-fab>
+        <ion-fab top right>
+            <button ion-fab color="primary" (click)="principal()" ><ion-icon name="home"></ion-icon></button>
+        </ion-fab>
+        <img [src]="imagenTomada" class="tomadaAnonImg">
+        <h3>{{mensaje}}</h3>
+        <button ion-button block round (click)="tomarFotoCliente()"> Tomar Foto</button>
+        <button ion-button block round (click)="finalizarRegistro()" [disabled]="!tomarfoto"> Finalizar</button>
+      </ion-col>
+    </ion-row>
+  </ion-slide>
+</ion-slides>
+>>>>>>> master
 </ion-content>
 
 

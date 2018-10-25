@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { LoginPage } from '../login/login';
+import { AltaClientePage } from '../altasPages/alta-cliente/alta-cliente';
 import { NativeAudio } from '@ionic-native/native-audio';
 /**
  * Generated class for the SplashPage page.
@@ -32,14 +33,14 @@ export class SplashPage {
         this.audioNativo.play('intro')
           .then(() => {
             setTimeout(() => {
-              this.navCtrl.setRoot(LoginPage)
+              this.navCtrl.push(AltaClientePage)
             }, 7000);
           })
       }, 2000);
     }
     else {
       setTimeout(() => {
-        this.navCtrl.setRoot(LoginPage)
+        this.navCtrl.push(AltaClientePage)
       }, 7000);
     }
 

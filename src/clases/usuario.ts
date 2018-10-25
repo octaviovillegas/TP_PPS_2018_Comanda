@@ -1,14 +1,10 @@
 export class usuario{
     id:number;
-    nombre:string;
+    usuario:string;
     perfil:string;
-    sexo:string;
-    clave:string;
-    constructor(id:number, nombre:string, perfil:string, sexo:string, clave:string){
+    constructor(id:number, usuario:string, perfil:string){
         this.id = id;
-        this.nombre = nombre;
+        this.usuario = usuario;
         this.perfil = perfil;
-        this.sexo = sexo;
-        this.clave = clave;
     }
 }

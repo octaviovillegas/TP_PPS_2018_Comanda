@@ -1,4 +1,5 @@
 import { MesasPage } from './../pages/mesasPages/mesas/mesas';
+import { AltaClientePage } from './../pages/altasPages/alta-cliente/alta-cliente';
 import { Component, ViewChild } from '@angular/core';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -13,7 +14,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   //rootPage: any = SplashPage;
-  rootPage: any = MesasPage;
+  rootPage: any = SplashPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public screen: ScreenOrientation) {
     platform.ready().then(() => {

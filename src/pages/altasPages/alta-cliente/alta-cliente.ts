@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Slides,  } from 'ionic-angular';
 
 /**
  * Generated class for the AltaClientePage page.
@@ -14,12 +14,49 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'alta-cliente.html',
 })
 export class AltaClientePage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  @ViewChild(Slides) slides: Slides;
+  anonimo:string="";
+  mensaje:string="";
+  imagenTomada:string="assets/imgs/calavera.png";
+  registroAnonimo:Boolean;
+  tomoFoto:Boolean = false;
+  constructor(public navCtrl: NavController, public navParams: NavParams, ) {
+    this.registroAnonimo = false;
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad AltaClientePage');
+  ngAfterViewInit(){
+    //this.slides.lockSwipeToNext(true);
+    //this.slides.lockSwipeToPrev(true);
+  }
+  public siguiente(){
+    this.slides.lockSwipes(false);
+    this.slides.slideNext();
+  }
+  public anterior(){
+    this.slides.lockSwipes(false);
+    this.slides.slidePrev();
+  }
+  public iniciar(anonimo:string){
+    this.slides.lockSwipes(false);
+    this.anonimo = anonimo;
+    if(this.anonimo == 'anonimo'){
+      this.registroAnonimo = true;
+      this.slides.slideNext();
+    }
+    else{
+      this.registroAnonimo = false;
+      this.slides.slideTo(3, 500, false);
+    }
+  }
+  onIonDrag(event){
+    this.slides.lockSwipes(true);
+  }
+  tomarFoto(){
+    this.tomoFoto = true;
+  }
+
+  tomarFotoCliente(){
+    this.mensaje = "¡Opa! Que bien saliste";
   }
 
 }

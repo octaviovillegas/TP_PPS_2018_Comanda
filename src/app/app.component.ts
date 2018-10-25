@@ -14,7 +14,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   //rootPage: any = SplashPage;
-  rootPage: any = AltaClientePage;
+  rootPage: any = SplashPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public screen: ScreenOrientation) {
     platform.ready().then(() => {

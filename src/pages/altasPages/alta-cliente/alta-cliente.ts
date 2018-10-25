@@ -48,6 +48,11 @@ export class AltaClientePage {
       this.slides.slideTo(3, 500, false);
     }
   }
+
+  public anteriorCliente(){
+    this.slides.lockSwipes(false);
+    this.slides.slideTo(1);
+  }
   onIonDrag(event){
     this.slides.lockSwipes(true);
   }
@@ -55,8 +60,13 @@ export class AltaClientePage {
     this.tomoFoto = true;
   }
 
+  public principal(){
+    this.navCtrl.pop();
+  }
+
   tomarFotoCliente(){
     this.mensaje = "¡Opa! Que bien saliste";
+    this.tomoFoto = true;
   }
 
 }

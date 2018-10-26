@@ -15,8 +15,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class AltaPedidoPage {
 
-  public menuPlatos = [];
-  public menuFrios = [];
+  public menu = [];
   public mesa: any;
   public tipomenu: any;
   public pedido;
@@ -26,14 +25,57 @@ export class AltaPedidoPage {
 
     this.mesa = this.navParams.get("mesa");
     this.tipomenu = "minutas";
-    this.pedido = [];
+    this.pedido = [];   
+    this.inicializarItemsMenu();
+  }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad AltaPedidoPage');
+  }
+
+  seleccionarPedido(item: any, value: number) {
+
+    if (this.pedido.some(p => p.id === item.id)) {
+      for (var i = 0; i < this.pedido.length; i++) {
+        if (this.pedido[i].id === item.id) {
+          this.pedido[i].cantidad += value;
+          if(this.pedido[i].cantidad == 0) {
+            this.pedido.splice(i,1);
+          }
+          break;
+        }
+      }
+    }
+    else {
+      this.pedido.push({
+        "id": item.id,
+        "nombre:": item.nombre,
+        "descripcion": item.descripcion,
+        "cantidad": 1
+      })
+      
+    }
+
+    console.log(this.pedido);
 
 
+  }
 
-    this.menuFrios = [
-    ];
+  getItems(ev: any) {
+    // Reset items back to all of the items
+    this.inicializarItemsMenu();
+    // set val to the value of the searchbar
+    const val = ev.target.value;
+    // if the value is an empty string don't filter the items
+    if (val && val.trim() != '') {
+      this.menu = this.menu.filter((item) => {
+        return (item.nombre.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
+    }
+  }
 
-    this.menuPlatos = [
+  inicializarItemsMenu() {
+    this.menu = [
       {
         "id": 1,
         "nombre": "Milanesas con pure",
@@ -105,37 +147,6 @@ export class AltaPedidoPage {
         "categoria": 2
       }
     ];
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad AltaPedidoPage');
-  }
-
-  seleccionarPedido(item: any, value: number) {
-  
-    if (this.pedido.some(p => p.id === item.id)) {
-      for (var i = 0; i < this.pedido.length; i++) {
-        if (this.pedido[i].id === item.id) {
-          this.pedido[i].cantidad += value;
-          if(this.pedido[i].cantidad == 0) {
-            this.pedido.splice(i,1);
-          }
-          break;
-        }
-      }
-    }
-    else {
-      this.pedido.push({
-        "id": item.id,
-        "nombre:": item.nombre,
-        "descripcion": item.descripcion,
-        "cantidad": 1
-      })
-    }
-
-    console.log(this.pedido);
-
-
   }
 
   agregarPedido() {

@@ -17,8 +17,6 @@
   </ion-navbar>
 </ion-header>
 
-<menu></menu>
-
 
 <ion-content class="outer-content">
   <ion-list class="chat-sliding-demo">
@@ -28,25 +26,29 @@
     <ion-item-sliding *ngFor="let mesa of listaMesas" #item>
 
       <ion-item *ngIf="mesa.estado != 'Libre' && mesa.estado!='Bloqueada'" (click)="abrirPedidos(mesa)">
-        <ion-avatar item-start>
-          <img [src]="mesa.img">
+        <ion-avatar item-start  class="imgColores" [ngSwitch]="mesa.estado" >
+          <img *ngSwitchCase="'Abierta'" [src]="'assets/imgs/coloresEstados/azul.png'">
+          <img *ngSwitchCase="'Comiendo'" [src]="'assets/imgs/coloresEstados/violeta.png'">
+          <img *ngSwitchCase="'Esperando pedido'" [src]="'assets/imgs/coloresEstados/amarillo.png'">
+          <img *ngSwitchCase="'Esperando cobro'" [src]="'assets/imgs/coloresEstados/amarillo.png'"> 
         </ion-avatar>
         <p>MESA {{mesa.numero}}</p>
+        
         <ion-note item-end>
           {{mesa.estado}}
         </ion-note>
+
+      
+
       </ion-item>
 
-      <ion-item-options side="right" (ionSwipe)="cerrar(mesa, item)">
-        <button ion-button color="primary" (click)="cerrar(mesa, item)">
+      <ion-item-options side="right">
+        <button *ngIf="mesa.estado=='Esperando cobro' || mesa.estado=='Abierta'" ion-button color="danger" (click)="cerrar(mesa, item)">
           <ion-icon name="close" class="expand-hide"></ion-icon>
-          <div class="expand-hide"></div>
-          <!-- <ion-spinner id="archive-spinner"></ion-spinner> -->
         </button>
       </ion-item-options>
-
-      <ion-item-options side="left" (ionSwipe)="abrirPedidos(mesa, item)">
-        <button ion-button color="s_light" (click)="abrirPedidos(mesa, item)" expandable>
+      <ion-item-options *ngIf="mesa.estado != 'Esperando cobro'" side="left" (ionSwipe)="abrirPedidos(mesa, item)">
+        <button  ion-button color="s_light" (click)="abrirPedidos(mesa, item)" expandable>
           <ion-icon name="share-alt" class="expand-hide"></ion-icon>
           <div class="expand-hide"></div>
           <!-- <ion-spinner id="archive-spinner"></ion-spinner> -->
@@ -56,7 +58,7 @@
     </ion-item-sliding>
   </ion-list>
 
-
+<br>
 
   <ion-list class="login-sliding-demo">
     <ion-list-header>
@@ -65,9 +67,10 @@
     <ion-item-sliding *ngFor="let mesa of listaMesas" #item>
 
       <ion-item *ngIf="mesa.estado == 'Libre' || mesa.estado == 'Bloqueada'">
-        <ion-avatar item-start>
-          <img [src]="mesa.img">
-        </ion-avatar>
+          <ion-avatar item-start  class="imgColores" [ngSwitch]="mesa.estado" >
+              <img *ngSwitchCase="'Libre'" [src]="'assets/imgs/coloresEstados/verde.png'">
+              <img *ngSwitchCase="'Bloqueada'" [src]="'assets/imgs/coloresEstados/rojo.png'">
+            </ion-avatar>
         <p>MESA {{mesa.numero}}</p>
         <ion-note item-end>
           {{mesa.estado}}

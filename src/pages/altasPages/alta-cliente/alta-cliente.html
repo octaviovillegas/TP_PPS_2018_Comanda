@@ -1,3 +1,105 @@
+<<<<<<< HEAD
+<ion-header>
+  <ion-navbar>
+    <ion-title>FORMULARIO NUEVO CLIENTE</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="formGroup" (ngSubmit)="saveData()">
+    <ion-list>
+      <ion-item>
+        <ion-icon name="person" item-start></ion-icon>
+        <ion-label stacked>Nombres:</ion-label>
+        <ion-input formControlName="name" type="text" placeholder="Nombre"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="person" item-start></ion-icon>
+        <ion-label stacked>Apellidos:</ion-label>
+        <ion-input formControlName="lastName" type="text" placeholder="Apellidos"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="at" item-start></ion-icon>
+        <ion-label stacked>Correo electronico:</ion-label>
+        <ion-input formControlName="email" placeholder="Email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="arrow-dropright" item-start></ion-icon>
+        <ion-label>Tipo documento</ion-label>
+        <ion-select formControlName="tipodocumento" interface="popover">
+          <ion-option value="dni">DNI</ion-option>
+          <ion-option value="lc">LC</ion-option>
+          <ion-option value="le">LE</ion-option>
+          <ion-option value="pasaporte">Pasaporte</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="finger-print" item-start></ion-icon>
+        <ion-label stacked>Numero:</ion-label>
+        <ion-input formControlName="numerodocumento" placeholder="numero"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="barcode" item-start></ion-icon>
+        <ion-label stacked>Código QR:</ion-label>
+        <ion-input formControlName="numerodocumento" placeholder=""></ion-input>
+      </ion-item>
+    </ion-list>
+    <div padding>
+      <button ion-button block type="submit" [disabled]="!formGroup.valid">Guardar</button>
+    </div>
+  </form>
+
+
+  <!-- <ion-grid>
+    <ion-row>
+      <ion-slides pager #slider>
+        <ion-slide *ngFor="let img of imgList" color="light">
+          <ion-card>
+            <ion-row>
+              <ion-col>
+                <button ion-button color="danger" (click)="eliminar(img)" icon-start clear small>
+                  <ion-icon name='close'></ion-icon>
+                </button>
+              </ion-col>
+            </ion-row>
+            <img [src]="img.imagenPreview">
+            <ion-row>
+              <ion-col text-right>
+                <div>{{img.titulo}}</div>
+              </ion-col>
+            </ion-row>
+          </ion-card>
+        </ion-slide>
+      </ion-slides>
+    </ion-row>
+  </ion-grid> -->
+
+  <ion-fab center bottom #fab>
+    <button ion-fab color="primary">
+      <ion-icon name="expand"></ion-icon>
+    </button>
+    <ion-fab-list side="top">
+      <button ion-fab color="s-light" (click)="fab.close(); mostrarCamara()">
+        <ion-icon name="camera"></ion-icon>
+      </button>
+    </ion-fab-list>
+    <ion-fab-list side="left">
+      <button ion-fab color="danger" (click)="fab.close()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-fab-list>
+    <ion-fab-list side="right" *ngIf="mostrar">
+      <button ion-fab color="p-dark" (click)="fab.close()">
+        <ion-icon name="checkmark"></ion-icon>
+      </button>
+    </ion-fab-list>
+
+  </ion-fab>
+
+
+
+
+=======
 <!--
   Generated template for the AltaClientePage page.
 
@@ -125,4 +227,40 @@
     </ion-row>
   </ion-slide>
 </ion-slides>
+>>>>>>> master
 </ion-content>
+
+
+<!-- <ion-item>
+        <ion-icon name="calendar" item-start></ion-icon>
+        <ion-label stacked>Fecha de nacimiento:</ion-label>
+        <ion-datetime formControlName="dateBirth" displayFormat="MM-DD-YYYY" placeholder="MM-DD-YYY"></ion-datetime>
+      </ion-item>
+      <div formGroupName="passwordRetry">
+        <ion-item>
+          <ion-icon name="eye" item-start></ion-icon>
+          <ion-label stacked>Contraseña:</ion-label>
+          <ion-input formControlName="password" type="password" placeholder="Contraseña"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="eye" item-start></ion-icon>
+          <ion-label stacked>Confirmar contraseña:</ion-label>
+          <ion-input formControlName="passwordConfirmation" type="password" placeholder="Confirmar contraseña"></ion-input>
+        </ion-item>
+      </div>
+      <ion-row radio-group formControlName="gender">
+        <ion-col>
+          <ion-item>
+            <ion-icon name="woman" item-start></ion-icon>
+            <ion-label>Mujer</ion-label>
+            <ion-radio value="2"></ion-radio>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-icon name="man" item-start></ion-icon>
+            <ion-label>Hombre</ion-label>
+            <ion-radio value="1"></ion-radio>
+          </ion-item>
+        </ion-col>
+      </ion-row> -->

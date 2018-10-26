@@ -10,13 +10,13 @@
   </div>
   <ion-toolbar no-border-top>
     <ion-segment [(ngModel)]="pet">
-      <ion-segment-button value="puppies">
+      <ion-segment-button value="derivado">
         Derivado
       </ion-segment-button>
-      <ion-segment-button value="kittens">
+      <ion-segment-button value="entregado">
         Entregado
       </ion-segment-button>
-      <ion-segment-button value="ducklings">
+      <ion-segment-button value="pendiente">
         Pendiente
       </ion-segment-button>
     </ion-segment>
@@ -31,10 +31,10 @@
   </ion-fab>
   <div [ngSwitch]="pet">
 
-    <ion-list *ngSwitchCase="'puppies'">
+    <ion-list *ngSwitchCase="'derivado'">
       <ion-item>
         <ion-thumbnail item-start>
-          <img src="assets/img/thumbnail-puppy-1.jpg">
+          <img src="">
         </ion-thumbnail>
         <h2>Ruby</h2>
       </ion-item>
@@ -71,7 +71,7 @@
 
     </ion-list>
 
-    <ion-list *ngSwitchCase="'kittens'">
+    <ion-list *ngSwitchCase="'entregado'">
       <ion-item>
         <ion-thumbnail item-start>
           <img src="assets/img/thumbnail-kitten-1.jpg">
@@ -98,7 +98,7 @@
       </ion-item>
     </ion-list>
 
-    <ion-list *ngSwitchCase="'ducklings'">
+    <ion-list *ngSwitchCase="'pendiente'">
       <ion-item>
         <ion-thumbnail item-start>
           <img src="assets/img/thumbnail-duckling-1.jpg">

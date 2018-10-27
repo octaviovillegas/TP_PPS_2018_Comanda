@@ -3,7 +3,7 @@ import { EncuestaEnstradaSalidaPage } from './../../encuestasPages/encuesta-enst
 import { EncuestaSupervisorPage } from '../../encuestasPages/encuesta-supervisor/encuesta-supervisor';
 import { MesasPage } from './../../mesasPages/mesas/mesas';
 
-import { Platform, Nav } from 'ionic-angular';
+import { Platform, Nav, NavParams, Events } from 'ionic-angular';
 import { Component, Output, EventEmitter } from '@angular/core';
 //import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
@@ -19,10 +19,14 @@ export class MenuMozoPage {
 
   public pages: Array<{ title: string, component: any }>;
   public perfil;
+  
+  constructor(public events2: Events) {
 
-  constructor() {
-
-    this.perfil = "Mozo";
+    //this.perfil = this.navParams.get('perfil');
+    this.events2.subscribe('usuario', (data)=>{
+      this.perfil = data.perfil;
+    })
+    //this.perfil = 'Mozo';
 
     this.cargarPages();
 
@@ -42,7 +46,7 @@ export class MenuMozoPage {
         break;
 //LOS SIGUIENTES MENUS HAY QUE IR ARREGLANDOLOS
       case 'Supervisor':
-      case 'Dueno':
+      case 'Dueño':
         this.pages = [
           { title: 'Reservas', component: MesasPage },
           { title: 'Nuevo Empleado', component: MesasPage },

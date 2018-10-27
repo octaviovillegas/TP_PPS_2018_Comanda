@@ -1,12 +1,7 @@
-<<<<<<< HEAD
 import { Camera, CameraPopoverOptions, CameraOptions } from '@ionic-native/camera';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, ToastController, LoadingController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-=======
-import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides,  } from 'ionic-angular';
->>>>>>> master
 
 /**
  * Generated class for the AltaClientePage page.
@@ -21,53 +16,13 @@ import { IonicPage, NavController, NavParams, Slides,  } from 'ionic-angular';
   templateUrl: 'alta-cliente.html',
 })
 export class AltaClientePage {
-  @ViewChild(Slides) slides: Slides;
   anonimo:string="";
   mensaje:string="";
   imagenTomada:string="assets/imgs/calavera.png";
   registroAnonimo:Boolean;
   tomoFoto:Boolean = false;
-  constructor(public navCtrl: NavController, public navParams: NavParams, ) {
-    this.registroAnonimo = false;
-  }
 
-  ngAfterViewInit(){
-    //this.slides.lockSwipeToNext(true);
-    //this.slides.lockSwipeToPrev(true);
-  }
-  public siguiente(){
-    this.slides.lockSwipes(false);
-    this.slides.slideNext();
-  }
-  public anterior(){
-    this.slides.lockSwipes(false);
-    this.slides.slidePrev();
-  }
-  public iniciar(anonimo:string){
-    this.slides.lockSwipes(false);
-    this.anonimo = anonimo;
-    if(this.anonimo == 'anonimo'){
-      this.registroAnonimo = true;
-      this.slides.slideNext();
-    }
-    else{
-      this.registroAnonimo = false;
-      this.slides.slideTo(3, 500, false);
-    }
-  }
 
-  public anteriorCliente(){
-    this.slides.lockSwipes(false);
-    this.slides.slideTo(1);
-  }
-  onIonDrag(event){
-    this.slides.lockSwipes(true);
-  }
-  tomarFoto(){
-    this.tomoFoto = true;
-  }
-
-<<<<<<< HEAD
   public formGroup: FormGroup;
 
   titulo: string = "";
@@ -90,10 +45,6 @@ export class AltaClientePage {
     this.formGroup = this.crearFormulario();
 
 
-=======
-  public principal(){
-    this.navCtrl.pop();
->>>>>>> master
   }
 
   tomarFotoCliente(){

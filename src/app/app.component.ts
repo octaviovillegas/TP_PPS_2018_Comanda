@@ -3,8 +3,9 @@ import { AltaClientePage } from './../pages/altasPages/alta-cliente/alta-cliente
 import { Component, ViewChild } from '@angular/core';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { Platform, Nav } from 'ionic-angular';
-import { SplashPage } from '../pages/splash/splash';
+import { Platform, Nav, NavParams } from 'ionic-angular';
+import { MenuMozoPage } from '../pages/menusPages/menu-mozo/menu-mozo';
+import { LoginPage } from '../pages/login/login';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 @Component({
@@ -14,9 +15,9 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   //rootPage: any = SplashPage;
-  rootPage: any = SplashPage;
+  rootPage: any = LoginPage;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public screen: ScreenOrientation) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public screen: ScreenOrientation, ) {
     platform.ready().then(() => {
 
 

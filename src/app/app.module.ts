@@ -11,7 +11,7 @@ import { MesasPage } from './../pages/mesasPages/mesas/mesas';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule, Modal } from 'ionic-angular';
+import { IonicApp, IonicErrorHandler, IonicModule, Modal, NavParams } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
@@ -111,7 +111,8 @@ export const firebaseConfig = {
     Camera,
     DeviceMotion,
     NativeAudio,
-    ScreenOrientation
+    ScreenOrientation,
+    
 
 
   ]

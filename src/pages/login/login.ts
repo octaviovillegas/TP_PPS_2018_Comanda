@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Events} from 'ionic-angular'
 import { NavController, NavParams, Loading, LoadingController, MenuController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { usuario } from '../../clases/usuario';
@@ -6,7 +7,7 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { Observable, Subject, } from 'rxjs';
 import { map, tap, takeUntil } from 'rxjs/operators';
 import { take } from 'rxjs/operators';
-import { HomePage } from '../home/home';
+import { MenuMozoPage } from '../menusPages/menu-mozo/menu-mozo';
 
 import 'rxjs/add/operator/map';
 
@@ -30,7 +31,8 @@ export class LoginPage {
     private loadingCtrl: LoadingController,
     private angularFire: AngularFireAuth,
     private firestore: AngularFirestore,
-    public menuCtrl: MenuController) {
+    public menuCtrl: MenuController,
+    public events1:Events) {
 
     this.menuCtrl.enable(false, 'menu');
 
@@ -110,39 +112,46 @@ export class LoginPage {
         logueado.present();
         logueado.onDidDismiss(alto => {
           switch (this.usuario.perfil) {
-            case 'dueño':
-              this.navCtrl.push(HomePage,{
-                usuario: this.usuario.usuario
+            case 'Dueño':
+              this.events1.publish('usuario', this.usuario);
+              this.navCtrl.push(MenuMozoPage,{
+                usuario: this.usuario.usuario,
               });
               break;
-            case 'supervisor':
-              this.navCtrl.push(HomePage,{
-                usuario: this.usuario.usuario
+            case 'Supervisor':
+            this.events1.publish('usuario', this.usuario);
+              this.navCtrl.push(MenuMozoPage,{
+                usuario: this.usuario.usuario,
               });
               break;
-            case 'cliente':
-              this.navCtrl.push(HomePage,{
-                usuario: this.usuario.usuario
+            case 'Cliente':
+              this.events1.publish('usuario', this.usuario);
+              this.navCtrl.push(MenuMozoPage,{
+                usuario: this.usuario.usuario,
               });
               break;
-            case 'cocinero':
-              this.navCtrl.push(HomePage,{
-                usuario: this.usuario.usuario
+            case 'Cocinero':
+              this.events1.publish('usuario', this.usuario);
+              this.navCtrl.push(MenuMozoPage,{
+                usuario: this.usuario.usuario,
               });
               break;
-            case 'bartender':
-              this.navCtrl.push(HomePage,{
-                usuario: this.usuario.usuario
+            case 'Bartender':
+              this.events1.publish('usuario', this.usuario);
+              this.navCtrl.push(MenuMozoPage,{
+                usuario: this.usuario.usuario,
               });
               break;
-            case 'mozo':
-              this.navCtrl.push(HomePage,{
-                usuario: this.usuario.usuario
+            case 'Mozo':
+              this.events1.publish('usuario', this.usuario);
+              this.navCtrl.push(MenuMozoPage,{
+                usuario: this.usuario.usuario,
               });
               break;
-            case 'mestre':
-              this.navCtrl.push(HomePage,{
-                usuario:this.usuario.usuario
+            case 'Mestre':
+              this.events1.publish('usuario', this.usuario);
+              this.navCtrl.push(MenuMozoPage,{
+                usuario:this.usuario.usuario,
               })
             default:
               break;

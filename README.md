@@ -9,8 +9,7 @@ _El proyecto se va a estar orientada a dispositivos moviles, desarrollada a trav
 
 ***
 
-# Equipo:
-  ## Equipo3
+# Nombre del equipo: Equipo3
 
 # Integrantes:
  - Gustavo Petruzzi :fa-github: [/gustavoPetruzzi](https://github.com/gustavoPetruzzi/ "/gustavoPetruzzi")

@@ -5,7 +5,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Platform, Nav, NavParams } from 'ionic-angular';
 import { MenuMozoPage } from '../pages/menusPages/menu-mozo/menu-mozo';
-import { LoginPage } from '../pages/login/login';
+import { SplashPage } from '../pages/splash/splash';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 @Component({
@@ -14,8 +14,8 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  //rootPage: any = SplashPage;
-  rootPage: any = LoginPage;
+  rootPage: any = SplashPage;
+  //rootPage: any = LoginPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public screen: ScreenOrientation, ) {
     platform.ready().then(() => {

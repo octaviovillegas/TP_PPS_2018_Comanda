@@ -33,14 +33,14 @@ export class SplashPage {
         this.audioNativo.play('intro')
           .then(() => {
             setTimeout(() => {
-              this.navCtrl.push(AltaClientePage)
+              this.navCtrl.push(LoginPage)
             }, 7000);
           })
       }, 2000);
     }
     else {
       setTimeout(() => {
-        this.navCtrl.push(AltaClientePage)
+        this.navCtrl.push(LoginPage)
       }, 7000);
     }
 

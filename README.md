@@ -15,4 +15,8 @@ _El proyecto se va a estar orientada a dispositivos moviles, desarrollada a trav
  - Gustavo Petruzzi :fa-github: [/gustavoPetruzzi](https://github.com/gustavoPetruzzi/ "/gustavoPetruzzi")
  - Sabrina Veiga :fa-github: [/Sabsolvei](https://github.com/Sabsolvei "/Sabsolvei")
  - Nicolas Saavedra Rojas :fa-github:  [/Nikollaz](https://github.com/Nikollaz "/Nikollaz")
+ 
+ 
+ 
+ 
 https://docs.google.com/spreadsheets/d/1nk1voMplk4VpQ3R_nmYqD3kn0eXW3lus535L_qwjRFU/edit?usp=sharing

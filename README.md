@@ -10,9 +10,9 @@ _El proyecto se va a estar orientada a dispositivos moviles, desarrollada a trav
 ***
 
 # Equipo:
-  ##Equipo3
+  ## Equipo3
 
-#Integrantes:
+# Integrantes:
  - Gustavo Petruzzi :fa-github: [/gustavoPetruzzi](https://github.com/gustavoPetruzzi/ "/gustavoPetruzzi")
  - Sabrina Veiga :fa-github: [/Sabsolvei](https://github.com/Sabsolvei "/Sabsolvei")
  - Nicolas Saavedra Rojas :fa-github:  [/Nikollaz](https://github.com/Nikollaz "/Nikollaz")

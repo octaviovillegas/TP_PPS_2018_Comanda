@@ -7,8 +7,7 @@
 *El proyecto se va a estar orientada a dispositivos moviles, desarrollada a traves de [Ionic ](https://ionicframework.com/ "Ionic "), utilizando como base de datos [Firebase](https://firebase.google.com/?hl=es-419 "Firebase")  *
 
 
-[========]
-
+***
 
 # Equipo:
 - ##Equipo3

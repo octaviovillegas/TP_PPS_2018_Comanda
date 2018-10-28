@@ -6,6 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { Platform, Nav, NavParams } from 'ionic-angular';
 import { MenuMozoPage } from '../pages/menusPages/menu-mozo/menu-mozo';
 import { SplashPage } from '../pages/splash/splash';
+import { AltaPlatoPage } from '../pages/altasPages/alta-plato/alta-plato';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 @Component({
@@ -14,7 +15,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = SplashPage;
+  rootPage: any = AltaPlatoPage;
   //rootPage: any = LoginPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public screen: ScreenOrientation, ) {

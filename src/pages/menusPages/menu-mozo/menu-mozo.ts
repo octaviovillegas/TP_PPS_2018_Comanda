@@ -24,7 +24,9 @@ export class MenuMozoPage {
 
     //this.perfil = this.navParams.get('perfil');
     this.events2.subscribe('usuario', (data)=>{
-      this.perfil = data.perfil;
+      this.perfil = data;
+      console.log(data);
+      this.cargarPages();
     })
     //this.perfil = 'Mozo';
 

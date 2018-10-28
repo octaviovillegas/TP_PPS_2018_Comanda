@@ -1,0 +1,115 @@
+<!--
+  Generated template for the AltaPlatoPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-content padding>
+  <ion-slides #Slides  (ionSlideDrag)="onIonDrag()">
+    <ion-slide>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <h1> ¡Agrega un nuevo plato!</h1>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <img class="imgPlato" src="assets/imgs/plato.png"> 
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <button class="boton" round color="danger" (click)="volver()" ion-button>Volver</button>
+          </ion-col>
+          <ion-col>
+            <button class="boton" round color="secondary" (click)="siguiente()" ion-button>Agregar</button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+    <ion-slide>
+      <ion-row>
+        <ion-col>
+          <h1>Ingresa el nombre del plato</h1>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <form  #nombreForm="ngForm">
+            <ion-item>
+              <ion-label floating>Nombre del plato</ion-label>
+              <ion-input type="text" [(ngModel)]="nombre" name="Nombre" class="item" required></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Importe</ion-label>
+                <ion-input type="number" [(ngModel)]="importe" name="Importe" class="item" required></ion-input>
+              </ion-item>
+            <button class="boton" round color="danger" (click)="anterior()" ion-button>Volver</button>
+            <button class="boton" round color="secondary" (click)="siguiente()" [disabled]="!nombreForm.form.valid" ion-button>Siguiente</button>
+          </form>
+        </ion-col>
+      </ion-row>
+    </ion-slide>
+    <ion-slide>
+      <ion-row>
+        <ion-col>
+          <h1>¡Saca una foto de los ingredientes!</h1>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <img [src]="ingredientes" class="imgPlato">
+        </ion-col>
+      </ion-row>
+      <ion-row>
+
+        <ion-col>
+          <button class="" round large block color="green" (click)="fotoIngredientes()" ion-button> <ion-icon name="camera"></ion-icon>  Tomar Foto </button>
+          <button class="boton" round color="danger" (click)="anterior()" ion-button>Volver</button>
+          <button class="boton" round color="secondary" (click)="siguiente()" [disabled]="!fotoIngredientesTomada" ion-button>Siguiente</button>
+        </ion-col>
+      </ion-row>
+
+    </ion-slide>
+    <ion-slide>
+      <ion-row>
+        <ion-col>
+          <h1>¡Saca una foto de la preparación!</h1>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <img [src]="preparacion" class="imgPlato">
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <button class="" round large block color="green" (click)="fotoPreparacion()" ion-button> <ion-icon name="camera"></ion-icon>  Tomar Foto </button>
+          <button class="boton" round color="danger" (click)="anterior()" ion-button>Volver</button>
+          <button class="boton" round color="secondary" (click)="siguiente()" [disabled]="!fotoPreparacionTomada" ion-button>Siguiente</button>
+        </ion-col>
+      </ion-row>
+    </ion-slide>
+    <ion-slide>
+      <ion-row>
+        <ion-col>
+          <h1>¡Saca una foto del plato ya preparado!</h1>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <img [src]="preparado" class="imgPlato">
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <button class="" round large block color="green" (click)="fotoPreparado()" ion-button> <ion-icon name="camera"></ion-icon>  Tomar Foto </button>
+          <button class="boton" round color="danger" (click)="anterior()" ion-button>Volver</button>
+          <button class="boton" round color="secondary" (click)="subir()" [disabled]="!fotoPreparadoTomada" ion-button>Subir</button>
+        </ion-col>
+        </ion-row>
+    </ion-slide>
+  </ion-slides>
+
+</ion-content>

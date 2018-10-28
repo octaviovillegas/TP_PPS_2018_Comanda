@@ -3,6 +3,7 @@ import { EncuestaEnstradaSalidaPage } from '../pages/encuestasPages/encuesta-ens
 import { EncuestaSupervisorPage } from '../pages/encuestasPages/encuesta-supervisor/encuesta-supervisor';
 import { AltaPedidoPage } from './../pages/pedidosPages/alta-pedido/alta-pedido';
 import { AltaClientePage } from '../pages/altasPages/alta-cliente/alta-cliente';
+import { AltaPlatoPage } from '../pages/altasPages/alta-plato/alta-plato';
 import { MenuMozoPage } from './../pages/menusPages/menu-mozo/menu-mozo';
 import { PedidosPage } from '../pages/pedidosPages/pedidos/pedidos';
 import { MesasPage } from './../pages/mesasPages/mesas/mesas';
@@ -68,7 +69,8 @@ export const firebaseConfig = {
     AltaClientePage,
     EncuestaEnstradaSalidaPage,
     EncuestaSupervisorPage,
-    MenuMozoPage
+    MenuMozoPage,
+    AltaPlatoPage
   ],
   imports: [
     BrowserModule,
@@ -100,7 +102,8 @@ export const firebaseConfig = {
     AltaClientePage,
     EncuestaEnstradaSalidaPage,
     EncuestaSupervisorPage,
-    MenuMozoPage
+    MenuMozoPage,
+    AltaPlatoPage
   ],
   providers: [
     StatusBar,

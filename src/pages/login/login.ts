@@ -119,37 +119,37 @@ export class LoginPage {
               });
               break;
             case 'Supervisor':
-            this.events1.publish('usuario', this.usuario);
+            this.events1.publish('usuario', this.usuario.perfil);
               this.navCtrl.push(MenuMozoPage,{
                 usuario: this.usuario.usuario,
               });
               break;
             case 'Cliente':
-              this.events1.publish('usuario', this.usuario);
+              this.events1.publish('usuario', this.usuario.perfil);
               this.navCtrl.push(MenuMozoPage,{
                 usuario: this.usuario.usuario,
               });
               break;
             case 'Cocinero':
-              this.events1.publish('usuario', this.usuario);
+              this.events1.publish('usuario', this.usuario.perfil);
               this.navCtrl.push(MenuMozoPage,{
                 usuario: this.usuario.usuario,
               });
               break;
             case 'Bartender':
-              this.events1.publish('usuario', this.usuario);
+              this.events1.publish('usuario', this.usuario.perfil);
               this.navCtrl.push(MenuMozoPage,{
                 usuario: this.usuario.usuario,
               });
               break;
             case 'Mozo':
-              this.events1.publish('usuario', this.usuario);
+              this.events1.publish('usuario', this.usuario.perfil);
               this.navCtrl.push(MenuMozoPage,{
                 usuario: this.usuario.usuario,
               });
               break;
             case 'Mestre':
-              this.events1.publish('usuario', this.usuario);
+              this.events1.publish('usuario', this.usuario.perfil);
               this.navCtrl.push(MenuMozoPage,{
                 usuario:this.usuario.usuario,
               })

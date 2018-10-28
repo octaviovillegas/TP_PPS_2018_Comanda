@@ -21,8 +21,8 @@ export class MenuMozoPage {
   public pages: Array<{ title: string, component: any }>;
   public perfil;
 
-  constructor(public events2: Events, public navCtrl: NavController, public navParams: NavParams) {
 
+  constructor(public events2: Events, public navCtrl: NavController, public navParams: NavParams) {
     //this.perfil = this.navParams.get('perfil');
     this.perfil = localStorage.getItem("perfil");
     this.cargarPages();

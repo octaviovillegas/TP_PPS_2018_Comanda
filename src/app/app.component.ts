@@ -4,6 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Platform, Nav, MenuController } from 'ionic-angular';
 import { SplashPage } from '../pages/splash/splash';
+import { AltaPlatoPage } from '../pages/altasPages/alta-plato/alta-plato';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { LoginPage } from '../pages/login/login';
 import { AuthProvider } from '../providers/auth/auth';
@@ -14,6 +15,7 @@ import { EncuestaEnstradaSalidaPage } from '../pages/encuestasPages/encuesta-ens
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
+
   //rootPage: any = SplashPage;
   //rootPage: any = LoginPage;
   rootPage: any = EncuestaEnstradaSalidaPage;

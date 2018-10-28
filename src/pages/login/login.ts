@@ -124,6 +124,7 @@ export class LoginPage {
               });
               break;
             case 'Supervisor':
+
               this.events1.publish('usuario', this.usuario);
               localStorage.setItem("perfil", this.usuario.perfil);
               localStorage.setItem("usuario", this.usuario.usuario);
@@ -133,6 +134,7 @@ export class LoginPage {
               });
               break;
             case 'Cliente':
+
               this.events1.publish('usuario', this.usuario);
               localStorage.setItem("perfil", this.usuario.perfil);
               localStorage.setItem("usuario", this.usuario.usuario);
@@ -141,7 +143,9 @@ export class LoginPage {
                 perfil: this.usuario.perfil
               });
               break;
+              
             case 'Cocinero':
+
               this.events1.publish('usuario', this.usuario);
               localStorage.setItem("perfil", this.usuario.perfil);
               localStorage.setItem("usuario", this.usuario.usuario);
@@ -150,18 +154,22 @@ export class LoginPage {
                 perfil: this.usuario.perfil
               });
               break;
+              
             case 'Bartender':
+
               this.events1.publish('usuario', this.usuario);
 
               localStorage.setItem("perfil", this.usuario.perfil);
               localStorage.setItem("usuario", this.usuario.usuario);
 
-              this.navCtrl.setRoot(MesasPage, {
+              this.navCtrl.setRoot(MesasPage, 
                 usuario: this.usuario.usuario,
                 perfil: this.usuario.perfil
               });
               break;
+              
             case 'Mozo':
+
               this.events1.publish('usuario', this.usuario);
               localStorage.setItem("perfil", this.usuario.perfil);
               localStorage.setItem("usuario", this.usuario.usuario);
@@ -170,7 +178,9 @@ export class LoginPage {
                 perfil: this.usuario.perfil
               });
               break;
+              
             case 'Mestre':
+
               this.events1.publish('usuario', this.usuario);
               localStorage.setItem("perfil", this.usuario.perfil);
               localStorage.setItem("usuario", this.usuario.usuario);
@@ -178,6 +188,7 @@ export class LoginPage {
                 usuario: this.usuario.usuario,
                 perfil: this.usuario.perfil
               });
+              break;
             default:
               break;
           }

@@ -1,4 +1,18 @@
 
+
+import { MenuComponent } from './../components/menu/menu';
+/*
+import { EncuestaEnstradaSalidaPage } from '../pages/encuestasPages/encuesta-enstrada-salida/encuesta-enstrada-salida';
+import { EncuestaSupervisorPage } from '../pages/encuestasPages/encuesta-supervisor/encuesta-supervisor';
+import { AltaPedidoPage } from './../pages/pedidosPages/alta-pedido/alta-pedido';
+import { AltaClientePage } from '../pages/altasPages/alta-cliente/alta-cliente';
+import { AltaPlatoPage } from '../pages/altasPages/alta-plato/alta-plato';
+import { MenuMozoPage } from './../pages/menusPages/menu-mozo/menu-mozo';
+import { PedidosPage } from '../pages/pedidosPages/pedidos/pedidos';
+import { MesasPage } from './../pages/mesasPages/mesas/mesas';
+*/
+
+
 import { EncuestaEnstradaSalidaPageModule } from '../pages/encuestasPages/encuesta-enstrada-salida/encuesta-enstrada-salida.module';
 import { EncuestaSupervisorPageModule } from '../pages/encuestasPages/encuesta-supervisor/encuesta-supervisor.module';
 import { AltaPedidoPageModule } from './../pages/pedidosPages/alta-pedido/alta-pedido.module';
@@ -59,7 +73,18 @@ export const firebaseConfig = {
     HomePage,
     LoginPage,
     SplashPage,
-    ModalPage
+    LindasPage,
+    FeasPage,
+    ModalPage,
+    MesasPage,
+    PedidosPage,
+    AltaPedidoPage,
+    AltaClientePage,
+    EncuestaEnstradaSalidaPage,
+    EncuestaSupervisorPage,
+    MenuMozoPage,
+    AltaPlatoPage
+
   ],
   imports: [
     BrowserModule,
@@ -90,9 +115,15 @@ export const firebaseConfig = {
     HomePage,
     LoginPage,
     SplashPage,
-    //LindasPage,
-   // FeasPage,
-    ModalPage
+    ModalPage,
+    MesasPage,
+    PedidosPage,
+    AltaPedidoPage,
+    AltaClientePage,
+    EncuestaEnstradaSalidaPage,
+    EncuestaSupervisorPage,
+    MenuMozoPage,
+    AltaPlatoPage
   ],
   providers: [
     StatusBar,

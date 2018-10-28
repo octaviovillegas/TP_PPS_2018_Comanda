@@ -1,22 +1,14 @@
+import { AuthProvider } from './../../providers/auth/auth';
+import { usuario } from './../../clases/usuario';
+import { MesasPage } from './../mesasPages/mesas/mesas';
 import { Component } from '@angular/core';
-import { Events} from 'ionic-angular'
+import { Events } from 'ionic-angular'
 import { NavController, NavParams, Loading, LoadingController, MenuController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { usuario } from '../../clases/usuario';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
-import { Observable, Subject, } from 'rxjs';
-import { map, tap, takeUntil } from 'rxjs/operators';
-import { take } from 'rxjs/operators';
-import { MenuMozoPage } from '../menusPages/menu-mozo/menu-mozo';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { Observable } from 'rxjs';
 
 import 'rxjs/add/operator/map';
-
-/**
- * Generated class for the LoginPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 
 @Component({
@@ -26,14 +18,16 @@ import 'rxjs/add/operator/map';
 export class LoginPage {
 
   constructor(
+    private auth: AuthProvider,
     public navCtrl: NavController,
     public navParams: NavParams,
     private loadingCtrl: LoadingController,
     private angularFire: AngularFireAuth,
     private firestore: AngularFirestore,
     public menuCtrl: MenuController,
-    public events1:Events) {
+    public events1: Events) {
 
+    firestore.firestore.settings({ timestampsInSnapshots: true });
     this.menuCtrl.enable(false, 'menu');
 
   }
@@ -44,7 +38,7 @@ export class LoginPage {
   pass: string;
   clave: string;
   valido: Boolean = false;
-  perfil:string;
+  perfil: string;
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
@@ -101,58 +95,89 @@ export class LoginPage {
   }
 
   async login() {
+    //let esperador = this.esperar();
+    //esperador.present();
 
-    let esperador = this.esperar();
-    esperador.present();
-
-    await this.angularFire.auth.signInWithEmailAndPassword(this.nombre, this.clave)
+    await this.auth.loginUser(this.nombre, this.clave)
       .then(result => {
-        esperador.dismiss();
-        let logueado: Loading = this.esperar(this.creaFondo("Ingreso correcto", "assets/imgs/logueado.png"))
+
+
+        //esperador.dismiss();
+        //let logueado: Loading = this.esperar(this.creaFondo("Ingreso correcto", "assets/imgs/logueado.png"))
+        let logueado: Loading = this.esperar();
         logueado.present();
         logueado.onDidDismiss(alto => {
+
+          console.log("Perfil logueado: ");
+          console.log(this.usuario.perfil);
+          this.auth.perfilLogueado = this.usuario.perfil;
+
+
           switch (this.usuario.perfil) {
             case 'Dueño':
               this.events1.publish('usuario', this.usuario);
-              this.navCtrl.push(MenuMozoPage,{
+              localStorage.setItem("perfil", this.usuario.perfil);
+              localStorage.setItem("usuario", this.usuario.usuario);
+              this.navCtrl.setRoot(MesasPage, {
                 usuario: this.usuario.usuario,
+                perfil: this.usuario.perfil
               });
               break;
             case 'Supervisor':
-            this.events1.publish('usuario', this.usuario);
-              this.navCtrl.push(MenuMozoPage,{
+              this.events1.publish('usuario', this.usuario);
+              localStorage.setItem("perfil", this.usuario.perfil);
+              localStorage.setItem("usuario", this.usuario.usuario);
+              this.navCtrl.setRoot(MesasPage, {
                 usuario: this.usuario.usuario,
+                perfil: this.usuario.perfil
               });
               break;
             case 'Cliente':
               this.events1.publish('usuario', this.usuario);
-              this.navCtrl.push(MenuMozoPage,{
+              localStorage.setItem("perfil", this.usuario.perfil);
+              localStorage.setItem("usuario", this.usuario.usuario);
+              this.navCtrl.setRoot(MesasPage, {
                 usuario: this.usuario.usuario,
+                perfil: this.usuario.perfil
               });
               break;
             case 'Cocinero':
               this.events1.publish('usuario', this.usuario);
-              this.navCtrl.push(MenuMozoPage,{
+              localStorage.setItem("perfil", this.usuario.perfil);
+              localStorage.setItem("usuario", this.usuario.usuario);
+              this.navCtrl.setRoot(MesasPage, {
                 usuario: this.usuario.usuario,
+                perfil: this.usuario.perfil
               });
               break;
             case 'Bartender':
               this.events1.publish('usuario', this.usuario);
-              this.navCtrl.push(MenuMozoPage,{
+
+              localStorage.setItem("perfil", this.usuario.perfil);
+              localStorage.setItem("usuario", this.usuario.usuario);
+
+              this.navCtrl.setRoot(MesasPage, {
                 usuario: this.usuario.usuario,
+                perfil: this.usuario.perfil
               });
               break;
             case 'Mozo':
               this.events1.publish('usuario', this.usuario);
-              this.navCtrl.push(MenuMozoPage,{
+              localStorage.setItem("perfil", this.usuario.perfil);
+              localStorage.setItem("usuario", this.usuario.usuario);
+              this.navCtrl.setRoot(MesasPage, {
                 usuario: this.usuario.usuario,
+                perfil: this.usuario.perfil
               });
               break;
             case 'Mestre':
               this.events1.publish('usuario', this.usuario);
-              this.navCtrl.push(MenuMozoPage,{
-                usuario:this.usuario.usuario,
-              })
+              localStorage.setItem("perfil", this.usuario.perfil);
+              localStorage.setItem("usuario", this.usuario.usuario);
+              this.navCtrl.setRoot(MesasPage, {
+                usuario: this.usuario.usuario,
+                perfil: this.usuario.perfil
+              });
             default:
               break;
           }
@@ -181,7 +206,7 @@ export class LoginPage {
         });
       })
       .catch(error => {
-        esperador.dismiss();
+        //esperador.dismiss();
         let errorCode = error.code;
         let loadingError;
         if (errorCode === 'auth/invalid-email') {

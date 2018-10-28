@@ -1,38 +1,34 @@
+import { Observable, Subject } from 'rxjs';
+import { AuthProvider } from './../../providers/auth/auth';
+import { Nav } from 'ionic-angular';
 import { AltaClientePage } from '../../pages/altasPages/alta-cliente/alta-cliente';
 import { EncuestaEnstradaSalidaPage } from '../../pages/encuestasPages/encuesta-enstrada-salida/encuesta-enstrada-salida';
 import { EncuestaSupervisorPage } from '../../pages/encuestasPages/encuesta-supervisor/encuesta-supervisor';
 import { MesasPage } from '../../pages/mesasPages/mesas/mesas';
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
 
-/**
- * Generated class for the MenuComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
 @Component({
   selector: 'menu',
   templateUrl: 'menu.html'
 })
 export class MenuComponent {
 
+  @ViewChild(Nav) nav: Nav;
   @Output() openPage = new EventEmitter();
+  @Output() cerrarSesion = new EventEmitter();
 
   public pages: Array<{ title: string, component: any }>;
-  public perfil;
 
-  constructor() {
-    console.log("CONSTRUCTOR MENU");
+  constructor(
+    private auth: AuthProvider
+  ) {
 
-    this.perfil = "Mozo";
-
-    this.cargarPages();
-
+      this.cargarPages();
   }
 
   cargarPages() {
 
-    switch (this.perfil) {
+    switch (this.auth.perfilLogueado) {
 
       case 'Mozo':
         this.pages = [
@@ -57,10 +53,8 @@ export class MenuComponent {
       case 'Cocinero':
       case 'Bartender':
         this.pages = [
-          { title: 'Pedidos', component: MesasPage },
-          { title: 'Nuevo Producto', component: EncuestaEnstradaSalidaPage },
-          { title: 'Encuesta e/s', component: EncuestaEnstradaSalidaPage },
-          { title: 'Encuesta supervisor', component: EncuestaSupervisorPage }
+          { title: 'Mesas', component: MesasPage },
+          { title: 'Alta Cliente', component: AltaClientePage },
         ];
         break;
 
@@ -73,16 +67,21 @@ export class MenuComponent {
         break;
     }
 
+
   }
 
 
   enviarPage(p: any) {
-    console.log("MENU COMPONENT");
-    console.log(p);
+    console.log("enviar page");
+    console.log(p.component);
     this.openPage.emit(p);
   }
   salir() {
-
+    localStorage.removeItem('perfil');
+    localStorage.removeItem('usuario');
+    this.cerrarSesion.emit("'LoginPage'");
   }
 
 }
+
+

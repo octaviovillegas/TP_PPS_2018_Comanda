@@ -1,13 +1,11 @@
-import { MenuComponent } from './../components/menu/menu';
-import { EncuestaEnstradaSalidaPage } from '../pages/encuestasPages/encuesta-enstrada-salida/encuesta-enstrada-salida';
-import { EncuestaSupervisorPage } from '../pages/encuestasPages/encuesta-supervisor/encuesta-supervisor';
-import { AltaPedidoPage } from './../pages/pedidosPages/alta-pedido/alta-pedido';
-import { AltaClientePage } from '../pages/altasPages/alta-cliente/alta-cliente';
-import { MenuMozoPage } from './../pages/menusPages/menu-mozo/menu-mozo';
-import { PedidosPage } from '../pages/pedidosPages/pedidos/pedidos';
-import { MesasPage } from './../pages/mesasPages/mesas/mesas';
 
-
+import { EncuestaEnstradaSalidaPageModule } from '../pages/encuestasPages/encuesta-enstrada-salida/encuesta-enstrada-salida.module';
+import { EncuestaSupervisorPageModule } from '../pages/encuestasPages/encuesta-supervisor/encuesta-supervisor.module';
+import { AltaPedidoPageModule } from './../pages/pedidosPages/alta-pedido/alta-pedido.module';
+import { AltaClientePageModule } from '../pages/altasPages/alta-cliente/alta-cliente.module';
+import { MenuMozoPageModule } from './../pages/menusPages/menu-mozo/menu-mozo.module';
+import { PedidosPageModule } from '../pages/pedidosPages/pedidos/pedidos.module';
+import { MesasPageModule } from './../pages/mesasPages/mesas/mesas.module';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -20,8 +18,8 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { SplashPage } from '../pages/splash/splash';
-import { LindasPage } from '../pages/lindas/lindas';
-import { FeasPage } from '../pages/feas/feas';
+//import { LindasPage } from '../pages/lindas/lindas';
+//import { FeasPage } from '../pages/feas/feas';
 import { ModalPage } from '../pages/modal/modal';
 import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion';
 //AF
@@ -42,6 +40,8 @@ import { IonicImageLoader } from 'ionic-image-loader';
 import { NativeAudio } from '@ionic-native/native-audio';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ComponentsModule } from '../components/components.module';
+import { NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { AuthProvider } from '../providers/auth/auth';
 
 
 export const firebaseConfig = {
@@ -59,16 +59,7 @@ export const firebaseConfig = {
     HomePage,
     LoginPage,
     SplashPage,
-    LindasPage,
-    FeasPage,
-    ModalPage,
-    MesasPage,
-    PedidosPage,
-    AltaPedidoPage,
-    AltaClientePage,
-    EncuestaEnstradaSalidaPage,
-    EncuestaSupervisorPage,
-    MenuMozoPage
+    ModalPage
   ],
   imports: [
     BrowserModule,
@@ -81,7 +72,15 @@ export const firebaseConfig = {
     HttpModule,
     IonicImageLoader.forRoot(),
     ChartModule,
-    ComponentsModule
+    ComponentsModule,
+    EncuestaEnstradaSalidaPageModule,
+    EncuestaSupervisorPageModule,
+    AltaPedidoPageModule,
+    AltaClientePageModule,
+    MenuMozoPageModule,
+    PedidosPageModule,
+    MesasPageModule
+
   ],
   bootstrap: [
     IonicApp
@@ -91,16 +90,9 @@ export const firebaseConfig = {
     HomePage,
     LoginPage,
     SplashPage,
-    LindasPage,
-    FeasPage,
-    ModalPage,
-    MesasPage,
-    PedidosPage,
-    AltaPedidoPage,
-    AltaClientePage,
-    EncuestaEnstradaSalidaPage,
-    EncuestaSupervisorPage,
-    MenuMozoPage
+    //LindasPage,
+   // FeasPage,
+    ModalPage
   ],
   providers: [
     StatusBar,
@@ -112,9 +104,11 @@ export const firebaseConfig = {
     DeviceMotion,
     NativeAudio,
     ScreenOrientation,
-    
-
-
+    AuthProvider
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA,
+    NO_ERRORS_SCHEMA
   ]
 })
 export class AppModule { }

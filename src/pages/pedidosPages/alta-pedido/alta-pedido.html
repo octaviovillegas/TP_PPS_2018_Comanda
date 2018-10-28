@@ -30,22 +30,30 @@
   <ion-searchbar (ionInput)="getItems($event)" [placeholder]="'Buscar por nombre'"></ion-searchbar>
 
   <ion-grid *ngSwitchCase="'minutas'">
-    <ion-row>
-      <ion-col col-9>
+    <!-- <ion-row class='itemsMenu'>
+      <ion-col col-7>
         NOMBRE
       </ion-col>
-
-      <ion-col col-2 text-center>
-        CANT
-      </ion-col>
       <ion-col col-1 text-center>
-        S
+        -
       </ion-col>
-    </ion-row>
+      <ion-col col-2 text-center>
+        C
+      </ion-col>
+      <ion-col col-2 text-center>
+        +
+      </ion-col>
+    </ion-row> -->
 
-    <ion-row align-items-center *ngFor="let item of menu">
-      <ion-col col-9>
-        {{item.nombre}}
+    <ion-row align-items-center *ngFor="let item of menu" class='itemsMenu'>
+      <ion-col col-7>
+        {{item.nombre| uppercase}}
+      </ion-col>
+
+      <ion-col col-1 text-center>
+        <div>
+          <ion-icon name="remove-circle" isActive="false" color="dark" (click)="seleccionarPedido(item, -1)"></ion-icon>
+        </div>
       </ion-col>
 
       <ion-col col-2 text-center>
@@ -54,13 +62,10 @@
         </div>
       </ion-col>
 
-      <ion-col col-1 text-center>
+      <ion-col col-2 text-center class='addItem'>
         <div>
-          <ion-icon name="arrow-round-up" color="primary" (click)="seleccionarPedido(item, 1)"></ion-icon>
-          <br><br>
-          <ion-icon name="arrow-round-down" color="primary" (click)="seleccionarPedido(item, -1)"></ion-icon>
+          <ion-icon name="add-circle" color="primary" (click)="seleccionarPedido(item, 1)"></ion-icon>
         </div>
-        <!-- <ion-checkbox color="primary" [(ngModel)]="item.pedido" (ionChange)="seleccionarPedido(item)"></ion-checkbox> -->
       </ion-col>
 
     </ion-row>

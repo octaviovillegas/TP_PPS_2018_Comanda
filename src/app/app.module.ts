@@ -4,6 +4,7 @@ import { EncuestaSupervisorPage } from '../pages/encuestasPages/encuesta-supervi
 import { AltaPedidoPage } from './../pages/pedidosPages/alta-pedido/alta-pedido';
 import { AltaClientePage } from '../pages/altasPages/alta-cliente/alta-cliente';
 import { AltaPlatoPage } from '../pages/altasPages/alta-plato/alta-plato';
+import { AltaBebidaPage } from '../pages/altasPages/alta-bebida/alta-bebida';
 import { MenuMozoPage } from './../pages/menusPages/menu-mozo/menu-mozo';
 import { PedidosPage } from '../pages/pedidosPages/pedidos/pedidos';
 import { MesasPage } from './../pages/mesasPages/mesas/mesas';

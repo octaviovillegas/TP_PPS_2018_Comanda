@@ -3,8 +3,9 @@ import { IonicPage, NavController, NavParams, Slides, LoadingController} from 'i
 import {Camera, CameraOptions} from '@ionic-native/camera';
 import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+
 /**
- * Generated class for the AltaPlatoPage page.
+ * Generated class for the AltaBebidaPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -12,10 +13,10 @@ import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/fires
 
 @IonicPage()
 @Component({
-  selector: 'page-alta-plato',
-  templateUrl: 'alta-plato.html',
+  selector: 'page-alta-bebida',
+  templateUrl: 'alta-bebida.html',
 })
-export class AltaPlatoPage {
+export class AltaBebidaPage {
   @ViewChild(Slides) slides: Slides;
   ingredientes:string;
   preparacion:string;
@@ -41,16 +42,16 @@ export class AltaPlatoPage {
     public loadingCtrl:LoadingController
     ) 
   {
-    this.ingredientes = "assets/imgs/ingredientes.png";
-    this.preparacion = "assets/imgs/cocinando.png";
-    this.preparado = "assets/imgs/preparado.png";
+    this.ingredientes = "assets/imgs/ingredientesBebida.png";
+    this.preparacion = "assets/imgs/preparacion.png";
+    this.preparado = "assets/imgs/preparadoBebida.png";
     this.fotoIngredientesTomada = false;
     this.fotoPreparacionTomada = false;
     this.fotoPreparadoTomada = false;
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AltaPlatoPage');
+    console.log('ionViewDidLoad AltaBebidaPage');
   }
 
   public siguiente(){
@@ -106,7 +107,7 @@ export class AltaPlatoPage {
 
   public subir(){
     let loading = this.loadingCtrl.create({
-      content: `Cargando plato`
+      content: `Cargando Bebida`
     })
     loading.present();
     this.createUploadTask(this.ingredientes)
@@ -124,7 +125,7 @@ export class AltaPlatoPage {
               this.storage.ref(this.rutaArchivo).getDownloadURL().toPromise()
               .then(urlImagen =>{
                 this.urlPreparado =urlImagen;
-                this.db.collection('platos').add({
+                this.db.collection('bebidas').add({
                   nombre: this.nombre,
                   importe: this.importe,
                   categoria: this.categoria,
@@ -145,12 +146,12 @@ export class AltaPlatoPage {
 
   public createUploadTask(file: string) {
 
-    this.rutaArchivo = `platos/${this.nombre}_${ new Date().getTime() }.jpg`;
+    this.rutaArchivo = `bebidas/${this.nombre}_${ new Date().getTime() }.jpg`;
     this.image = 'data:image/jpg;base64,' + file;
     
     this.task = this.storage.ref(this.rutaArchivo).putString(file, 'data_url');
 
     return this.task;
-  } 
+  }
 
 }

@@ -20,8 +20,8 @@ _El proyecto se va a estar orientada a dispositivos moviles, desarrollada a trav
 
 ### Perfiles de usuarios:
 -  #### Dueño
-- #### Supervisor
-- #### Empleado
+-  #### Supervisor
+-  #### Empleado
   - ##### Bartender
   - ##### Cocinero
   - ##### Mestre

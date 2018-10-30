@@ -34,10 +34,28 @@ _El proyecto se va a estar orientada a dispositivos moviles, desarrollada a trav
 
 |   Responsabilidad | Estado   |
 | :------------: | :------------: |
-|  Alta de plato | ![amarillo](/imagesamarillo.png)  |
+|  Alta de plato | ![amarillo](/images/amarillo.png)  |
 |  Alta de bebida |![amarillo](/images/amarillo.png)   |
 |  Splash | ![verde](/images/verde.png)  |
 |  Login |  ![verde](/images/verde.png) |
+
+ # Responsabilidades por Integrante:
+##  - Veiga
+##  - Sabrina
+|   Responsabilidad | Estado   |
+| :------------: | :------------: |
+|  Menu Principal| ![amarillo](/images/amarillo.png)  |
+|  Alta de Cliente |![amarillo](/images/amarillo.png)   |
+|  Encuesta entrada-salida | ![amarillo](/images/amarillo.png)   |
+|  Encuesta Supervisor |  ![amarillo](/images/amarillo.png)   |
+|  Encuesta Supervisor |  ![amarillo](/images/amarillo.png)   |
+|  Gestion de mesas |  ![amarillo](/images/amarillo.png)   |
+|  Alta de pedido |  ![amarillo](/images/amarillo.png)   |
+|  Pedidos  |  ![amarillo](/images/amarillo.png)   |
+
+
+
+
 
 
  

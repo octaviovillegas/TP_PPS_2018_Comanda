@@ -34,10 +34,10 @@ _El proyecto se va a estar orientada a dispositivos moviles, desarrollada a trav
 
 |   Responsabilidad | Estado   |
 | :------------: | :------------: |
-|  Alta de plato | ![amarillo](/image/amarillo.png)  |
-|  Alta de bebida |![amarillo](/image/amarillo.png)   |
-|  Splash | ![verde](/image/verde.png)  |
-|  Login |  ![verde](/image/verde.png) |
+|  Alta de plato | ![amarillo](/imagesamarillo.png)  |
+|  Alta de bebida |![amarillo](/images/amarillo.png)   |
+|  Splash | ![verde](/images/verde.png)  |
+|  Login |  ![verde](/images/verde.png) |
 
 
  

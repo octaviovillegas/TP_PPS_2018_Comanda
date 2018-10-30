@@ -1,7 +1,7 @@
 # Restaurant "La comanda"
 ![la comanda](https://i.imgur.com/GzRLCcys.png "la comanda")
 # Nombre del equipo: 
- - ##Equipo3
+ - ## Equipo3
 
 # Integrantes:
  - ### Gustavo Petruzzi [![](/images/github.png)](https://github.com/gustavoPetruzzi  "Github de Gustavo Petruzzi")
@@ -22,10 +22,10 @@ _El proyecto se va a estar orientada a dispositivos moviles, desarrollada a trav
 -  #### Dueño
 - #### Supervisor
 - #### Empleado
- - ##### Bartender
- - ##### Cocinero
- - ##### Mestre
- - ##### Mozo
+  - ##### Bartender
+  - ##### Cocinero
+  - ##### Mestre
+  - ##### Mozo
  
  # Responsabilidades por Integrante:
 ##  - Petruzzi
@@ -34,11 +34,11 @@ _El proyecto se va a estar orientada a dispositivos moviles, desarrollada a trav
 
 |   Responsabilidad | Estado   |
 | :------------: | :------------: |
-|  Alta de plato |   |
-|  Alta de bebida |   |
-|  Splash |   |
-|  Login |   |
+|  Alta de plato | ![amarillo](/image/amarillo.png)  |
+|  Alta de bebida |![amarillo](/image/amarillo.png)   |
+|  Splash | ![verde](/image/verde.png)  |
+|  Login |  ![verde](/image/verde.png) |
 
- 
+
  
 https://docs.google.com/spreadsheets/d/1nk1voMplk4VpQ3R_nmYqD3kn0eXW3lus535L_qwjRFU/edit?usp=sharing

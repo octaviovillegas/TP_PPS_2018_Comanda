@@ -1,14 +1,8 @@
 import { Camera, CameraPopoverOptions, CameraOptions } from '@ionic-native/camera';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, ToastController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, ToastController, LoadingController, MenuController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-/**
- * Generated class for the AltaClientePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -38,10 +32,11 @@ export class AltaClientePage {
     private camera: Camera,
     public viewCtrl: ViewController,
     public toastCtrl: ToastController,
-    public loadingCtrl: LoadingController
+    public loadingCtrl: LoadingController, 
+    public menuCtrl: MenuController
 
   ) {
-
+    this.menuCtrl.enable(true, 'menu');
     this.formGroup = this.crearFormulario();
 
 

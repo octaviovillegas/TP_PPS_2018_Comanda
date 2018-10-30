@@ -1,12 +1,8 @@
+import { Camera, CameraPopoverOptions, CameraOptions } from '@ionic-native/camera';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, ToastController, LoadingController, MenuController } from 'ionic-angular';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-/**
- * Generated class for the EncuestaEnstradaSalidaPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -14,13 +10,92 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'encuesta-enstrada-salida.html',
 })
 export class EncuestaEnstradaSalidaPage {
+  anonimo: string = "";
+  mensaje: string = "";
+  imagenTomada: string = "assets/imgs/calavera.png";
+  registroAnonimo: Boolean;
+  tomoFoto: Boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    console.log("ENCUESTA E-S");
+
+  public formGroup: FormGroup;
+
+  titulo: string = "";
+
+  tipoFoto: string;
+
+  mostrar: boolean = false;
+
+  public rate: any;
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public formBuilder: FormBuilder,
+    private camera: Camera,
+    public viewCtrl: ViewController,
+    public toastCtrl: ToastController,
+    public loadingCtrl: LoadingController,
+    public menuCtrl: MenuController
+
+  ) {
+    this.menuCtrl.enable(true, 'menu');
+    this.formGroup = this.crearFormulario();
+
+
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad EncuestaEnstradaSalidaPage');
+  tomarFotoCliente() {
+    this.mensaje = "¡Opa! Que bien saliste";
+    this.tomoFoto = true;
   }
+
+  saveData() {
+    console.log(this.formGroup.value);
+  }
+
+  private crearFormulario() {
+    return this.formBuilder.group({
+      name: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', Validators.required],
+      tipodocumento: ['DNI', Validators.required],
+      numerodocumento: ['', Validators.required],
+      valoracion: ['', Validators.required]
+    });
+
+
+  }
+
+
+  mostrarCamara() {
+
+    let popoverOptions: CameraPopoverOptions = {
+      x: 0,
+      y: 0,
+      width: 800,
+      height: 800,
+      arrowDir: this.camera.PopoverArrowDirection.ARROW_DOWN
+    };
+
+    const options: CameraOptions = {
+      quality: 40,
+      targetWidth: 800,
+      targetHeight: 800,
+      allowEdit: false,
+      correctOrientation: true,
+      saveToPhotoAlbum: false,
+      cameraDirection: this.camera.Direction.BACK,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+
+  }
+  onModelChange(e: any) {
+    console.log(e);
+  }
+
+
+
 
 }

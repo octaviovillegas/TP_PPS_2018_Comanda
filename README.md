@@ -1,5 +1,13 @@
 # Restaurant "La comanda"
 ![la comanda](https://i.imgur.com/GzRLCcys.png "la comanda")
+# Nombre del equipo: 
+ - ##Equipo3
+
+# Integrantes:
+ - ### Gustavo Petruzzi [![](/images/github.png)](https://github.com/gustavoPetruzzi  "Github de Gustavo Petruzzi")
+ - ### Sabrina Veiga  [![](/images/github.png)](https://github.com/Sabsolvei  "Github de Sabrina Veiga")
+
+ 
 ## ¿De que se trata el proyecto?
 _El Proyecto Consiste En Desarrollar Una Aplicacion Para La Gestion De Un Restaurant, Enfocada En La Experiencia De Usuario._
 
@@ -9,14 +17,28 @@ _El proyecto se va a estar orientada a dispositivos moviles, desarrollada a trav
 
 ***
 
-# Nombre del equipo: Equipo3
 
-# Integrantes:
- - Gustavo Petruzzi :fa-github: [/gustavoPetruzzi](https://github.com/gustavoPetruzzi/ "/gustavoPetruzzi")
- - Sabrina Veiga :fa-github: [/Sabsolvei](https://github.com/Sabsolvei "/Sabsolvei")
- - Nicolas Saavedra Rojas :fa-github:  [/Nikollaz](https://github.com/Nikollaz "/Nikollaz")
+### Perfiles de usuarios:
+-  #### Dueño
+- #### Supervisor
+- #### Empleado
+ - ##### Bartender
+ - ##### Cocinero
+ - ##### Mestre
+ - ##### Mozo
  
- 
+ # Responsabilidades por Integrante:
+##  - Petruzzi
+##  - Gustavo
+
+
+|   Responsabilidad | Estado   |
+| :------------: | :------------: |
+|  Alta de plato |   |
+|  Alta de bebida |   |
+|  Splash |   |
+|  Login |   |
+
  
  
 https://docs.google.com/spreadsheets/d/1nk1voMplk4VpQ3R_nmYqD3kn0eXW3lus535L_qwjRFU/edit?usp=sharing

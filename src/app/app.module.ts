@@ -1,8 +1,8 @@
-
 import { EncuestaEnstradaSalidaPageModule } from '../pages/encuestasPages/encuesta-enstrada-salida/encuesta-enstrada-salida.module';
 import { EncuestaSupervisorPageModule } from '../pages/encuestasPages/encuesta-supervisor/encuesta-supervisor.module';
 import { AltaPedidoPageModule } from './../pages/pedidosPages/alta-pedido/alta-pedido.module';
 import { AltaClientePageModule } from '../pages/altasPages/alta-cliente/alta-cliente.module';
+import { AltaPlatoPageModule } from '../pages/altasPages/alta-plato/alta-plato.module';
 import { MenuMozoPageModule } from './../pages/menusPages/menu-mozo/menu-mozo.module';
 import { PedidosPageModule } from '../pages/pedidosPages/pedidos/pedidos.module';
 import { MesasPageModule } from './../pages/mesasPages/mesas/mesas.module';
@@ -42,6 +42,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ComponentsModule } from '../components/components.module';
 import { NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AuthProvider } from '../providers/auth/auth';
+import { DatosProvider } from '../providers/datos/datos';
 
 
 export const firebaseConfig = {
@@ -59,7 +60,9 @@ export const firebaseConfig = {
     HomePage,
     LoginPage,
     SplashPage,
-    ModalPage
+    ModalPage,
+    ModalPage,
+    
   ],
   imports: [
     BrowserModule,
@@ -79,7 +82,8 @@ export const firebaseConfig = {
     AltaClientePageModule,
     MenuMozoPageModule,
     PedidosPageModule,
-    MesasPageModule
+    MesasPageModule,
+    AltaPlatoPageModule
 
   ],
   bootstrap: [
@@ -90,9 +94,9 @@ export const firebaseConfig = {
     HomePage,
     LoginPage,
     SplashPage,
-    //LindasPage,
-   // FeasPage,
-    ModalPage
+    ModalPage,
+    ModalPage,
+
   ],
   providers: [
     StatusBar,
@@ -104,7 +108,8 @@ export const firebaseConfig = {
     DeviceMotion,
     NativeAudio,
     ScreenOrientation,
-    AuthProvider
+    AuthProvider,
+    DatosProvider
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

@@ -1,6 +1,6 @@
 import { AuthProvider } from './../../providers/auth/auth';
 import { usuario } from './../../clases/usuario';
-import { MesasPage } from './../mesasPages/mesas/mesas';
+// import { MesasPage } from './../mesasPages/mesas/mesas';
 import { Component } from '@angular/core';
 import { Events } from 'ionic-angular'
 import { NavController, NavParams, Loading, LoadingController, MenuController } from 'ionic-angular';
@@ -41,7 +41,7 @@ export class LoginPage {
   perfil: string;
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
+
   }
 
 
@@ -97,10 +97,11 @@ export class LoginPage {
   async login() {
     //let esperador = this.esperar();
     //esperador.present();
+    let destinoPage:string;
+
 
     await this.auth.loginUser(this.nombre, this.clave)
       .then(result => {
-
 
         //esperador.dismiss();
         //let logueado: Loading = this.esperar(this.creaFondo("Ingreso correcto", "assets/imgs/logueado.png"))
@@ -108,79 +109,16 @@ export class LoginPage {
         logueado.present();
         logueado.onDidDismiss(alto => {
 
-          console.log("Perfil logueado: ");
-          console.log(this.usuario.perfil);
-          this.auth.perfilLogueado = this.usuario.perfil;
+          localStorage.setItem("perfil", this.usuario.perfil);
+          localStorage.setItem("userID", this.usuario.id.toString());
+          destinoPage = this.auth.buscarDestino(this.usuario.perfil);
 
+          this.events1.publish('usuario', this.usuario);
+          this.navCtrl.setRoot(destinoPage, {
+            usuario: this.usuario.usuario,
+            perfil: this.usuario.perfil
+          });
 
-          switch (this.usuario.perfil) {
-            case 'Dueño':
-              this.events1.publish('usuario', this.usuario);
-              localStorage.setItem("perfil", this.usuario.perfil);
-              localStorage.setItem("usuario", this.usuario.usuario);
-              this.navCtrl.setRoot(MesasPage, {
-                usuario: this.usuario.usuario,
-                perfil: this.usuario.perfil
-              });
-              break;
-            case 'Supervisor':
-              this.events1.publish('usuario', this.usuario);
-              localStorage.setItem("perfil", this.usuario.perfil);
-              localStorage.setItem("usuario", this.usuario.usuario);
-              this.navCtrl.setRoot(MesasPage, {
-                usuario: this.usuario.usuario,
-                perfil: this.usuario.perfil
-              });
-              break;
-            case 'Cliente':
-              this.events1.publish('usuario', this.usuario);
-              localStorage.setItem("perfil", this.usuario.perfil);
-              localStorage.setItem("usuario", this.usuario.usuario);
-              this.navCtrl.setRoot(MesasPage, {
-                usuario: this.usuario.usuario,
-                perfil: this.usuario.perfil
-              });
-              break;
-            case 'Cocinero':
-              this.events1.publish('usuario', this.usuario);
-              localStorage.setItem("perfil", this.usuario.perfil);
-              localStorage.setItem("usuario", this.usuario.usuario);
-              this.navCtrl.setRoot(MesasPage, {
-                usuario: this.usuario.usuario,
-                perfil: this.usuario.perfil
-              });
-              break;
-            case 'Bartender':
-              this.events1.publish('usuario', this.usuario);
-
-              localStorage.setItem("perfil", this.usuario.perfil);
-              localStorage.setItem("usuario", this.usuario.usuario);
-
-              this.navCtrl.setRoot(MesasPage, {
-                usuario: this.usuario.usuario,
-                perfil: this.usuario.perfil
-              });
-              break;
-            case 'Mozo':
-              this.events1.publish('usuario', this.usuario);
-              localStorage.setItem("perfil", this.usuario.perfil);
-              localStorage.setItem("usuario", this.usuario.usuario);
-              this.navCtrl.setRoot(MesasPage, {
-                usuario: this.usuario.usuario,
-                perfil: this.usuario.perfil
-              });
-              break;
-            case 'Mestre':
-              this.events1.publish('usuario', this.usuario);
-              localStorage.setItem("perfil", this.usuario.perfil);
-              localStorage.setItem("usuario", this.usuario.usuario);
-              this.navCtrl.setRoot(MesasPage, {
-                usuario: this.usuario.usuario,
-                perfil: this.usuario.perfil
-              });
-            default:
-              break;
-          }
         })
         //logueado.dismiss();
         this.coleccionTipada = this.firestore.collection<usuario>('usuarios');
@@ -197,11 +135,13 @@ export class LoginPage {
         this.listadoUsuarios.map(datos => {
           return datos.filter(usuarios => usuarios.usuario == this.nombre);
         }).subscribe(res => {
-
           this.usuario = res[0];
-          setTimeout(function () {
-            logueado.dismiss();
-          }, 2000);
+
+          logueado.dismiss();
+
+          // setTimeout(function () {
+          //   logueado.dismiss();
+          // }, 2000);
 
         });
       })

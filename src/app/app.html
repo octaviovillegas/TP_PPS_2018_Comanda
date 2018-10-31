@@ -16,12 +16,8 @@
             </ion-toolbar>
         </ion-header>
         <ion-content>
-                <!-- <page-menu-mozo (openPage)="abrirPage($event)"></page-menu-mozo> -->
                 <menu (openPage)="abrirPage($event)" (cerrarSesion)="salir($event)"></menu>
-
         </ion-content>
-       
-        <!-- <page-menu-mozo (openPage)="abrirPage($event)"></page-menu-mozo> -->
     </ion-menu>
 
     <ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

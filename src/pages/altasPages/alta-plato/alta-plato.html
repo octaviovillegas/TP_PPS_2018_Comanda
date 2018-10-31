@@ -63,6 +63,21 @@
     <ion-slide>
       <ion-row>
         <ion-col>
+          <h1> Ingresa una descripcion</h1>
+          <form #descripcionForm="ngForm">
+            <ion-item>
+              <ion-label floating> Descripcion</ion-label>
+              <ion-textarea [(ngModel)]="descripcion" name="Descripcion" class="item" required></ion-textarea>
+            </ion-item>
+            <button class="boton" round color="danger" (click)="anterior()" ion-button>Volver</button>
+            <button class="boton" round color="secondary" (click)="siguiente()" [disabled]="!descripcionForm.form.valid" ion-button>Siguiente</button>
+          </form>
+        </ion-col>
+      </ion-row>
+    </ion-slide>
+    <ion-slide>
+      <ion-row>
+        <ion-col>
           <h1>¡Saca una foto de los ingredientes!</h1>
         </ion-col>
       </ion-row>

@@ -3,6 +3,14 @@ import { IonicPage, NavController, NavParams, Slides, LoadingController} from 'i
 import {Camera, CameraOptions} from '@ionic-native/camera';
 import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { IPlato } from '../../../clases/IPlato';
+import {platosProvider} from '../../../providers/platos/plato';
+//import { Observable } from '@firebase/util';
+import { Subscription } from 'rxjs';
+import {map} from 'rxjs/operators';
+import { Observable } from 'rxjs/Observable';
+
 /**
  * Generated class for the AltaPlatoPage page.
  *
@@ -21,8 +29,9 @@ export class AltaPlatoPage {
   preparacion:string;
   preparado:string;
   nombre:string;
-  importe:string;
+  importe:number;
   categoria:string;
+  descripcion:string;
   image:string;
   task:AngularFireUploadTask;
   rutaArchivo:string;
@@ -32,13 +41,15 @@ export class AltaPlatoPage {
   urlIngredientes:string;
   urlPreparacion:string;
   urlPreparado:string;
+  platos:Observable<IPlato[]>;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams, 
     public camera:Camera,
     public storage: AngularFireStorage,
     private db: AngularFirestore,
-    public loadingCtrl:LoadingController
+    public loadingCtrl:LoadingController,
+    public platoProveedor:platosProvider
     ) 
   {
     this.ingredientes = "assets/imgs/ingredientes.png";
@@ -47,6 +58,8 @@ export class AltaPlatoPage {
     this.fotoIngredientesTomada = false;
     this.fotoPreparacionTomada = false;
     this.fotoPreparadoTomada = false;
+
+    
   }
 
   ionViewDidLoad() {
@@ -108,30 +121,32 @@ export class AltaPlatoPage {
     let loading = this.loadingCtrl.create({
       content: `Cargando plato`
     })
+    let nuevo:IPlato ={
+      nombre: this.nombre,
+      importe: this.importe,
+      categoria: this.categoria,
+      descripcion: this.descripcion,
+      ingredientesFoto: "",
+      preparacionFoto: "",
+      preparadoFoto: "",
+    }
     loading.present();
     this.createUploadTask(this.ingredientes)
     .then(res =>{
       this.storage.ref(this.rutaArchivo).getDownloadURL().toPromise()
       .then(urlImagen =>{
-        this.urlIngredientes = urlImagen;
+        nuevo.ingredientesFoto = urlImagen;
         this.createUploadTask(this.preparacion)
         .then(res =>{
           this.storage.ref(this.rutaArchivo).getDownloadURL().toPromise()
           .then(urlImagen =>{
-            this.urlPreparacion = urlImagen;
+            nuevo.preparacionFoto = urlImagen;
             this.createUploadTask(this.preparado)
             .then(res =>{
               this.storage.ref(this.rutaArchivo).getDownloadURL().toPromise()
               .then(urlImagen =>{
-                this.urlPreparado =urlImagen;
-                this.db.collection('platos').add({
-                  nombre: this.nombre,
-                  importe: this.importe,
-                  categoria: this.categoria,
-                  urlIngredientes: this.urlIngredientes,
-                  urlPreparacion: this.urlPreparacion,
-                  urlPreparado: this.urlPreparado
-                })
+                nuevo.preparadoFoto =urlImagen;
+                this.platoProveedor.guardarPlato(nuevo)
                 .then(res =>{
                   loading.dismiss();
                 })

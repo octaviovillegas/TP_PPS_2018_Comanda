@@ -29,6 +29,7 @@ export class MenuMozoPage {
     // })
     //this.perfil = 'Mozo';
 
+  constructor(public events2: Events, public navCtrl: NavController, public navParams: NavParams) {
     //this.perfil = this.navParams.get('perfil');
     //this.perfil = localStorage.getItem("perfil");
     //this.cargarPages();

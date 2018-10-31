@@ -1,21 +1,15 @@
-<!--
-  Generated template for the AltaPlatoPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-content padding>
   <ion-slides #Slides  (ionSlideDrag)="onIonDrag()">
     <ion-slide>
       <ion-grid>
         <ion-row>
           <ion-col>
-            <h1> ¡Agrega un nuevo plato!</h1>
+            <h1> ¡Agrega un nueva bebida!</h1>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <img class="imgPlato" src="assets/imgs/plato.png"> 
+            <img class="imgPlato" src="assets/imgs/bebida.png"> 
           </ion-col>
         </ion-row>
         <ion-row>
@@ -31,28 +25,19 @@
     <ion-slide>
       <ion-row>
         <ion-col>
-          <h1>Ingresa el nombre del plato</h1>
+          <h1>Ingresa el nombre de la bebida</h1>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col>
           <form  #nombreForm="ngForm">
             <ion-item>
-              <ion-label floating>Nombre del plato</ion-label>
+              <ion-label floating>Nombre de la bebida</ion-label>
               <ion-input type="text" [(ngModel)]="nombre" name="Nombre" class="item" required></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label floating>Importe</ion-label>
                 <ion-input type="number" [(ngModel)]="importe" name="Importe" class="item" required></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label>Categoria</ion-label>
-              <ion-select [(ngModel)]="categoria" name="Categoria" required>
-                <ion-option value="Frio">Frio</ion-option>
-                <ion-option value="Calientes">Caliente</ion-option>
-                <ion-option value="Minuta">Minuta</ion-option>
-                <ion-option value="Postre">Postre</ion-option>
-              </ion-select>
             </ion-item>
             <button class="boton" round color="danger" (click)="anterior()" ion-button>Volver</button>
             <button class="boton" round color="secondary" (click)="siguiente()" [disabled]="!nombreForm.form.valid" ion-button>Siguiente</button>

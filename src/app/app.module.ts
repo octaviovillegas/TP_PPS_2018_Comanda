@@ -4,8 +4,10 @@ import { EncuestaClientePageModule } from '../pages/encuestasPages/encuesta-clie
 import { AltaPedidoPageModule } from './../pages/pedidosPages/alta-pedido/alta-pedido.module';
 import { AltaClientePageModule } from '../pages/altasPages/alta-cliente/alta-cliente.module';
 import { AltaPlatoPageModule } from '../pages/altasPages/alta-plato/alta-plato.module';
+import { AltaBebidaPageModule } from '../pages/altasPages/alta-bebida/alta-bebida.module';
 import { PedidosPageModule } from '../pages/pedidosPages/pedidos/pedidos.module';
 import { MesasPageModule } from './../pages/mesasPages/mesas/mesas.module';
+import { AltaSupervisorPageModule } from './../pages/altasPages/alta-supervisor/alta-supervisor.module';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -43,6 +45,9 @@ import { ComponentsModule } from '../components/components.module';
 import { NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AuthProvider } from '../providers/auth/auth';
 import { DatosEncuestaProvider } from '../providers/datos/datosEncuesta';
+import { platosProvider } from '../providers/platos/plato';
+import { bebidasProvider } from '../providers/bebidas/bebidas';
+import { UsuariosProvider } from '../providers/usuarios/usuarios';
 
 
 export const firebaseConfig = {
@@ -81,7 +86,9 @@ export const firebaseConfig = {
     AltaClientePageModule,
     PedidosPageModule,
     MesasPageModule,
-    AltaPlatoPageModule
+    AltaPlatoPageModule,
+    AltaBebidaPageModule,
+    AltaSupervisorPageModule
 
   ],
   bootstrap: [
@@ -105,7 +112,10 @@ export const firebaseConfig = {
     NativeAudio,
     ScreenOrientation,
     AuthProvider,
-    DatosEncuestaProvider
+    DatosEncuestaProvider,
+    platosProvider,
+    bebidasProvider,
+    UsuariosProvider
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

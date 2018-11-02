@@ -3,6 +3,9 @@ import { IonicPage, NavController, NavParams, Slides, LoadingController} from 'i
 import {Camera, CameraOptions} from '@ionic-native/camera';
 import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { IComestible } from '../../../clases/IComestible';
+import {bebidasProvider} from '../../../providers/bebidas/bebidas';
+import { Observable } from 'rxjs/Observable';
 
 /**
  * Generated class for the AltaBebidaPage page.
@@ -22,8 +25,9 @@ export class AltaBebidaPage {
   preparacion:string;
   preparado:string;
   nombre:string;
-  importe:string;
+  importe:number;
   categoria:string;
+  descripcion:string
   image:string;
   task:AngularFireUploadTask;
   rutaArchivo:string;
@@ -39,7 +43,8 @@ export class AltaBebidaPage {
     public camera:Camera,
     public storage: AngularFireStorage,
     private db: AngularFirestore,
-    public loadingCtrl:LoadingController
+    public loadingCtrl:LoadingController,
+    public bebidaProveedor:bebidasProvider,
     ) 
   {
     this.ingredientes = "assets/imgs/ingredientesBebida.png";
@@ -107,32 +112,33 @@ export class AltaBebidaPage {
 
   public subir(){
     let loading = this.loadingCtrl.create({
-      content: `Cargando Bebida`
+      content: `Cargando Bebida...`
     })
     loading.present();
+    let nuevo:IComestible={
+      nombre: this.nombre,
+      importe: this.importe,
+      descripcion: this.descripcion,
+      ingredientesFoto: "",
+      preparacionFoto: "",
+      preparadoFoto: ""
+    }
     this.createUploadTask(this.ingredientes)
     .then(res =>{
       this.storage.ref(this.rutaArchivo).getDownloadURL().toPromise()
       .then(urlImagen =>{
-        this.urlIngredientes = urlImagen;
+        nuevo.ingredientesFoto = urlImagen;
         this.createUploadTask(this.preparacion)
         .then(res =>{
           this.storage.ref(this.rutaArchivo).getDownloadURL().toPromise()
           .then(urlImagen =>{
-            this.urlPreparacion = urlImagen;
+            this.preparacion = urlImagen;
             this.createUploadTask(this.preparado)
             .then(res =>{
               this.storage.ref(this.rutaArchivo).getDownloadURL().toPromise()
               .then(urlImagen =>{
-                this.urlPreparado =urlImagen;
-                this.db.collection('bebidas').add({
-                  nombre: this.nombre,
-                  importe: this.importe,
-                  categoria: this.categoria,
-                  urlIngredientes: this.urlIngredientes,
-                  urlPreparacion: this.urlPreparacion,
-                  urlPreparado: this.urlPreparado
-                })
+                this.preparado =urlImagen;
+                this.bebidaProveedor.guardarBebida(nuevo)
                 .then(res =>{
                   loading.dismiss();
                 })

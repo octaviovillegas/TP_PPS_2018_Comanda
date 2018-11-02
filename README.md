@@ -44,10 +44,9 @@ _El proyecto se va a estar orientada a dispositivos moviles, desarrollada a trav
 ##  - Sabrina
 |   Responsabilidad | Estado   |
 | :------------: | :------------: |
-|  Menu Principal| ![amarillo](/images/amarillo.png)  |
+|  Menu Principal| ![verde](/images/verde.png)  |
 |  Alta de Cliente |![amarillo](/images/amarillo.png)   |
-|  Encuesta entrada-salida | ![amarillo](/images/amarillo.png)   |
-|  Encuesta Supervisor |  ![amarillo](/images/amarillo.png)   |
+|  Encuesta entrada-salida | ![verde](/images/verde.png)   |
 |  Encuesta Supervisor |  ![amarillo](/images/amarillo.png)   |
 |  Gestion de mesas |  ![amarillo](/images/amarillo.png)   |
 |  Alta de pedido |  ![amarillo](/images/amarillo.png)   |

@@ -98,7 +98,7 @@ export class AltaSupervisorPage {
 
   public createUploadTask(file: string) {
 
-    this.rutaArchivo = `platos/${this.supervisorForm.controls['email'].value}_${ new Date().getTime() }.jpg`;
+    this.rutaArchivo = `usuarios/${this.supervisorForm.controls['email'].value}_${ new Date().getTime() }.jpg`;
     this.image = 'data:image/jpg;base64,' + file;
     
     this.task = this.storage.ref(this.rutaArchivo).putString(file, 'data_url');
@@ -108,7 +108,7 @@ export class AltaSupervisorPage {
 
   public subir(){
     let cargandoFoto = this.loadingCtrl.create({
-      content: 'Cargando foto...'
+      content: 'Cargando...'
     });
     let nuevo:Iusuario = {
       nombre: this.supervisorForm.controls['nombre'].value,
@@ -120,47 +120,56 @@ export class AltaSupervisorPage {
       cuil: this.supervisorForm.controls['cuil'].value,
     }
     cargandoFoto.present();
-    this.createUploadTask(this.fotoNuevo)
-    .then(res =>{
-      
-      this.storage.ref(this.rutaArchivo).getDownloadURL().toPromise()
-      .then(urlImagen =>{
-        nuevo.foto = urlImagen;
-        cargandoFoto.dismiss();
-        let cargandoDatos = this.loadingCtrl.create({
-          content: 'Cargando cuenta...'
-        })
-        cargandoDatos.present();
-        this.angAut.auth.createUserWithEmailAndPassword(nuevo.email, nuevo.dni.toString())
-        .then(result =>{
-          cargandoDatos.dismiss();
+    this.angAut.auth.createUserWithEmailAndPassword(nuevo.email, nuevo.dni.toString())
+    .then(result =>{
+      this.createUploadTask(this.fotoNuevo)
+      .then(result =>{
+        this.storage.ref(this.rutaArchivo).getDownloadURL().toPromise()
+        .then(urlImagen =>{
+          nuevo.foto = urlImagen;
           this.usuariosProveedor.guardarSupervisor(nuevo)
           .then(result =>{
+            cargandoFoto.dismiss();
+            let usuarioGuardado = this.esperar(this.creaFondo("Se ha creado con exito!", "assets/imgs/logueado.png"))
+            usuarioGuardado.present();
+            setTimeout(() => {
+              usuarioGuardado.dismiss();
+            }, 7000);
+          })
+          .catch(error =>{
+            cargandoFoto.dismiss();
           })
         })
         .catch(error =>{
-          cargandoDatos.dismiss();
-          let errorAuth = this.esperar(this.creaFondo(error.code, 'assets/imgs/error.png'))
-          errorAuth.present();
+          cargandoFoto.dismiss();
+          let errorLoading = this.esperar(this.creaFondo("Ha ocurrido un error subiendo la foto","assets/imgs/error.png"));
+          errorLoading.present();
           setTimeout(() => {
-            errorAuth.dismiss();
-          }, 7000);
+            errorLoading.dismiss();
+          }, 5000);
+          
         })
-      })
-      .catch(error =>{
-        cargandoFoto.dismiss();
-        let errorFoto = this.esperar(this.creaFondo('error cargando foto', 'assets/imgs/error.png'));
-        errorFoto.present();
-        setTimeout(() => {
-          errorFoto.dismiss();
-        }, 3000);
       })
     })
     .catch(error =>{
-      console.log(error);
+      cargandoFoto.dismiss();
+      let errorLoading = this.esperar(this.creaFondo(this.usuariosProveedor.errorAuth(error), "assets/imgs/error.png"));
+      errorLoading.present();
+      setTimeout(() => {
+        errorLoading.dismiss();
+      }, 4000);
     })
-    
   }
+
+
+
+
+
+
+
+
+
+
   creaFondo(mensaje, imagen) {
     let fondo = `
           <div>

@@ -29,8 +29,8 @@ export class UsuariosProvider {
   }
 
   public guardarSupervisor(guardado: Iusuario){
-    return this.afDB.list('usuarios')
-           .push({
+    return this.afDB.object('usuarios')
+           .set({
              apellido: guardado.apellido,
              cuil: guardado.cuil,
              dni: guardado.dni,
@@ -39,6 +39,26 @@ export class UsuariosProvider {
              nombre: guardado.nombre,
              perfil: guardado.perfil
            });
+  }
+
+  public errorAuth(error:any){
+    let errorCode = error.code;
+    let loadingError;
+    if (errorCode === 'auth/invalid-email') {
+      return "Mail invalido";
+    }
+    else if (errorCode === 'auth/email-already-in-use') {
+      return "El mail ya se encuentra utilizado";
+    }
+    else if(errorCode === 'auth/operation-not-allowed'){
+      return "el usuario no fue encontrado"
+    }
+    else if(errorCode === 'auth/weak-password'){
+      return "La contraseña no es lo suficientemente segura"
+    }
+    else {
+      return "Ha ocurrido un error";
+    }
   }
 
 }

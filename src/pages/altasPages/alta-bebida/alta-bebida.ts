@@ -47,7 +47,7 @@ export class AltaBebidaPage {
     public bebidaProveedor:bebidasProvider,
     ) 
   {
-    this.ingredientes = "assets/imgs/ingredientesBebida.png";
+    this.ingredientes = "assets/imgs/ingredientesBebida.jpg";
     this.preparacion = "assets/imgs/preparacion.png";
     this.preparado = "assets/imgs/preparadoBebida.png";
     this.fotoIngredientesTomada = false;

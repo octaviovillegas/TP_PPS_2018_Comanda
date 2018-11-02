@@ -6,6 +6,7 @@ import { AltaPlatoPageModule } from '../pages/altasPages/alta-plato/alta-plato.m
 import { AltaBebidaPageModule } from '../pages/altasPages/alta-bebida/alta-bebida.module';
 import { PedidosPageModule } from '../pages/pedidosPages/pedidos/pedidos.module';
 import { MesasPageModule } from './../pages/mesasPages/mesas/mesas.module';
+import { AltaSupervisorPageModule } from './../pages/altasPages/alta-supervisor/alta-supervisor.module';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -45,6 +46,7 @@ import { AuthProvider } from '../providers/auth/auth';
 import { DatosProvider } from '../providers/datos/datos';
 import { platosProvider } from '../providers/platos/plato';
 import { bebidasProvider } from '../providers/bebidas/bebidas';
+import { UsuariosProvider } from '../providers/usuarios/usuarios';
 
 
 export const firebaseConfig = {
@@ -83,7 +85,8 @@ export const firebaseConfig = {
     PedidosPageModule,
     MesasPageModule,
     AltaPlatoPageModule,
-    AltaBebidaPageModule
+    AltaBebidaPageModule,
+    AltaSupervisorPageModule
 
   ],
   bootstrap: [
@@ -109,7 +112,8 @@ export const firebaseConfig = {
     AuthProvider,
     DatosProvider,
     platosProvider,
-    bebidasProvider
+    bebidasProvider,
+    UsuariosProvider
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

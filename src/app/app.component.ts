@@ -55,10 +55,10 @@ export class MyApp {
     this.auth.Session.subscribe(_session => {
 
       if (!_session) { //si no esta logueado
-        this.rootPage = AltaSupervisorPage;
+        this.rootPage = LoginPage;
       }else {
         if(localStorage.getItem("perfil") == null){
-          this.rootPage = AltaSupervisorPage;
+          this.rootPage = LoginPage;
         }else{
           this.rootPage = this.auth.buscarDestino(localStorage.getItem("perfil"));
         }

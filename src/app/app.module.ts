@@ -7,6 +7,7 @@ import { AltaBebidaPageModule } from '../pages/altasPages/alta-bebida/alta-bebid
 import { PedidosPageModule } from '../pages/pedidosPages/pedidos/pedidos.module';
 import { MesasPageModule } from './../pages/mesasPages/mesas/mesas.module';
 import { AltaSupervisorPageModule } from './../pages/altasPages/alta-supervisor/alta-supervisor.module';
+import { AltaDueñoPageModule } from './../pages/altasPages/alta-dueño/alta-dueño.module';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -86,7 +87,8 @@ export const firebaseConfig = {
     MesasPageModule,
     AltaPlatoPageModule,
     AltaBebidaPageModule,
-    AltaSupervisorPageModule
+    AltaSupervisorPageModule,
+    AltaDueñoPageModule
 
   ],
   bootstrap: [

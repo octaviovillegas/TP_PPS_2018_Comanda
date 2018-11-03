@@ -4,19 +4,19 @@
   </ion-navbar>
   <ion-toolbar no-border-top>
     <ion-segment [(ngModel)]="tipomenu">
-      <ion-segment-button value="minutas">
+      <ion-segment-button value="Minutas" (click)="traerMenuPorCategoria('Minutas')">
         Minutas
       </ion-segment-button>
-      <ion-segment-button value="frios">
+      <ion-segment-button value="Frios" (click)="traerMenuPorCategoria('Frios')">
         Fríos
       </ion-segment-button>
-      <ion-segment-button value="calientes">
+      <ion-segment-button value="Calientes" (click)="traerMenuPorCategoria('Calientes')">
         Calientes
       </ion-segment-button>
-      <ion-segment-button value="postres">
+      <ion-segment-button value="Postres" (click)="traerMenuPorCategoria('Postres')">
         Postres
       </ion-segment-button>
-      <ion-segment-button value="bebidas">
+      <ion-segment-button value="Bebidas" (click)="traerMenuBebidas()">
         Bebidas
       </ion-segment-button>
     </ion-segment>
@@ -29,65 +29,138 @@
 
   <ion-searchbar (ionInput)="getItems($event)" [placeholder]="'Buscar por nombre'"></ion-searchbar>
 
-  <ion-grid *ngSwitchCase="'minutas'">
-    <!-- <ion-row class='itemsMenu'>
-      <ion-col col-7>
-        NOMBRE
-      </ion-col>
-      <ion-col col-1 text-center>
-        -
-      </ion-col>
-      <ion-col col-2 text-center>
-        C
-      </ion-col>
-      <ion-col col-2 text-center>
-        +
-      </ion-col>
-    </ion-row> -->
+  <ion-grid *ngSwitchCase="'Minutas'">
 
-    <ion-row align-items-center *ngFor="let item of menu" class='itemsMenu'>
-      <ion-col col-7>
-        {{item.nombre| uppercase}}
-      </ion-col>
-
-      <ion-col col-1 text-center>
-        <div>
-          <ion-icon name="remove-circle" isActive="false" color="dark" (click)="seleccionarPedido(item, -1)"></ion-icon>
-        </div>
-      </ion-col>
-
-      <ion-col col-2 text-center>
-        <div *ngFor="let p of pedido">
-          <div *ngIf="pedido && item.id == p.id">{{ p.cantidad }}</div>
-        </div>
-      </ion-col>
-
-      <ion-col col-2 text-center class='addItem'>
-        <div>
-          <ion-icon name="add-circle" color="primary" (click)="seleccionarPedido(item, 1)"></ion-icon>
-        </div>
-      </ion-col>
-
-    </ion-row>
+    <div *ngIf="lMinutas">
+      <ion-row align-items-center *ngFor="let item of lMinutas" class='itemsMenu'>
+        <ion-col col-2>
+          {{item.tiempoEstimado}} m
+        </ion-col>
+        <ion-col col-7 (click)="mostrarImagenes()">
+          {{item.nombre| uppercase}}
+        </ion-col>
+        <ion-col col-1 text-center>
+          <div>
+            <ion-icon name="remove-circle" isActive="false" color="dark" (click)="restarCantidad(item, -1)"></ion-icon>
+          </div>
+        </ion-col>
+        <ion-col col-1 text-center>
+          {{item.cantidad}}
+        </ion-col>
+        <ion-col col-1 text-center class='addItem'>
+          <div>
+            <ion-icon name="add-circle" color="primary" (click)="sumarCantidad(item, 1)"></ion-icon>
+          </div>
+        </ion-col>
+      </ion-row>
+    </div>
   </ion-grid>
 
 
-  <ion-grid *ngSwitchCase="'frios'">
-
+  <ion-grid *ngSwitchCase="'Frios'">
+    <div *ngIf="lFrios">
+      <ion-row align-items-center *ngFor="let item of lFrios" class='itemsMenu'>
+        <ion-col col-2>
+          {{item.tiempoEstimado}}
+        </ion-col>
+        <ion-col col-7 (click)="mostrarImagenes()">
+          {{item.nombre| uppercase}}
+        </ion-col>
+        <ion-col col-1 text-center>
+          <div>
+            <ion-icon name="remove-circle" isActive="false" color="dark" (click)="restarCantidad(item, -1)"></ion-icon>
+          </div>
+        </ion-col>
+        <ion-col col-1 text-center>
+          {{item.cantidad}}
+        </ion-col>
+        <ion-col col-1 text-center class='addItem'>
+          <div>
+            <ion-icon name="add-circle" color="primary" (click)="sumarCantidad(item, 1)"></ion-icon>
+          </div>
+        </ion-col>
+      </ion-row>
+    </div>
   </ion-grid>
 
-  <ion-grid *ngSwitchCase="'calientes'">
-
+  <ion-grid *ngSwitchCase="'Calientes'">
+    <div *ngIf="lCalientes">
+      <ion-row align-items-center *ngFor="let item of lCalientes" class='itemsMenu'>
+        <ion-col col-2>
+          {{item.tiempoEstimado}}
+        </ion-col>
+        <ion-col col-7 (click)="mostrarImagenes()">
+          {{item.nombre| uppercase}}
+        </ion-col>
+        <ion-col col-1 text-center>
+          <div>
+            <ion-icon name="remove-circle" isActive="false" color="dark" (click)="restarCantidad(item, -1)"></ion-icon>
+          </div>
+        </ion-col>
+        <ion-col col-1 text-center>
+          {{item.cantidad}}
+        </ion-col>
+        <ion-col col-1 text-center class='addItem'>
+          <div>
+            <ion-icon name="add-circle" color="primary" (click)="sumarCantidad(item, 1)"></ion-icon>
+          </div>
+        </ion-col>
+      </ion-row>
+    </div>
   </ion-grid>
 
 
-  <ion-grid *ngSwitchCase="'postres'">
-
+  <ion-grid *ngSwitchCase="'Postres'">
+    <div *ngIf="lPostres">
+      <ion-row align-items-center *ngFor="let item of lPostres" class='itemsMenu'>
+        <ion-col col-2>
+          {{item.tiempoEstimado}}
+        </ion-col>
+        <ion-col col-7 (click)="mostrarImagenes()">
+          {{item.nombre| uppercase}}
+        </ion-col>
+        <ion-col col-1 text-center>
+          <div>
+            <ion-icon name="remove-circle" isActive="false" color="dark" (click)="restarCantidad(item, -1)"></ion-icon>
+          </div>
+        </ion-col>
+        <ion-col col-1 text-center>
+          {{item.cantidad}}
+        </ion-col>
+        <ion-col col-1 text-center class='addItem'>
+          <div>
+            <ion-icon name="add-circle" color="primary" (click)="sumarCantidad(item, 1)"></ion-icon>
+          </div>
+        </ion-col>
+      </ion-row>
+    </div>
   </ion-grid>
 
 
-  <ion-grid *ngSwitchCase="'bebidas'">
-
+  <ion-grid *ngSwitchCase="'Bebidas'">
+    <div *ngIf="lBebidas">
+      <ion-row align-items-center *ngFor="let item of lBebidas" class='itemsMenu'>
+        <ion-col col-2>
+          {{item.tiempoEstimado}}
+        </ion-col>
+        <ion-col col-7 (click)="mostrarImagenes()">
+          {{item.nombre| uppercase}}
+        </ion-col>
+        <ion-col col-1 text-center>
+          <div>
+            <ion-icon name="remove-circle" isActive="false" color="dark" (click)="restarCantidad(item, -1)"></ion-icon>
+          </div>
+        </ion-col>
+        <ion-col col-1 text-center>
+          {{item.cantidad}}
+        </ion-col>
+        <ion-col col-1 text-center class='addItem'>
+          <div>
+            <ion-icon name="add-circle" color="primary" (click)="sumarCantidad(item, 1)"></ion-icon>
+          </div>
+        </ion-col>
+      </ion-row>
+    </div>
   </ion-grid>
 
 

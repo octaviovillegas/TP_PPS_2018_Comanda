@@ -15,7 +15,7 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <img class="imgPlato" src="assets/imgs/plato.png"> 
+            <img class="imgPlato" src="assets/imgs/plato.png">
           </ion-col>
         </ion-row>
         <ion-row>
@@ -36,26 +36,36 @@
       </ion-row>
       <ion-row>
         <ion-col>
-          <form  #nombreForm="ngForm">
+          <form #nombreForm="ngForm">
+
+            <ion-item>
+              <ion-label>Categoria</ion-label>
+              <ion-select [(ngModel)]="categoria" name="Categoria" required>
+                <ion-option value="Frios">Frios</ion-option>
+                <ion-option value="Calientes">Caliente</ion-option>
+                <ion-option value="Minutas">Minutas</ion-option>
+                <ion-option value="Postres">Postres</ion-option>
+              </ion-select>
+            </ion-item>
+
             <ion-item>
               <ion-label floating>Nombre del plato</ion-label>
               <ion-input type="text" [(ngModel)]="nombre" name="Nombre" class="item" required></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label floating>Importe</ion-label>
-                <ion-input type="number" [(ngModel)]="importe" name="Importe" class="item" required></ion-input>
+              <ion-label floating>Importe</ion-label>
+              <ion-input type="number" [(ngModel)]="importe" name="Importe" class="item" required></ion-input>
             </ion-item>
+
             <ion-item>
-              <ion-label>Categoria</ion-label>
-              <ion-select [(ngModel)]="categoria" name="Categoria" required>
-                <ion-option value="Frio">Frio</ion-option>
-                <ion-option value="Calientes">Caliente</ion-option>
-                <ion-option value="Minuta">Minuta</ion-option>
-                <ion-option value="Postre">Postre</ion-option>
-              </ion-select>
+              <ion-label floating>Tiempo estimado (minutos)</ion-label>
+              <ion-input type="number" [(ngModel)]="tiempoEstimado" name="tiempoEstimado" class="item" required></ion-input>
             </ion-item>
+
+
             <button class="boton" round color="danger" (click)="anterior()" ion-button>Volver</button>
-            <button class="boton" round color="secondary" (click)="siguiente()" [disabled]="!nombreForm.form.valid" ion-button>Siguiente</button>
+            <button class="boton" round color="secondary" (click)="siguiente()" [disabled]="!nombreForm.form.valid"
+              ion-button>Siguiente</button>
           </form>
         </ion-col>
       </ion-row>
@@ -70,7 +80,8 @@
               <ion-textarea [(ngModel)]="descripcion" name="Descripcion" class="item" required></ion-textarea>
             </ion-item>
             <button class="boton" round color="danger" (click)="anterior()" ion-button>Volver</button>
-            <button class="boton" round color="secondary" (click)="siguiente()" [disabled]="!descripcionForm.form.valid" ion-button>Siguiente</button>
+            <button class="boton" round color="secondary" (click)="siguiente()" [disabled]="!descripcionForm.form.valid"
+              ion-button>Siguiente</button>
           </form>
         </ion-col>
       </ion-row>
@@ -89,9 +100,12 @@
       <ion-row>
 
         <ion-col>
-          <button class="" round large block color="green" (click)="captureImage('ingredientes')" ion-button> <ion-icon name="camera"></ion-icon>  Tomar Foto </button>
+          <button class="" round large block color="green" (click)="captureImage('ingredientes')" ion-button>
+            <ion-icon name="camera"></ion-icon> Tomar Foto
+          </button>
           <button class="boton" round color="danger" (click)="anterior()" ion-button>Volver</button>
-          <button class="boton" round color="secondary" (click)="siguiente()" [disabled]="!fotoIngredientesTomada" ion-button>Siguiente</button>
+          <button class="boton" round color="secondary" (click)="siguiente()" [disabled]="!fotoIngredientesTomada"
+            ion-button>Siguiente</button>
         </ion-col>
       </ion-row>
 
@@ -109,9 +123,12 @@
       </ion-row>
       <ion-row>
         <ion-col>
-          <button class="" round large block color="green" (click)="captureImage('preparacion')" ion-button> <ion-icon name="camera"></ion-icon>  Tomar Foto </button>
+          <button class="" round large block color="green" (click)="captureImage('preparacion')" ion-button>
+            <ion-icon name="camera"></ion-icon> Tomar Foto
+          </button>
           <button class="boton" round color="danger" (click)="anterior()" ion-button>Volver</button>
-          <button class="boton" round color="secondary" (click)="siguiente()" [disabled]="!fotoPreparacionTomada" ion-button>Siguiente</button>
+          <button class="boton" round color="secondary" (click)="siguiente()" [disabled]="!fotoPreparacionTomada"
+            ion-button>Siguiente</button>
         </ion-col>
       </ion-row>
     </ion-slide>
@@ -128,11 +145,13 @@
       </ion-row>
       <ion-row>
         <ion-col>
-          <button class="" round large block color="green" (click)="captureImage('preparado')" ion-button> <ion-icon name="camera"></ion-icon>  Tomar Foto </button>
+          <button class="" round large block color="green" (click)="captureImage('preparado')" ion-button>
+            <ion-icon name="camera"></ion-icon> Tomar Foto
+          </button>
           <button class="boton" round color="danger" (click)="anterior()" ion-button>Volver</button>
           <button class="boton" round color="secondary" (click)="subir()" [disabled]="!fotoPreparadoTomada" ion-button>Subir</button>
         </ion-col>
-        </ion-row>
+      </ion-row>
     </ion-slide>
   </ion-slides>
 

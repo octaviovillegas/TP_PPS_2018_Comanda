@@ -1,20 +1,20 @@
 <ion-content padding>
-  <ion-slides #Slides style="height: auto"  (ionSlideDrag)="onIonDrag()">
+  <ion-slides #Slides style="height: auto" (ionSlideDrag)="onIonDrag()">
     <ion-slide>
       <ion-grid>
         <ion-row>
           <ion-col>
-            <h1> ¡Agrega un nueva bebida!</h1>
+            <h1> ¡Agrega una nueva bebida!</h1>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <img class="imgPlato" src="assets/imgs/bebida.png"> 
+            <img class="imgPlato" src="assets/imgs/bebida.png">
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <button class="boton" round color="danger" (click)="volver()" ion-button>Volver</button>
+            <button class="boton" round color="danger" (click)="inicio()" ion-button>Volver</button>
           </ion-col>
           <ion-col>
             <button class="boton" round color="secondary" (click)="siguiente()" ion-button>Agregar</button>
@@ -30,17 +30,26 @@
       </ion-row>
       <ion-row>
         <ion-col>
-          <form  #nombreForm="ngForm">
+          <form #nombreForm="ngForm">
+
             <ion-item>
               <ion-label floating>Nombre de la bebida</ion-label>
               <ion-input type="text" [(ngModel)]="nombre" name="Nombre" class="item" required></ion-input>
             </ion-item>
+
             <ion-item>
-                <ion-label floating>Importe</ion-label>
-                <ion-input type="number" [(ngModel)]="importe" name="Importe" class="item" required></ion-input>
+              <ion-label floating>Importe</ion-label>
+              <ion-input type="number" [(ngModel)]="importe" name="Importe" class="item" required></ion-input>
             </ion-item>
+
+            <ion-item>
+              <ion-label floating>Tiempo estimado (minutos)</ion-label>
+              <ion-input type="number" [(ngModel)]="tiempoEstimado" name="tiempoEstimado" class="item" required></ion-input>
+            </ion-item>
+
             <button class="boton" round color="danger" (click)="anterior()" ion-button>Volver</button>
-            <button class="boton" round color="secondary" (click)="siguiente()" [disabled]="!nombreForm.form.valid" ion-button>Siguiente</button>
+            <button class="boton" round color="secondary" (click)="siguiente()" [disabled]="!nombreForm.form.valid"
+              ion-button>Siguiente</button>
           </form>
         </ion-col>
       </ion-row>
@@ -55,7 +64,8 @@
               <ion-textarea [(ngModel)]="descripcion" name="Descripcion" class="item" required></ion-textarea>
             </ion-item>
             <button class="boton" round color="danger" (click)="anterior()" ion-button>Volver</button>
-            <button class="boton" round color="secondary" (click)="siguiente()" [disabled]="!descripcionForm.form.valid" ion-button>Siguiente</button>
+            <button class="boton" round color="secondary" (click)="siguiente()" [disabled]="!descripcionForm.form.valid"
+              ion-button>Siguiente</button>
           </form>
         </ion-col>
       </ion-row>
@@ -74,9 +84,12 @@
       <ion-row>
 
         <ion-col>
-          <button class="" round large block color="green" (click)="captureImage('ingredientes')" ion-button> <ion-icon name="camera"></ion-icon>  Tomar Foto </button>
+          <button class="" round large block color="green" (click)="captureImage('ingredientes')" ion-button>
+            <ion-icon name="camera"></ion-icon> Tomar Foto
+          </button>
           <button class="boton" round color="danger" (click)="anterior()" ion-button>Volver</button>
-          <button class="boton" round color="secondary" (click)="siguiente()" [disabled]="!fotoIngredientesTomada" ion-button>Siguiente</button>
+          <button class="boton" round color="secondary" (click)="siguiente()" [disabled]="!fotoIngredientesTomada"
+            ion-button>Siguiente</button>
         </ion-col>
       </ion-row>
 
@@ -94,16 +107,19 @@
       </ion-row>
       <ion-row>
         <ion-col>
-          <button class="" round large block color="green" (click)="captureImage('preparacion')" ion-button> <ion-icon name="camera"></ion-icon>  Tomar Foto </button>
+          <button class="" round large block color="green" (click)="captureImage('preparacion')" ion-button>
+            <ion-icon name="camera"></ion-icon> Tomar Foto
+          </button>
           <button class="boton" round color="danger" (click)="anterior()" ion-button>Volver</button>
-          <button class="boton" round color="secondary" (click)="siguiente()" [disabled]="!fotoPreparacionTomada" ion-button>Siguiente</button>
+          <button class="boton" round color="secondary" (click)="siguiente()" [disabled]="!fotoPreparacionTomada"
+            ion-button>Siguiente</button>
         </ion-col>
       </ion-row>
     </ion-slide>
     <ion-slide>
       <ion-row>
         <ion-col>
-          <h1>¡Saca una foto del plato ya preparado!</h1>
+          <h1>¡Saca una foto de la bebida preparada!</h1>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -113,11 +129,13 @@
       </ion-row>
       <ion-row>
         <ion-col>
-          <button class="" round large block color="green" (click)="captureImage('preparado')" ion-button> <ion-icon name="camera"></ion-icon>  Tomar Foto </button>
+          <button class="" round large block color="green" (click)="captureImage('preparado')" ion-button>
+            <ion-icon name="camera"></ion-icon> Tomar Foto
+          </button>
           <button class="boton" round color="danger" (click)="anterior()" ion-button>Volver</button>
           <button class="boton" round color="secondary" (click)="subir()" [disabled]="!fotoPreparadoTomada" ion-button>Subir</button>
         </ion-col>
-        </ion-row>
+      </ion-row>
     </ion-slide>
   </ion-slides>
 

@@ -9,6 +9,7 @@ import { PedidosPageModule } from '../pages/pedidosPages/pedidos/pedidos.module'
 import { MesasPageModule } from './../pages/mesasPages/mesas/mesas.module';
 import { AltaSupervisorPageModule } from './../pages/altasPages/alta-supervisor/alta-supervisor.module';
 import { AltaDueñoPageModule } from './../pages/altasPages/alta-dueño/alta-dueño.module';
+import { VerImagenPedidoPageModule } from '../pages/pedidosPages/ver-imagen-pedido/ver-imagen-pedido.module';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -51,6 +52,7 @@ import { bebidasProvider } from '../providers/bebidas/bebidas';
 import { UsuariosProvider } from '../providers/usuarios/usuarios';
 
 
+
 export const firebaseConfig = {
   apiKey: "AIzaSyDsDUoXfo8kvkYOm9Q8DzWHF82QVGltwo4",
   authDomain: "equipo3-74752.firebaseapp.com",
@@ -90,7 +92,8 @@ export const firebaseConfig = {
     AltaPlatoPageModule,
     AltaBebidaPageModule,
     AltaSupervisorPageModule,
-    AltaDueñoPageModule
+    AltaDueñoPageModule,
+    VerImagenPedidoPageModule
 
   ],
   bootstrap: [

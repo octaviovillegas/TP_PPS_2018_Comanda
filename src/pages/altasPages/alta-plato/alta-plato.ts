@@ -1,15 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides, LoadingController, Loading} from 'ionic-angular';
-import {Camera, CameraOptions} from '@ionic-native/camera';
+import { IonicPage, NavController, NavParams, Slides, LoadingController, Loading } from 'ionic-angular';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { IPlato } from '../../../clases/IPlato';
-import {platosProvider} from '../../../providers/platos/plato';
+import { platosProvider } from '../../../providers/platos/plato';
 //import { Observable } from '@firebase/util';
-import {MesasPage} from '../../mesasPages/mesas/mesas'
+import { MesasPage } from '../../mesasPages/mesas/mesas'
 import { Subscription } from 'rxjs';
-import {map} from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 
 /**
@@ -26,33 +26,34 @@ import { Observable } from 'rxjs/Observable';
 })
 export class AltaPlatoPage {
   @ViewChild(Slides) slides: Slides;
-  ingredientes:string;
-  preparacion:string;
-  preparado:string;
-  nombre:string;
-  importe:number;
-  categoria:string;
-  descripcion:string;
-  image:string;
-  task:AngularFireUploadTask;
-  rutaArchivo:string;
-  fotoIngredientesTomada:boolean;
-  fotoPreparacionTomada:boolean;
-  fotoPreparadoTomada:boolean;
-  urlIngredientes:string;
-  urlPreparacion:string;
-  urlPreparado:string;
-  platos:Observable<IPlato[]>;
+  ingredientes: string;
+  preparacion: string;
+  preparado: string;
+  nombre: string;
+  importe: number;
+  tiempoEstimado: number;
+  idPlato: number;
+  categoria: string;
+  descripcion: string;
+  image: string;
+  task: AngularFireUploadTask;
+  rutaArchivo: string;
+  fotoIngredientesTomada: boolean;
+  fotoPreparacionTomada: boolean;
+  fotoPreparadoTomada: boolean;
+  urlIngredientes: string;
+  urlPreparacion: string;
+  urlPreparado: string;
+  platos: Observable<IPlato[]>;
   constructor(
-    public navCtrl: NavController, 
-    public navParams: NavParams, 
-    public camera:Camera,
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public camera: Camera,
     public storage: AngularFireStorage,
     private db: AngularFirestore,
-    public loadingCtrl:LoadingController,
-    public platoProveedor:platosProvider
-    ) 
-  {
+    public loadingCtrl: LoadingController,
+    public _platosProvider: platosProvider
+  ) {
     this.ingredientes = "assets/imgs/ingredientes.png";
     this.preparacion = "assets/imgs/cocinando.png";
     this.preparado = "assets/imgs/preparado.png";
@@ -60,30 +61,30 @@ export class AltaPlatoPage {
     this.fotoPreparacionTomada = false;
     this.fotoPreparadoTomada = false;
 
-    
   }
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AltaPlatoPage');
   }
 
-  public inicio(){
+  public inicio() {
     this.navCtrl.setRoot(MesasPage) // Cambiar por menu principal de cocinero
   }
-  public siguiente(){
+  public siguiente() {
     this.slides.lockSwipes(false);
     this.slides.slideNext();
   }
-  onIonDrag(event){
+  onIonDrag(event) {
     this.slides.lockSwipes(true);
   }
 
-  public anterior(){
+  public anterior() {
     this.slides.lockSwipes(false);
     this.slides.slidePrev();
   }
 
-  public captureImage(cual:string){
+  public captureImage(cual: string) {
     const options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -97,23 +98,23 @@ export class AltaPlatoPage {
     switch (cual) {
       case 'ingredientes':
         this.camera.getPicture(options)
-        .then(data =>{
-          this.ingredientes = 'data:image/jpg;base64,' + data;
-        })
+          .then(data => {
+            this.ingredientes = 'data:image/jpg;base64,' + data;
+          })
         this.fotoIngredientesTomada = true;
         break;
       case 'preparacion':
         this.camera.getPicture(options)
-        .then(data =>{
-          this.preparacion = 'data:image/jpg;base64,' + data;
-        })
+          .then(data => {
+            this.preparacion = 'data:image/jpg;base64,' + data;
+          })
         this.fotoPreparacionTomada = true;
         break;
       case 'preparado':
         this.camera.getPicture(options)
-        .then(data =>{
-          this.preparado = 'data:image/jpg;base64,' + data;
-        })
+          .then(data => {
+            this.preparado = 'data:image/jpg;base64,' + data;
+          })
         this.fotoPreparadoTomada = true;
         break;
       default:
@@ -121,12 +122,16 @@ export class AltaPlatoPage {
     }
   }
 
-  public subir(){
+  public subir() {
+
     let loading = this.loadingCtrl.create({
       content: `Cargando plato`
     })
-    let nuevo:IPlato ={
+    this.idPlato = new Date().valueOf();
+    let nuevo: IPlato = {
       nombre: this.nombre,
+      id: this.idPlato,
+      tiempoEstimado: this.tiempoEstimado,
       importe: this.importe,
       categoria: this.categoria,
       descripcion: this.descripcion,
@@ -136,46 +141,47 @@ export class AltaPlatoPage {
     }
     loading.present();
     this.createUploadTask(this.ingredientes)
-    .then(res =>{
-      this.storage.ref(this.rutaArchivo).getDownloadURL().toPromise()
-      .then(urlImagen =>{
-        nuevo.ingredientesFoto = urlImagen;
-        this.createUploadTask(this.preparacion)
-        .then(res =>{
-          this.storage.ref(this.rutaArchivo).getDownloadURL().toPromise()
-          .then(urlImagen =>{
-            nuevo.preparacionFoto = urlImagen;
-            this.createUploadTask(this.preparado)
-            .then(res =>{
-              this.storage.ref(this.rutaArchivo).getDownloadURL().toPromise()
-              .then(urlImagen =>{
-                nuevo.preparadoFoto =urlImagen;
-                this.platoProveedor.guardarPlato(nuevo)
-                .then(res =>{
-                  loading.dismiss();
-                  let platoCargado = this.esperar(this.creaFondo("¡Plato Cargado!", "assets/imgs/icono_restaurant.png"))
-                  platoCargado.present();
-                  setTimeout(() => {
-                    platoCargado.dismiss();
-                  }, 4000);
-                })
+      .then(res => {
+        this.storage.ref(this.rutaArchivo).getDownloadURL().toPromise()
+          .then(urlImagen => {
+            nuevo.ingredientesFoto = urlImagen;
+            this.createUploadTask(this.preparacion)
+              .then(res => {
+                this.storage.ref(this.rutaArchivo).getDownloadURL().toPromise()
+                  .then(urlImagen => {
+                    nuevo.preparacionFoto = urlImagen;
+                    this.createUploadTask(this.preparado)
+                      .then(res => {
+                        this.storage.ref(this.rutaArchivo).getDownloadURL().toPromise()
+                          .then(urlImagen => {
+                            nuevo.preparadoFoto = urlImagen;
+                            this._platosProvider.guardarPlato(nuevo)
+                              .then(res => {
+                                loading.dismiss();
+                                let platoCargado = this.esperar(this.creaFondo("¡Plato Cargado!", "assets/imgs/icono_restaurant.png"))
+                                platoCargado.present();
+                                setTimeout(() => {
+                                  platoCargado.dismiss();
+                                  this.inicio();
+                                }, 4000);
+                              })
+                          })
+                      })
+                  })
               })
-            })
           })
-        })
       })
-    })
   }
 
   public createUploadTask(file: string) {
 
-    this.rutaArchivo = `platos/${this.nombre}_${ new Date().getTime() }.jpg`;
+    this.rutaArchivo = `platos/${this.idPlato}/${new Date().getTime()}.jpg`;
     this.image = 'data:image/jpg;base64,' + file;
-    
+
     this.task = this.storage.ref(this.rutaArchivo).putString(file, 'data_url');
 
     return this.task;
-  } 
+  }
 
   creaFondo(mensaje, imagen) {
     let fondo = `

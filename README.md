@@ -50,7 +50,7 @@ _El proyecto se va a estar orientada a dispositivos moviles, desarrollada a trav
 |  Menu Principal| ![verde](/images/verde.png)  |
 |  Alta de Cliente |![amarillo](/images/verde.png)   |
 |  Encuesta entrada-salida | ![verde](/images/verde.png)   |
-|  Encuesta Supervisor |  ![verde](/images/verde.png)   |
+|  Encuesta Satisfaccion |  ![verde](/images/verde.png)   |
 |  Gestion de mesas |  ![amarillo](/images/amarillo.png)   |
 |  Alta de pedido |  ![amarillo](/images/amarillo.png)   |
 |  Pedidos  |  ![amarillo](/images/amarillo.png)   |

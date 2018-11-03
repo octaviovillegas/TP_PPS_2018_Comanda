@@ -1,6 +1,7 @@
 //import { Observable, Subject } from 'rxjs';
 import { AuthProvider } from './../../providers/auth/auth';
 import { Nav } from 'ionic-angular';
+import {AltaSupervisorPage} from '../../pages/altasPages/alta-supervisor/alta-supervisor';
 // import { AltaClientePage } from '../../pages/altasPages/alta-cliente/alta-cliente';
 // import { EncuestaEnstradaSalidaPage } from '../../pages/encuestasPages/encuesta-enstrada-salida/encuesta-enstrada-salida';
 // import { EncuestaSupervisorPage } from '../../pages/encuestasPages/encuesta-supervisor/encuesta-supervisor';
@@ -44,21 +45,26 @@ export class MenuComponent {
         break;
       //LOS SIGUIENTES MENUS HAY QUE IR ARREGLANDOLOS
       case 'Supervisor':
-      case 'Dueno':
+      case 'Dueño':
         this.pages = [
           { title: 'Reservas', component: "MesasPage" },
           { title: 'Nuevo Empleado', component: "MesasPage" },
-          { title: 'Nuevo Supervisor', component: "MesasPage" },
+          { title: 'Nuevo Supervisor', component: "AltaSupervisorPage" },
+          { title: 'Nuevo Dueño', component:"AltaDueñoPage"},
           { title: 'Estadisticas', component: "MesasPage" },
           { title: 'Encuesta', component: "EncuestaEnstradaSalidaPage" }
         ];
         break;
 
       case 'Cocinero':
+        this.pages = [
+          { title: 'Nuevo plato', component: "AltaPlatoPage"},
+        ]
       case 'Bartender':
         this.pages = [
           { title: 'Mesas', component: "MesasPage" },
           { title: 'Alta Cliente', component: "AltaClientePage" },
+          { title: 'Nueva bebiba', component: "AltaBebidaPage"}
         ];
         break;
 
@@ -66,7 +72,7 @@ export class MenuComponent {
         this.pages = [
           { title: 'Reservar', component: "MesasPage" },
           { title: 'Hacer pedido', component: "EncuestaEnstradaSalidaPage" },
-          { title: 'Encuesta satisfaccion', component: "EncuestaSupervisorPage" }
+          { title: 'Encuesta de satisfacción', component: "EncuestaClientePage" }
         ];
         break;
     }

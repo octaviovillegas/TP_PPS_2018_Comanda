@@ -1,5 +1,6 @@
 import { EncuestaEnstradaSalidaPageModule } from '../pages/encuestasPages/encuesta-enstrada-salida/encuesta-enstrada-salida.module';
 import { EncuestaSupervisorPageModule } from '../pages/encuestasPages/encuesta-supervisor/encuesta-supervisor.module';
+import { EncuestaClientePageModule } from '../pages/encuestasPages/encuesta-cliente/encuesta-cliente.module';
 import { AltaPedidoPageModule } from './../pages/pedidosPages/alta-pedido/alta-pedido.module';
 import { AltaClientePageModule } from '../pages/altasPages/alta-cliente/alta-cliente.module';
 import { AltaPlatoPageModule } from '../pages/altasPages/alta-plato/alta-plato.module';
@@ -7,6 +8,7 @@ import { AltaBebidaPageModule } from '../pages/altasPages/alta-bebida/alta-bebid
 import { PedidosPageModule } from '../pages/pedidosPages/pedidos/pedidos.module';
 import { MesasPageModule } from './../pages/mesasPages/mesas/mesas.module';
 import { AltaSupervisorPageModule } from './../pages/altasPages/alta-supervisor/alta-supervisor.module';
+import { AltaDueñoPageModule } from './../pages/altasPages/alta-dueño/alta-dueño.module';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -43,7 +45,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ComponentsModule } from '../components/components.module';
 import { NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AuthProvider } from '../providers/auth/auth';
-import { DatosProvider } from '../providers/datos/datos';
+import { DatosEncuestaProvider } from '../providers/datos/datosEncuesta';
 import { platosProvider } from '../providers/platos/plato';
 import { bebidasProvider } from '../providers/bebidas/bebidas';
 import { UsuariosProvider } from '../providers/usuarios/usuarios';
@@ -80,13 +82,15 @@ export const firebaseConfig = {
     ComponentsModule,
     EncuestaEnstradaSalidaPageModule,
     EncuestaSupervisorPageModule,
+    EncuestaClientePageModule,
     AltaPedidoPageModule,
     AltaClientePageModule,
     PedidosPageModule,
     MesasPageModule,
     AltaPlatoPageModule,
     AltaBebidaPageModule,
-    AltaSupervisorPageModule
+    AltaSupervisorPageModule,
+    AltaDueñoPageModule
 
   ],
   bootstrap: [
@@ -110,7 +114,7 @@ export const firebaseConfig = {
     NativeAudio,
     ScreenOrientation,
     AuthProvider,
-    DatosProvider,
+    DatosEncuestaProvider,
     platosProvider,
     bebidasProvider,
     UsuariosProvider

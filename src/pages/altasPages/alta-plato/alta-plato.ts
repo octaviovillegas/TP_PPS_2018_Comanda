@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides, LoadingController} from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Slides, LoadingController, Loading} from 'ionic-angular';
 import {Camera, CameraOptions} from '@ionic-native/camera';
 import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
@@ -7,6 +7,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { IPlato } from '../../../clases/IPlato';
 import {platosProvider} from '../../../providers/platos/plato';
 //import { Observable } from '@firebase/util';
+import {MesasPage} from '../../mesasPages/mesas/mesas'
 import { Subscription } from 'rxjs';
 import {map} from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
@@ -66,6 +67,9 @@ export class AltaPlatoPage {
     console.log('ionViewDidLoad AltaPlatoPage');
   }
 
+  public inicio(){
+    this.navCtrl.setRoot(MesasPage) // Cambiar por menu principal de cocinero
+  }
   public siguiente(){
     this.slides.lockSwipes(false);
     this.slides.slideNext();
@@ -149,6 +153,11 @@ export class AltaPlatoPage {
                 this.platoProveedor.guardarPlato(nuevo)
                 .then(res =>{
                   loading.dismiss();
+                  let platoCargado = this.esperar(this.creaFondo("¡Plato Cargado!", "assets/imgs/icono_restaurant.png"))
+                  platoCargado.present();
+                  setTimeout(() => {
+                    platoCargado.dismiss();
+                  }, 4000);
                 })
               })
             })
@@ -167,5 +176,37 @@ export class AltaPlatoPage {
 
     return this.task;
   } 
+
+  creaFondo(mensaje, imagen) {
+    let fondo = `
+          <div>
+            <ion-row>
+              <ion-col>
+                <img src="${imagen}">
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <h1> ${mensaje} </h1>
+            </ion-row> 
+          </div> `;
+    return fondo;
+
+  }
+  esperar(personalizado?: string): Loading {
+    let loading;
+    if (!personalizado) {
+      loading = this.loadingCtrl.create({
+
+        content: 'Por favor, espere...'
+      });
+    }
+    else {
+      loading = this.loadingCtrl.create({
+        spinner: 'hide',
+        content: personalizado,
+      })
+    }
+    return loading;
+  }
 
 }

@@ -60,7 +60,7 @@ export class MenuComponent {
         this.pages = [
           { title: 'Nuevo plato', component: "AltaPlatoPage"},
         ];
-        break;
+          break;
       case 'Bartender':
         this.pages = [
           { title: 'Mesas', component: "MesasPage" },
@@ -73,7 +73,8 @@ export class MenuComponent {
         this.pages = [
           { title: 'Reservar', component: "MesasPage" },
           { title: 'Hacer pedido', component: "EncuestaEnstradaSalidaPage" },
-          { title: 'Encuesta de satisfacción', component: "EncuestaClientePage" }
+          { title: 'Encuesta satisfaccion', component: "EncuestaSupervisorPage" },
+          { title: 'Propina', component:'QrPropinaPage'}
         ];
         break;
     }

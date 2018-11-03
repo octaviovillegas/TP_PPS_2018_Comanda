@@ -11,6 +11,7 @@ import { LoginPage } from '../pages/login/login';
 import { AuthProvider } from '../providers/auth/auth';
 import { AltaBebidaPage } from '../pages/altasPages/alta-bebida/alta-bebida';
 import { AltaSupervisorPage } from '../pages/altasPages/alta-supervisor/alta-supervisor';
+import {QrPropinaPage} from '../pages/qr/qr-propina/qr-propina';
 // import { EncuestaEnstradaSalidaPage } from '../pages/encuestasPages/encuesta-enstrada-salida/encuesta-enstrada-salida';
 
 @Component({

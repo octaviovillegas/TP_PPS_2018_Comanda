@@ -21,6 +21,7 @@
     "@angular/http": "5.2.10",
     "@angular/platform-browser": "5.2.10",
     "@angular/platform-browser-dynamic": "5.2.10",
+    "@ionic-native/barcode-scanner": "^4.17.0",
     "@ionic-native/camera": "^4.7.0",
     "@ionic-native/core": "4.7.0",
     "@ionic-native/device-motion": "^4.15.0",
@@ -51,6 +52,7 @@
     "ionic-image-loader": "^5.1.1",
     "ionic2-rating": "^1.2.2",
     "ionicons": "3.0.0",
+    "phonegap-plugin-barcodescanner": "^8.0.0",
     "primeicons": "^1.0.0-beta.10",
     "primeng": "^6.1.4",
     "rxjs": "5.5.10",
@@ -74,7 +76,10 @@
       "cordova-plugin-file": {},
       "cordova-plugin-nativeaudio": {},
       "cordova-plugin-device-motion": {},
-      "cordova-plugin-screen-orientation": {}
+      "cordova-plugin-screen-orientation": {},
+      "phonegap-plugin-barcodescanner": {
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      }
     },
     "platforms": [
       "android"

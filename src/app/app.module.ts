@@ -9,6 +9,7 @@ import { PedidosPageModule } from '../pages/pedidosPages/pedidos/pedidos.module'
 import { MesasPageModule } from './../pages/mesasPages/mesas/mesas.module';
 import { AltaSupervisorPageModule } from './../pages/altasPages/alta-supervisor/alta-supervisor.module';
 import { AltaDueñoPageModule } from './../pages/altasPages/alta-dueño/alta-dueño.module';
+import { QrPropinaPageModule } from './../pages/qr/qr-propina/qr-propina.module';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -49,6 +50,7 @@ import { DatosEncuestaProvider } from '../providers/datos/datosEncuesta';
 import { platosProvider } from '../providers/platos/plato';
 import { bebidasProvider } from '../providers/bebidas/bebidas';
 import { UsuariosProvider } from '../providers/usuarios/usuarios';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 
 export const firebaseConfig = {
@@ -90,7 +92,8 @@ export const firebaseConfig = {
     AltaPlatoPageModule,
     AltaBebidaPageModule,
     AltaSupervisorPageModule,
-    AltaDueñoPageModule
+    AltaDueñoPageModule,
+    QrPropinaPageModule
 
   ],
   bootstrap: [
@@ -113,6 +116,7 @@ export const firebaseConfig = {
     DeviceMotion,
     NativeAudio,
     ScreenOrientation,
+    BarcodeScanner,
     AuthProvider,
     DatosEncuestaProvider,
     platosProvider,

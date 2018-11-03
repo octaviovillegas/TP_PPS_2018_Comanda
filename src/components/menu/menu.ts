@@ -72,7 +72,8 @@ export class MenuComponent {
         this.pages = [
           { title: 'Reservar', component: "MesasPage" },
           { title: 'Hacer pedido', component: "EncuestaEnstradaSalidaPage" },
-          { title: 'Encuesta de satisfacción', component: "EncuestaClientePage" }
+          { title: 'Encuesta satisfaccion', component: "EncuestaSupervisorPage" },
+          { title: 'Propina', component:'QrPropinaPage'}
         ];
         break;
     }

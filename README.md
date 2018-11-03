@@ -39,9 +39,6 @@ _El proyecto se va a estar orientada a dispositivos moviles, desarrollada a trav
 |  Alta de supervisor |![verde](/images/verde.png)   |
 |  Alta de dueño |![verde](/images/verde.png)   |
 |  Qr de propina |![amarillo](/images/amarillo.png)   |
-
-
-
 |  Splash | ![verde](/images/verde.png)  |
 |  Login |  ![verde](/images/verde.png) |
 

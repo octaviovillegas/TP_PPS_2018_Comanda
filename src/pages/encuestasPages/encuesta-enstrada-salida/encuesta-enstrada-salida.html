@@ -37,19 +37,15 @@
       </ion-item>
     </ion-list>
 
-    <ion-list radio-group formControlName="elementos" > 
+    <ion-list radio-group > 
       <ion-item class='pregFondo'>
         ¿Cuenta con todos elementos de trabajo?
       </ion-item>
+
       <ion-item>
-        <ion-label>Si</ion-label>
-        <!-- <ion-input formControlName="elementos" type="text" placeholder="Nombre"></ion-input> -->
-        <ion-radio  value='si' ></ion-radio>
-      </ion-item>
-      <ion-item>
-        <ion-label>No</ion-label>
-        <ion-radio value='no' ></ion-radio>
-      </ion-item>
+          <ion-label>Si</ion-label>
+          <ion-checkbox item-right color="primary" formControlName="elementos"></ion-checkbox>
+        </ion-item>
     </ion-list>
 
     <ion-list radio-group formControlName="banio">
@@ -65,52 +61,68 @@
         <ion-radio value="LevementeSucio"></ion-radio>
       </ion-item>
       <ion-item>
-        <ion-label>Limpia</ion-label>
-        <ion-radio value="Limpia"></ion-radio>
-      </ion-item>
-    </ion-list>
-
-    <ion-list radio-group formControlName="cocina">
-      <ion-item class='pregFondo'>
-        Estado de la cocina
-      </ion-item>
-      <ion-item>
-        <ion-label>Sucio</ion-label>
-        <ion-radio value="Sucio"></ion-radio>
-      </ion-item>
-      <ion-item>
-        <ion-label>Levemente Sucio</ion-label>
-        <ion-radio value="LevementeSucio"></ion-radio>
-      </ion-item>
-      <ion-item>
-        <ion-label>Limpia</ion-label>
+        <ion-label>Limpio</ion-label>
         <ion-radio value="Limpia"></ion-radio>
       </ion-item>
     </ion-list>
 
     <ion-list radio-group>
       <ion-item class='pregFondo'>
-        Estado del comedor
+        Estado de la cocina
+      </ion-item>
+      <ion-item >
+        <ion-select block  okText="Seleccionar" [(ngModel)]="cocina" formControlName="cocina" cancelText="Cancelar" interface="popover">
+            <ion-option value="muyLimpia">Muy Limpia</ion-option>
+            <ion-option value="limpia">Limpia</ion-option>
+            <ion-option value="levementeSucia">Levemente sucia</ion-option>
+            <ion-option value="sucia">Sucia</ion-option>
+          </ion-select>
+      </ion-item>
+    </ion-list>
+
+    <ion-list radio-group>
+      <ion-item class='pregFondo'>
+       Nivel de desorden general
+       <ion-badge item-end color="secondary">{{nivelSuciedad}}</ion-badge>
       </ion-item>
       <ion-item>
-          <ion-label>Todo en orden</ion-label>
-          <ion-checkbox item-right color="primary" formControlName="comedor1"></ion-checkbox>
+          <ion-range min="0" max="100" pin="true" [(ngModel)]="nivelSuciedad" formControlName="nivelSuciedad" color="secondary">
+            <ion-label range-left>0</ion-label>
+            <ion-label range-right>100</ion-label>
+          </ion-range>
         </ion-item>
-      <ion-item>
-        <ion-label>Sucio</ion-label>
-        <ion-checkbox item-right color="primary" formControlName="comedor2"></ion-checkbox>
+    </ion-list>
+    <ion-list radio-group>
+        <ion-item class='pregFondo'>
+         Observaciones
+        </ion-item>
+        <ion-item>
+            <ion-label color="secondary" floating>Ingrese su observación</ion-label>
+            <ion-input formControlName="observaciones" clearInput>{{observacion}}</ion-input>
+        </ion-item>
+      </ion-list>
+
+    <ion-list>
+      <ion-item class='pregFondo'>
+          Imagen del espacio de trabajo
       </ion-item>
       <ion-item>
-        <ion-label>Desordenado</ion-label>
-        <ion-checkbox item-right color="primary" formControlName="comedor3"></ion-checkbox>
+        <ion-card>
+            <img [src]="imagenPreview">
+          <!-- <ion-img height="100"  [src]="imagenPreview"></ion-img> -->
+
+          <!-- <ion-col col-12 [style.background-image]="imagenPreview" class="image--background"></ion-col> -->
+      </ion-card>
+      </ion-item>
+      <ion-item>
+        <button block ion-button type="button" color="primary" (click)="mostrarCamara()"><ion-icon name="camera"></ion-icon></button>
       </ion-item>
     </ion-list>
 
     <div padding>
-        <button ion-button block type="submit" [disabled]="!frmEncuesta.valid">Guardar</button>
-      </div>
+        <button ion-button block type="submit" [disabled]="!frmEncuesta.valid && imagen64 ==''">Guardar</button>
+        <!-- <button ion-button block type="submit" [disabled]="!frmEncuesta.valid">Guardar</button> -->
+    </div>
   </form>
-  <!-- <rating [(ngModel)]="rate" readOnly="false" max="5" emptyStarIconName="star-outline" halfStarIconName="star-half" starIconName="star" nullable="false" (ngModelChange)="onModelChange($event)">
-      Use it when you need to do something when user clicks on a star. in case you only need to change ngModel property, this property can be ommited.  </rating> -->
 
 

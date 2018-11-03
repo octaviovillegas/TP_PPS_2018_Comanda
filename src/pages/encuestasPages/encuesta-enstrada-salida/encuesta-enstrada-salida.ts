@@ -1,8 +1,8 @@
 import { AuthProvider } from './../../../providers/auth/auth';
-import { DatosProvider } from './../../../providers/datos/datos';
-//import { Camera, CameraPopoverOptions, CameraOptions } from '@ionic-native/camera';
+import { DatosEncuestaProvider } from '../../../providers/datos/datosEncuesta';
+import { Camera, CameraPopoverOptions, CameraOptions } from '@ionic-native/camera';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, ToastController, LoadingController, MenuController, Loading } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, ToastController, LoadingController, MenuController, Loading, Platform } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
@@ -18,6 +18,9 @@ export class EncuestaEnstradaSalidaPage {
   imagenTomada: string = "assets/imgs/calavera.png";
   registroAnonimo: Boolean;
   tomoFoto: Boolean = false;
+  observacion:String="";
+  cocina:string = "limpia";
+  nivelSuciedad:number = 0;
 
 
   public frmEncuesta: FormGroup;
@@ -30,6 +33,8 @@ export class EncuestaEnstradaSalidaPage {
   public tituloEnSal:string;
   ldg:Loading = null;
   public habilitado:boolean=true;
+  public imagenPreview: string = 'assets/imgs/sinImg.png';
+  public imagen64:string = "";
 
   constructor(
     public navCtrl: NavController,
@@ -39,14 +44,17 @@ export class EncuestaEnstradaSalidaPage {
     public toastCtrl: ToastController,
     public loadingCtrl: LoadingController,
     public menuCtrl: MenuController,
-    public _datos: DatosProvider,
+    public _datos: DatosEncuestaProvider,
     private auth: AuthProvider,
+    private camera: Camera,
+    private platform: Platform  
 
   ) {
 
     let subs: Subscription = _datos.getCantEncuestaES().subscribe((data)=> {
         this.entSal = data.length;
          
+        console.log("getEncuestasES: " + this.entSal);
         if(this.entSal == 2)
           this.presentToast();
         else if(this.entSal == 1)
@@ -58,7 +66,7 @@ export class EncuestaEnstradaSalidaPage {
     //Asi no queda escuchando la lista desde la base
     setTimeout(() => {
       subs.unsubscribe();
-    }, 1000);
+    }, 2000);
 
     this.menuCtrl.enable(true, 'menu');
     this.frmEncuesta = this.crearFormulario();
@@ -94,8 +102,8 @@ export class EncuestaEnstradaSalidaPage {
     setTimeout(() => {
       this._datos.saveEncuestaES(tipoEncuesta,this.frmEncuesta.value.estado,
         this.frmEncuesta.value.elementos,this.frmEncuesta.value.banio,
-        this.frmEncuesta.value.cocina,this.frmEncuesta.value.comedor1,
-        this.frmEncuesta.value.comedor2,this.frmEncuesta.value.comedor3).then( () => {
+        this.frmEncuesta.value.cocina,this.frmEncuesta.value.nivelSuciedad,
+        this.frmEncuesta.value.observaciones, this.imagen64).then( () => {
           this.ldg.dismiss().then( ()=>
             this.volverRoot()
           );
@@ -109,14 +117,14 @@ export class EncuestaEnstradaSalidaPage {
   }
 
   private crearFormulario() {
+
     return this.formBuilder.group({
       estado: ['', Validators.required],
-      elementos: ['', Validators.required],
+      elementos: ['true', Validators.required],
       banio: ['', Validators.required],
-      cocina: ['', Validators.required],
-      comedor1:['false'],
-      comedor2:['false'],
-      comedor3:['false']
+      cocina: ['limpia', Validators.required],
+      nivelSuciedad: ['0'],
+      observaciones:['']
     });
 
   }
@@ -135,35 +143,52 @@ export class EncuestaEnstradaSalidaPage {
         this.ldg.dismiss();
   }
 
-  // mostrarCamara() {
+  mostrarCamara(){
 
-  //   let popoverOptions: CameraPopoverOptions = {
-  //     x: 0,
-  //     y: 0,
-  //     width: 800,
-  //     height: 800,
-  //     arrowDir: this.camera.PopoverArrowDirection.ARROW_DOWN
-  //   };
+    if(this.platform.is("cordova")) {
+      let popoverOptions: CameraPopoverOptions = {
+        x: 0,
+        y: 0,
+        width: 640,
+        height: 640,
+        arrowDir: this.camera.PopoverArrowDirection.ARROW_DOWN
+    };
+  
+      const options: CameraOptions = {
+          quality: 40,
+          targetWidth: 640,
+          targetHeight: 640,
+          allowEdit: false,
+          correctOrientation: true,
+          saveToPhotoAlbum: false,
+          cameraDirection: this.camera.Direction.BACK,
+          destinationType: this.camera.DestinationType.DATA_URL, 
+          encodingType: this.camera.EncodingType.JPEG,
+          mediaType: this.camera.MediaType.PICTURE,
+          popoverOptions: popoverOptions
+      }
+  
+      this.camera.getPicture(options).then((imageData) => {
+  
+        this.imagenPreview = 'data:image/jpeg;base64,' + imageData;
+        this.imagen64 = imageData;
+  
+      }, (err) => {
+       // Handle error
+       this.mostrarMensaje("Error en la cámara:" + JSON.stringify(err));
+      });
+    }
+  }
 
-  //   const options: CameraOptions = {
-  //     quality: 40,
-  //     targetWidth: 800,
-  //     targetHeight: 800,
-  //     allowEdit: false,
-  //     correctOrientation: true,
-  //     saveToPhotoAlbum: false,
-  //     cameraDirection: this.camera.Direction.BACK,
-  //     destinationType: this.camera.DestinationType.DATA_URL,
-  //     encodingType: this.camera.EncodingType.JPEG,
-  //     mediaType: this.camera.MediaType.PICTURE
-  //   }
+  mostrarMensaje(mensaje:string){
+    this.toastCtrl.create({
+      message: mensaje,
+      duration: 2000,
+      position: 'top'
+    }).present();
+  }
 
-  // }
-  // onModelChange(e: any) {
-  //   console.log(e);
-  // }
-
-
-
-
+  prueba(){
+   this.imagen64="asda";
+ }
 }

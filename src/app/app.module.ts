@@ -1,5 +1,6 @@
 import { EncuestaEnstradaSalidaPageModule } from '../pages/encuestasPages/encuesta-enstrada-salida/encuesta-enstrada-salida.module';
 import { EncuestaSupervisorPageModule } from '../pages/encuestasPages/encuesta-supervisor/encuesta-supervisor.module';
+import { EncuestaClientePageModule } from '../pages/encuestasPages/encuesta-cliente/encuesta-cliente.module';
 import { AltaPedidoPageModule } from './../pages/pedidosPages/alta-pedido/alta-pedido.module';
 import { AltaClientePageModule } from '../pages/altasPages/alta-cliente/alta-cliente.module';
 import { AltaPlatoPageModule } from '../pages/altasPages/alta-plato/alta-plato.module';
@@ -45,7 +46,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ComponentsModule } from '../components/components.module';
 import { NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AuthProvider } from '../providers/auth/auth';
-import { DatosProvider } from '../providers/datos/datos';
+import { DatosEncuestaProvider } from '../providers/datos/datosEncuesta';
 import { platosProvider } from '../providers/platos/plato';
 import { bebidasProvider } from '../providers/bebidas/bebidas';
 import { UsuariosProvider } from '../providers/usuarios/usuarios';
@@ -83,6 +84,7 @@ export const firebaseConfig = {
     ComponentsModule,
     EncuestaEnstradaSalidaPageModule,
     EncuestaSupervisorPageModule,
+    EncuestaClientePageModule,
     AltaPedidoPageModule,
     AltaClientePageModule,
     PedidosPageModule,
@@ -116,7 +118,7 @@ export const firebaseConfig = {
     ScreenOrientation,
     BarcodeScanner,
     AuthProvider,
-    DatosProvider,
+    DatosEncuestaProvider,
     platosProvider,
     bebidasProvider,
     UsuariosProvider

@@ -41,6 +41,7 @@ _El proyecto se va a estar orientada a dispositivos moviles, desarrollada a trav
 |  Qr de propina |![amarillo](/images/amarillo.png)   |
 |  Splash | ![verde](/images/verde.png)  |
 |  Login |  ![verde](/images/verde.png) |
+|  Encuesta Supervisor  |  ![rojo](/images/rojo.png)   |
 
  # Responsabilidades por Integrante:
 ##  - Veiga
@@ -54,6 +55,8 @@ _El proyecto se va a estar orientada a dispositivos moviles, desarrollada a trav
 |  Gestion de mesas |  ![amarillo](/images/amarillo.png)   |
 |  Alta de pedido |  ![amarillo](/images/amarillo.png)   |
 |  Pedidos  |  ![amarillo](/images/amarillo.png)   |
+|  Qr de la mesa  |  ![rojo](/images/rojo.png)   |
+|  Alta de mesa  |  ![rojo](/images/rojo.png)   |
 
 
 

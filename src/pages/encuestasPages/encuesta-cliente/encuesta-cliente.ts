@@ -19,8 +19,8 @@ export class EncuestaClientePage {
   registroAnonimo: Boolean;
   tomoFoto: Boolean = false;
   observacion: String = "";
-  cocina: string = "limpia";
-  nivelSuciedad: number = 0;
+  mesa: string = "limpia";
+  calPlatos: number = 0;
   imagenes64List: Array<string> = [];
   imagenesPViewList: Array<string> = [];
 
@@ -32,9 +32,10 @@ export class EncuestaClientePage {
   mostrar: boolean = false;
   public rate: any;
   public entSal: number = 0;
-  //public tituloEnSal:string;
   ldg: Loading = null;
   public habilitado: boolean = true;
+  public verBotonFoto: boolean = true;
+  public hayFoto: boolean = false;
   //public imagenPreview: string = 'assets/imgs/sinImg.png';
   //public imagen64:string = "";
 
@@ -56,12 +57,10 @@ export class EncuestaClientePage {
     let subs: Subscription = _datos.getCantEncuestaCliente().subscribe((data) => {
       this.entSal = data.length;
 
-      if (this.entSal == 1)
-        this.presentToast();
-      // else if(this.entSal == 1)
-      //   this.tituloEnSal = "Salida";
-      // else
-      //   this.tituloEnSal = "Entrada";
+      if (this.entSal > 0)
+        this.presentToast("Ya se ha cargado la encuesta de satisfacción", true);
+
+
     });
 
     //Asi no queda escuchando la lista desde la base
@@ -73,14 +72,17 @@ export class EncuestaClientePage {
     this.frmEncuesta = this.crearFormulario();
   }
 
-  presentToast() {
+  presentToast(mensaje: string, volver: boolean) {
     const toast = this.toastCtrl.create({
-      message: 'Las encuestas ya fueron cargadas',
+      message: mensaje,
       duration: 3000
     });
-    toast.present().then(() =>
-      this.volverRoot()
-    );
+    toast.present().then(() => {
+
+      if (volver)
+        this.volverRoot()
+
+    });
   }
 
   tomarFotoCliente() {
@@ -90,23 +92,27 @@ export class EncuestaClientePage {
 
   saveData() {
     this.presentLoading('Guardando encuesta...');
-    let tipoEncuesta: string;
+    // let tipoEncuesta: string;
 
-    if (this.entSal == 0) {
-      tipoEncuesta = "Entrada";
-    } else {
-      tipoEncuesta = "Salida";
-    }
+    // if (this.entSal == 0) {
+    //   tipoEncuesta = "Entrada";
+    // } else {
+    //   tipoEncuesta = "Salida";
+    // }
 
     //Para que muestre el loading 1 segundo
     setTimeout(() => {
       this._datos.saveEncuestaCliente(this.frmEncuesta.value.estado,
         this.frmEncuesta.value.elementos, this.frmEncuesta.value.banio,
         this.frmEncuesta.value.cocina, this.frmEncuesta.value.nivelSuciedad,
-        this.frmEncuesta.value.observaciones, this.imagenes64List).then(() => {
+        this.frmEncuesta.value.observaciones, this.imagenes64List)
+        .then(() => {
+          this.presentToast("SALIO DE PROMESA", false);
           this.ldg.dismiss().then(() =>
             this.volverRoot()
-          );
+          ).catch((error) => {
+            this.presentToast("Ha ocurrido un error. Reintente por favor.", false);
+          });
         });
     }, 1000);
 
@@ -119,11 +125,11 @@ export class EncuestaClientePage {
   private crearFormulario() {
 
     return this.formBuilder.group({
-      estado: ['', Validators.required],
-      elementos: ['true', Validators.required],
-      banio: ['', Validators.required],
-      cocina: ['limpia', Validators.required],
-      nivelSuciedad: ['0'],
+      calidadServicio: ['', Validators.required],
+      recomienda: ['false', Validators.required],
+      estadoResto: ['', Validators.required],
+      estadoMesa: ['', Validators.required],
+      calidadPlatos: ['1'],
       observaciones: ['']
     });
 
@@ -170,9 +176,13 @@ export class EncuestaClientePage {
 
       this.camera.getPicture(options).then((imageData) => {
 
+        this.hayFoto = true;
+        this.imagenesPViewList.push('data:image/jpeg;base64,' + imageData);
+        this.imagenes64List.push(imageData);
 
-        this.imagenes64List.push('data:image/jpeg;base64,' + imageData);
-        this.imagenesPViewList.push(imageData);
+        // Se permiten maximo, 3 fotos
+        if (this.imagenes64List.length == 3)
+          this.verBotonFoto = false;
 
       }, (err) => {
         // Handle error
@@ -187,5 +197,10 @@ export class EncuestaClientePage {
       duration: 2000,
       position: 'top'
     }).present();
+  }
+
+  prueba() {
+    //this._datos.prueba3();
+    // this._datos.prueba().then(() => { console.log("FIN PROMISE") });
   }
 }

@@ -1,3 +1,11 @@
 page-encuesta-cliente {
+    .pregFondo {
+        background: color($colors, p_light);
+        color: white;
+    }
 
+    .myCustomSelect{
+        max-width: 100% !important;
+        width: 100% !important;
+      }
 }

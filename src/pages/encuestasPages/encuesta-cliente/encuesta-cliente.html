@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      ENCUESTA E|S
+      ENCUESTA SATISFACCIÓN
     </ion-title>
     <ion-buttons right>
       <button ion-button icon-only menuToggle>
@@ -24,51 +24,48 @@
       </ion-item>
       <br>
       <ion-item class='pregFondo'>
-        Estado General
+        Calidad del servicio
       </ion-item>
       <ion-item>
-        <!-- <rating [(ngModel)]="rate" readOnly="false" max="5" emptyStarIconName="star-outline" halfStarIconName="star-half"
-          starIconName="star" nullable="false" formControlName="estado" (ngModelChange)="onModelChange($event)"></rating> -->
-        <rating [(ngModel)]="rate" readOnly="false" max="5" emptyStarIconName="star-outline" halfStarIconName="star-half"
-          starIconName="star" nullable="false" formControlName="estado"></rating>
+        <rating [(ngModel)]="rate" readOnly="false" max="5"  emptyStarIconName="star-outline" halfStarIconName="star-half"
+          starIconName="star" nullable="false" formControlName="calidadServicio"></rating>
       </ion-item>
     </ion-list>
 
     <ion-list radio-group>
       <ion-item class='pregFondo'>
-        ¿Cuenta con todos elementos de trabajo?
+        ¿Nos recomendaría?
       </ion-item>
-
       <ion-item>
         <ion-label>Si</ion-label>
-        <ion-checkbox item-right color="primary" formControlName="elementos"></ion-checkbox>
+        <ion-checkbox item-right color="primary" formControlName="recomienda"></ion-checkbox>
       </ion-item>
     </ion-list>
 
-    <ion-list radio-group formControlName="banio">
+    <ion-list radio-group formControlName="estadoResto">
       <ion-item class='pregFondo'>
-        Estado del baño
+        Estado del restaurante
       </ion-item>
       <ion-item>
-        <ion-label>Sucio</ion-label>
-        <ion-radio value="Sucio"></ion-radio>
+        <ion-label>Limpio</ion-label>
+        <ion-radio value="Limpia"></ion-radio>
       </ion-item>
       <ion-item>
         <ion-label>Levemente Sucio</ion-label>
         <ion-radio value="LevementeSucio"></ion-radio>
       </ion-item>
       <ion-item>
-        <ion-label>Limpio</ion-label>
-        <ion-radio value="Limpia"></ion-radio>
+        <ion-label>Sucio</ion-label>
+        <ion-radio value="Sucio"></ion-radio>
       </ion-item>
     </ion-list>
 
     <ion-list radio-group>
       <ion-item class='pregFondo'>
-        Estado de la cocina
+        Estado de la mesa
       </ion-item>
       <ion-item>
-        <ion-select block okText="Seleccionar" [(ngModel)]="cocina" formControlName="cocina" cancelText="Cancelar"
+        <ion-select class="myCustomSelect" block okText="Seleccionar" [(ngModel)]="mesa" formControlName="estadoMesa" cancelText="Cancelar"
           interface="popover">
           <ion-option value="muyLimpia">Muy Limpia</ion-option>
           <ion-option value="limpia">Limpia</ion-option>
@@ -80,13 +77,13 @@
 
     <ion-list radio-group>
       <ion-item class='pregFondo'>
-        Nivel de desorden general
-        <ion-badge item-end color="secondary">{{nivelSuciedad}}</ion-badge>
+        Calidad de platos seleccionados
+        <!-- <ion-badge item-end color="secondary">{{calPlatos}}</ion-badge> -->
       </ion-item>
       <ion-item>
-        <ion-range min="0" max="100" pin="true" [(ngModel)]="nivelSuciedad" formControlName="nivelSuciedad" color="secondary">
-          <ion-label range-left>0</ion-label>
-          <ion-label range-right>100</ion-label>
+        <ion-range min="1" max="10" step="1" pin="true" snaps="true" formControlName="calidadPlatos" color="secondary">
+          <ion-label range-left>1</ion-label>
+          <ion-label range-right>10</ion-label>
         </ion-range>
       </ion-item>
     </ion-list>
@@ -102,7 +99,7 @@
 
     <ion-list>
       <ion-item class='pregFondo'>
-        Imagen del espacio de trabajo
+        ¿Desea tomar alguna foto?
       </ion-item>
       <ion-item>
         <ion-grid>
@@ -118,7 +115,7 @@
         </ion-grid>
       </ion-item>
       <ion-item>
-        <button block ion-button type="button" color="primary" (click)="mostrarCamara()">
+        <button block ion-button type="button" color="primary" *ngIf="verBotonFoto" (click)="mostrarCamara()">
           <ion-icon name="camera"></ion-icon>
         </button>
       </ion-item>
@@ -126,6 +123,7 @@
 
     <div padding>
       <button ion-button block type="submit" [disabled]="!frmEncuesta.valid">Guardar</button>
+      <!-- <button ion-button block type="button" (click)="prueba()">Guardar</button> -->
       <!-- <button ion-button block type="submit" [disabled]="!frmEncuesta.valid">Guardar</button> -->
     </div>
   </form>

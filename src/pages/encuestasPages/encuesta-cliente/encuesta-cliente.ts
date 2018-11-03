@@ -57,16 +57,16 @@ export class EncuestaClientePage {
     let subs: Subscription = _datos.getCantEncuestaCliente().subscribe((data) => {
       this.entSal = data.length;
 
+      console.log(this.entSal);
       if (this.entSal > 0)
         this.presentToast("Ya se ha cargado la encuesta de satisfacción", true);
-
 
     });
 
     //Asi no queda escuchando la lista desde la base
     setTimeout(() => {
       subs.unsubscribe();
-    }, 2000);
+    }, 3000);
 
     this.menuCtrl.enable(true, 'menu');
     this.frmEncuesta = this.crearFormulario();
@@ -102,12 +102,12 @@ export class EncuestaClientePage {
 
     //Para que muestre el loading 1 segundo
     setTimeout(() => {
-      this._datos.saveEncuestaCliente(this.frmEncuesta.value.estado,
-        this.frmEncuesta.value.elementos, this.frmEncuesta.value.banio,
-        this.frmEncuesta.value.cocina, this.frmEncuesta.value.nivelSuciedad,
+      this._datos.saveEncuestaCliente2(this.frmEncuesta.value.calidadServicio,
+        this.frmEncuesta.value.recomienda, this.frmEncuesta.value.estadoResto,
+        this.frmEncuesta.value.estadoMesa, this.frmEncuesta.value.calidadPlatos,
         this.frmEncuesta.value.observaciones, this.imagenes64List)
         .then(() => {
-          this.presentToast("SALIO DE PROMESA", false);
+         // this.presentToast("SALIO DE PROMESA", false);
           this.ldg.dismiss().then(() =>
             this.volverRoot()
           ).catch((error) => {

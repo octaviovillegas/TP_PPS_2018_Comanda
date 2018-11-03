@@ -100,110 +100,109 @@ export class DatosEncuestaProvider {
   }
 
   /** Guarda la encuesta de CLIENTE por usuario */
-  // saveEncuestaCliente(estado: string,
-  //   elementos: string, banio: string, cocina: string,
-  //   nivelSuciedad: string, observaciones: string,
-  //   imagenes: Array<string>): Promise<any> {
+  saveEncuestaCliente2(calidadServicio: string,
+    recomienda: string, estadoResto: string, estadoMesa: string,
+    calidadPlatos: string, observaciones: string,
+    imagenes: Array<string>): Promise<any> {
 
-  //   var fechaS: string;
-  //   let userID: String = localStorage.getItem("userID");
-
-
-  //   let nombreArchivo: string;
-  //   var img1: string = '';
-  //   var img2: string = '';
-  //   var img3: string = '';
-
-  //   fechaS = this.obtenerFechaNombre();
-
-  //   let promesa = new Promise((resolve, reject) => {
-
-  //     let storeRef = firebase.storage().ref();
-
-  //     if (imagenes.length > 0) {
-  //       var source = Observable.range(0, imagenes.length);
+    var fechaS: string;
+    let userID: String = localStorage.getItem("userID");
 
 
-  //       source.subscribe(
-  //         (i: number) => { //esta parte se ejecuta por cada iteracion del source. Primero debo guardar todas las imagenes, para tomar todas las URLs
+    let nombreArchivo: string;
+    var img1: string = '';
+    var img2: string = '';
+    var img3: string = '';
 
-  //           nombreArchivo = new Date().valueOf().toString(); // 1231231231
+    fechaS = this.obtenerFechaNombre();
 
-  //           let uploadTask: firebase.storage.UploadTask =
-  //             storeRef.child(`img/${nombreArchivo}`)
-  //               .putString(imagenes[i], 'base64', { contentType: 'image/jpeg' });
+    let promesa = new Promise((resolve, reject) => {
 
-  //           uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
-  //             () => { }, // saber el % de cuantos Mbs se han subido
+      let storeRef = firebase.storage().ref();
 
-  //             (error) => {
-  //               // manejo de error
-  //               this.presentToast("ERROR Archivo: " + i);
-  //               reject();
-  //             }, () => {
-  //               // Tomo la URL
-                
-  //               uploadTask.snapshot.ref.getDownloadURL().then((url) => {
+      if (imagenes.length > 0) {
+        var source = Observable.range(0, imagenes.length);
 
-  //                 this.presentToast("URL: " + i);
-  //                 switch (i) {
-  //                   case 0:
-  //                     img1 = url;
-  //                     break;
-  //                   case 1:
-  //                     img2 = url;
-  //                     break;
-  //                   case 2:
-  //                     img3 = url;
-  //                     break;
-  //                 }
-  //               });
 
-  //               resolve();
-  //             })
-  //         },
+        source.subscribe(
+          (i: number) => { //esta parte se ejecuta por cada iteracion del source. Primero debo guardar todas las imagenes, para tomar todas las URLs
 
-  //         (err) => { },
+            nombreArchivo = new Date().valueOf().toString(); // 1231231231
 
-  //         () => { //Una vez guardadas todas las fotos, se ejecuta el complete del Observable
+            let uploadTask: firebase.storage.UploadTask =
+              storeRef.child(`img/${nombreArchivo}`)
+                .putString(imagenes[i], 'base64', { contentType: 'image/jpeg' });
 
-  //           setTimeout(() => {
-  //             this.presentToast("GUARDAAA!!!");
-  //             this.afDB.object('/encuestaCliente/' + userID + '/' + fechaS).update({
-  //               estado: estado,
-  //               elementos: elementos,
-  //               banio: banio,
-  //               cocina: cocina,
-  //               nivelSuciedad: nivelSuciedad,
-  //               observaciones: observaciones,
-  //               imagen1: img1,
-  //               imagen2: img2,
-  //               imagen3: img3
-  //             }).then(() => resolve());
+            uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+              () => { }, // saber el % de cuantos Mbs se han subido
 
-  //           }, 5000);
+              (error) => {
+                // manejo de error
+                //this.presentToast("ERROR Archivo: " + i);
+                reject();
+              }, () => {
+                // Tomo la URL
 
-  //           resolve();
-  //         }
-  //       )
-  //     } else { //Guardo la encuesta sin fotos
-  //       console.log("Guardando encuesta");
-  //       this.afDB.object('/encuestaCliente/' + userID + '/' + fechaS).update({
-  //         estado: estado,
-  //         elementos: elementos,
-  //         banio: banio,
-  //         cocina: cocina,
-  //         nivelSuciedad: nivelSuciedad,
-  //         observaciones: observaciones,
-  //         imagen1: img1,
-  //         imagen2: img2,
-  //         imagen3: img3
-  //       }).then(() => resolve());
-  //     }
-  //   });
+                uploadTask.snapshot.ref.getDownloadURL().then((url) => {
 
-  //   return promesa;
-  // }
+                  //this.presentToast("URL: " + i);
+                  switch (i) {
+                    case 0:
+                      img1 = url;
+                      break;
+                    case 1:
+                      img2 = url;
+                      break;
+                    case 2:
+                      img3 = url;
+                      break;
+                  }
+                });
+
+                resolve();
+              })
+          },
+
+          (err) => { },
+
+          () => { //Una vez guardadas todas las fotos, se ejecuta el complete del Observable
+
+            setTimeout(() => {
+              // this.presentToast("GUARDAAA!!!");
+              this.afDB.object('/encuestaCliente/' + userID + '/' + fechaS).update({
+                calidadServicio: calidadServicio,
+                recomienda: recomienda,
+                estadoResto: estadoResto,
+                estadoMesa: estadoMesa,
+                calidadPlatos: calidadPlatos,
+                observaciones: observaciones,
+                imagen1: img1,
+                imagen2: img2,
+                imagen3: img3
+              }).then(() => resolve());
+
+            }, 5000);
+            resolve();
+          }
+        )
+      } else { //Guardo la encuesta sin fotos
+        //console.log("Guardando encuesta");
+        this.afDB.object('/encuestaCliente/' + userID + '/' + fechaS).update({
+          calidadServicio: calidadServicio,
+          recomienda: recomienda,
+          estadoResto: estadoResto,
+          estadoMesa: estadoMesa,
+          calidadPlatos: calidadPlatos,
+          observaciones: observaciones,
+          imagen1: img1,
+          imagen2: img2,
+          imagen3: img3
+        }).then(() => resolve());
+      }
+    });
+
+    return promesa;
+  }
 
   /** Guarda la encuesta de CLIENTE por usuario */
   // saveEncuestaCliente2(estado: string,
@@ -268,176 +267,176 @@ export class DatosEncuestaProvider {
     toast.present();
   }
 
-/** Guarda la encuesta de CLIENTE por usuario */
-  saveEncuestaCliente(estado: string,
-    elementos: string, banio: string, cocina: string,
-    nivelSuciedad: string, observaciones: string,
-    imagenes: Array<string>) {
-    var subject = new Subject();
-    var subjectImg = new Subject();
+  /** Guarda la encuesta de CLIENTE por usuario */
+  // saveEncuestaCliente(estado: string,
+  //   elementos: string, banio: string, cocina: string,
+  //   nivelSuciedad: string, observaciones: string,
+  //   imagenes: Array<string>) {
+  //   var subject = new Subject();
+  //   var subjectImg = new Subject();
 
-    let storeRef = firebase.storage().ref();
-    let userID: String = localStorage.getItem("userID");
-    let fecha: Date = new Date();
-    let fechaS: String;
-    let imagenesURL: Array<string> = [];
-    let img1: string = '';
-    let img2: string = '';
-    let img3: string = '';
-    let obs: Observable<any>;
-    let obs1: Observable<any>;
-    let obs2: Observable<any>;
-
-
-    fechaS = this.obtenerFechaNombre();
-
-    let prom = new Promise((resolve, reject) => {
+  //   let storeRef = firebase.storage().ref();
+  //   let userID: String = localStorage.getItem("userID");
+  //   let fecha: Date = new Date();
+  //   let fechaS: String;
+  //   let imagenesURL: Array<string> = [];
+  //   let img1: string = '';
+  //   let img2: string = '';
+  //   let img3: string = '';
+  //   let obs: Observable<any>;
+  //   let obs1: Observable<any>;
+  //   let obs2: Observable<any>;
 
 
-      if (imagenes[0] != '') {
+  //   fechaS = this.obtenerFechaNombre();
 
-        let promesa = new Promise((resolve, reject) => {
-          let storeRef = firebase.storage().ref();
-          let nombreArchivo: string = new Date().valueOf().toString(); // 1231231231
-
-          let uploadTask: firebase.storage.UploadTask =
-            storeRef.child(`img/${nombreArchivo}`)
-              .putString(imagenes[0], 'base64', { contentType: 'image/jpeg' });
-
-          uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
-            () => { }, // saber el % de cuantos Mbs se han subido
-            (error) => {
-              // manejo de error
-              reject();
-            }, () => {
-              // Tomo la URL
-              uploadTask.snapshot.ref.getDownloadURL().then((url) => {
-
-                imagenesURL.push(url);
-                resolve();
-              });
-            })
-        });
-
-        obs = Observable.fromPromise(promesa);
-      }
-
-      if (imagenes[1] != '') {
-
-        let promesa = new Promise((resolve, reject) => {
-          let storeRef = firebase.storage().ref();
-          let nombreArchivo: string = new Date().valueOf().toString(); // 1231231231
-
-          let uploadTask: firebase.storage.UploadTask =
-            storeRef.child(`img/${nombreArchivo}`)
-              .putString(imagenes[1], 'base64', { contentType: 'image/jpeg' });
-
-          uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
-            () => { }, // saber el % de cuantos Mbs se han subido
-            (error) => {
-              // manejo de error
-              reject();
-            }, () => {
-              // Tomo la URL
-              uploadTask.snapshot.ref.getDownloadURL().then((url) => {
-
-                imagenesURL.push(url);
-                resolve();
-              });
-            })
-        });
-
-        obs1 = Observable.fromPromise(promesa);
-      }
-
-      if (imagenes[2] != '') {
-
-        let promesa = new Promise((resolve, reject) => {
-          let storeRef = firebase.storage().ref();
-          let nombreArchivo: string = new Date().valueOf().toString(); // 1231231231
-
-          let uploadTask: firebase.storage.UploadTask =
-            storeRef.child(`img/${nombreArchivo}`)
-              .putString(imagenes[2], 'base64', { contentType: 'image/jpeg' });
-
-          uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
-            () => { }, // saber el % de cuantos Mbs se han subido
-            (error) => {
-              // manejo de error
-              reject();
-            }, () => {
-              // Tomo la URL
-              uploadTask.snapshot.ref.getDownloadURL().then((url) => {
-                imagenesURL.push(url);
-                resolve();
-              });
-            })
-        });
-
-        obs2 = Observable.fromPromise(promesa);
-      }
-
-      switch (imagenesURL.length) {
-        case 1:
-          obs.subscribe(() => { }, (err) => { }, () => {
-            this.afDB.object('/encuestaCliente/' + userID + '/' + fechaS).update({
-              estado: estado,
-              elementos: elementos,
-              banio: banio,
-              cocina: cocina,
-              nivelSuciedad: nivelSuciedad,
-              observaciones: observaciones,
-              imagen1: imagenesURL[0],
-              imagen2: '',
-              imagen3: ''
-            }).then(() => resolve());
-          });
-
-          break;
-        case 2:
-          obs.subscribe(() => { }, (err) => { }, () => {
-            obs1.subscribe(() => { }, (err) => { }, () => {
-              this.afDB.object('/encuestaCliente/' + userID + '/' + fechaS).update({
-                estado: estado,
-                elementos: elementos,
-                banio: banio,
-                cocina: cocina,
-                nivelSuciedad: nivelSuciedad,
-                observaciones: observaciones,
-                imagen1: imagenesURL[0],
-                imagen2: imagenesURL[1],
-                imagen3: ''
-              }).then(() => resolve());
-            })
-          });
-          break;
-        case 3:
-          obs.subscribe(() => { }, (err) => { }, () => {
-            obs1.subscribe(() => { }, (err) => { }, () => {
-              obs2.subscribe(() => { }, (err) => { }, () => {
-
-                this.afDB.object('/encuestaCliente/' + userID + '/' + fechaS).update({
-                  estado: estado,
-                  elementos: elementos,
-                  banio: banio,
-                  cocina: cocina,
-                  nivelSuciedad: nivelSuciedad,
-                  observaciones: observaciones,
-                  imagen1: imagenesURL[0],
-                  imagen2: imagenesURL[1],
-                  imagen3: imagenesURL[2]
-                }).then(() => resolve());
-              })
-            })
-          });
-
-          break;
-      }
+  //   let prom = new Promise((resolve, reject) => {
 
 
-    });
+  //     if (imagenes[0] != '') {
 
-    return prom;
-  }
+  //       let promesa = new Promise((resolve, reject) => {
+  //         let storeRef = firebase.storage().ref();
+  //         let nombreArchivo: string = new Date().valueOf().toString(); // 1231231231
+
+  //         let uploadTask: firebase.storage.UploadTask =
+  //           storeRef.child(`img/${nombreArchivo}`)
+  //             .putString(imagenes[0], 'base64', { contentType: 'image/jpeg' });
+
+  //         uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+  //           () => { }, // saber el % de cuantos Mbs se han subido
+  //           (error) => {
+  //             // manejo de error
+  //             reject();
+  //           }, () => {
+  //             // Tomo la URL
+  //             uploadTask.snapshot.ref.getDownloadURL().then((url) => {
+
+  //               imagenesURL.push(url);
+  //               resolve();
+  //             });
+  //           })
+  //       });
+
+  //       obs = Observable.fromPromise(promesa);
+  //     }
+
+  //     if (imagenes[1] != '') {
+
+  //       let promesa = new Promise((resolve, reject) => {
+  //         let storeRef = firebase.storage().ref();
+  //         let nombreArchivo: string = new Date().valueOf().toString(); // 1231231231
+
+  //         let uploadTask: firebase.storage.UploadTask =
+  //           storeRef.child(`img/${nombreArchivo}`)
+  //             .putString(imagenes[1], 'base64', { contentType: 'image/jpeg' });
+
+  //         uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+  //           () => { }, // saber el % de cuantos Mbs se han subido
+  //           (error) => {
+  //             // manejo de error
+  //             reject();
+  //           }, () => {
+  //             // Tomo la URL
+  //             uploadTask.snapshot.ref.getDownloadURL().then((url) => {
+
+  //               imagenesURL.push(url);
+  //               resolve();
+  //             });
+  //           })
+  //       });
+
+  //       obs1 = Observable.fromPromise(promesa);
+  //     }
+
+  //     if (imagenes[2] != '') {
+
+  //       let promesa = new Promise((resolve, reject) => {
+  //         let storeRef = firebase.storage().ref();
+  //         let nombreArchivo: string = new Date().valueOf().toString(); // 1231231231
+
+  //         let uploadTask: firebase.storage.UploadTask =
+  //           storeRef.child(`img/${nombreArchivo}`)
+  //             .putString(imagenes[2], 'base64', { contentType: 'image/jpeg' });
+
+  //         uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+  //           () => { }, // saber el % de cuantos Mbs se han subido
+  //           (error) => {
+  //             // manejo de error
+  //             reject();
+  //           }, () => {
+  //             // Tomo la URL
+  //             uploadTask.snapshot.ref.getDownloadURL().then((url) => {
+  //               imagenesURL.push(url);
+  //               resolve();
+  //             });
+  //           })
+  //       });
+
+  //       obs2 = Observable.fromPromise(promesa);
+  //     }
+
+  //     switch (imagenesURL.length) {
+  //       case 1:
+  //         obs.subscribe(() => { }, (err) => { }, () => {
+  //           this.afDB.object('/encuestaCliente/' + userID + '/' + fechaS).update({
+  //             estado: estado,
+  //             elementos: elementos,
+  //             banio: banio,
+  //             cocina: cocina,
+  //             nivelSuciedad: nivelSuciedad,
+  //             observaciones: observaciones,
+  //             imagen1: imagenesURL[0],
+  //             imagen2: '',
+  //             imagen3: ''
+  //           }).then(() => resolve());
+  //         });
+
+  //         break;
+  //       case 2:
+  //         obs.subscribe(() => { }, (err) => { }, () => {
+  //           obs1.subscribe(() => { }, (err) => { }, () => {
+  //             this.afDB.object('/encuestaCliente/' + userID + '/' + fechaS).update({
+  //               estado: estado,
+  //               elementos: elementos,
+  //               banio: banio,
+  //               cocina: cocina,
+  //               nivelSuciedad: nivelSuciedad,
+  //               observaciones: observaciones,
+  //               imagen1: imagenesURL[0],
+  //               imagen2: imagenesURL[1],
+  //               imagen3: ''
+  //             }).then(() => resolve());
+  //           })
+  //         });
+  //         break;
+  //       case 3:
+  //         obs.subscribe(() => { }, (err) => { }, () => {
+  //           obs1.subscribe(() => { }, (err) => { }, () => {
+  //             obs2.subscribe(() => { }, (err) => { }, () => {
+
+  //               this.afDB.object('/encuestaCliente/' + userID + '/' + fechaS).update({
+  //                 estado: estado,
+  //                 elementos: elementos,
+  //                 banio: banio,
+  //                 cocina: cocina,
+  //                 nivelSuciedad: nivelSuciedad,
+  //                 observaciones: observaciones,
+  //                 imagen1: imagenesURL[0],
+  //                 imagen2: imagenesURL[1],
+  //                 imagen3: imagenesURL[2]
+  //               }).then(() => resolve());
+  //             })
+  //           })
+  //         });
+
+  //         break;
+  //     }
+
+
+  //   });
+
+  //   return prom;
+  // }
 
 }

@@ -59,7 +59,7 @@ export class MenuComponent {
       case 'Cocinero':
         this.pages = [
           { title: 'Nuevo plato', component: "AltaPlatoPage"},
-        ]:
+        ];
           break;
       case 'Bartender':
         this.pages = [

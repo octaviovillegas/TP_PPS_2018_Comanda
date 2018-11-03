@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides, LoadingController} from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Slides, LoadingController, Loading} from 'ionic-angular';
 import {Camera, CameraOptions} from '@ionic-native/camera';
 import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
@@ -47,9 +47,9 @@ export class AltaBebidaPage {
     public bebidaProveedor:bebidasProvider,
     ) 
   {
-    this.ingredientes = "assets/imgs/ingredientesBebida.png";
-    this.preparacion = "assets/imgs/preparacion.png";
-    this.preparado = "assets/imgs/preparadoBebida.png";
+    this.ingredientes = "assets/imgs/ingredientesBebida.jpg";
+    this.preparacion = "assets/imgs/preparacion.jpg";
+    this.preparado = "assets/imgs/preparadoBebida.jpg";
     this.fotoIngredientesTomada = false;
     this.fotoPreparacionTomada = false;
     this.fotoPreparadoTomada = false;
@@ -132,15 +132,20 @@ export class AltaBebidaPage {
         .then(res =>{
           this.storage.ref(this.rutaArchivo).getDownloadURL().toPromise()
           .then(urlImagen =>{
-            this.preparacion = urlImagen;
+            nuevo.preparacionFoto = urlImagen;
             this.createUploadTask(this.preparado)
             .then(res =>{
               this.storage.ref(this.rutaArchivo).getDownloadURL().toPromise()
               .then(urlImagen =>{
-                this.preparado =urlImagen;
+                nuevo.preparadoFoto =urlImagen;
                 this.bebidaProveedor.guardarBebida(nuevo)
                 .then(res =>{
                   loading.dismiss();
+                  let platoCargado = this.esperar(this.creaFondo("Bebida Cargada!", "assets/imgs/icono_restaurant.png"))
+                  platoCargado.present();
+                  setTimeout(() => {
+                    platoCargado.dismiss();
+                  }, 4000);
                 })
               })
             })
@@ -158,6 +163,38 @@ export class AltaBebidaPage {
     this.task = this.storage.ref(this.rutaArchivo).putString(file, 'data_url');
 
     return this.task;
+  }
+
+  creaFondo(mensaje, imagen) {
+    let fondo = `
+          <div>
+            <ion-row>
+              <ion-col>
+                <img src="${imagen}">
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <h1> ${mensaje} </h1>
+            </ion-row> 
+          </div> `;
+    return fondo;
+
+  }
+  esperar(personalizado?: string): Loading {
+    let loading;
+    if (!personalizado) {
+      loading = this.loadingCtrl.create({
+
+        content: 'Por favor, espere...'
+      });
+    }
+    else {
+      loading = this.loadingCtrl.create({
+        spinner: 'hide',
+        content: personalizado,
+      })
+    }
+    return loading;
   }
 
 }

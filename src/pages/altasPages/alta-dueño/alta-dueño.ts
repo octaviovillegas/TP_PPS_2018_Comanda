@@ -9,7 +9,7 @@ import {UsuariosProvider} from '../../../providers/usuarios/usuarios';
 import {MesasPage} from '../../mesasPages/mesas/mesas';
 //import { regexValidators } from '../validators/validator';
 /**
- * Generated class for the AltaSupervisorPage page.
+ * Generated class for the AltaDueñoPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -17,10 +17,10 @@ import {MesasPage} from '../../mesasPages/mesas/mesas';
 
 @IonicPage()
 @Component({
-  selector: 'page-alta-supervisor',
-  templateUrl: 'alta-supervisor.html',
+  selector: 'page-alta-dueño',
+  templateUrl: 'alta-dueño.html',
 })
-export class AltaSupervisorPage {
+export class AltaDueñoPage {
   @ViewChild(Slides) slides: Slides;
   supervisorForm:FormGroup;
   fotoNuevo:string;
@@ -42,7 +42,7 @@ export class AltaSupervisorPage {
     this.fotoNuevo = "assets/imgs/persona.png";
     this.fotoTomada = false;
     
-    this.perfil = "Supervisor";
+    this.perfil = "Dueño";
     this.supervisorForm = this.formBuilder.group({
       email: [
         '', Validators.required
@@ -80,8 +80,9 @@ export class AltaSupervisorPage {
   }
 
   public inicio(){
-    this.navCtrl.setRoot(MesasPage);
+    this.navCtrl.setRoot(MesasPage)
   }
+
 
 
   public captureImage(cual:string){

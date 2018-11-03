@@ -1,0 +1,90 @@
+<!--
+  Generated template for the AltaDueñoPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-content padding>
+    <ion-slides #Slides style="height: auto" (ionSlideDrag)="onIonDrag()">
+      <ion-slide>
+        <ion-row>
+          <ion-col>
+            <h1>Da de alta a un nuevo {{perfil}}</h1>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <img class="imgPersona" src="assets/imgs/empleado.png">
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <button class="boton" round color="danger" (click)="inicio()" ion-button>Volver</button>
+            <button class="boton" round color="secondary" (click)="siguiente()" ion-button>Siguiente</button>
+          </ion-col>
+        </ion-row>
+      </ion-slide>
+      <ion-slide>
+        <form [formGroup]="supervisorForm">
+            <ion-item>
+              <ion-label floating>Email</ion-label>
+              <ion-input [formControl]="supervisorForm.controls['email']" type="email"></ion-input>
+            </ion-item>
+            <div *ngIf="!supervisorForm.controls.email.valid && supervisorForm.controls.email.dirty" class="validator-error">
+              Por favor, ingrese un email valido
+            </div>
+        
+            <ion-item>
+              <ion-label floating>Nombre</ion-label>
+              <ion-input [formControl]="supervisorForm.controls['nombre']" type="text" required></ion-input>
+            </ion-item>
+            <div *ngIf="!supervisorForm.controls.nombre.valid && supervisorForm.controls.nombre.dirty" class="validator-error">
+              El nombre es requerido
+            </div>
+        
+            <ion-item>
+              <ion-label floating>Apellido</ion-label>
+              <ion-input [formControl]="supervisorForm.controls['apellido']" type="text" required></ion-input>
+            </ion-item>
+            <div *ngIf="!supervisorForm.controls.apellido.valid && supervisorForm.controls.apellido.dirty" class="validator-error">
+              El apellido es requerido
+            </div>
+        
+            <ion-item>
+              <ion-label floating> DNI</ion-label>
+              <ion-input [formControl]="supervisorForm.controls['dni']" type="number" required></ion-input>
+            </ion-item>
+            <div *ngIf="!supervisorForm.controls.dni.valid && supervisorForm.controls.dni.dirty" class="validator-error">
+              El dni es requerido
+            </div>
+        
+            <ion-item>
+              <ion-label floating>CUIL</ion-label>
+              <ion-input [formControl]="supervisorForm.controls['cuil']" type="number" required></ion-input>
+            </ion-item>
+            <div *ngIf="!supervisorForm.controls.cuil.valid && supervisorForm.controls.cuil.dirty" class="validator-error">
+              El CUIL es requerido
+            </div>
+            <button class="" round  block color="green" (click)="captureImage()" ion-button> <ion-icon name="qr-scanner"></ion-icon>  </button>          
+            <button  class="" block round  color="primary" (click)="anterior()" ion-button>volver</button>
+            <button class="" block round  color="secondary" (click)="siguiente()" [disabled]="!supervisorForm.valid" ion-button>Siguiente</button>
+          </form>
+      </ion-slide>
+      <ion-slide>
+        <ion-row>
+          <ion-col>
+            <h1>Toma una foto</h1>
+            <img class="imgPersona" [src]="fotoNuevo"> 
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <button class="" round large block color="green" (click)="captureImage()" ion-button> <ion-icon name="camera"></ion-icon>  Tomar Foto </button>
+            <button class="boton" round color="primary" (click)="anterior()" ion-button>Volver</button>
+            <button class="boton" round color="secondary" (click)="subir()" [disabled]="!fotoTomada" ion-button>crear</button>
+          </ion-col>
+        </ion-row>
+      </ion-slide>
+    </ion-slides>
+  </ion-content>
+  

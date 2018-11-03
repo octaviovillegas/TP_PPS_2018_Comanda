@@ -5,7 +5,7 @@
   Ionic pages and navigation.
 -->
 <ion-content padding>
-  <ion-slides #Slides  (ionSlideDrag)="onIonDrag()">
+  <ion-slides #Slides style="height: auto" (ionSlideDrag)="onIonDrag()">
     <ion-slide>
       <ion-grid>
         <ion-row>
@@ -20,7 +20,7 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <button class="boton" round color="danger" (click)="volver()" ion-button>Volver</button>
+            <button class="boton" round color="danger" (click)="inicio()" ion-button>Volver</button>
           </ion-col>
           <ion-col>
             <button class="boton" round color="secondary" (click)="siguiente()" ion-button>Agregar</button>

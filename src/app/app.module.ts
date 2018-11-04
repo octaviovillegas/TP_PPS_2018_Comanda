@@ -11,6 +11,7 @@ import { AltaSupervisorPageModule } from './../pages/altasPages/alta-supervisor/
 import { AltaDueñoPageModule } from './../pages/altasPages/alta-dueño/alta-dueño.module';
 import { VerImagenPedidoPageModule } from '../pages/pedidosPages/ver-imagen-pedido/ver-imagen-pedido.module';
 import { QrPropinaPageModule } from './../pages/qr/qr-propina/qr-propina.module';
+import { AltaMesaPageModule } from './../pages/altasPages/alta-mesa/alta-mesa.module';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -18,13 +19,10 @@ import { IonicApp, IonicErrorHandler, IonicModule, Modal, NavParams } from 'ioni
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
-
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { SplashPage } from '../pages/splash/splash';
-//import { LindasPage } from '../pages/lindas/lindas';
-//import { FeasPage } from '../pages/feas/feas';
 import { ModalPage } from '../pages/modal/modal';
 import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion';
 //AF
@@ -45,15 +43,16 @@ import { IonicImageLoader } from 'ionic-image-loader';
 import { NativeAudio } from '@ionic-native/native-audio';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ComponentsModule } from '../components/components.module';
-import { NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AuthProvider } from '../providers/auth/auth';
 import { DatosEncuestaProvider } from '../providers/datos/datosEncuesta';
 import { platosProvider } from '../providers/platos/plato';
 import { bebidasProvider } from '../providers/bebidas/bebidas';
 import { UsuariosProvider } from '../providers/usuarios/usuarios';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
-
-
+import { NgxQRCodeModule } from 'ngx-qrcode2';
+import { MesasProvider } from '../providers/mesas/mesas';
+import { UtilProvider } from '../providers/util/util';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDsDUoXfo8kvkYOm9Q8DzWHF82QVGltwo4",
@@ -96,7 +95,9 @@ export const firebaseConfig = {
     AltaSupervisorPageModule,
     AltaDueñoPageModule,
     VerImagenPedidoPageModule,
-    QrPropinaPageModule
+    QrPropinaPageModule,
+    NgxQRCodeModule,
+    AltaMesaPageModule
 
   ],
   bootstrap: [
@@ -124,7 +125,9 @@ export const firebaseConfig = {
     DatosEncuestaProvider,
     platosProvider,
     bebidasProvider,
-    UsuariosProvider
+    UsuariosProvider,
+    MesasProvider,
+    UtilProvider
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

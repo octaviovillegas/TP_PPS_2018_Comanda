@@ -1,4 +1,3 @@
-
 import { AngularFireList } from 'angularfire2/database';
 import { VerImagenPedidoPage } from './../ver-imagen-pedido/ver-imagen-pedido';
 import { Component } from '@angular/core';
@@ -33,7 +32,7 @@ export class AltaPedidoPage {
 
   public mesa: any;
   public tipomenu: any;
-  public pedido: Array<IPedido>;
+  public pedidoACargar: IPedido[] = [];
   cant: number;
   public platos: any;
 
@@ -47,16 +46,14 @@ export class AltaPedidoPage {
     this.traerMenuPorCategoria('Minutas');
     this.mesa = this.navParams.get("mesa");
     this.tipomenu = "minutas";
-    this.pedido = [];
-
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AltaPedidoPage');
+    //console.log('ionViewDidLoad AltaPedidoPage');
   }
 
 
-  cargarPedido(item: IPlato): IPedido {
+  cargarLista(item: IPlato): IPedido {
     let pedido: IPedido = {
       nombre: item.nombre,
       id: item.id,
@@ -69,8 +66,7 @@ export class AltaPedidoPage {
       preparadoFoto: item.preparadoFoto,
       idPedido: 0,
       cantidad: 0
-    }
-
+    };
     return pedido;
   }
 
@@ -103,38 +99,35 @@ export class AltaPedidoPage {
 
   traerMenuPorCategoria(categoria: string) {
 
-    console.log('CATEGORIA1');
-    console.log(categoria);
-    console.log(this.existeMenu(categoria));
     if (!(this.existeMenu(categoria))) {
       this._platosProvider.traerPlatos(categoria).subscribe(dataPlatos => {
-
-        console.log(dataPlatos);
 
         switch (categoria) {
           case 'Minutas':
             dataPlatos.forEach((item: IPlato) => {
-              this.lMinutas.push(this.cargarPedido(item));
+              if (!this.lMinutas.some(p => p.id === item.id)) {
+                this.lMinutas.push(this.cargarLista(item));
+              }
             });
             break;
           case 'Calientes':
             dataPlatos.forEach((item: IPlato) => {
-              this.lCalientes.push(this.cargarPedido(item));
+              this.lCalientes.push(this.cargarLista(item));
             });
             break;
           case 'Frios':
             dataPlatos.forEach((item: IPlato) => {
-              this.lFrios.push(this.cargarPedido(item));
+              this.lFrios.push(this.cargarLista(item));
             });
             break;
           case 'Postres':
             dataPlatos.forEach((item: IPlato) => {
-              this.lPostres.push(this.cargarPedido(item));
+              this.lPostres.push(this.cargarLista(item));
             });
             break;
           // case 'Bebidas':
           //   dataPlatos.forEach((item: IPlato) => {
-          //     this.lBebidas.push(this.cargarPedido(item));
+          //     this.lBebidas.push(this.cargarLista(item));
           //   });
           //   break;
         }
@@ -147,9 +140,8 @@ export class AltaPedidoPage {
     if (!this.existeMenu('Bebidas')) {
       this._bebidasProvider.traerBebidas().subscribe(dataBebidas => {
         dataBebidas.forEach((item: IPlato) => {
-          this.lBebidas.push(this.cargarPedido(item));
+          this.lBebidas.push(this.cargarLista(item));
         });
-        console.log(dataBebidas);
       });
     }
   }
@@ -179,8 +171,7 @@ export class AltaPedidoPage {
   }
 
   sumarCantidad(item: IPedido, value: number) {
-      item.cantidad = item.cantidad + value;
-    
+    item.cantidad = item.cantidad + value;
   }
   restarCantidad(item: IPedido, value: number) {
     if (item.cantidad > 0) {
@@ -192,17 +183,15 @@ export class AltaPedidoPage {
     // const popover = this.popCtrl.create(VerImagenPedidoPage, { imagen: img, titulo: tit, votos: votos });
     // popover.present();
   }
-
   getItems(ev: any) {
-    this.inicializarItemsMenu();
-    const val = ev.target.value;
-    if (val && val.trim() != '') {
-      this.lCalientes = this.lCalientes.filter((item) => {
-        return (item.nombre.toLowerCase().indexOf(val.toLowerCase()) > -1);
-      })
-    }
+    // this.inicializarItemsMenu();
+    // const val = ev.target.value;
+    // if (val && val.trim() != '') {
+    //   this.lCalientes = this.lCalientes.filter((item) => {
+    //     return (item.nombre.toLowerCase().indexOf(val.toLowerCase()) > -1);
+    //   })
+    // }
   }
-
   inicializarItemsMenu() {
     // this.menu = [
     //   {
@@ -280,6 +269,24 @@ export class AltaPedidoPage {
 
   agregarPedido() {
 
+    this.cargarPedido(this.lMinutas);
+    this.cargarPedido(this.lFrios);
+    this.cargarPedido(this.lCalientes);
+    this.cargarPedido(this.lPostres);
+    this.cargarPedido(this.lBebidas);
+
+    console.log(this.pedidoACargar);
+
   }
+
+  cargarPedido(itemsSeleccionados: IPedido[]) {
+    itemsSeleccionados
+      .filter(item => item.cantidad > 0)
+      .forEach((i: IPedido) => {
+        console.log(i);
+        this.pedidoACargar.push(i);
+      });
+  }
+
 
 }

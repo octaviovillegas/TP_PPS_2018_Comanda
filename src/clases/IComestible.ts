@@ -1,9 +1,11 @@
-export interface IComestible{
-    ingredientesFoto:string;
-    preparacionFoto:string;
-    preparadoFoto:string;
-    nombre:string;
-    importe:number;
-    descripcion:string;
-    key?:string;
+export interface IComestible {
+    ingredientesFoto: string;
+    preparacionFoto: string;
+    preparadoFoto: string;
+    nombre: string;
+    id: number;
+    tiempoEstimado: number;
+    importe: number;
+    descripcion: string;
+    key?: string;
 }

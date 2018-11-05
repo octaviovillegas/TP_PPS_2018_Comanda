@@ -120,7 +120,7 @@
     </ion-list>
 
     <div padding>
-        <button ion-button block type="submit" [disabled]="!frmEncuesta.valid && imagen64 ==''">Guardar</button>
+        <button ion-button block type="submit" [disabled]="!frmEncuesta.valid || imagen64 ==''">Guardar</button>
         <!-- <button ion-button block type="submit" [disabled]="!frmEncuesta.valid">Guardar</button> -->
     </div>
   </form>

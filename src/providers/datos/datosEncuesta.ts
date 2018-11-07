@@ -87,6 +87,9 @@ export class DatosEncuestaProvider {
     return fecha.getFullYear().toString() + (fecha.getMonth() + 1).toString() + fecha.getDate().toString();
   }
 
+  public guardarEncuesta(relacionColegas:string, 
+    puntualidad: string, actitud:string,
+    eficacia:string)
   /** Obtiene la encuesta del CLIENTE por usuario y fecha del dia. */
   getCantEncuestaCliente(): Observable<{}[]> {
     let userID: String = localStorage.getItem("userID");

@@ -16,7 +16,7 @@ export class UsuariosProvider {
   }
 
   public obtenerUsuarios(){
-    return this.afDB.list('usuarios').valueChanges();
+    return this.afDB.list<Iusuario>('usuarios').valueChanges();
   }
 
   public buscarUsuario(buscado:Iusuario){

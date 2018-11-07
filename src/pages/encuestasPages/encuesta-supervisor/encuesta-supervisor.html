@@ -117,5 +117,94 @@
         <button class="boton" type="submit" [disabled]="!encuestaEmpleadoForm3.valid" round color="secondary"  ion-button>Guardar</button>
       </form>
     </ion-slide>
+    <ion-slide>
+      <ion-grid>
+        <ion-row >
+          <ion-col>
+            <h3> Seleccion el cliente</h3>
+            <ion-item>
+              <ion-label>Empleados:</ion-label>
+              <ion-select [(ngModel)]="usuario">
+                <ion-option *ngFor="let usuario of usuarios" [value]="usuario">{{usuario.nombre}}  {{usuario.apellido}}</ion-option>
+              </ion-select>
+            </ion-item>
+            <button class="boton" round color="danger"  (click)="ir(1)" ion-button>Volver</button>
+            <button class="boton" round color="secondary" [disabled]="!usuario" (click)="siguiente()" ion-button>Siguiente</button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+    <ion-slide>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <form [formGroup]="encuestaClienteForm">
+              <p>¿Como calificaria el servicio otorgado a {{usuario.nombre}} {{usuario.apellido}} durante su visita?</p>
+              <ion-item>
+                <ion-select formControlName="servicioCliente">
+                  <ion-option value="Excelente">Excelente</ion-option>
+                  <ion-option value="Muy Bueno">Muy Bueno</ion-option>
+                  <ion-option value="Bueno">Bueno</ion-option>
+                  <ion-option value="Regular">Regular</ion-option>
+                  <ion-option value="Mala">Mala</ion-option>
+                  <ion-option value="Muy Mala">Muy Mala</ion-option>
+                </ion-select>
+              </ion-item> 
+              <p>¿Cuales considera que son los mejores cualidades de {{usuario.nombre}} {{usuario.apellido}} como cliente?</p>
+              <ion-list>
+                <ion-item>
+                  <ion-label>Amabilidad</ion-label>
+                  <ion-checkbox formControlName="amabilidad"></ion-checkbox>
+                </ion-item>
+                <ion-item>
+                  <ion-label>La propina</ion-label>
+                  <ion-checkbox formControlName="propina"></ion-checkbox>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Fidelidad</ion-label>
+                  <ion-checkbox formControlName="fidelidad"></ion-checkbox>
+                </ion-item>
+              </ion-list>                           
+              <button class="boton" (click)="anterior()"  round color="danger"  ion-button>Volver</button>
+              <button class="boton" (click)="siguiente()" [disabled]="!encuestaClienteForm.valid" round color="secondary"  ion-button>Siguiente</button>              
+            </form>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+    <ion-slide>
+      <form [formGroup]="encuestaClienteForm2">
+        <p>¿Considera que la propina otorgada por {{usuario.nombre}} {{usuario.apellid}} corresponde al servicio prestado por el restaurant?</p>
+        <ion-list radio-group formControlName="rendimiento">
+          <ion-item>
+            <ion-label>Si</ion-label>
+            <ion-radio value="si"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>No</ion-label>
+            <ion-radio value="no"></ion-radio>
+          </ion-item>
+        </ion-list>
+        <p>¿Como calificaria a {{usuario.nombre}} {{usuario.apellido}}?</p>
+        <ion-item>
+          
+          <rating [(ngModel)]="rate" formControlName="calificacionCliente" readOnly="false" max="5" emptyStarIconName="star-outline" halfStarIconName="star-half"
+            starIconName="star" nullable="false"></rating>
+        </ion-item>
+        <button class="boton" (click)="anterior()" round color="danger" ion-button>Volver</button>
+        <button class="boton" (click)="siguiente()" [disabled]="!encuestaClienteForm2.valid" round color="secondary"  ion-button>Siguiente</button>
+      </form>      
+    </ion-slide>
+    <ion-slide>
+      <form [formGroup]="encuestaClienteForm3" (ngSubmit)="guardar()">
+        <p>¿Que observaciones tiene sobre {{usuario.nombre}} {{usuario.apellido}}?</p>
+        <ion-item>
+          <ion-label>Observaciones</ion-label>
+          <ion-textarea maxLength="140" formControlName="observacionesCliente"></ion-textarea>
+        </ion-item>
+        <button class="boton" (click)="anterior" round color="danger" ion-button>Volver</button>
+        <button class="boton" type="submit" [disabled]="!encuestaClienteForm3.valid" round color="secondary"  ion-button>Guardar</button>
+      </form>
+    </ion-slide>
   </ion-slides>
 </ion-content>

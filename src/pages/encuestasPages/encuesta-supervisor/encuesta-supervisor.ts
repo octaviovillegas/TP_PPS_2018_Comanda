@@ -24,6 +24,9 @@ export class EncuestaSupervisorPage {
   encuestaEmpleadoForm:FormGroup;
   encuestaEmpleadoForm2:FormGroup;
   encuestaEmpleadoForm3:FormGroup;
+  encuestaClienteForm:FormGroup:
+  encuestaClienteForm:FormGroup;
+  encuestaClienteForm:FormGroup;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -49,6 +52,13 @@ export class EncuestaSupervisorPage {
 
     this.encuestaEmpleadoForm3 = this.formBuilder.group({
       observaciones:['', Validators.required]
+    })
+
+    this.encuestaClienteForm = this.formBuilder.group({
+      servicioCliente:['', Validators.required],
+      amabilidad: ['false'],
+      propina: ['false'],
+      fidelidad: ['false']
     })
 
   }
@@ -104,7 +114,7 @@ export class EncuestaSupervisorPage {
           })
         })
         console.log(this.usuarios);
-        this.ir(4);
+        this.ir(5);
         break;
       default:
         break;

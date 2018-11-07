@@ -87,9 +87,18 @@ export class DatosEncuestaProvider {
     return fecha.getFullYear().toString() + (fecha.getMonth() + 1).toString() + fecha.getDate().toString();
   }
 
-  public guardarEncuesta(relacionColegas:string, 
+  public guardarEncuesta(email:string, relacionColegas:string, 
     puntualidad: string, actitud:string,
-    eficacia:string)
+    eficacia:string, rendimiento:string, calificacion:string, observaciones:string){
+    return this.afdb.object()'/encuestaSupervisor/' + email + '/' + this.obtenerFechaNombre().set({
+      relacionColegas: relacionColegas,
+      puntualidad: puntualidad,
+      eficacia: eficacia,
+      rendimiento: rendimiento,
+      calificacion: calificacion,
+      observaciones: observaciones
+    });
+  }
   /** Obtiene la encuesta del CLIENTE por usuario y fecha del dia. */
   getCantEncuestaCliente(): Observable<{}[]> {
     let userID: String = localStorage.getItem("userID");

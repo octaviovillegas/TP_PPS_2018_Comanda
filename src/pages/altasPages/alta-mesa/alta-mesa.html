@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Nueva Mesa
+    </ion-title>
+    <ion-buttons right>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name='menu'></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <form [formGroup]="formGroup" (ngSubmit)="guardarMesa()">
+    <ion-list>
+      <ion-item>
+        <ion-icon name="grid" item-start></ion-icon>
+        <ion-label stacked>Numero:</ion-label>
+        <ion-input formControlName="numero" type="number" placeholder="Numero"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="people" item-start></ion-icon>
+        <ion-label stacked>Capacidad:</ion-label>
+        <ion-input formControlName="capacidad" type="number" placeholder="Capacidad"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon name="arrow-dropright" item-start></ion-icon>
+        <ion-label>Tipo</ion-label>
+        <ion-select formControlName="tipo" interface="popover">
+          <ion-option value="comun">Común</ion-option>
+          <ion-option value="vip">VIP</ion-option>
+          <ion-option value="discapacitados">Discapacitados</ion-option>
+        </ion-select>
+      </ion-item>
+
+
+      <ion-item>
+        <ion-card *ngIf="codigoGenerado">
+          <ngx-qrcode [qrc-value]="codigoGenerado"></ngx-qrcode>
+          <ion-card-content>
+            <p>Código generado: {{codigoGenerado}}</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+      <ion-item>
+        <button ion-button block type="button" color='secondary' [disabled]="!formGroup.valid" (click)='crearCodigoQR()'>
+          <ion-icon name="barcode" item-start></ion-icon>
+        </button>
+      </ion-item>
+
+      <ion-item>
+        <ion-card>
+          <img [src]="imagenPreview">
+        </ion-card>
+      </ion-item>
+      <ion-item>
+        <button ion-button block type="button" color="primary" (click)="mostrarCamara()">
+          <ion-icon name="camera"></ion-icon>
+        </button>
+      </ion-item>
+    </ion-list>
+
+    <div padding>
+      <button ion-button block type="submit" [disabled]="!formGroup.valid || codigoGenerado==''">Guardar</button>
+      <!-- [disabled]="!formGroup.valid || codigoGenerado=='' || imagen64 ==''" -->
+    </div>
+  </form>
+
+</ion-content>

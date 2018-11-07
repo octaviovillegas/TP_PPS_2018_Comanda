@@ -1,14 +1,20 @@
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Injectable } from '@angular/core';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { Page } from 'ionic-angular/umd/navigation/nav-util';
+import { of } from 'rxjs/observable/of';
 
 @Injectable()
 export class AuthProvider {
 
-  public perfilLogueado: String;
+  //public perfilLogueado: string;
+
+  public perfil$ = new BehaviorSubject("");
+
+
 
   constructor(private afAuth: AngularFireAuth) {
-    console.log('Hello AuthProvider Provider');
-    this.perfilLogueado = '';
+    
   }
 
   // Registro de usuario
@@ -36,5 +42,49 @@ export class AuthProvider {
     })
   }
 
+  buscarPerfil():Observable<String>{
+    return this.perfil$.asObservable();
+  }
+
+  buscarDestino(perfil:string):string {
+    let destinoPage: string;
+    
+    this.perfil$.next(perfil);
+
+    switch(perfil) {
+      case 'Dueño':
+      destinoPage = "MesasPage";
+      break;
+      
+    case 'Supervisor':
+      destinoPage = "MesasPage";
+
+      break;
+    case 'Cliente':
+      destinoPage = "MesasPage";
+
+      break;
+    case 'Cocinero':
+      destinoPage = "MesasPage";
+      break;
+    case 'Bartender':
+      destinoPage = "MesasPage";
+
+      break;
+    case 'Mozo':
+      destinoPage = "MesasPage";
+
+      break;
+    case 'Mestre':
+      destinoPage = "MesasPage";
+
+      break;
+    default:
+      destinoPage = "LoginPage";
+      break;
+    }
+
+    return destinoPage;
+  }
 
 }

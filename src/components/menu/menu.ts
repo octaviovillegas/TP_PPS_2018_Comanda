@@ -1,11 +1,7 @@
-import { Observable, Subject } from 'rxjs';
 import { AuthProvider } from './../../providers/auth/auth';
 import { Nav } from 'ionic-angular';
-import { AltaClientePage } from '../../pages/altasPages/alta-cliente/alta-cliente';
-import { EncuestaEnstradaSalidaPage } from '../../pages/encuestasPages/encuesta-enstrada-salida/encuesta-enstrada-salida';
-import { EncuestaSupervisorPage } from '../../pages/encuestasPages/encuesta-supervisor/encuesta-supervisor';
-import { MesasPage } from '../../pages/mesasPages/mesas/mesas';
 import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
+import { LoginPage } from '../../pages/login/login';
 
 @Component({
   selector: 'menu',
@@ -17,69 +13,76 @@ export class MenuComponent {
   @Output() openPage = new EventEmitter();
   @Output() cerrarSesion = new EventEmitter();
 
-  public pages: Array<{ title: string, component: any }>;
+  public pages: Array<{ title: string, component: string }>;
 
   constructor(
     private auth: AuthProvider
   ) {
 
-      this.cargarPages();
+    //Me subscribo para tomar los cambios del perfil
+      this.auth.buscarPerfil().subscribe(
+        (valor:string)=> this.cargarPages(valor)
+      );
   }
 
-  cargarPages() {
+  cargarPages(perfil:string) {
 
-    switch (this.auth.perfilLogueado) {
+    switch (perfil) {
 
       case 'Mozo':
         this.pages = [
-          { title: 'Mesas', component: MesasPage },
-          { title: 'Encuesta e/s', component: EncuestaEnstradaSalidaPage },
-          { title: 'Encuesta supervisor', component: EncuestaSupervisorPage },
-          { title: 'Nuevo cliente', component: AltaClientePage }
+          { title: 'Mesas', component: "MesasPage" },
+          { title: 'Encuesta e/s', component: "EncuestaEnstradaSalidaPage" },
+          { title: 'Encuesta supervisor', component: "EncuestaSupervisorPage" },
+          { title: 'Nuevo cliente', component: "AltaClientePage" }
         ];
         break;
       //LOS SIGUIENTES MENUS HAY QUE IR ARREGLANDOLOS
       case 'Supervisor':
-      case 'Dueno':
+      case 'Dueño':
         this.pages = [
-          { title: 'Reservas', component: MesasPage },
-          { title: 'Nuevo Empleado', component: MesasPage },
-          { title: 'Nuevo Supervisor', component: MesasPage },
-          { title: 'Estadisticas', component: MesasPage },
-          { title: 'Encuesta', component: EncuestaEnstradaSalidaPage }
+          { title: 'Reservas', component: "MesasPage" },
+          { title: 'Nuevo Empleado', component: "MesasPage" },
+          { title: 'Nuevo Supervisor', component: "AltaSupervisorPage" },
+          { title: 'Nuevo Dueño', component:"AltaDueñoPage"},
+          { title: 'Nueva Mesa', component:"AltaMesaPage"},
+          { title: 'Estadisticas', component: "MesasPage" },
+          { title: 'Encuesta', component: "EncuestaEnstradaSalidaPage" }
         ];
         break;
 
       case 'Cocinero':
+        this.pages = [
+          { title: 'Nuevo plato', component: "AltaPlatoPage"},
+        ];
+          break;
       case 'Bartender':
         this.pages = [
-          { title: 'Mesas', component: MesasPage },
-          { title: 'Alta Cliente', component: AltaClientePage },
+          { title: 'Mesas', component: "MesasPage" },
+          { title: 'Nuevo Cliente', component: "AltaClientePage" },
+          { title: 'Nueva bebiba', component: "AltaBebidaPage"}
         ];
         break;
 
       case 'Cliente':
         this.pages = [
-          { title: 'Reservar', component: MesasPage },
-          { title: 'Hacer pedido', component: EncuestaEnstradaSalidaPage },
-          { title: 'Encuesta satisfaccion', component: EncuestaSupervisorPage }
+          { title: 'Reservar', component: "MesasPage" },
+          { title: 'Hacer pedido', component: "EncuestaEnstradaSalidaPage" },
+          { title: 'Encuesta satisfaccion', component: "EncuestaClientePage" },
+          { title: 'Propina', component:'QrPropinaPage'}
         ];
         break;
     }
-
-
   }
 
 
   enviarPage(p: any) {
-    console.log("enviar page");
-    console.log(p.component);
     this.openPage.emit(p);
   }
   salir() {
     localStorage.removeItem('perfil');
     localStorage.removeItem('usuario');
-    this.cerrarSesion.emit("'LoginPage'");
+    this.cerrarSesion.emit(LoginPage);
   }
 
 }

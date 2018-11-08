@@ -87,4 +87,8 @@ export class AuthProvider {
     return destinoPage;
   }
 
+  public ingresoAnonimo(){
+    return this.afAuth.auth.signInAnonymously();
+  }
+
 }

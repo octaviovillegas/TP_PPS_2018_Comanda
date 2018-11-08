@@ -107,7 +107,7 @@
       </form>
     </ion-slide>
     <ion-slide>
-      <form [formGroup]="encuestaEmpleadoForm3" (ngSubmit)="guardar()">
+      <form [formGroup]="encuestaEmpleadoForm3" (ngSubmit)="guardarEmpleado()">
         <p>¿Que observaciones tiene sobre {{usuario.nombre}} {{usuario.apellido}}?</p>
         <ion-item>
           <ion-label>Observaciones</ion-label>
@@ -123,12 +123,12 @@
           <ion-col>
             <h3> Seleccion el cliente</h3>
             <ion-item>
-              <ion-label>Empleados:</ion-label>
+              <ion-label>Clientes:</ion-label>
               <ion-select [(ngModel)]="usuario">
                 <ion-option *ngFor="let usuario of usuarios" [value]="usuario">{{usuario.nombre}}  {{usuario.apellido}}</ion-option>
               </ion-select>
             </ion-item>
-            <button class="boton" round color="danger"  (click)="ir(1)" ion-button>Volver</button>
+            <button class="boton" round color="danger"  (click)="ir(0)" ion-button>Volver</button>
             <button class="boton" round color="secondary" [disabled]="!usuario" (click)="siguiente()" ion-button>Siguiente</button>
           </ion-col>
         </ion-row>
@@ -175,7 +175,7 @@
     <ion-slide>
       <form [formGroup]="encuestaClienteForm2">
         <p>¿Considera que la propina otorgada por {{usuario.nombre}} {{usuario.apellid}} corresponde al servicio prestado por el restaurant?</p>
-        <ion-list radio-group formControlName="rendimiento">
+        <ion-list radio-group formControlName="propinaServicio">
           <ion-item>
             <ion-label>Si</ion-label>
             <ion-radio value="si"></ion-radio>
@@ -196,7 +196,7 @@
       </form>      
     </ion-slide>
     <ion-slide>
-      <form [formGroup]="encuestaClienteForm3" (ngSubmit)="guardar()">
+      <form [formGroup]="encuestaClienteForm3" (ngSubmit)="guardarCliente()">
         <p>¿Que observaciones tiene sobre {{usuario.nombre}} {{usuario.apellido}}?</p>
         <ion-item>
           <ion-label>Observaciones</ion-label>

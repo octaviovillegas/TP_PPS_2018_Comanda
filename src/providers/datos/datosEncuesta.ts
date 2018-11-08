@@ -86,19 +86,36 @@ export class DatosEncuestaProvider {
 
     return fecha.getFullYear().toString() + (fecha.getMonth() + 1).toString() + fecha.getDate().toString();
   }
-
-  public guardarEncuesta(email:string, relacionColegas:string, 
+  /** Guarda la encuesta del supervisor sobre el empleado */
+  public guardarEncuestaSupervisorEmpleado(dni:string, relacionColegas:string, 
     puntualidad: string, actitud:string,
     eficacia:string, rendimiento:string, calificacion:string, observaciones:string){
-    return this.afdb.object()'/encuestaSupervisor/' + email + '/' + this.obtenerFechaNombre().set({
+    return this.afDB.list('/encuestaSupervisor/' + 'empleados/' + dni).push({
+      fecha: this.fechaFormateada(),
       relacionColegas: relacionColegas,
       puntualidad: puntualidad,
+      actitud: actitud,
       eficacia: eficacia,
       rendimiento: rendimiento,
       calificacion: calificacion,
       observaciones: observaciones
     });
   }
+  /** Guarda la encuesta del Supervisor sobre el cliente */
+  public guardarEncuestaSupervisorCliente(dni:string, servicioCliente:string, 
+    amabilidad:string, propina:string, 
+    fidelidad:string, propinaServicio:string, calificacionCliente:string, observacionesCliente:string){
+      return this.afDB.list('/encuestaSupervisor/' + 'clientes/' + dni).push({
+        fecha: this.fechaFormateada(),
+        servicioCliente: servicioCliente,
+        amabilidad: amabilidad,
+        propina: propina,
+        fidelidad: fidelidad,
+        propinaServicio: propinaServicio,
+        calificacionCliente: calificacionCliente,
+        observacionesCliente: observacionesCliente
+      });
+    }
   /** Obtiene la encuesta del CLIENTE por usuario y fecha del dia. */
   getCantEncuestaCliente(): Observable<{}[]> {
     let userID: String = localStorage.getItem("userID");
@@ -279,6 +296,22 @@ export class DatosEncuestaProvider {
     toast.present();
   }
 
+
+  private fechaFormateada(){
+    let fecha: Date = new Date();
+    let año = fecha.getFullYear().toString();
+
+    let mes = (fecha.getMonth() + 1).toString();
+    let dia = fecha.getDate().toString();
+
+    if(mes.length < 2){
+      mes = '0' + mes;
+    }
+    if(dia.length < 2 ){
+      dia = '0' + dia;
+    }
+    return (año + "/" + mes + "/" + dia);
+  }
   /** Guarda la encuesta de CLIENTE por usuario */
   // saveEncuestaCliente(estado: string,
   //   elementos: string, banio: string, cocina: string,

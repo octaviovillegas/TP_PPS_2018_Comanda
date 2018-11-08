@@ -13,6 +13,7 @@ import { AltaBebidaPage } from '../pages/altasPages/alta-bebida/alta-bebida';
 import { AltaSupervisorPage } from '../pages/altasPages/alta-supervisor/alta-supervisor';
 import {QrPropinaPage} from '../pages/qr/qr-propina/qr-propina';
 import { EncuestaSupervisorPage } from '../pages/encuestasPages/encuesta-supervisor/encuesta-supervisor';
+import { AltaClienteAnonimoPage} from '../pages/altasPages/alta-cliente-anonimo/alta-cliente-anonimo';
 // import { EncuestaEnstradaSalidaPage } from '../pages/encuestasPages/encuesta-enstrada-salida/encuesta-enstrada-salida';
 
 @Component({
@@ -57,10 +58,10 @@ export class MyApp {
     this.auth.Session.subscribe(_session => {
 
       if (!_session) { //si no esta logueado
-        this.rootPage = EncuestaSupervisorPage;
+        this.rootPage = AltaClienteAnonimoPage;
       }else {
         if(localStorage.getItem("perfil") == null){
-          this.rootPage = EncuestaSupervisorPage;
+          this.rootPage = AltaClienteAnonimoPage;
         }else{
           this.rootPage = this.auth.buscarDestino(localStorage.getItem("perfil"));
         }

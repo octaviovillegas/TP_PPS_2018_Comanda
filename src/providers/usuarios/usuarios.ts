@@ -13,9 +13,6 @@ import { Iusuario } from "../../clases/usuario";
 export class UsuariosProvider {
   constructor(public afDB: AngularFireDatabase) {}
 
-  public obtenerUsuarios() {
-    return this.afDB.list("usuarios").valueChanges();
-  }
 
   public buscarUsuario(buscado: Iusuario) {
     let usuarios: Iusuario[];
@@ -26,6 +23,10 @@ export class UsuariosProvider {
         usuarios = data.filter(usuario => usuario.email == buscado.email);
         return usuarios;
       });
+  }
+  
+  public obtenerUsuarios(){
+    return this.afDB.list<Iusuario>('usuarios').valueChanges();
   }
 
   public buscarUsuarioxMail(email: string): Promise<Iusuario> {

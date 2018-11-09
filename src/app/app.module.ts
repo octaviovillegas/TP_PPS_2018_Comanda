@@ -13,6 +13,7 @@ import { AltaDueñoPageModule } from './../pages/altasPages/alta-dueño/alta-due
 import { VerImagenPedidoPageModule } from '../pages/pedidosPages/ver-imagen-pedido/ver-imagen-pedido.module';
 import { QrPropinaPageModule } from './../pages/qr/qr-propina/qr-propina.module';
 import { AltaMesaPageModule } from './../pages/altasPages/alta-mesa/alta-mesa.module';
+import { AltaClienteAnonimoPageModule} from '../pages/altasPages/alta-cliente-anonimo/alta-cliente-anonimo.module';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -101,7 +102,8 @@ export const firebaseConfig = {
     QrPropinaPageModule,
     NgxQRCodeModule,
     AltaMesaPageModule,
-    AltaComandaPageModule
+    AltaComandaPageModule,
+    AltaClienteAnonimoPageModule
 
   ],
   bootstrap: [

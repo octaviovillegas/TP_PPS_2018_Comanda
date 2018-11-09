@@ -1,6 +1,14 @@
-import { PedidosPage } from './../../pedidosPages/pedidos/pedidos';
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, ItemSliding, MenuController, DateTime } from 'ionic-angular';
+import { PedidosPage } from "./../../pedidosPages/pedidos/pedidos";
+import { Component } from "@angular/core";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  ToastController,
+  ItemSliding,
+  MenuController,
+  DateTime
+} from "ionic-angular";
 
 /**
  * Generated class for the MesasPage page.
@@ -11,26 +19,29 @@ import { IonicPage, NavController, NavParams, ToastController, ItemSliding, Menu
 
 @IonicPage()
 @Component({
-  selector: 'page-mesas',
-  templateUrl: 'mesas.html',
+  selector: "page-mesas",
+  templateUrl: "mesas.html"
 })
 export class MesasPage {
-
   public listaMesas = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private toastCtrl: ToastController, public menuCtrl: MenuController) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private toastCtrl: ToastController,
+    public menuCtrl: MenuController
+  ) {
+    this.menuCtrl.enable(true, "menu");
 
-    this.menuCtrl.enable(true, 'menu');
-
-    let obj1 = { "id": 1, "numero": 1, "estado": "Abierta" };
-    let obj2 = { "id": 2, "numero": 2, "estado": "Comiendo" };
-    let obj3 = { "id": 3, "numero": 3, "estado": "Esperando pedido" };
-    let obj4 = { "id": 4, "numero": 4, "estado": "Esperando cobro" };
-    let obj5 = { "id": 5, "numero": 5, "estado": "Bloqueada" };
-    let obj6 = { "id": 6, "numero": 6, "estado": "Libre" };
-    let obj7 = { "id": 7, "numero": 7, "estado": "Libre" };
-    let obj8 = { "id": 8, "numero": 8, "estado": "Libre" };
-    let obj9 = { "id": 9, "numero": 9, "estado": "Libre" };
+    let obj1 = { id: 1, numero: 1, estado: "Abierta" };
+    let obj2 = { id: 2, numero: 2, estado: "Comiendo" };
+    let obj3 = { id: 3, numero: 3, estado: "Esperando pedido" };
+    let obj4 = { id: 4, numero: 4, estado: "Esperando cobro" };
+    let obj5 = { id: 5, numero: 5, estado: "Bloqueada" };
+    let obj6 = { id: 6, numero: 6, estado: "Libre" };
+    let obj7 = { id: 7, numero: 7, estado: "Libre" };
+    let obj8 = { id: 8, numero: 8, estado: "Libre" };
+    let obj9 = { id: 9, numero: 9, estado: "Libre" };
     this.listaMesas.push(obj1);
     this.listaMesas.push(obj2);
     this.listaMesas.push(obj3);
@@ -42,34 +53,37 @@ export class MesasPage {
     this.listaMesas.push(obj9);
   }
 
-
   cerrar(mesa: any, item: ItemSliding) {
-    mesa.estado = 'Libre';
+    mesa.estado = "Libre";
     console.log(this.listaMesas);
-    this.expandAction(item, 'Cerrando', 'Mesa cerrada.');
+    this.expandAction(item, "Cerrando", "Mesa cerrada.");
   }
 
   bloquear(mesa: any, item: ItemSliding) {
-    mesa.estado = 'Bloqueada';
+    mesa.estado = "Bloqueada";
     console.log(this.listaMesas);
-    this.expandAction(item, 'Bloqueando', 'Mesa bloqueada.');
+    this.expandAction(item, "Bloqueando", "Mesa bloqueada.");
   }
 
   desbloquear(mesa: any, item: ItemSliding) {
-    mesa.estado = 'Libre';
+    mesa.estado = "Libre";
     console.log(this.listaMesas);
-    this.expandAction(item, 'Desbloqueando', 'Mesa libre.');
+    this.expandAction(item, "Desbloqueando", "Mesa libre.");
   }
 
   abrir(mesa: any, item: ItemSliding) {
-    mesa.estado = 'Abierta';
+    mesa.estado = "Abierta";
     console.log(this.listaMesas);
-    this.expandAction(item, 'Abriendo', 'Mesa abierta.');
+    this.expandAction(item, "Abriendo", "Mesa abierta.");
   }
 
   abrirPedidos(mesa: any) {
     console.log("abrir pedidos");
-    this.navCtrl.push(PedidosPage, { "mesa": mesa });
+    this.navCtrl.push(PedidosPage, { mesa: mesa });
+  }
+
+  irAltaComanda() {
+    this.navCtrl.push("AltaComandaPage");
   }
 
   expandAction(item: ItemSliding, _: any, text: string) {
@@ -86,6 +100,4 @@ export class MesasPage {
       setTimeout(() => toast.dismiss(), 2000);
     }, 1500);
   }
-
-
 }

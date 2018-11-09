@@ -46,7 +46,6 @@ export class EncuestaEnstradaSalidaPage {
     public loadingCtrl: LoadingController,
     public menuCtrl: MenuController,
     public _datos: DatosEncuestaProvider,
-    private auth: AuthProvider,
     private camera: Camera,
     private platform: Platform,
     public util: UtilProvider
@@ -82,7 +81,7 @@ export class EncuestaEnstradaSalidaPage {
   }
 
   saveData() {
-    this.util.presentLoading('Guardando encuesta...');
+    this.presentLoading('Guardando encuesta...');
     let tipoEncuesta: string;
 
     if (this.entSal == 0) {
@@ -121,6 +120,14 @@ export class EncuestaEnstradaSalidaPage {
   ionViewWillLeave() {
     if (this.ldg != null)
       this.ldg.dismiss();
+  }
+
+  presentLoading(mensaje:string) {
+    this.ldg = this.loadingCtrl.create({
+      spinner:'dots',
+      content: mensaje
+    });
+    this.ldg.present();
   }
 
   mostrarCamara() {
@@ -167,13 +174,7 @@ export class EncuestaEnstradaSalidaPage {
   //     position: 'top'
   //   }).present();
   // }
-  // presentLoading(mensaje:string) {
-  //   this.ldg = this.loadingCtrl.create({
-  //     spinner:'dots',
-  //     content: mensaje
-  //   });
-  //   this.ldg.present();
-  // }
+
   // presentToast() {
   //   const toast = this.toastCtrl.create({
   //     message: 'Las encuestas ya fueron cargadas',

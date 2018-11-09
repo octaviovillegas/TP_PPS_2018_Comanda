@@ -1,0 +1,95 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Alta Comanda</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <!-- style="height: auto" -->
+  <ion-slides loop effect="cube">
+
+    <ion-slide style="background-color: rgb(255, 255, 255)">
+
+      <ion-list>
+        <ion-list-header>
+          Ingreso de Cliente
+        </ion-list-header>
+        <ion-item>
+          <ion-label>Cliente Anónimo</ion-label>
+          <ion-checkbox [(ngModel)]="esAnonimo"></ion-checkbox>
+        </ion-item>
+      </ion-list>
+
+      <ng-template [ngIf]="esAnonimo">
+        <ion-item>
+          <ion-icon name="person" item-start></ion-icon>
+          <ion-label stacked>Nombres:</ion-label>
+          <ion-input type="text" [(ngModel)]="nombreCliente" placeholder="Nombre"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="camera" item-start></ion-icon>
+          <ion-img></ion-img>
+        </ion-item>
+        <ion-item>
+          <button ion-button full round block type="button" color="primary" (click)="mostrarCamara()">
+            <ion-icon name="camera"></ion-icon>
+          </button>
+        </ion-item>
+      </ng-template>
+      <ng-template [ngIf]="!esAnonimo">
+        <ion-item>
+          <ion-icon name="search" item-start></ion-icon>
+          <ion-input type="text" placeholder="Buscar cliente" [(ngModel)]="clienteABuscar"></ion-input>
+        </ion-item>
+        <ion-item>
+          <button ion-button block type="button" color="secondary" (click)="BuscarCliente()">Buscar</button>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="person" item-start></ion-icon>
+          <ion-label stacked>Nombres: {{nombreEncontrado}}</ion-label>
+          <ion-label stacked>Apellido: {{apellidoEncontrado}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="camera" item-start></ion-icon>
+          <ion-img></ion-img>
+        </ion-item>
+        <ion-item>
+          <button ion-button full round block type="button" color="primary" (click)="mostrarCamara()">
+            <ion-icon name="person-add"></ion-icon>
+          </button>
+        </ion-item>
+      </ng-template>
+
+    </ion-slide>
+
+    <ion-slide style="background-color: rgb(110, 97, 228)">
+      <ion-list>
+        <ion-item>
+          <button ion-button color="primary" full round (click)="scan()">Scanear Código QR</button>
+        </ion-item>
+        <ion-item>
+          <ion-card *ngIf="codigoQR">
+            <ion-card-header>
+              <h2>Mesa: {{mesa.numero}}</h2>
+            </ion-card-header>
+            <ion-card-content>
+              <ul>
+                <li>{{mesa.tipo}}</li>
+                <li>{{mesa.capacidad}}</li>
+                <li>
+                  <ion-img [src]="mesa.img"></ion-img>
+                </li>
+              </ul>
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
+        <ion-item>
+          <button ion-button color="primary" full round *ngIf="codigoQR"  (click)="guardarComanda()">Guardar Comanda</button>
+        </ion-item>
+      </ion-list>
+    </ion-slide>
+
+  </ion-slides>
+
+</ion-content>

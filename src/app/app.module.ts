@@ -1,3 +1,4 @@
+import { AltaComandaPageModule } from './../pages/pedidosPages/alta-comanda/alta-comanda.module';
 import { EncuestaEnstradaSalidaPageModule } from '../pages/encuestasPages/encuesta-enstrada-salida/encuesta-enstrada-salida.module';
 import { EncuestaSupervisorPageModule } from '../pages/encuestasPages/encuesta-supervisor/encuesta-supervisor.module';
 import { EncuestaClientePageModule } from '../pages/encuestasPages/encuesta-cliente/encuesta-cliente.module';
@@ -53,6 +54,8 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { MesasProvider } from '../providers/mesas/mesas';
 import { UtilProvider } from '../providers/util/util';
+import { ComandaProvider } from '../providers/comanda/comanda';
+import { ClienteProvider } from '../providers/cliente/cliente';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDsDUoXfo8kvkYOm9Q8DzWHF82QVGltwo4",
@@ -97,7 +100,8 @@ export const firebaseConfig = {
     VerImagenPedidoPageModule,
     QrPropinaPageModule,
     NgxQRCodeModule,
-    AltaMesaPageModule
+    AltaMesaPageModule,
+    AltaComandaPageModule
 
   ],
   bootstrap: [
@@ -127,7 +131,9 @@ export const firebaseConfig = {
     bebidasProvider,
     UsuariosProvider,
     MesasProvider,
-    UtilProvider
+    UtilProvider,
+    ComandaProvider,
+    ClienteProvider
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

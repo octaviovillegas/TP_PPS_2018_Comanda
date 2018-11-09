@@ -47,4 +47,8 @@ export class MesasProvider {
     return this.afDB.list('/mesas/').valueChanges();
   }
 
+  buscarMesa(codigoQR: string) {
+    return this.afDB.list('/mesas/', ref => ref.orderByChild('codigoQR').equalTo(codigoQR)).valueChanges();
+  }
+
 }

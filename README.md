@@ -41,8 +41,9 @@ _El proyecto se va a estar orientada a dispositivos moviles, desarrollada a trav
 |  Qr de propina |![amarillo](/images/amarillo.png)   |
 |  Splash | ![verde](/images/verde.png)  |
 |  Login |  ![verde](/images/verde.png) |
-|  Encuesta Supervisor  |  ![rojo](/images/rojo.png)   |
-
+|  Encuesta Supervisor  |  ![verde](/images/verde.png)   |
+|  Alta cliente anonimo  |  ![verde](/images/verde.png)   |
+|  Qr lista espera  |  ![amarillo](/images/amarillo.png)   |
  # Responsabilidades por Integrante:
 ##  - Veiga
 ##  - Sabrina
@@ -53,10 +54,11 @@ _El proyecto se va a estar orientada a dispositivos moviles, desarrollada a trav
 |  Encuesta entrada-salida | ![verde](/images/verde.png)   |
 |  Encuesta Satisfaccion |  ![verde](/images/verde.png)   |
 |  Gestion de mesas |  ![amarillo](/images/amarillo.png)   |
-|  Alta de pedido |  ![amarillo](/images/amarillo.png)   |
+|  Alta de pedido |  ![verde](/images/verde.png)   |
 |  Pedidos  |  ![amarillo](/images/amarillo.png)   |
-|  Qr de la mesa  |  ![rojo](/images/rojo.png)   |
-|  Alta de mesa  |  ![rojo](/images/rojo.png)   |
+|  Qr de la mesa  |  ![verde](/images/verde.png)   |
+|  Alta de mesa  |  ![verde](/images/verde.png)   |
+|  Validacion por mail  |  ![verde](/images/verde.png)   |
 
 
 

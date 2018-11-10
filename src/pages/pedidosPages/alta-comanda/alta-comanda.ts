@@ -151,19 +151,6 @@ export class AltaComandaPage {
         this.utilProvider.mostrarMensaje("Código QR incorrecto");
       }
     });
-
-    // this._mesa.buscarMesa(barcode).subscribe(m => {
-    //   if (m != null) {
-    //     if ((m[0] as IMesa).estado == "Libre") {
-    //       this.mesa = m[0] as IMesa;
-    //       this.codigoQR = this.mesa.codigoQr;
-    //     } else {
-    //       this.utilProvider.mostrarMensaje("La mesa no está Libre");
-    //     }
-    //   } else {
-    //     this.utilProvider.mostrarMensaje("Código QR incorrecto");
-    //   }
-    // });
   }
 
   // mostrarMensaje(mensaje: string) {
@@ -189,6 +176,8 @@ export class AltaComandaPage {
   validarGuardarComanda(): string {
     if (this.esAnonimo) {
       if (this.nombreCliente != "") {
+        return "";
+      }else{
         return "Debe ingresar un cliente";
       }
     } else {
@@ -224,6 +213,7 @@ export class AltaComandaPage {
         this.comanda.fotoCliente = this.imagen64;
       } else {
         this.comanda.cliente = this.clienteEncontrado; // DNI
+        this.comanda.nombreCliente = this.nombreEncontrado;
       }
 
       this.comanda.mesa = this.mesa.idMesa;

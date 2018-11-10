@@ -65,7 +65,7 @@ export class PedidosPage {
 
                   this.listaPedidosPendientes.push({
                     id: data[i].pedidos[j].id,
-                    estado: "Pendiente",
+                    nombre: "Pendiente",
                     cantBebidas: cantBe,
                     cantPlatos: cantPl
                   });

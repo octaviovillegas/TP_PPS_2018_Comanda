@@ -1,22 +1,8 @@
-<ion-header>
-
-  <ion-navbar>
-    <!-- <ion-title text-center>{{titulo}}</ion-title> -->
-  </ion-navbar>
-
-</ion-header>
-
-
 <ion-content padding>
-
-  <ion-grid>
-      <ion-row class="picture_preview">
-       <ion-col col-12>
-        <!-- <img [src]="imagen" *ngIf="imagen"/> -->
-       </ion-col>
-      </ion-row>
-  </ion-grid> 
-  
-  <!-- <img [src]="imagen" *ngIf="imagen"/> -->
-
+  <ion-slides pager #slider>
+    <ion-slide *ngFor="let img of imgList" color="light">
+      <h3 class="slide-title">{{ img.titulo }}</h3>
+      <img [src]="img.img" />
+    </ion-slide>
+  </ion-slides>
 </ion-content>

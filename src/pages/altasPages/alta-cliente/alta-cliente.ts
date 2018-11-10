@@ -1,6 +1,6 @@
-import { ICliente } from "./../../../clases/ICliente";
-import { UtilProvider } from "./../../../providers/util/util";
-import { Component } from "@angular/core";
+import { ICliente } from './../../../clases/ICliente';
+import { UtilProvider } from './../../../providers/util/util';
+import { Component } from '@angular/core';
 import {
   IonicPage,
   NavController,
@@ -10,26 +10,27 @@ import {
   LoadingController,
   MenuController,
   Loading
-} from "ionic-angular";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { ClienteProvider } from "../../../providers/cliente/cliente";
+} from 'ionic-angular';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ClienteProvider } from '../../../providers/cliente/cliente';
 
 @IonicPage()
 @Component({
-  selector: "page-alta-cliente",
-  templateUrl: "alta-cliente.html"
+  selector: 'page-alta-cliente',
+  templateUrl: 'alta-cliente.html'
 })
 export class AltaClientePage {
-  anonimo: string = "";
-  mensaje: string = "";
-  imagenTomada: string = "assets/imgs/calavera.png";
+  anonimo: string = '';
+  mensaje: string = '';
+  imagenTomada: string = 'assets/imgs/calavera.png';
   registroAnonimo: Boolean;
   tomoFoto: Boolean = false;
   public formGroup: FormGroup;
-  titulo: string = "";
+  titulo: string = '';
   tipoFoto: string;
   mostrar: boolean = false;
   ldg: Loading = null;
+  vieneDeComanda: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -40,14 +41,30 @@ export class AltaClientePage {
     public loadingCtrl: LoadingController,
     public menuCtrl: MenuController,
     public util: UtilProvider,
-    public _cliente: ClienteProvider
+    public _cliente: ClienteProvider,
+    params: NavParams
   ) {
-    this.menuCtrl.enable(true, "menu");
+    this.menuCtrl.enable(true, 'menu');
+
+    if (params.get('comanda') != null) {
+      this.vieneDeComanda = true;
+    }
+
     this.formGroup = this.crearFormulario();
   }
 
+  dismiss() {
+    let data = {
+      nombre: this.formGroup.value.nombre,
+      apellido: this.formGroup.value.apellido,
+      dni: this.formGroup.value.numeroDocu
+    };
+    
+    this.viewCtrl.dismiss(data);
+  }
+
   saveData() {
-    this.presentLoading("Guardando cliente...");
+    this.presentLoading('Guardando cliente...');
 
     let cliente: ICliente = {
       nombre: this.formGroup.value.nombre,
@@ -58,16 +75,28 @@ export class AltaClientePage {
     };
 
     setTimeout(() => {
-      this._cliente.saveCliente(cliente).then(() => {
-        this.ldg.dismiss().then(
-          () => this.util.volverRoot());
-      }).catch((err)=> this.util.mostrarMensaje(err));
+      this._cliente
+        .saveCliente(cliente)
+        .then(() => {
+          this.ldg.dismiss().then(() => {
+            if (this.vieneDeComanda) {
+              this.dismiss();
+            } else {
+              this.util.volverRoot();
+            }
+          });
+        })
+        .catch(err => {
+          this.ldg.dismiss().then(()=>{
+            this.util.mostrarMensaje(err);
+          })
+        });
     }, 1000);
   }
 
-  presentLoading(mensaje:string) {
+  presentLoading(mensaje: string) {
     this.ldg = this.loadingCtrl.create({
-      spinner:'dots',
+      spinner: 'dots',
       content: mensaje
     });
     this.ldg.present();
@@ -75,12 +104,11 @@ export class AltaClientePage {
 
   private crearFormulario() {
     return this.formBuilder.group({
-      nombre: ["", Validators.required],
-      apellido: ["", Validators.required],
-      email: ["", Validators.compose([Validators.required, Validators.email])],
-      tipoDocu: ["DNI", Validators.required],
-      numeroDocu: ["", Validators.required]
+      nombre: ['', Validators.required],
+      apellido: ['', Validators.required],
+      email: ['', Validators.compose([Validators.required, Validators.email])],
+      tipoDocu: ['DNI', Validators.required],
+      numeroDocu: ['', Validators.required]
     });
   }
-
 }

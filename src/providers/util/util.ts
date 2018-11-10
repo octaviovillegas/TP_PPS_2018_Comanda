@@ -38,8 +38,8 @@ export class UtilProvider {
   mostrarMensaje(mensaje: string) {
     this.toastCtrl.create({
       message: mensaje,
-      duration: 2000,
-      position: 'top'
+      duration: 3000,
+      position: 'bottom'
     }).present();
   }
 

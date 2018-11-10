@@ -1,50 +1,62 @@
-import { AngularFireList } from 'angularfire2/database';
-import { VerImagenPedidoPage } from './../ver-imagen-pedido/ver-imagen-pedido';
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, PopoverController, List } from 'ionic-angular';
-import { Observable } from '@firebase/util';
-import { bebidasProvider } from '../../../providers/bebidas/bebidas';
-import { platosProvider } from '../../../providers/platos/plato';
-import { IPlato } from './../../../clases/IPlato';
-import { NgSwitch } from '@angular/common';
-import { IPedido } from '../../../clases/IPedido';
-import { asTextData } from '@angular/core/src/view';
-/**
- * Generated class for the AltaPedidoPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { UtilProvider } from './../../../providers/util/util';
+import { ComandaProvider } from "./../../../providers/comanda/comanda";
+import { IComandaPedido } from "./../../../clases/IComandaPedido";
+import { ISubPedidoBebida } from "./../../../clases/ISubPedidoBebida";
+import { ISubPedidoCocina } from "./../../../clases/ISubPedidoCocina";
+import { IComanda } from "./../../../clases/IComanda";
+import { AngularFireList } from "angularfire2/database";
+import { VerImagenPedidoPage } from "./../ver-imagen-pedido/ver-imagen-pedido";
+import { Component } from "@angular/core";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  PopoverController,
+  List
+} from "ionic-angular";
+import { bebidasProvider } from "../../../providers/bebidas/bebidas";
+import { platosProvider } from "../../../providers/platos/plato";
+import { IPlato } from "./../../../clases/IPlato";
+import { ISubpedidoItem } from "../../../clases/ISubpedidoItem";
+
 
 @IonicPage()
 @Component({
-  selector: 'page-alta-pedido',
-  templateUrl: 'alta-pedido.html',
+  selector: "page-alta-pedido",
+  templateUrl: "alta-pedido.html"
 })
 export class AltaPedidoPage {
-
+  public comanda: IComanda;
   public menu = [];
-  public lCalientes: IPedido[] = [];
-  public lFrios: IPedido[] = [];
-  public lMinutas: IPedido[] = [];
-  public lPostres: IPedido[] = [];
-  public lBebidas: IPedido[] = [];
+  public lCalientes: ISubpedidoItem[] = [];
+  public lFrios: ISubpedidoItem[] = [];
+  public lMinutas: ISubpedidoItem[] = [];
+  public lPostres: ISubpedidoItem[] = [];
+  public lBebidas: ISubpedidoItem[] = [];
 
   public mesa: any;
   public tipomenu: any;
-  public pedidoACargar: IPedido[] = [];
+  public pedidoACargar: ISubpedidoItem[] = [];
   cant: number;
   public platos: any;
+
+  //CAMPOS COMANDA
+  public itemsCocina: { cantidad: number; platoID: number }[]=[];
+  public itemsBebida: { cantidad: number; bebidaID: number }[]=[];
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public popCtrl: PopoverController,
     public _platosProvider: platosProvider,
-    public _bebidasProvider: bebidasProvider) {
-
-    this.traerMenuPorCategoria('Minutas');
+    public _bebidasProvider: bebidasProvider,
+    public _comandas: ComandaProvider,
+    public UtilProvider: UtilProvider
+  ) {
+    this.traerMenuPorCategoria("Minutas");
+    
     this.mesa = this.navParams.get("mesa");
+    this.comanda = this.navParams.get("comanda");
     this.tipomenu = "minutas";
   }
 
@@ -52,9 +64,8 @@ export class AltaPedidoPage {
     //console.log('ionViewDidLoad AltaPedidoPage');
   }
 
-
-  cargarLista(item: IPlato): IPedido {
-    let pedido: IPedido = {
+  cargarLista(item: IPlato): ISubpedidoItem {
+    let pedido: ISubpedidoItem = {
       nombre: item.nombre,
       id: item.id,
       tiempoEstimado: item.tiempoEstimado,
@@ -64,33 +75,42 @@ export class AltaPedidoPage {
       ingredientesFoto: item.ingredientesFoto,
       preparacionFoto: item.preparacionFoto,
       preparadoFoto: item.preparadoFoto,
-      idPedido: 0,
+      idSubpedido: 0,
       cantidad: 0
     };
     return pedido;
   }
 
-
   existeMenu(categoria: string): boolean {
     switch (categoria) {
-      case 'Minutas':
-        if (this.lMinutas.length > 0) { return true; }
+      case "Minutas":
+        if (this.lMinutas.length > 0) {
+          return true;
+        }
         break;
 
-      case 'Calientes':
-        if (this.lCalientes.length > 0) { return true; }
+      case "Calientes":
+        if (this.lCalientes.length > 0) {
+          return true;
+        }
         break;
 
-      case 'Frios':
-        if (this.lFrios.length > 0) { return true; }
+      case "Frios":
+        if (this.lFrios.length > 0) {
+          return true;
+        }
         break;
 
-      case 'Postres':
-        if (this.lPostres.length > 0) { return true; }
+      case "Postres":
+        if (this.lPostres.length > 0) {
+          return true;
+        }
         break;
 
-      case 'Bebidas':
-        if (this.lBebidas.length > 0) { return true; }
+      case "Bebidas":
+        if (this.lBebidas.length > 0) {
+          return true;
+        }
         break;
     }
 
@@ -98,46 +118,38 @@ export class AltaPedidoPage {
   }
 
   traerMenuPorCategoria(categoria: string) {
-
-    if (!(this.existeMenu(categoria))) {
+    if (!this.existeMenu(categoria)) {
       this._platosProvider.traerPlatos(categoria).subscribe(dataPlatos => {
-
         switch (categoria) {
-          case 'Minutas':
+          case "Minutas":
             dataPlatos.forEach((item: IPlato) => {
               if (!this.lMinutas.some(p => p.id === item.id)) {
                 this.lMinutas.push(this.cargarLista(item));
               }
             });
             break;
-          case 'Calientes':
+          case "Calientes":
             dataPlatos.forEach((item: IPlato) => {
               this.lCalientes.push(this.cargarLista(item));
             });
             break;
-          case 'Frios':
+          case "Frios":
             dataPlatos.forEach((item: IPlato) => {
               this.lFrios.push(this.cargarLista(item));
             });
             break;
-          case 'Postres':
+          case "Postres":
             dataPlatos.forEach((item: IPlato) => {
               this.lPostres.push(this.cargarLista(item));
             });
             break;
-          // case 'Bebidas':
-          //   dataPlatos.forEach((item: IPlato) => {
-          //     this.lBebidas.push(this.cargarLista(item));
-          //   });
-          //   break;
         }
       });
     }
   }
 
-
   traerMenuBebidas() {
-    if (!this.existeMenu('Bebidas')) {
+    if (!this.existeMenu("Bebidas")) {
       this._bebidasProvider.traerBebidas().subscribe(dataBebidas => {
         dataBebidas.forEach((item: IPlato) => {
           this.lBebidas.push(this.cargarLista(item));
@@ -147,7 +159,6 @@ export class AltaPedidoPage {
   }
 
   seleccionarPedido(item: any, value: number) {
-
     // if (this.pedido.some(p => p.id === item.id)) {
     //   for (var i = 0; i < this.pedido.length; i++) {
     //     if (this.pedido[i].id === item.id) {
@@ -170,18 +181,30 @@ export class AltaPedidoPage {
     // console.log(this.pedido);
   }
 
-  sumarCantidad(item: IPedido, value: number) {
+  sumarCantidad(item: ISubpedidoItem, value: number) {
     item.cantidad = item.cantidad + value;
   }
-  restarCantidad(item: IPedido, value: number) {
+  restarCantidad(item: ISubpedidoItem, value: number) {
     if (item.cantidad > 0) {
       item.cantidad = item.cantidad + value;
     }
   }
 
-  mostrarImagenes() {
-    // const popover = this.popCtrl.create(VerImagenPedidoPage, { imagen: img, titulo: tit, votos: votos });
-    // popover.present();
+  mostrarImagenes(
+    fotoIngredientes: any,
+    fotoPreparacion: any,
+    fotoPreparado: any
+  ) {
+    console.log(fotoIngredientes);
+    console.log(fotoPreparacion);
+    console.log(fotoPreparado);
+
+    const popover = this.popCtrl.create(VerImagenPedidoPage, {
+      fIngredientes: fotoIngredientes,
+      fPreparacion: fotoPreparacion,
+      fPreparado: fotoPreparado
+    });
+    popover.present();
   }
   getItems(ev: any) {
     // this.inicializarItemsMenu();
@@ -268,25 +291,82 @@ export class AltaPedidoPage {
   }
 
   agregarPedido() {
+    let estadoCocina: string = "";
+    let estadoBebida: string = "";
+    let comandaPedido: IComandaPedido;
+    let comandaPedidos: IComandaPedido[];
 
-    this.cargarPedido(this.lMinutas);
-    this.cargarPedido(this.lFrios);
-    this.cargarPedido(this.lCalientes);
-    this.cargarPedido(this.lPostres);
-    this.cargarPedido(this.lBebidas);
+    this.cargarItemsSubpedidos(this.lMinutas);
+    this.cargarItemsSubpedidos(this.lFrios);
+    this.cargarItemsSubpedidos(this.lCalientes);
+    this.cargarItemsSubpedidos(this.lPostres);
+    this.cargarItemsSubpedidos(this.lBebidas);
 
-    console.log(this.pedidoACargar);
+    //Aca tengo cargados los items categorizados
+    //Si hay items cargados le doy el estado Pendiente, sino Nada (porque en los pedidos de la comanda van a haber 2 subitems)
+    if (this.itemsCocina.length > 0) estadoCocina = "Pendiente";
+    else estadoCocina = "Nada";
 
+    if (this.itemsBebida.length > 0) estadoBebida = "Pendiente";
+    else estadoBebida = "Nada";
+
+    let subCocina: ISubPedidoCocina = {
+      id: new Date().valueOf(),
+      estado: estadoCocina,
+      items: this.itemsCocina
+    };
+
+    let subBebida: ISubPedidoBebida = {
+      id: new Date().valueOf(),
+      estado: estadoBebida,
+      items: this.itemsBebida
+    };
+
+    comandaPedido = {
+      id: new Date().valueOf(),
+      estado: "Pendiente",
+      subPedidosBebida: subBebida,
+      subPedidosCocina: subCocina
+    };
+
+
+    if(this.comanda.pedidos != null) {
+      this.comanda.pedidos.push(comandaPedido);
+    } else {
+      comandaPedidos = [comandaPedido];
+      this.comanda.pedidos = comandaPedidos;
+    }
+
+
+    this._comandas.actualizarComanda(this.comanda).then(() => {
+
+      this.UtilProvider.mostrarMensaje("Se cargó el pedido");
+
+      setTimeout(() => {
+        this.navCtrl.pop();
+      }, 2000);
+      
+    }, () => {
+      this.UtilProvider.mostrarMensaje("Reintente por favor");
+    });
   }
 
-  cargarPedido(itemsSeleccionados: IPedido[]) {
+  cargarSubpedidos() {}
+
+  cargarItemsSubpedidos(itemsSeleccionados: ISubpedidoItem[]) {
+
     itemsSeleccionados
       .filter(item => item.cantidad > 0)
-      .forEach((i: IPedido) => {
-        console.log(i);
+      .forEach((i: ISubpedidoItem) => {
+
+        //Cargo los items discriminados por categoria Bebidas o Platos
+        if (i.categoria == "Bebidas") {
+          this.itemsBebida.push({ cantidad: i.cantidad, bebidaID: i.id });
+        } else {
+          this.itemsCocina.push({ cantidad: i.cantidad, platoID: i.id });
+        }
+
         this.pedidoACargar.push(i);
       });
   }
-
-
 }

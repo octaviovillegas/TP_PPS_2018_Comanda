@@ -74,7 +74,9 @@ export class AltaMesaPage {
       capacidad: this.formGroup.value.capacidad,
       tipo: this.formGroup.value.tipo,
       img: this.imagen64,
-      codigoQr: this.codigoGenerado
+      codigoQr: this.codigoGenerado,
+      estado: "Libre",
+      comanda: 0
     }
 
     this.utilProvider.presentLoading('Guardando mesa...')

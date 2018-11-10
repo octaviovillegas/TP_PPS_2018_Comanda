@@ -4,11 +4,12 @@ import { IComandaPedido } from "./IComandaPedido";
 export interface IComanda {
 
     id: number;
-    cliente: number;
+    cliente: string;
     fechaHora: number;
     mesa: number;
     nombreCliente: string;
     fotoCliente: string;
-    userID: number;
-    pedidos: IComandaPedido[];
+    userID: string;
+    estado:string; //ABIERTA, CERRADA
+    pedidos?: IComandaPedido[];
 }

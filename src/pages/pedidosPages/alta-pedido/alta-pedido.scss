@@ -1,31 +1,30 @@
 page-alta-pedido {
-    // ion-item {
-    //     background-color: transparent !important;
-    //   }
+  // ion-item {
+  //     background-color: transparent !important;
+  //   }
 
-      ion-content {
-          background-color: white !important;
-      }
-    //   .col{
-    //     background: rgb(233, 233, 233);
-        
-    // }
-    .row {
-        border: solid 0.5px black;
-        border-top-style: solid;
-        border-bottom-style: solid;
-    }
+  ion-content {
+    background-color: white !important;
+  }
+  //   .col{
+  //     background: rgb(233, 233, 233);
 
-    ion-grid {
-        background-color: color($colors, s_light);
-    }
+  // }
+  .row {
+    border: solid 0.017px rgb(128, 128, 128) !important;
+    border-top-style: solid;
+    border-bottom-style: solid;
+  }
 
-    .itemsMenu{
-        font-size:110%;
-     }
+  ion-grid {
+    background-color: color($colors, s_light);
+  }
 
-     .addItem{
-        font-size:120%;
-     }
+  .itemsMenu {
+    font-size: 110%;
+  }
 
+  .addItem {
+    font-size: 120%;
+  }
 }

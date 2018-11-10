@@ -55,11 +55,15 @@
       </ion-item>
       <!--
         <ion-item>
+
           <ion-icon name="barcode" item-start></ion-icon>
+
 
           <ion-label stacked>Código QR:</ion-label>
 
+
           <ion-input placeholder=""></ion-input>
+
 
         </ion-item>
       -->
@@ -73,47 +77,69 @@
 
   <!--
     <ion-grid>
+
       <ion-row>
+
 
         <ion-slides pager #slider>
 
+
           <ion-slide *ngFor="let img of imgList" color="light">
+
 
             <ion-card>
 
+
               <ion-row>
+
 
                 <ion-col>
 
+
                   <button ion-button color="danger" (click)="eliminar(img)" icon-start clear small>
+
 
                     <ion-icon name='close'></ion-icon>
 
+
                   </button>
+
 
                 </ion-col>
 
+
               </ion-row>
+
 
               <img [src]="img.imagenPreview">
 
+
               <ion-row>
+
 
                 <ion-col text-right>
 
+
                   <div>{{img.titulo}}</div>
+
 
                 </ion-col>
 
+
               </ion-row>
+
 
             </ion-card>
 
+
           </ion-slide>
+
 
         </ion-slides>
 
+
       </ion-row>
+
 
     </ion-grid>
   -->
@@ -121,7 +147,7 @@
   <ion-fab center bottom #fab>
     <button ion-fab color="primary"><ion-icon name="expand"></ion-icon></button>
     <ion-fab-list side="top">
-      <button ion-fab color="s-light" (click)="fab.close(); mostrarCamara()">
+      <button ion-fab color="s-light" (click)="fab.close();">
         <ion-icon name="camera"></ion-icon>
       </button>
     </ion-fab-list>
@@ -141,67 +167,99 @@
 <!--
   <ion-item>
 
+
      <ion-icon name="calendar" item-start></ion-icon>
+
 
      <ion-label stacked>Fecha de nacimiento:</ion-label>
 
+
      <ion-datetime formControlName="dateBirth" displayFormat="MM-DD-YYYY" placeholder="MM-DD-YYY"></ion-datetime>
+
 
    </ion-item>
 
+
    <div formGroupName="passwordRetry">
+
 
      <ion-item>
 
+
        <ion-icon name="eye" item-start></ion-icon>
+
 
        <ion-label stacked>Contraseña:</ion-label>
 
+
        <ion-input formControlName="password" type="password" placeholder="Contraseña"></ion-input>
 
+
      </ion-item>
+
 
      <ion-item>
 
+
        <ion-icon name="eye" item-start></ion-icon>
+
 
        <ion-label stacked>Confirmar contraseña:</ion-label>
 
+
        <ion-input formControlName="passwordConfirmation" type="password" placeholder="Confirmar contraseña"></ion-input>
+
 
      </ion-item>
 
+
    </div>
+
 
    <ion-row radio-group formControlName="gender">
 
+
      <ion-col>
 
+
        <ion-item>
+
 
          <ion-icon name="woman" item-start></ion-icon>
 
+
          <ion-label>Mujer</ion-label>
+
 
          <ion-radio value="2"></ion-radio>
 
+
        </ion-item>
 
+
      </ion-col>
+
 
      <ion-col>
 
+
        <ion-item>
+
 
          <ion-icon name="man" item-start></ion-icon>
 
+
          <ion-label>Hombre</ion-label>
+
 
          <ion-radio value="1"></ion-radio>
 
+
        </ion-item>
 
+
      </ion-col>
+
 
    </ion-row>
 -->

@@ -14,6 +14,7 @@ import { VerImagenPedidoPageModule } from '../pages/pedidosPages/ver-imagen-pedi
 import { QrPropinaPageModule } from './../pages/qr/qr-propina/qr-propina.module';
 import { AltaMesaPageModule } from './../pages/altasPages/alta-mesa/alta-mesa.module';
 import { AltaClienteAnonimoPageModule} from '../pages/altasPages/alta-cliente-anonimo/alta-cliente-anonimo.module';
+import { QrEsperaPageModule } from '../pages/qr/qr-espera/qr-espera.module';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -103,7 +104,8 @@ export const firebaseConfig = {
     NgxQRCodeModule,
     AltaMesaPageModule,
     AltaComandaPageModule,
-    AltaClienteAnonimoPageModule
+    AltaClienteAnonimoPageModule,
+    QrEsperaPageModule
 
   ],
   bootstrap: [

@@ -22,10 +22,10 @@
       </ion-col>
     </ion-row>
     <ion-row padding-top>
-      <ion-col>
-        <button round ion-button color="" large block (click)="tomarFoto()">Tomar Foto</button>
+      <ion-col text-center>
+        <button round ion-button color="" large block (click)="captureImage()">Tomar Foto</button>
         <button round ion-button color="danger" (click)="volver()" class="boton">Volver</button>
-        <button round ion-button color="secondary" (click)="subir()" class="boton" [disabled]="!anonimoForm.valid">Ingresar</button>
+        <button round ion-button color="secondary" (click)="subir()" class="boton" [disabled]="!anonimoForm.valid || !fotoTomada">Ingresar</button>
       </ion-col>
     </ion-row>
   </ion-grid>

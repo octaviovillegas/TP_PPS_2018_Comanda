@@ -3,6 +3,7 @@ import { AuthProvider } from "./../../providers/auth/auth";
 import { usuario, Iusuario } from "./../../clases/usuario";
 // import { MesasPage } from './../mesasPages/mesas/mesas';
 import { Component } from "@angular/core";
+import { AltaClienteAnonimoPage } from '../altasPages/alta-cliente-anonimo/alta-cliente-anonimo';
 import { Events } from "ionic-angular";
 import {
   NavController,
@@ -96,6 +97,14 @@ export class LoginPage {
         break;
     }
     this.login();
+  }
+
+  public registro(){
+
+  }
+
+  public anonimo(){
+    this.navCtrl.setRoot(AltaClienteAnonimoPage);
   }
 
   login() {

@@ -121,7 +121,9 @@ export class AuthProvider {
         break;
       case "Cliente":
         destinoPage = "MesasPage";
-
+        break;
+      case "Anonimo":
+        destinoPage = "QrEsperaPage";
         break;
       case "Cocinero":
         destinoPage = "MesasPage";

@@ -1,3 +1,6 @@
+import { IComandaPedido } from "./../../../clases/IComandaPedido";
+import { AltaClientePage } from "./../../altasPages/alta-cliente/alta-cliente";
+import { ICliente } from "./../../../clases/ICliente";
 import { ComandaProvider } from "./../../../providers/comanda/comanda";
 import { MesasProvider } from "./../../../providers/mesas/mesas";
 import { IComanda } from "./../../../clases/IComanda";
@@ -16,8 +19,10 @@ import {
   NavParams,
   Platform,
   ToastController,
-  DateTime
+  DateTime,
+  ModalController
 } from "ionic-angular";
+import { ClienteProvider } from "../../../providers/cliente/cliente";
 
 @IonicPage()
 @Component({
@@ -31,8 +36,8 @@ export class AltaComandaPage {
   public imagenPreview: string = "";
   public imagen64: string = "";
 
-  public clienteEncontrado: number = 0;
-  public clienteABuscar: string = "";
+  public clienteEncontrado: string = "";
+  public dniABuscar: string = "";
   public nombreEncontrado: string = "";
   public apellidoEncontrado: string = "";
 
@@ -40,6 +45,7 @@ export class AltaComandaPage {
 
   public comanda: IComanda;
   public mesa: IMesa;
+  public mesaKey: string = "";
   // public cliente: ICliente;
 
   constructor(
@@ -51,8 +57,13 @@ export class AltaComandaPage {
     private camera: Camera,
     private _mesa: MesasProvider,
     public toastCtrl: ToastController,
-    public _comanda: ComandaProvider
-  ) {}
+    public _comanda: ComandaProvider,
+    public _cliente: ClienteProvider,
+    public modalCtrl: ModalController
+  ) {
+    this.mesa = this.navParams.get("mesa");
+    this.mesaKey = this.navParams.get("mesaKey");
+  }
 
   mostrarCamara() {
     if (this.platform.is("cordova")) {
@@ -92,21 +103,51 @@ export class AltaComandaPage {
     }
   }
 
-  BuscarCliente() {}
+  BuscarCliente() {
+    this._cliente.buscarDNI(this.dniABuscar).then(
+      (c: ICliente) => {
+        if (c != null) {
+          this.nombreEncontrado = c.nombre;
+          this.apellidoEncontrado = c.apellido;
+          this.clienteEncontrado = c.numeroDocu;
+        } else {
+          this.utilProvider.mostrarMensaje("Cliente inexistente");
+        }
+      },
+      () => {
+        this.utilProvider.mostrarMensaje("Cliente inexistente");
+      }
+    );
+  }
 
   scan() {
     this.scanner.scan().then(barcodeData => {
-      this.codigoQR = barcodeData.text;
-      this.buscarMesa();
+      this.buscarMesaLibre(barcodeData.text);
     });
   }
 
-  buscarMesa() {
-    this._mesa.buscarMesa(this.codigoQR).subscribe(m => {
-      if (m != null) {
-        this.mesa = m[0] as IMesa;
-      } else {
-        this.utilProvider.mostrarMensaje("Código incorrecto");
+  buscarMesaLibre(barcode: string) {
+    this._mesa.items.subscribe(data => {
+      let encontro: Boolean = false;
+
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].codigoQr == barcode) {
+          encontro = true;
+
+          if (data[i].estado == "Libre") {
+            this.mesa = data[i];
+            this.mesaKey = data[i].key;
+            //console.log(this.mesaKey);
+            //this.codigoQR = this.mesa.codigoQr;
+          } else {
+            this.utilProvider.mostrarMensaje("La mesa no está Libre");
+          }
+          break;
+        }
+      }
+
+      if (!encontro) {
+        this.utilProvider.mostrarMensaje("Código QR incorrecto");
       }
     });
   }
@@ -120,45 +161,82 @@ export class AltaComandaPage {
   //   toast.present();
   // }
 
-  validarGuardarComanda(): boolean {
+  nuevoCliente() {
+    const modal = this.modalCtrl.create(AltaClientePage, { comanda: true });
+
+    modal.onDidDismiss(data => {
+      this.nombreEncontrado = data.nombre;
+      this.apellidoEncontrado = data.apellido;
+      this.clienteEncontrado = data.dni;
+    });
+
+    modal.present();
+  }
+  validarGuardarComanda(): string {
+    if (this.mesa == null) return "Debe seleccionar una mesa";
+
     if (this.esAnonimo) {
-      if (this.nombreCliente != "") {
-        return false;
-      }
+      if (this.nombreCliente != "") return "";
+      else return "Debe ingresar un cliente";
     } else {
-      if (this.clienteEncontrado > 0) return true;
-      else return false;
+      if (this.clienteEncontrado.length > 0) return "";
+      else return "Debe ingresar un cliente";
     }
   }
 
   guardarComanda() {
-    if (this.validarGuardarComanda) {
+    let msj: string = this.validarGuardarComanda();
+
+    if (msj.length == 0) {
+      this.utilProvider.presentLoading("Guardando Comanda...");
+
+      this.comanda = {
+        id: 0,
+        cliente: "",
+        fechaHora: 0,
+        mesa: 0,
+        nombreCliente: "",
+        fotoCliente: "",
+        userID: "",
+        estado: "Abierta"
+      };
+
       this.comanda.fechaHora = Date.now();
 
       if (this.esAnonimo) {
         this.comanda.nombreCliente = this.nombreCliente;
         this.comanda.fotoCliente = this.imagen64;
       } else {
-        this.comanda.cliente = this.clienteEncontrado;
+        this.comanda.cliente = this.clienteEncontrado; // DNI
+        this.comanda.nombreCliente = this.nombreEncontrado;
       }
 
       this.comanda.mesa = this.mesa.idMesa;
       this.comanda.id = new Date().valueOf();
-      this.comanda.userID = parseInt(localStorage.getItem("userID"));
-
-      this.utilProvider.presentLoading("Guardando Comanda...");
+      this.comanda.userID = localStorage.getItem("userID");
 
       setTimeout(() => {
-        this._comanda.saveComanda(this.comanda).then(() => {
-          this.utilProvider.dismiss().then(() => {
-
-            // this.utilProvider.volverRoot();
-            this.navCtrl.push("PedidoPage", { mesa: this.mesa.numero});
-          });
-        });
+        this._comanda.saveComanda(this.comanda, this.mesa, this.mesaKey).then(
+          () => {
+            this.utilProvider.dismiss().then(() => {
+              console.log(this.mesa.numero);
+              this.navCtrl.push("PedidosPage", {
+                mesa: this.mesa.numero,
+                comanda: this.comanda
+              });
+            });
+          },
+          () => {
+            this.utilProvider
+              .dismiss()
+              .then(() =>
+                this.utilProvider.mostrarMensaje("Debe ingresar un cliente")
+              );
+          }
+        );
       }, 2000);
     } else {
-      this.utilProvider.mostrarMensaje("Debe ingresar un cliente");
+      this.utilProvider.mostrarMensaje(msj);
     }
   }
 }

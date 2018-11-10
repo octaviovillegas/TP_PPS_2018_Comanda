@@ -7,4 +7,34 @@ page-alta-comanda {
         height: 70vh !important;
         width: auto !important;
       }
+
+      .card-background-page {
+
+        ion-card {
+          position: relative;
+          text-align: center;
+          //height: 0px !important;
+        }
+        .img {
+            height: 50px !important;
+        }
+      
+        .card-title {
+          position: absolute;
+          top: 36%;
+          font-size: 2.0em;
+          width: 100%;
+          font-weight: bold;
+          color: #fff;
+        }
+      
+        .card-subtitle {
+          font-size: 1.0em;
+          position: absolute;
+          top: 52%;
+          width: 100%;
+          color: #fff;
+        }
+      
+      }
 }

@@ -15,37 +15,34 @@ export class ClienteProvider {
 
   /** Guarda una cliente */
   saveCliente(cliente: ICliente): Promise<any> {
-
     let promesa = new Promise((resolve, reject) => {
-
       this.buscarEmail(cliente.email).then(existe => {
         if (existe) {
           //existe el mail
           reject("El e-mail ya existe");
         } else {
           this.auth
-            .registerUser(cliente.email, '123456')
+            .registerUser(cliente.email, "123456")
             .catch(() => reject("El e-mail es inválido"))
-            .then((user) => {
+            .then(user => {
               // Si el mail no existe y es valido, guardo el CLIENTE
               // Luego de guardar el cliente, genero un usuario con los mismos datos, dandole como perfil Cliente
               this.afDB
                 .list("/clientes/")
                 .push(cliente)
                 .then(() => {
-
                   this.afDB
-                  .list("/usuarios/")
-                  .push({
-                    nombre: cliente.nombre,
-                    apellido: cliente.apellido,
-                    email: cliente.email,
-                    cuil: cliente.numeroDocu,
-                    dni: cliente.numeroDocu,
-                    foto: "sin foto",
-                    perfil: "Cliente"
-                  }).then(()=>resolve());
-
+                    .list("/usuarios/")
+                    .push({
+                      nombre: cliente.nombre,
+                      apellido: cliente.apellido,
+                      email: cliente.email,
+                      cuil: cliente.numeroDocu,
+                      dni: cliente.numeroDocu,
+                      foto: "sin foto",
+                      perfil: "Cliente"
+                    })
+                    .then(() => resolve());
                 });
             });
         }
@@ -64,6 +61,35 @@ export class ClienteProvider {
           (cli: any) => {
             if (cli.length > 0) resolve(true);
             else resolve(false);
+          },
+          err => {
+            reject(err);
+          }
+        );
+    });
+
+    return promesa;
+  }
+
+  buscarDNI(dni: string): Promise<ICliente> {
+    let promesa = new Promise<ICliente>((resolve, reject) => {
+
+      this.afDB
+        .list("/clientes/", ref =>
+          ref
+            .orderByChild("numeroDocu")
+            .equalTo(dni)
+            .limitToFirst(1)
+        )
+        .valueChanges()
+        .subscribe(
+          (cli: any) => {
+
+            if (cli.length > 0) {
+              resolve(cli[0]);
+            } else {
+              reject();
+            }
           },
           err => {
             reject(err);

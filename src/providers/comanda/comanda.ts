@@ -1,23 +1,45 @@
+import { map } from "rxjs/operators";
 import { IComanda } from "./../../clases/IComanda";
-import { ToastController, BlockerDelegate } from "ionic-angular";
-import { Observable } from "rxjs/Observable";
-import { AngularFireDatabase } from "angularfire2/database";
+import { ToastController } from "ionic-angular";
+//import { Observable } from "rxjs/Observable";
+import { AngularFireDatabase, AngularFireList } from "angularfire2/database";
 import { Injectable } from "@angular/core";
 import * as firebase from "firebase";
-// import { Subject } from 'rxjs';
+import { IMesa } from "../../clases/IMesa";
+import { MesasProvider } from "../mesas/mesas";
+import { Observable } from "rxjs";
 
 @Injectable()
 export class ComandaProvider {
+  public lista: AngularFireList<IComanda>;
+  public items: Observable<any[]>;
+
   constructor(
     public afDB: AngularFireDatabase,
-    public toastCtrl: ToastController
-  ) {}
+    public toastCtrl: ToastController,
+    public _mesas: MesasProvider
+  ) {
+    //Traigo las Comandas por usuario
+    // this.lista = this.afDB.list("/Mesa_Comandas", ref =>
+    //   ref.equalTo(localStorage.getItem("userID"), "userID")
+    // );
+
+    this.lista = this.afDB.list("/Mesa_Comandas");
+
+    this.items = this.lista
+      .snapshotChanges()
+      .pipe(
+        map(changes =>
+          changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
+        )
+      );
+  }
 
   /** Guarda una comanda */
-  saveComanda(comanda: IComanda): Promise<any> {
+  saveComanda(comanda: IComanda, mesa: IMesa, mesaKey: string): Promise<any> {
     //let userID: String = localStorage.getItem("userID");
-    let fecha: Date = new Date();
-    let fechaS: String;
+    //let fecha: Date = new Date();
+    //let fechaS: String;
 
     //primero guaro la imagen para obtener la URL, y colocarla como campo en la encuesta
     let promesa = new Promise((resolve, reject) => {
@@ -27,7 +49,7 @@ export class ComandaProvider {
       if (comanda.fotoCliente != "") {
         // Si tiene una imagen, la guardo y la asigno a la comanda
         let uploadTask: firebase.storage.UploadTask = storeRef
-          .child(`img/${nombreArchivo}`)
+          .child(`comandas/${nombreArchivo}`)
           .putString(comanda.fotoCliente, "base64", {
             contentType: "image/jpeg"
           });
@@ -42,7 +64,7 @@ export class ComandaProvider {
           () => {
             // Tomo la URL
             uploadTask.snapshot.ref.getDownloadURL().then(url => {
-              this.guardarComanda(comanda, url);
+              this.guardarComanda(comanda, mesa, mesaKey, url);
             });
 
             resolve();
@@ -50,22 +72,118 @@ export class ComandaProvider {
         );
       } else {
         //No tiene imagen
-        this.guardarComanda(comanda);
+
+        this.guardarComanda(comanda, mesa, mesaKey).then(
+          (resultado: Boolean) => {
+            if (resultado) resolve();
+            else reject();
+          },
+          () => {
+            reject();
+          }
+        );
       }
     });
 
     return promesa;
   }
 
- 
-  private guardarComanda(comanda: IComanda, url?: string) {
-    if (url != null) comanda.fotoCliente = url;  // Si tiene URL se la asigno
+  actualizarComanda(comanda: IComanda): Promise<Boolean> {
+    let promesa = new Promise<Boolean>((resolve, reject) => {
+      //Me devuelve una referencia al objeto de la lista, asi me aseguro de Updatear y no generar una nueva Comanda
 
-    this.afDB
-      .list("/Mesa_Comandas/")
-      .push(comanda)
-      .then(() => {
-        return true;
+      this.items.subscribe(data => {
+        for (let i = 0; i < data.length; i++) {
+          if (data[i].id == comanda.id) {
+            let ref = firebase.database().ref("/Mesa_Comandas/" + data[i].key);
+
+            ref.ref
+              .update(comanda)
+              .then(
+                () => {
+                  resolve(true);
+                },
+                err => {
+                  reject(false);
+                }
+              );
+
+            break;
+          }
+        }
       });
+
+    });
+
+    return promesa;
+  }
+
+  private guardarComanda(
+    comanda: IComanda,
+    mesa: IMesa,
+    mesaKey: string,
+    url?: string
+  ): Promise<Boolean> {
+    if (url != null) comanda.fotoCliente = url; // Si tiene URL se la asigno
+
+    let promesa = new Promise<Boolean>((resolve, reject) => {
+
+      this.lista.push(comanda).then(
+        () => {
+          //CAMBIO EL ESTADO DE LA MESA A OCUPADA
+          //console.log(mesaKey);
+          let ref = firebase.database().ref("/mesas/" + mesaKey);
+
+          ref.ref 
+            .update({ estado: "Ocupada", comanda: comanda.id })
+            .then(
+              () => {
+                resolve(true);
+              },
+              err => {
+                reject(false);
+              }
+            );
+        },
+        err => {
+          reject(false);
+        }
+      );
+    });
+
+    return promesa;
+  }
+
+  verificarComandaPorUsuario(comandaID: number): Promise<IComanda> {
+    let promesa = new Promise<IComanda>((resolve, reject) => {
+      let userID: string = localStorage.getItem("userID");
+      let encontro: boolean = false;
+
+      let subs = this.lista.valueChanges().subscribe(
+        (comandas: IComanda[]) => {
+          for (let i = 0; i < comandas.length; i++) {
+            if (comandas[i].id == comandaID) {
+              if (comandas[i].userID == userID) {
+                resolve(comandas[i]);
+                encontro = true;
+                break;
+              }
+            }
+          }
+
+          if (!encontro)
+            //no le pertenece la Comanda al usuario
+            resolve(null);
+        },
+        err => {
+          reject(err);
+        }
+      );
+
+      setTimeout(() => {
+        subs.unsubscribe();
+      }, 2000);
+    });
+    return promesa;
   }
 }

@@ -127,7 +127,6 @@ export class AltaComandaPage {
   }
 
   buscarMesaLibre(barcode: string) {
-
     this._mesa.items.subscribe(data => {
       let encontro: Boolean = false;
 
@@ -174,23 +173,19 @@ export class AltaComandaPage {
     modal.present();
   }
   validarGuardarComanda(): string {
+    if (this.mesa == null) return "Debe seleccionar una mesa";
+
     if (this.esAnonimo) {
-      if (this.nombreCliente != "") {
-        return "";
-      }else{
-        return "Debe ingresar un cliente";
-      }
+      if (this.nombreCliente != "") return "";
+      else return "Debe ingresar un cliente";
     } else {
       if (this.clienteEncontrado.length > 0) return "";
       else return "Debe ingresar un cliente";
     }
-
-    if(this.mesa == null)
-    return "Debe seleccionar una mesa";
   }
 
   guardarComanda() {
-    let msj:string = this.validarGuardarComanda();
+    let msj: string = this.validarGuardarComanda();
 
     if (msj.length == 0) {
       this.utilProvider.presentLoading("Guardando Comanda...");

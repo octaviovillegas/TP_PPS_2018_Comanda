@@ -58,6 +58,7 @@ import { MesasProvider } from '../providers/mesas/mesas';
 import { UtilProvider } from '../providers/util/util';
 import { ComandaProvider } from '../providers/comanda/comanda';
 import { ClienteProvider } from '../providers/cliente/cliente';
+import { EsperaProvider } from '../providers/espera/espera';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDsDUoXfo8kvkYOm9Q8DzWHF82QVGltwo4",
@@ -137,7 +138,8 @@ export const firebaseConfig = {
     MesasProvider,
     UtilProvider,
     ComandaProvider,
-    ClienteProvider
+    ClienteProvider,
+    EsperaProvider
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

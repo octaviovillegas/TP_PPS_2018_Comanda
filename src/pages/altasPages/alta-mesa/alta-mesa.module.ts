@@ -6,7 +6,7 @@ import { UtilProvider } from '../../../providers/util/util';
 
 @NgModule({
   declarations: [
-    AltaMesaPage,
+    AltaMesaPage
   ],
   imports: [
     IonicPageModule.forChild(AltaMesaPage),

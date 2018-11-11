@@ -1,4 +1,4 @@
-import { UtilProvider } from './../../../providers/util/util';
+import { UtilProvider } from "./../../../providers/util/util";
 import { ComandaProvider } from "./../../../providers/comanda/comanda";
 import { IComandaPedido } from "./../../../clases/IComandaPedido";
 import { ISubPedidoBebida } from "./../../../clases/ISubPedidoBebida";
@@ -18,7 +18,6 @@ import { bebidasProvider } from "../../../providers/bebidas/bebidas";
 import { platosProvider } from "../../../providers/platos/plato";
 import { IPlato } from "./../../../clases/IPlato";
 import { ISubpedidoItem } from "../../../clases/ISubpedidoItem";
-
 
 @IonicPage()
 @Component({
@@ -41,8 +40,9 @@ export class AltaPedidoPage {
   public platos: any;
 
   //CAMPOS COMANDA
-  public itemsCocina: { cantidad: number; platoID: number }[]=[];
-  public itemsBebida: { cantidad: number; bebidaID: number }[]=[];
+  public itemsCocina: { cantidad: number; platoID: number }[] = [];
+  public itemsBebida: { cantidad: number; bebidaID: number }[] = [];
+  public tiemposEstimadosDelPedido = [];
 
   constructor(
     public navCtrl: NavController,
@@ -54,7 +54,7 @@ export class AltaPedidoPage {
     public UtilProvider: UtilProvider
   ) {
     this.traerMenuPorCategoria("Minutas");
-    
+
     this.mesa = this.navParams.get("mesa");
     this.comanda = this.navParams.get("comanda");
     this.tipomenu = "minutas";
@@ -207,13 +207,15 @@ export class AltaPedidoPage {
     popover.present();
   }
   getItems(ev: any) {
-    // this.inicializarItemsMenu();
-    // const val = ev.target.value;
-    // if (val && val.trim() != '') {
-    //   this.lCalientes = this.lCalientes.filter((item) => {
-    //     return (item.nombre.toLowerCase().indexOf(val.toLowerCase()) > -1);
-    //   })
-    // }
+    //this.inicializarItemsMenu();
+    const val = ev.target.value;
+
+    console.log(this.tipomenu);
+    if (val && val.trim() != "") {
+      this.lCalientes = this.lCalientes.filter(item => {
+        return item.nombre.toLowerCase().indexOf(val.toLowerCase()) > -1;
+      });
+    }
   }
   inicializarItemsMenu() {
     // this.menu = [
@@ -315,58 +317,60 @@ export class AltaPedidoPage {
       estado: estadoCocina,
       items: this.itemsCocina
     };
-
+    
     let subBebida: ISubPedidoBebida = {
       id: new Date().valueOf(),
       estado: estadoBebida,
       items: this.itemsBebida
     };
 
+    let tiempoMayorEstimado = Math.max(...this.tiemposEstimadosDelPedido);
+
     comandaPedido = {
       id: new Date().valueOf(),
       estado: "Pendiente",
       subPedidosBebida: subBebida,
-      subPedidosCocina: subCocina
+      subPedidosCocina: subCocina,
+      tiempoMayorEstimado: tiempoMayorEstimado
     };
 
-
-    if(this.comanda.pedidos != null) {
+    if (this.comanda.pedidos != null) {
       this.comanda.pedidos.push(comandaPedido);
     } else {
       comandaPedidos = [comandaPedido];
       this.comanda.pedidos = comandaPedidos;
     }
 
+    this._comandas.actualizarComanda(this.comanda).then(
+      () => {
+        this.UtilProvider.mostrarMensaje("Se cargó el pedido");
 
-    this._comandas.actualizarComanda(this.comanda).then(() => {
-
-      this.UtilProvider.mostrarMensaje("Se cargó el pedido");
-
-      setTimeout(() => {
-        this.navCtrl.pop();
-      }, 2000);
-      
-    }, () => {
-      this.UtilProvider.mostrarMensaje("Reintente por favor");
-    });
+        setTimeout(() => {
+          this.navCtrl.pop();
+        }, 2000);
+      },
+      () => {
+        this.UtilProvider.mostrarMensaje("Reintente por favor");
+      }
+    );
   }
 
   cargarSubpedidos() {}
 
   cargarItemsSubpedidos(itemsSeleccionados: ISubpedidoItem[]) {
-
     itemsSeleccionados
       .filter(item => item.cantidad > 0)
       .forEach((i: ISubpedidoItem) => {
-
         //Cargo los items discriminados por categoria Bebidas o Platos
         if (i.categoria == "Bebidas") {
           this.itemsBebida.push({ cantidad: i.cantidad, bebidaID: i.id });
+          this.tiemposEstimadosDelPedido.push(i.tiempoEstimado);
         } else {
           this.itemsCocina.push({ cantidad: i.cantidad, platoID: i.id });
+          this.tiemposEstimadosDelPedido.push(i.tiempoEstimado);
         }
 
-        this.pedidoACargar.push(i);
+        // this.pedidoACargar.push(i);
       });
   }
 }

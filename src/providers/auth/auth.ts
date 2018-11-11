@@ -56,6 +56,7 @@ export class AuthProvider {
             if (u.perfil == "Cliente") {
               if (user.emailVerified) {
                 resolve(u);
+                ``;
               } else {
                 reject("Email no verificado");
               }
@@ -148,8 +149,7 @@ export class AuthProvider {
     return destinoPage;
   }
 
-  public ingresoAnonimo(){
+  public ingresoAnonimo() {
     return this.afAuth.auth.signInAnonymously();
   }
-
 }

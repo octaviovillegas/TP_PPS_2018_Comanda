@@ -45,6 +45,8 @@
     [placeholder]="'Buscar por nombre'"
   ></ion-searchbar>
 
+
+
   <ion-grid *ngSwitchCase="'Minutas'">
     <div *ngIf="lMinutas">
       <ion-row
@@ -53,7 +55,7 @@
         class="itemsMenu"
       >
         <ion-col
-          col-7
+          col-6
           (click)="
             mostrarImagenes(
               item.ingredientesFoto,
@@ -65,7 +67,7 @@
           {{ item.nombre | uppercase }}
         </ion-col>
         <ion-col col-2> {{ item.importe }} </ion-col>
-        <ion-col col-1 text-center class="addItem">
+        <ion-col col-1 text-center>
           <div>
             <ion-icon
               name="remove-circle"
@@ -75,7 +77,7 @@
           </div>
         </ion-col>
         <ion-col col-1 text-center> {{ item.cantidad }} </ion-col>
-        <ion-col col-1 text-center class="addItem">
+        <ion-col col-2 text-center class="addItem">
           <div>
             <ion-icon
               name="add-circle"
@@ -88,11 +90,13 @@
     </div>
   </ion-grid>
 
+
+
   <ion-grid *ngSwitchCase="'Frios'">
     <div *ngIf="lFrios">
       <ion-row align-items-center *ngFor="let item of lFrios" class="itemsMenu">
         <ion-col
-          col-7
+          col-6
           (click)="
             mostrarImagenes(
               item.ingredientesFoto,
@@ -104,7 +108,7 @@
           {{ item.nombre | uppercase }}
         </ion-col>
         <ion-col col-2> {{ item.importe }} </ion-col>
-        <ion-col col-1 text-center class="addItem">
+        <ion-col col-1 text-center>
           <div>
             <ion-icon
               name="remove-circle"
@@ -114,7 +118,7 @@
           </div>
         </ion-col>
         <ion-col col-1 text-center> {{ item.cantidad }} </ion-col>
-        <ion-col col-1 text-center class="addItem">
+        <ion-col col-2 text-center class="addItem">
           <div>
             <ion-icon
               name="add-circle"
@@ -126,6 +130,7 @@
       </ion-row>
     </div>
   </ion-grid>
+
 
   <ion-grid *ngSwitchCase="'Calientes'">
     <div *ngIf="lCalientes">
@@ -135,7 +140,7 @@
         class="itemsMenu"
       >
         <ion-col
-          col-7
+          col-6
           (click)="
             mostrarImagenes(
               item.ingredientesFoto,
@@ -147,7 +152,7 @@
           {{ item.nombre | uppercase }}
         </ion-col>
         <ion-col col-2> {{ item.importe }} </ion-col>
-        <ion-col col-1 text-center class="addItem">
+        <ion-col col-1 text-center>
           <div>
             <ion-icon
               name="remove-circle"
@@ -157,7 +162,7 @@
           </div>
         </ion-col>
         <ion-col col-1 text-center> {{ item.cantidad }} </ion-col>
-        <ion-col col-1 text-center class="addItem">
+        <ion-col col-2 text-center class="addItem">
           <div>
             <ion-icon
               name="add-circle"
@@ -169,6 +174,9 @@
       </ion-row>
     </div>
   </ion-grid>
+
+
+
 
   <ion-grid *ngSwitchCase="'Postres'">
     <div *ngIf="lPostres">
@@ -178,7 +186,7 @@
         class="itemsMenu"
       >
         <ion-col
-          col-7
+          col-6
           (click)="
             mostrarImagenes(
               item.ingredientesFoto,
@@ -190,7 +198,7 @@
           {{ item.nombre | uppercase }}
         </ion-col>
         <ion-col col-2> {{ item.importe }} </ion-col>
-        <ion-col col-1 text-center class="addItem">
+        <ion-col col-1 text-center>
           <div>
             <ion-icon
               name="remove-circle"
@@ -200,7 +208,7 @@
           </div>
         </ion-col>
         <ion-col col-1 text-center> {{ item.cantidad }} </ion-col>
-        <ion-col col-1 text-center class="addItem">
+        <ion-col col-2 text-center class="addItem">
           <div>
             <ion-icon
               name="add-circle"
@@ -213,6 +221,9 @@
     </div>
   </ion-grid>
 
+
+
+
   <ion-grid *ngSwitchCase="'Bebidas'">
     <div *ngIf="lBebidas">
       <ion-row
@@ -221,7 +232,7 @@
         class="itemsMenu"
       >
         <ion-col
-          col-7
+          col-6
           (click)="
             mostrarImagenes(
               item.ingredientesFoto,
@@ -233,7 +244,7 @@
           {{ item.nombre | uppercase }}
         </ion-col>
         <ion-col col-2> {{ item.importe }} </ion-col>
-        <ion-col col-1 text-center class="addItem">
+        <ion-col col-1 text-center>
           <div>
             <ion-icon
               name="remove-circle"
@@ -243,7 +254,7 @@
           </div>
         </ion-col>
         <ion-col col-1 text-center> {{ item.cantidad }} </ion-col>
-        <ion-col col-1 text-center class="addItem">
+        <ion-col col-2 text-center class="addItem">
           <div>
             <ion-icon
               name="add-circle"

@@ -9,9 +9,9 @@
   </div>
   <ion-toolbar no-border-top>
     <ion-segment [(ngModel)]="estado">
+      <ion-segment-button value="pendiente"> Pendiente </ion-segment-button>
       <ion-segment-button value="derivado"> Derivado </ion-segment-button>
       <ion-segment-button value="entregado"> Entregado </ion-segment-button>
-      <ion-segment-button value="pendiente"> Pendiente </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
 </ion-header>
@@ -23,84 +23,92 @@
     </button>
   </ion-fab>
   <div [ngSwitch]="estado">
-    <ion-list *ngSwitchCase="'derivado'">
-      <!-- <ion-item>
-        <ion-thumbnail item-start>
-          <img src="assets/imgs/derivado.png" />
-        </ion-thumbnail>
-        <ion-note item-center> Ruby </ion-note>
-      </ion-item>
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img src="assets/imgs/derivado.png" />
-        </ion-thumbnail>
-        <ion-note item-center> Oscar </ion-note>
-      </ion-item>
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img src="assets/imgs/derivado.png" />
-        </ion-thumbnail>
-        <ion-note item-center> Zoey </ion-note>
-      </ion-item>
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img src="assets/imgs/derivado.png" />
-        </ion-thumbnail>
-        <ion-note item-center> Otto </ion-note>
-      </ion-item>
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img src="assets/imgs/derivado.png" />
-        </ion-thumbnail>
-        <ion-note item-center> Otto </ion-note>
-      </ion-item>
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img src="assets/imgs/derivado.png" />
-        </ion-thumbnail>
-        <ion-note item-center> Otto </ion-note>
-      </ion-item> -->
-    </ion-list>
-
-    <ion-list *ngSwitchCase="'entregado'">
-      <!-- <ion-item>
-        <ion-thumbnail item-start>
-          <img src="assets/imgs/entregado.png" />
-        </ion-thumbnail>
-        <ion-note item-center> Luna </ion-note>
-      </ion-item>
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img src="assets/imgs/entregado.png" />
-        </ion-thumbnail>
-        <ion-note item-center> Milo </ion-note>
-      </ion-item>
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img src="assets/imgs/entregado.png" />
-        </ion-thumbnail>
-        <ion-note item-center> Bandit </ion-note>
-      </ion-item>
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img src="assets/imgs/entregado.png" />
-        </ion-thumbnail>
-        <ion-note item-center> Nala </ion-note>
-      </ion-item> -->
-    </ion-list>
-
     <div *ngSwitchCase="'pendiente'">
       <div *ngIf="listaPedidosPendientes">
         <ion-list *ngFor="let item of listaPedidosPendientes">
-          <ion-item>
-            <ion-thumbnail item-start>
-              <img src="assets/imgs/pendiente.png" />
-            </ion-thumbnail>
-            <ion-note item-center>Platos:  {{ item.cantPlatos }} </ion-note> <br>
-            <ion-note item-center>Bebidas: {{ item.cantBebidas }} </ion-note>
-          </ion-item>
+          <pedido-pendiente [itemPedido]="item"></pedido-pendiente>
+          <!--
+            <ion-item>
+              <ion-thumbnail item-start>
+                <img src="assets/imgs/pendiente.png" />
+              </ion-thumbnail>
+              <ion-note item-center>Platos: {{ item.cantPlatos }} </ion-note>
+              <br />
+              <ion-note item-center>Bebidas: {{ item.cantBebidas }} </ion-note>
+            </ion-item>
+          -->
         </ion-list>
       </div>
     </div>
+
+    <ion-list *ngSwitchCase="'derivado'">
+      <!--
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/derivado.png" />
+          </ion-thumbnail>
+          <ion-note item-center> Ruby </ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/derivado.png" />
+          </ion-thumbnail>
+          <ion-note item-center> Oscar </ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/derivado.png" />
+          </ion-thumbnail>
+          <ion-note item-center> Zoey </ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/derivado.png" />
+          </ion-thumbnail>
+          <ion-note item-center> Otto </ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/derivado.png" />
+          </ion-thumbnail>
+          <ion-note item-center> Otto </ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/derivado.png" />
+          </ion-thumbnail>
+          <ion-note item-center> Otto </ion-note>
+        </ion-item>
+      -->
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'entregado'">
+      <!--
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/entregado.png" />
+          </ion-thumbnail>
+          <ion-note item-center> Luna </ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/entregado.png" />
+          </ion-thumbnail>
+          <ion-note item-center> Milo </ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/entregado.png" />
+          </ion-thumbnail>
+          <ion-note item-center> Bandit </ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/entregado.png" />
+          </ion-thumbnail>
+          <ion-note item-center> Nala </ion-note>
+        </ion-item>
+      -->
+    </ion-list>
   </div>
 </ion-content>

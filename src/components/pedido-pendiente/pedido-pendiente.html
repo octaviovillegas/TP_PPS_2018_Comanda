@@ -1,0 +1,38 @@
+<ion-card>
+  <ion-card-content>
+    <ion-row no-padding>
+      <ion-col>
+        <ion-card-title> {{ itemPedido.hora }}</ion-card-title>
+      </ion-col>
+      <ion-col text-right>
+          <button ion-button clear small color="danger" icon-start (click)="DerivarSubpedido()">
+          <ion-icon name="share-alt"></ion-icon>
+          DERIVAR
+        </button>
+      </ion-col>
+    </ion-row>
+    <p>Tiempo mayor estimado: {{ itemPedido.hora }}</p>
+  </ion-card-content>
+  <div *ngFor="let item of itemPedido.subpedidoBebidas">
+    <ion-item>
+      <ion-avatar item-start>
+        <img
+          style="height: 8vh !important; width: 8vh !important;"
+          src="{{item.bebida.preparadoFoto}}"
+        />
+      </ion-avatar>
+      <p>{{ item.cantidad }} {{ item.bebida.nombre }}</p>
+    </ion-item>
+  </div>
+  <div *ngFor="let item of itemPedido.subpedidoCocina">
+    <ion-item>
+      <ion-avatar item-start>
+        <img
+          style="height: 8vh !important; width: 8vh !important;"
+          src="{{item.plato.preparadoFoto}}"
+        />
+      </ion-avatar>
+      <p>{{ item.cantidad }} {{ item.plato.nombre }}</p>
+    </ion-item>
+  </div>
+</ion-card>

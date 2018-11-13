@@ -27,16 +27,16 @@ export class bebidasProvider {
   }
 
   traerBebida(id: any): Promise<any> {
-    console.log("ID BEBIDA A BUSCAR");
-    console.log(id);
+    //console.log("ID BEBIDA A BUSCAR");
+    //console.log(id);
     let promesa = new Promise<any>((resolve, reject) => {
       this.afDB
         .list("/bebidas/", ref => ref.orderByChild("id").equalTo(id))
         .valueChanges()
         .subscribe(
           (bebida: any) => {
-            console.log("BEBIDA ENCONTRADA");
-            console.log(bebida);
+            //console.log("BEBIDA ENCONTRADA");
+            //console.log(bebida);
             if (bebida.length > 0) resolve(bebida[0]);
             else resolve(bebida);
           },

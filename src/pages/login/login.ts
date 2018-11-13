@@ -118,9 +118,9 @@ export class LoginPage {
       (user: Iusuario) => {
         //console.log(user);
         localStorage.setItem("perfil", user.perfil);
-        console.log(user);
+        //console.log(user);
         localStorage.setItem("userID", user.id.toString());
-        console.log(user.id);
+        //console.log(user.id);
         destinoPage = this.auth.buscarDestino(user.perfil);
         this.events1.publish("usuario", user);
 

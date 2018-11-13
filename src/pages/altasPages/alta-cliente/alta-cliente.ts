@@ -1,5 +1,6 @@
 import { ICliente } from './../../../clases/ICliente';
 import { UtilProvider } from './../../../providers/util/util';
+import { LoginPage } from '../../login/login';
 import { Component } from '@angular/core';
 import {
   IonicPage,
@@ -75,7 +76,16 @@ export class AltaClientePage {
     };
 
     setTimeout(() => {
-      this._cliente
+      if(localStorage.getItem('perfil') === null){
+        this._cliente
+          .saveCliente(cliente)
+          .then(() =>{
+            this.ldg.dismiss();
+            this.navCtrl.setRoot(LoginPage);
+          })
+      }
+      else{
+        this._cliente
         .saveCliente(cliente)
         .then(() => {
           this.ldg.dismiss().then(() => {
@@ -91,6 +101,7 @@ export class AltaClientePage {
             this.util.mostrarMensaje(err);
           })
         });
+      }
     }, 1000);
   }
 

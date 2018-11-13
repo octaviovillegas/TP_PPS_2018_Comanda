@@ -40,16 +40,16 @@ export class platosProvider {
   }
 
   traerPlato(id: any): Promise<any> {
-    console.log("ID PLATO A BUSCAR");
-    console.log(id);
+    // console.log("ID PLATO A BUSCAR");
+    // console.log(id);
     let promesa = new Promise<any>((resolve, reject) => {
       this.afDB
         .list("/platos/", ref => ref.orderByChild("id").equalTo(id))
         .valueChanges()
         .subscribe(
           (plato: any) => {
-            console.log("PLATO ENCONTRADA");
-            console.log(plato);
+            // console.log("PLATO ENCONTRADA");
+            // console.log(plato);
             if (plato.length > 0) resolve(plato[0]);
             else resolve(plato);
           },

@@ -17,7 +17,7 @@ export class UtilProvider {
     private authProvider: AuthProvider,
     public toastCtrl: ToastController
   ) {
-    console.log("Hello UtilProvider Provider");
+    //console.log("Hello UtilProvider Provider");
   }
 
   public ldg: Loading = null;
@@ -58,9 +58,9 @@ export class UtilProvider {
     var temp = "" + (hour > 12 ? hour - 12 : hour);
     if (hour == 0) temp = "12";
     temp += (minute < 10 ? ":0" : ":") + minute;
-    temp += (second < 10 ? ":0" : ":") + second;
-    temp += hour >= 12 ? " P.M." : " A.M.";
-    console.log(temp);
+    // temp += (second < 10 ? ":0" : ":") + second;
+    // temp += hour >= 12 ? " P.M." : " A.M.";
+    //console.log(temp);
     return temp;
   }
 }

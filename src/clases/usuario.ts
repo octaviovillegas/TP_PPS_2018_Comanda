@@ -6,7 +6,7 @@ export interface Iusuario{
     perfil:string;
     email:string;
     cuil?:number;
-    id?:number;
+    id?:any;
 }
 
 export class usuario{

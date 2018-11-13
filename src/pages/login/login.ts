@@ -4,6 +4,7 @@ import { usuario, Iusuario } from "./../../clases/usuario";
 // import { MesasPage } from './../mesasPages/mesas/mesas';
 import { Component } from "@angular/core";
 import { AltaClienteAnonimoPage } from '../altasPages/alta-cliente-anonimo/alta-cliente-anonimo';
+import { AltaClientePage} from '../altasPages/alta-cliente/alta-cliente';
 import { Events } from "ionic-angular";
 import {
   NavController,
@@ -77,8 +78,8 @@ export class LoginPage {
       case "supervisor@gmail.com":
         this.clave = "222222";
         break;
-      case "cliente@gmail.com":
-        this.clave = "333333";
+      case "gustavopetruzzi19@gmail.com":
+        this.clave = "123456";
         break;
       case "cocinero@gmail.com":
         this.clave = "444444";
@@ -100,7 +101,7 @@ export class LoginPage {
   }
 
   public registro(){
-
+    this.navCtrl.push(AltaClientePage);
   }
 
   public anonimo(){
@@ -115,8 +116,11 @@ export class LoginPage {
 
     this.auth.loginUser(this.nombre, this.clave).then(
       (user: Iusuario) => {
+        //console.log(user);
         localStorage.setItem("perfil", user.perfil);
+        console.log(user);
         localStorage.setItem("userID", user.id.toString());
+        console.log(user.id);
         destinoPage = this.auth.buscarDestino(user.perfil);
         this.events1.publish("usuario", user);
 

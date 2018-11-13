@@ -27,6 +27,14 @@
         <button round ion-button color="danger" (click)="volver()" class="boton">Volver</button>
         <button round ion-button color="secondary" (click)="subir()" class="boton" [disabled]="!anonimoForm.valid || !fotoTomada">Ingresar</button>
       </ion-col>
+      <!--
+      <ion-fab top right>
+          <button ion-fab><ion-icon name="add-circle"></ion-icon></button>
+          <ion-fab-list side="bottom">
+            <button ion-fab (click)="mostrar()">Re</button>
+          </ion-fab-list>
+        </ion-fab>
+      -->
     </ion-row>
   </ion-grid>
 </ion-content>

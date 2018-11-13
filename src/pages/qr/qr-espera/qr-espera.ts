@@ -156,4 +156,5 @@ export class QrEsperaPage {
 
   }
 
+
 }

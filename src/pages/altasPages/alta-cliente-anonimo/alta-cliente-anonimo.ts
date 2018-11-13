@@ -72,6 +72,7 @@ export class AltaClienteAnonimoPage {
           localStorage.setItem("perfil", "Anonimo");
           this.uid = data.uid;
           localStorage.setItem("userID", this.uid);
+          localStorage.setItem("nombre", this.anonimoForm.controls['nombre'].value);
           localStorage.setItem("fotoAnonimo", this.urlAnonimo);
           this.navCtrl.setRoot(QrEsperaPage);
         })

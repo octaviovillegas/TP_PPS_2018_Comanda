@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable, ViewChild } from "@angular/core";
+import {LoginPage} from '../../pages/login/login';
 import {
   App,
   LoadingController,

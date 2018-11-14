@@ -61,17 +61,18 @@ export class AltaClienteAnonimoPage {
       content: "Cargando..."
     })
     loading.present();
-    this.createUploadTask(this.fotoAnonimo)
-    .then(res =>{
-      this.storage.ref(this.rutaArchivo).getDownloadURL().toPromise()
-      .then(urlImagen =>{
-        this.urlAnonimo = urlImagen;
-        this.afAuth.ingresoAnonimo()
-        .then(data =>{
+
+    this.afAuth.ingresoAnonimo()
+    .then( data =>{
+      this.uid = data.uid;
+      this.createUploadTask(this.fotoAnonimo)
+      .then(res =>{
+        this.storage.ref(this.rutaArchivo).getDownloadURL().toPromise()
+        .then(urlImagen =>{
+          this.urlAnonimo = urlImagen;
           loading.dismiss();
           localStorage.setItem("perfil", "Anonimo");
-          this.uid = data.uid;
-          localStorage.setItem("userID", this.uid);
+          localStorage.setItem("clAnonimoId", this.uid);
           localStorage.setItem("nombre", this.anonimoForm.controls['nombre'].value);
           localStorage.setItem("fotoAnonimo", this.urlAnonimo);
           this.navCtrl.setRoot(QrEsperaPage);
@@ -144,6 +145,14 @@ export class AltaClienteAnonimoPage {
       })
     }
     return loading;
+  }
+
+  public mostrar(){
+    this.afAuth.ingresoAnonimo().then(data =>{
+      console.log(data.uid);
+      this.uid = data.uid;
+      console.log(this.uid);
+    })
   }
 
 }

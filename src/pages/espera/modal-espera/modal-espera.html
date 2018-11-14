@@ -6,7 +6,7 @@
 -->
 <ion-content padding>
 <div *ngIf="mesasLibres.length > 0">
-  <ion-card (click)="Asignar('mesa')" *ngFor="let mesa of mesasLibres">
+  <ion-card (click)="asignar('mesa')" *ngFor="let mesa of mesasLibres">
     <ion-item>
       <p item-start><font size="4"> Capacidad:</font></p>
       <p item-end><font size="4"></font>{{mesa.capacidad}}</p>
@@ -15,7 +15,7 @@
         <p item-start><font size="4"> Numero:</font></p>
         <p item-end><font size="4"></font>{{mesa.numero}}</p>
     </ion-item>
-    <button ion-button block large (click)="asignar()">Asignar</button>
+    <button ion-button block large>Asignar</button>
   </ion-card>
 </div>
 </ion-content>

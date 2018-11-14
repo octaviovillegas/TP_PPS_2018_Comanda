@@ -198,7 +198,9 @@ export class AltaComandaPage {
         nombreCliente: "",
         fotoCliente: "",
         userID: "",
-        estado: "Abierta"
+        estado: "Abierta",
+        ClienteId:"",
+        MozoId:"",
       };
 
       this.comanda.fechaHora = Date.now();

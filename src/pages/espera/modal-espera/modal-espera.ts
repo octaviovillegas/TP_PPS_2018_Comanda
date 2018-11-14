@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {MesasProvider} from '../../../providers/mesas/mesas';
 import {IMesa} from '../../../clases/IMesa';
+import {IComanda} from '../../../clases/IComanda';
 /**
  * Generated class for the ModalEsperaPage page.
  *
@@ -18,6 +19,7 @@ export class ModalEsperaPage {
   comensales:number;
   idCliente:string;
   mesasLibres:IMesa[] = [];
+  nuevaComanda:IComanda;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -25,6 +27,8 @@ export class ModalEsperaPage {
   {
     this.mesasLibres = [];
     this.comensales = this.navParams.get('comensales');
+    this.idCliente = this.navParams.get('idCliente');
+    this.nuevaComanda;
     this.proveedorMesas.traerMesasconId().subscribe(data =>{
       data.forEach(element => {
         if(element.estado == 'Libre'  && parseInt(element.capacidad) >= this.comensales){
@@ -38,6 +42,10 @@ export class ModalEsperaPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ModalEsperaPage');
+  }
+
+  public asignar(){
+    
   }
 
 }

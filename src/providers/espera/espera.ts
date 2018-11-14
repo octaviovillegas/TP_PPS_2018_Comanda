@@ -34,7 +34,7 @@ export class EsperaProvider {
     })
   }
 
-  public traerEnLista(){
+  public traerEnLista():Observable<IEspera[]>{
     return this.afDB.list<IEspera[]>('listaDeEspera').snapshotChanges()
     .map(actions =>{
       return actions.map(a =>{

@@ -17,6 +17,7 @@ import { AltaClienteAnonimoPage } from "../pages/altasPages/alta-cliente-anonimo
  import { AltaPlatoPage } from '../pages/altasPages/alta-plato/alta-plato';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { LoginPage } from '../pages/login/login';
+import {EsperaPage} from '../pages/espera/espera';
 import { QrEsperaPage } from '../pages/qr/qr-espera/qr-espera';
 import { AuthProvider } from '../providers/auth/auth';
 import { AltaBebidaPage } from '../pages/altasPages/alta-bebida/alta-bebida';
@@ -60,10 +61,10 @@ export class MyApp {
     this.auth.Session.subscribe(_session => {
 
       if (!_session) { //si no esta logueado
-        this.rootPage = LoginPage;
+        this.rootPage = EsperaPage;
       }else {
         if(localStorage.getItem("perfil") == null){
-          this.rootPage = LoginPage;
+          this.rootPage = EsperaPage;
         }else{
           this.rootPage = this.auth.buscarDestino(localStorage.getItem("perfil"));
         }

@@ -15,6 +15,8 @@ import { QrPropinaPageModule } from './../pages/qr/qr-propina/qr-propina.module'
 import { AltaMesaPageModule } from './../pages/altasPages/alta-mesa/alta-mesa.module';
 import { AltaClienteAnonimoPageModule} from '../pages/altasPages/alta-cliente-anonimo/alta-cliente-anonimo.module';
 import { QrEsperaPageModule } from '../pages/qr/qr-espera/qr-espera.module';
+import {EsperaPageModule} from '../pages/espera/espera.module';
+import {ModalEsperaPageModule} from '../pages/espera/modal-espera/modal-espera.module';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -59,6 +61,7 @@ import { UtilProvider } from '../providers/util/util';
 import { ComandaProvider } from '../providers/comanda/comanda';
 import { ClienteProvider } from '../providers/cliente/cliente';
 import { EsperaProvider } from '../providers/espera/espera';
+
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDsDUoXfo8kvkYOm9Q8DzWHF82QVGltwo4",
@@ -106,7 +109,9 @@ export const firebaseConfig = {
     AltaMesaPageModule,
     AltaComandaPageModule,
     AltaClienteAnonimoPageModule,
-    QrEsperaPageModule
+    QrEsperaPageModule,
+    EsperaPageModule,
+    ModalEsperaPageModule
 
   ],
   bootstrap: [
@@ -139,7 +144,8 @@ export const firebaseConfig = {
     UtilProvider,
     ComandaProvider,
     ClienteProvider,
-    EsperaProvider
+    EsperaProvider,
+    ModalEsperaPageModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

@@ -65,6 +65,17 @@ export class MesasProvider {
   traerMesas() {
     return this.afDB.list("/mesas/").valueChanges();
   }
+  
+  public traerMesasconId(){
+    return this.afDB.list<IMesa[]>("/mesas/").snapshotChanges()
+    .map(actions =>{
+      return actions.map(a =>{
+        const data = a.payload.val() as IMesa;
+        const idMesa = a.payload.key;
+        return {idMesa, ...data};
+      })
+    })
+  }
 
   buscarMesa(codigoQR: string) {
 

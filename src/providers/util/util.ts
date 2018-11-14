@@ -45,7 +45,7 @@ export class UtilProvider {
     this.toastCtrl
       .create({
         message: mensaje,
-        duration: 3000,
+        duration: 2000,
         position: "bottom"
       })
       .present();

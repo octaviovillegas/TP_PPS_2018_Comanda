@@ -7,12 +7,13 @@ import { Injectable } from "@angular/core";
 import * as firebase from "firebase";
 import { IMesa } from "../../clases/IMesa";
 import { MesasProvider } from "../mesas/mesas";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 
 @Injectable()
 export class ComandaProvider {
   public lista: AngularFireList<IComanda>;
   public items: Observable<any[]>;
+  public subs: Subscription = null;
 
   constructor(
     public afDB: AngularFireDatabase,
@@ -92,27 +93,24 @@ export class ComandaProvider {
     let promesa = new Promise<Boolean>((resolve, reject) => {
       //Me devuelve una referencia al objeto de la lista, asi me aseguro de Updatear y no generar una nueva Comanda
 
-      this.items.subscribe(data => {
+      this.subs = this.items.subscribe(data => {
         for (let i = 0; i < data.length; i++) {
           if (data[i].id == comanda.id) {
             let ref = firebase.database().ref("/Mesa_Comandas/" + data[i].key);
 
-            ref.ref
-              .update(comanda)
-              .then(
-                () => {
-                  resolve(true);
-                },
-                err => {
-                  reject(false);
-                }
-              );
+            ref.ref.update(comanda).then(
+              () => {
+                resolve(true);
+              },
+              err => {
+                reject(false);
+              }
+            );
 
             break;
           }
         }
       });
-
     });
 
     return promesa;
@@ -127,23 +125,20 @@ export class ComandaProvider {
     if (url != null) comanda.fotoCliente = url; // Si tiene URL se la asigno
 
     let promesa = new Promise<Boolean>((resolve, reject) => {
-
       this.lista.push(comanda).then(
         () => {
           //CAMBIO EL ESTADO DE LA MESA A OCUPADA
           //console.log(mesaKey);
           let ref = firebase.database().ref("/mesas/" + mesaKey);
 
-          ref.ref 
-            .update({ estado: "Ocupada", comanda: comanda.id })
-            .then(
-              () => {
-                resolve(true);
-              },
-              err => {
-                reject(false);
-              }
-            );
+          ref.ref.update({ estado: "Ocupada", comanda: comanda.id }).then(
+            () => {
+              resolve(true);
+            },
+            err => {
+              reject(false);
+            }
+          );
         },
         err => {
           reject(false);
@@ -184,6 +179,29 @@ export class ComandaProvider {
         subs.unsubscribe();
       }, 2000);
     });
+    return promesa;
+  }
+
+  cerrarComanda(comanda: IComanda, mesaKey: string): Promise<Boolean> {
+    let promesa = new Promise<Boolean>((resolve, reject) => {
+      this.actualizarComanda(comanda).then((actualizo: Boolean) => {
+        if (actualizo) {
+          let ref = firebase.database().ref("/mesas/" + mesaKey);
+
+          ref.ref.update({ estado: "Libre", comanda: 0 }).then(
+            () => {
+              resolve(true);
+            },
+            err => {
+              reject(false);
+            }
+          );
+        } else {
+          reject();
+        }
+      });
+    });
+
     return promesa;
   }
 }

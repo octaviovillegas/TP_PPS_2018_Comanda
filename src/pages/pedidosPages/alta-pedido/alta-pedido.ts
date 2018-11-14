@@ -345,6 +345,8 @@ export class AltaPedidoPage {
       () => {
         this.UtilProvider.mostrarMensaje("Se cargó el pedido");
 
+        //this.navParams.get("parentPage").inicializar();
+
         setTimeout(() => {
           this.navCtrl.pop();
         }, 2000);

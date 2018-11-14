@@ -66,13 +66,13 @@ export class MesasPage {
     this.expandAction(item, "Abriendo", "Mesa abierta.");
   }
 
-  agregarPedidos(mesaNumero: number, comandaID: number) {
+  agregarPedidos(mesaNumero: number, mesaKey:string, comandaID: number) {
     //console.log("abrir pedidos");
 
-    this.verificarComandaUsuario(mesaNumero, comandaID);
+    this.verificarComandaUsuario(mesaNumero, mesaKey, comandaID);
   }
 
-  verificarComandaUsuario(mesaNumero: number, comandaID: number) {
+  verificarComandaUsuario(mesaNumero: number, mesaKey:string, comandaID: number) {
 
     this._comandas.verificarComandaPorUsuario(comandaID).then((comanda:IComanda)=>{
       
@@ -80,6 +80,7 @@ export class MesasPage {
       if(comanda != null) {
         this.navCtrl.push(PedidosPage, {
           mesa: mesaNumero,
+          mesaKey: mesaKey,
           comanda: comanda
         });  
       } else {

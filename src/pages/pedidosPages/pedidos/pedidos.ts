@@ -9,6 +9,7 @@ import { UtilProvider } from "../../../providers/util/util";
 import { platosProvider } from "../../../providers/platos/plato";
 import { ISubPedido } from "../../../clases/ISubPedido";
 import { IComandaPedido } from "../../../clases/IComandaPedido";
+import { Subscription } from "rxjs";
 
 /**
  * Generated class for the PedidosPage page.
@@ -25,7 +26,8 @@ import { IComandaPedido } from "../../../clases/IComandaPedido";
 export class PedidosPage {
   estado: string = "pendiente";
   isAndroid: boolean = false;
-  mesa: any;
+  mesa: number;
+  mesaKey: string;
   comanda: IComanda;
   listaPedidosDerivados: Array<any> = [];
   listaPedidosEntregados: Array<any> = [];
@@ -36,6 +38,10 @@ export class PedidosPage {
 
   userID: string = "";
 
+  total: number = 0;
+  todoEntregado: Boolean = false;
+  subs: Subscription;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -44,77 +50,98 @@ export class PedidosPage {
     public _bebidas: bebidasProvider,
     public _platos: platosProvider
   ) {
-    this.mesa = this.navParams.get("mesa");
+    this.mesa = parseInt(this.navParams.get("mesa"));
+    this.mesaKey = this.navParams.get("mesaKey");
     this.comanda = this.navParams.get("comanda");
     this.userID = localStorage.getItem("userID");
 
+   // this.inicializar();
+  }
+
+  ionViewWillEnter() {
+    this.inicializar();
+  }
+
+  inicializar() {
     this.buscarComanda().then(com => {
       this.comanda = com;
+      this.total = 0;
 
-      this.armarListasEstados().then(()=> console.log("OK"));
+      //Para que no quede linkeado constantemente
+      this.subs.unsubscribe();
+
+      this.armarListasEstados().then(() => {
+        if (this.listaPedidosPendientes.length == 0)
+          if (this.listaPedidosDerivados.length == 0)
+            if (this.listaPedidosEntregados.length > 0)
+              this.todoEntregado = true;
+      });
     });
   }
 
   armarListasEstados(): Promise<any> {
     let promesa = new Promise(async (resolve, reject) => {
       let hora: string = "";
-      for (let i = 0; i < this.comanda.pedidos.length; i++) {
-        hora = this._utils.convertirAHora(this.comanda.pedidos[i].id);
 
-        switch (this.comanda.pedidos[i].estado) {
-          case "Pendiente":
-            await this.armarListas(this.comanda.pedidos[i]).then(() => {
-              this.listaPedidosPendientes.push({
-                id: this.comanda.pedidos[i].id,
-                hora: hora,
-                estado: this.comanda.pedidos[i].estado,
-                tiempoEstimado: this.comanda.pedidos[i].tiempoMayorEstimado,
-                subpedidoBebidas: this.bebidas,
-                subpedidoCocina: this.cocina
+      if (this.comanda.pedidos != null) {
+        for (let i = 0; i < this.comanda.pedidos.length; i++) {
+          hora = this._utils.convertirAHora(this.comanda.pedidos[i].id);
+
+          switch (this.comanda.pedidos[i].estado) {
+            case "Pendiente":
+              await this.armarListas(this.comanda.pedidos[i]).then(() => {
+                this.listaPedidosPendientes.push({
+                  id: this.comanda.pedidos[i].id,
+                  hora: hora,
+                  estado: this.comanda.pedidos[i].estado,
+                  tiempoEstimado: this.comanda.pedidos[i].tiempoMayorEstimado,
+                  subpedidoBebidas: this.bebidas,
+                  subpedidoCocina: this.cocina
+                });
               });
-            });
-           
-            break;
-          case "Derivado":
-            await this.armarListas(this.comanda.pedidos[i])
-            .then(() => {
-              this.listaPedidosDerivados.push({
-                id: this.comanda.pedidos[i].id,
-                hora: hora,
-                estado: this.comanda.pedidos[i].estado,
-                estadoSubpedidosBebida: this.comanda.pedidos[i].subPedidosBebida
-                  .estado,
-                estadoSubpedidosCocina: this.comanda.pedidos[i].subPedidosCocina
-                  .estado,
-                tiempoEstimado: this.comanda.pedidos[i].tiempoMayorEstimado,
-                subpedidoBebidas: this.bebidas,
-                subpedidoCocina: this.cocina
+
+              break;
+            case "Derivado":
+              await this.armarListas(this.comanda.pedidos[i]).then(() => {
+                this.listaPedidosDerivados.push({
+                  id: this.comanda.pedidos[i].id,
+                  hora: hora,
+                  estado: this.comanda.pedidos[i].estado,
+                  estadoSubpedidosBebida: this.comanda.pedidos[i]
+                    .subPedidosBebida.estado,
+                  estadoSubpedidosCocina: this.comanda.pedidos[i]
+                    .subPedidosCocina.estado,
+                  tiempoEstimado: this.comanda.pedidos[i].tiempoMayorEstimado,
+                  subpedidoBebidas: this.bebidas,
+                  subpedidoCocina: this.cocina
+                });
               });
-            });
-            
-            break;
-          case "Entregado":
-            await this.armarListas(this.comanda.pedidos[i]).then(() => {
-              let importeTotal: number = 0;
 
-              for (let j = 0; j < this.bebidas.length; j++) {
-                importeTotal = importeTotal + this.bebidas[j].precio;
-              }
+              break;
+            case "Entregado":
+              await this.armarListas(this.comanda.pedidos[i]).then(() => {
+                let importeTotal: number = 0;
 
-              for (let j = 0; j < this.cocina.length; j++) {
-                importeTotal = importeTotal + this.cocina[j].precio;
-              }
+                for (let j = 0; j < this.bebidas.length; j++) {
+                  importeTotal = importeTotal + this.bebidas[j].precio;
+                }
 
-              this.listaPedidosEntregados.push({
-                id: this.comanda.pedidos[i].id,
-                hora: hora,
-                estado: this.comanda.pedidos[i].estado,
-                subpedidoBebidas: this.bebidas,
-                subpedidoCocina: this.cocina,
-                importeTotal: importeTotal
+                for (let j = 0; j < this.cocina.length; j++) {
+                  importeTotal = importeTotal + this.cocina[j].precio;
+                }
+
+                this.total += importeTotal;
+                this.listaPedidosEntregados.push({
+                  id: this.comanda.pedidos[i].id,
+                  hora: hora,
+                  estado: this.comanda.pedidos[i].estado,
+                  subpedidoBebidas: this.bebidas,
+                  subpedidoCocina: this.cocina,
+                  importeTotal: importeTotal
+                });
               });
-            });
-            break;
+              break;
+          }
         }
       }
 
@@ -127,14 +154,14 @@ export class PedidosPage {
   // VER DE RECORRER POR ESETADOS E IR ARMANDO LAS LISTAS POR ESTADO.
   buscarComanda(): Promise<IComanda> {
     let promesa = new Promise<IComanda>((resolve, reject) => {
-      this._comandas.items.subscribe(data => {
+      this.subs = this._comandas.items.subscribe(data => {
         let encontro: Boolean = false;
         this.listaPedidosDerivados = [];
         this.listaPedidosEntregados = [];
         this.listaPedidosPendientes = [];
 
         for (let i = 0; i < data.length; i++) {
-          if ((data[i].userID == this.userID && data[i].id == this.comanda.id)) {
+          if (data[i].userID == this.userID && data[i].id == this.comanda.id) {
             resolve(data[i] as IComanda);
             break;
           }
@@ -161,10 +188,12 @@ export class PedidosPage {
               })
               .catch(() => reject());
           } else {
+            this.cocina = null;
             resolve();
           }
         });
       } else {
+        this.bebidas = null;
         if (pedido.subPedidosCocina.items != null) {
           this.buscarPlatos(pedido.subPedidosCocina.items)
             .then(lista => {
@@ -173,6 +202,7 @@ export class PedidosPage {
             })
             .catch(() => reject());
         } else {
+          this.cocina = null;
           resolve();
         }
       }
@@ -239,7 +269,6 @@ export class PedidosPage {
   }
 
   cambiarEstadoPedido(event: any) {
-
     for (let i = 0; i < this.comanda.pedidos.length; i++) {
       if (this.comanda.pedidos[i].id == event.idPedido) {
         this.comanda.pedidos[i].estado = event.estadoPedido;
@@ -253,6 +282,7 @@ export class PedidosPage {
       () => {
         this._utils.mostrarMensaje("Se derivó el pedido");
 
+        this._comandas.subs.unsubscribe();
         setTimeout(() => {
           this.navCtrl.pop();
         }, 2000);
@@ -298,5 +328,20 @@ export class PedidosPage {
         this._utils.mostrarMensaje("Reintente por favor");
       }
     );
+  }
+
+  cerrarComanda() {
+    this.comanda.estado = "Cerrada";
+
+    this._comandas.cerrarComanda(this.comanda, this.mesaKey).then(() => {
+      this.todoEntregado = false;
+      this.total = 0;
+      this._utils.mostrarMensaje("Se cerró la comanda");
+
+      this._comandas.subs.unsubscribe();
+      setTimeout(() => {
+        this.navCtrl.pop();
+      }, 2000);
+    });
   }
 }

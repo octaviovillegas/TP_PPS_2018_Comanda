@@ -43,7 +43,7 @@
     <ion-item-sliding *ngFor="let mesa of _mesas.items | async" #item>
       <ion-item
         *ngIf="mesa.estado != 'Libre'"
-        (click)="agregarPedidos(mesa.numero, mesa.comanda)"
+        (click)="agregarPedidos(mesa.numero, mesa.key, mesa.comanda)"
       >
         <ion-avatar item-start class="imgColores" [ngSwitch]="mesa.estado">
           <img

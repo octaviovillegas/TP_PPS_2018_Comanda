@@ -19,8 +19,10 @@
         </button>
       </ion-col>
     </ion-row>
-   
-    <div style="font-size: 15px; font-weight: bold">Espera: {{ itemPedido.tiempoEstimado }} min</div>
+
+    <div style="font-size: 15px; font-weight: bold">
+      Espera: {{ itemPedido.tiempoEstimado }} min
+    </div>
   </ion-card-content>
 
   <div *ngFor="let item of itemPedido.subpedidoBebidas">
@@ -52,8 +54,6 @@
   </div>
 </ion-card>
 
-
-
 <ion-card *ngIf="itemPedido.estado == 'Entregado'">
   <ion-card-content>
     <div *ngFor="let item of itemPedido.subpedidoBebidas">
@@ -65,18 +65,16 @@
           />
         </ion-avatar>
         <ion-row style="font-size: 17px; font-weight: bold" align-items-start>
-          <ion-col>
-            {{ item.cantidad }} {{ item.bebida.nombre }}
-          </ion-col>
-        </ion-row >
-        <ion-row style="font-style:italic" align-items-end>
-          <ion-col>
-            {{ item.precio | currency}}
-          </ion-col>
+          <ion-col> {{ item.cantidad }} {{ item.bebida.nombre }} </ion-col>
         </ion-row>
-        <!-- <p style="font-size: 17px; font-weight: bold">
-          {{ item.cantidad }} {{ item.bebida.nombre }} ... {{ item.precio | currency}}
-        </p> -->
+        <ion-row style="font-style:italic" align-items-end>
+          <ion-col> {{ item.precio | currency }} </ion-col>
+        </ion-row>
+        <!--
+          <p style="font-size: 17px; font-weight: bold">
+            {{ item.cantidad }} {{ item.bebida.nombre }} ... {{ item.precio | currency}}
+          </p>
+        -->
       </ion-item>
     </div>
     <div *ngFor="let item of itemPedido.subpedidoCocina">
@@ -88,122 +86,129 @@
           />
         </ion-avatar>
         <ion-row style="font-size: 17px; font-weight: bold" align-items-start>
-          <ion-col>
-            {{ item.cantidad }} {{ item.plato.nombre }}
-          </ion-col>
-        </ion-row >
+          <ion-col> {{ item.cantidad }} {{ item.plato.nombre }} </ion-col>
+        </ion-row>
         <ion-row style="font-style:italic" align-items-end>
-          <ion-col>
-            {{ item.precio | currency}}
-          </ion-col>
+          <ion-col> {{ item.precio | currency }} </ion-col>
         </ion-row>
 
-        <!-- <p style="font-size: 17px; font-weight: bold">
-          {{ item.cantidad }} {{ item.plato.nombre }} ... {{ item.precio | currency}}
-        </p> -->
+        <!--
+          <p style="font-size: 17px; font-weight: bold">
+            {{ item.cantidad }} {{ item.plato.nombre }} ... {{ item.precio | currency}}
+          </p>
+        -->
       </ion-item>
     </div>
-    
-    <ion-row style="font-size: 17px; text-align: center" >
+
+    <ion-row style="font-size: 17px; text-align: center">
       <ion-col>
-        <p style="font-style:italic">TOTAL:</p> <p style="font-size: 20px; font-weight: bold;">{{ itemPedido.importeTotal | currency}}</p>
+        <p style="font-style:italic">Sub Total:</p>
+        <p style="font-size: 18px; font-weight: bold;">
+          {{ itemPedido.importeTotal | currency }}
+        </p>
       </ion-col>
     </ion-row>
-    <!-- <ion-row style="font-size: 20px; font-weight: bold" align-items-start>
-      <ion-col>
-        {{ itemPedido.importeTotal | currency}}
-      </ion-col>
-    </ion-row> -->
+    <!--
+      <ion-row style="font-size: 20px; font-weight: bold" align-items-start>
+        <ion-col>
+          {{ itemPedido.importeTotal | currency}}
+        </ion-col>
+      </ion-row>
+    -->
   </ion-card-content>
 </ion-card>
 
-
-
 <ion-card *ngIf="itemPedido.estado == 'Derivado'" color="s_light">
   <ion-card-header style="padding-bottom: 0px; padding-top:5px">
-    Tiempo de entrega: {{sumarMinutos(itemPedido.tiempoEstimado) | date:'hh:mm'}} 
+    Tiempo de entrega:
+    {{ sumarMinutos(itemPedido.tiempoEstimado) | date: "hh:mm" }}
   </ion-card-header>
-  <ion-card *ngIf="itemPedido.estado == 'Derivado'">
-    <ion-row no-padding>
-      <ion-col>
-        <h2
-          style="margin-left:8%; font-size: 15px; font-weight: bold; color: #EF431D !important"
-        >
-          {{ itemPedido.estadoSubpedidosBebida }}
-        </h2>
-      </ion-col>
 
-      <ion-col text-right>
-        <button
-          ion-button
-          clear
-          small
-          color="danger"
-          icon-start
-          [disabled]="itemPedido.estadoSubpedidosBebida != 'Preparado'"
-          (click)="entregarSubpedido('Entregado', itemPedido.id, 'bebida')"
-        >
-          <ion-icon name="share-alt"></ion-icon>
-          ENTREGAR
-        </button>
-      </ion-col>
-    </ion-row>
-    <ion-card-content>
-      <div *ngFor="let item of itemPedido.subpedidoBebidas">
-        <ion-item>
-          <ion-avatar item-start>
-            <img
-              style="height: 7vh !important; width: 7vh !important;"
-              src="{{item.bebida.preparadoFoto}}"
-            />
-          </ion-avatar>
-          <p style="font-size: 17px; font-weight: bold">
-            {{ item.cantidad }} {{ item.bebida.nombre }}
-          </p>
-        </ion-item>
-      </div>
-    </ion-card-content>
-  </ion-card>
+  <div *ngIf="itemPedido.estado == 'Derivado' && itemPedido.subpedidoBebidas">
+    <ion-card *ngIf="itemPedido.estado == 'Derivado'">
+      <ion-row no-padding>
+        <ion-col>
+          <h2
+            style="margin-left:8%; font-size: 15px; font-weight: bold; color: #EF431D !important"
+          >
+            {{ itemPedido.estadoSubpedidosBebida }}
+          </h2>
+        </ion-col>
 
-  <ion-card *ngIf="itemPedido.estado == 'Derivado'">
-    <ion-row no-padding>
-      <ion-col>
-        <h2
-          style="margin-left:8%; font-size: 15px; font-weight: bold; color: #EF431D !important"
-        >
-          {{ itemPedido.estadoSubpedidosCocina }}
-        </h2>
-      </ion-col>
+        <ion-col text-right>
+          <button
+            ion-button
+            clear
+            small
+            color="danger"
+            icon-start
+            [disabled]="itemPedido.estadoSubpedidosBebida != 'Preparado'"
+            (click)="entregarSubpedido('Entregado', itemPedido.id, 'bebida')"
+          >
+            <ion-icon name="share-alt"></ion-icon>
+            ENTREGAR
+          </button>
+        </ion-col>
+      </ion-row>
+      <ion-card-content>
+        <div *ngFor="let item of itemPedido.subpedidoBebidas">
+          <ion-item>
+            <ion-avatar item-start>
+              <img
+                style="height: 7vh !important; width: 7vh !important;"
+                src="{{item.bebida.preparadoFoto}}"
+              />
+            </ion-avatar>
+            <p style="font-size: 17px; font-weight: bold">
+              {{ item.cantidad }} {{ item.bebida.nombre }}
+            </p>
+          </ion-item>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
 
-      <ion-col text-right>
-        <button
-          ion-button
-          clear
-          small
-          color="danger"
-          icon-start
-          [disabled]="itemPedido.estadoSubpedidosCocina != 'Preparado'"
-          (click)="entregarSubpedido('Entregado', itemPedido.id, 'cocina')"
-        >
-          <ion-icon name="share-alt"></ion-icon>
-          ENTREGAR
-        </button>
-      </ion-col>
-    </ion-row>
-    <ion-card-content>
-      <div *ngFor="let item of itemPedido.subpedidoCocina">
-        <ion-item>
-          <ion-avatar item-start>
-            <img
-              style="height: 7vh !important; width: 7vh !important;"
-              src="{{item.plato.preparadoFoto}}"
-            />
-          </ion-avatar>
-          <p style="font-size: 17px; font-weight: bold">
-            {{ item.cantidad }} {{ item.plato.nombre }}
-          </p>
-        </ion-item>
-      </div>
-    </ion-card-content>
-  </ion-card>
+  <div *ngIf="itemPedido.estado == 'Derivado' && itemPedido.subpedidoCocina">
+    <ion-card *ngIf="itemPedido.estado == 'Derivado'">
+      <ion-row no-padding>
+        <ion-col>
+          <h2
+            style="margin-left:8%; font-size: 15px; font-weight: bold; color: #EF431D !important"
+          >
+            {{ itemPedido.estadoSubpedidosCocina }}
+          </h2>
+        </ion-col>
+
+        <ion-col text-right>
+          <button
+            ion-button
+            clear
+            small
+            color="danger"
+            icon-start
+            [disabled]="itemPedido.estadoSubpedidosCocina != 'Preparado'"
+            (click)="entregarSubpedido('Entregado', itemPedido.id, 'cocina')"
+          >
+            <ion-icon name="share-alt"></ion-icon>
+            ENTREGAR
+          </button>
+        </ion-col>
+      </ion-row>
+      <ion-card-content>
+        <div *ngFor="let item of itemPedido.subpedidoCocina">
+          <ion-item>
+            <ion-avatar item-start>
+              <img
+                style="height: 7vh !important; width: 7vh !important;"
+                src="{{item.plato.preparadoFoto}}"
+              />
+            </ion-avatar>
+            <p style="font-size: 17px; font-weight: bold">
+              {{ item.cantidad }} {{ item.plato.nombre }}
+            </p>
+          </ion-item>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-card>

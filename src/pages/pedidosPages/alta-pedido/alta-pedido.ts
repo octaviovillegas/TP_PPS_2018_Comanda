@@ -343,7 +343,7 @@ export class AltaPedidoPage {
 
     this._comandas.actualizarComanda(this.comanda).then(
       () => {
-        this.UtilProvider.mostrarMensaje("Se cargó el pedido");
+        //this.UtilProvider.mostrarMensaje("Se cargó el pedido");
 
         //this.navParams.get("parentPage").inicializar();
 

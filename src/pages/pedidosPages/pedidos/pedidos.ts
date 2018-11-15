@@ -41,6 +41,7 @@ export class PedidosPage {
   total: number = 0;
   todoEntregado: Boolean = false;
   subs: Subscription;
+  automatico: Boolean = true; //Indica si la actualizacion de la pantalla es automatica. Esto sirve para cuando el bartender o cocinero cambian un estado.
 
   constructor(
     public navCtrl: NavController,
@@ -55,28 +56,43 @@ export class PedidosPage {
     this.comanda = this.navParams.get("comanda");
     this.userID = localStorage.getItem("userID");
 
-   // this.inicializar();
+    // this.inicializar();
   }
 
   ionViewWillEnter() {
+    this.automatico = false;
     this.inicializar();
+
+    setTimeout(() => {
+      this.automatico = true;  
+    }, 2000);
+    
+  }
+
+  ionViewWillLeave() {
+    //console.log("UNSUBSCRIBE");
+    this.subs.unsubscribe();
   }
 
   inicializar() {
-    this.buscarComanda().then(com => {
-      this.comanda = com;
-      this.total = 0;
+    this.buscarComanda();
 
-      //Para que no quede linkeado constantemente
-      this.subs.unsubscribe();
+    // this.buscarComanda().then(com => {
+    //   this.comanda = com;
+    //   this.total = 0;
 
-      this.armarListasEstados().then(() => {
-        if (this.listaPedidosPendientes.length == 0)
-          if (this.listaPedidosDerivados.length == 0)
-            if (this.listaPedidosEntregados.length > 0)
-              this.todoEntregado = true;
-      });
-    });
+    //   //Para que no quede linkeado constantemente
+    //   // setTimeout(() => {
+    //   //   this.subs.unsubscribe();
+    //   // }, 2000);
+
+    //   this.armarListasEstados().then(() => {
+    //     if (this.listaPedidosPendientes.length == 0)
+    //       if (this.listaPedidosDerivados.length == 0)
+    //         if (this.listaPedidosEntregados.length > 0)
+    //           this.todoEntregado = true;
+    //   });
+    // });
   }
 
   armarListasEstados(): Promise<any> {
@@ -84,6 +100,8 @@ export class PedidosPage {
       let hora: string = "";
 
       if (this.comanda.pedidos != null) {
+        let importeTotal: number = 0;
+
         for (let i = 0; i < this.comanda.pedidos.length; i++) {
           hora = this._utils.convertirAHora(this.comanda.pedidos[i].id);
 
@@ -120,15 +138,29 @@ export class PedidosPage {
               break;
             case "Entregado":
               await this.armarListas(this.comanda.pedidos[i]).then(() => {
-                let importeTotal: number = 0;
 
-                for (let j = 0; j < this.bebidas.length; j++) {
-                  importeTotal = importeTotal + this.bebidas[j].precio;
+                console.log("BEBIDAS");
+                console.log(this.bebidas);
+                if(this.bebidas != null) {
+                  for (let j = 0; j < this.bebidas.length; j++) {
+                    console.log("IMPORTE");
+                    console.log(this.bebidas[j].precio);
+                    importeTotal = importeTotal + this.bebidas[j].precio;
+                  }
                 }
 
-                for (let j = 0; j < this.cocina.length; j++) {
-                  importeTotal = importeTotal + this.cocina[j].precio;
+                console.log("COCINA");
+                console.log(this.cocina);
+                if(this.cocina != null) {
+                  for (let j = 0; j < this.cocina.length; j++) {
+                    console.log("IMPORTE");
+                    console.log(this.cocina[j].precio);
+                    importeTotal = importeTotal + this.cocina[j].precio;
+                  }
                 }
+
+                console.log(this.comanda.pedidos[i].id);
+                console.log(importeTotal);
 
                 this.total += importeTotal;
                 this.listaPedidosEntregados.push({
@@ -152,45 +184,114 @@ export class PedidosPage {
   }
 
   // VER DE RECORRER POR ESETADOS E IR ARMANDO LAS LISTAS POR ESTADO.
-  buscarComanda(): Promise<IComanda> {
-    let promesa = new Promise<IComanda>((resolve, reject) => {
-      this.subs = this._comandas.items.subscribe(data => {
-        let encontro: Boolean = false;
-        this.listaPedidosDerivados = [];
-        this.listaPedidosEntregados = [];
-        this.listaPedidosPendientes = [];
+  // buscarComanda(): Promise<IComanda> {
+  //   let promesa = new Promise<IComanda>((resolve, reject) => {
+  //     this.subs = this._comandas.items.subscribe(data => {
+  //       let encontro: Boolean = false;
+  //       this.listaPedidosDerivados = [];
+  //       this.listaPedidosEntregados = [];
+  //       this.listaPedidosPendientes = [];
 
-        for (let i = 0; i < data.length; i++) {
-          if (data[i].userID == this.userID && data[i].id == this.comanda.id) {
-            resolve(data[i] as IComanda);
-            break;
+  //       for (let i = 0; i < data.length; i++) {
+  //         if (data[i].userID == this.userID && data[i].id == this.comanda.id) {
+  //           resolve(data[i] as IComanda);
+  //           break;
+  //         }
+  //       }
+
+  //       if (!encontro) reject();
+  //     });
+  //   });
+
+  //   return promesa;
+  // }
+
+  //buscarComanda(): Promise<IComanda> {
+  buscarComanda() {
+    // new Promise<IComanda>((resolve, reject) => {
+
+    // if(this.subs!= null)
+    //   this.subs.unsubscribe();
+
+    this.subs = this._comandas.lista.valueChanges().subscribe(data => {
+      if (this.automatico)
+        this._utils.presentLoading("Actualizando pedidos...");
+
+      this.listaPedidosDerivados = [];
+      this.listaPedidosEntregados = [];
+      this.listaPedidosPendientes = [];
+
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].userID == this.userID && data[i].id == this.comanda.id) {
+
+          //resolve(data[i] as IComanda);
+
+          this.comanda = data[i];
+          this.total = 0;
+          this.todoEntregado = false;
+
+          // console.log("COMANDA");
+          // console.log(com);
+          this.armarListasEstados().then(() => {
+            if (this.listaPedidosPendientes.length == 0)
+              if (this.listaPedidosDerivados.length == 0)
+                if (this.listaPedidosEntregados.length > 0)
+                  this.todoEntregado = true;
+          });
+
+          if (this.automatico) {
+            setTimeout(() => {
+              this._utils.dismiss().then(() => {});
+            }, 2000);
           }
-        }
 
-        if (!encontro) reject();
-      });
+          break;
+        }
+      }
+
+      //if (!encontro) reject();
     });
 
-    return promesa;
+    //})
+    // .then(com=>{
+    //   this.comanda = com;
+    //   this.total = 0;
+    //   this.todoEntregado = false;
+
+    //   console.log("COMANDA");
+    //   console.log(com);
+    //   this.armarListasEstados().then(() => {
+    //     if (this.listaPedidosPendientes.length == 0)
+    //       if (this.listaPedidosDerivados.length == 0)
+    //         if (this.listaPedidosEntregados.length > 0)
+    //           this.todoEntregado = true;
+    //   });
+    // });
+
+    //return promesa;
   }
 
   armarListas(pedido: IComandaPedido): Promise<any> {
-    let promesa = new Promise((resolve, reject) => {
+    let promesa = new Promise(async (resolve, reject) => {
       if (pedido.subPedidosBebida.items != null) {
-        this.buscarBebidas(pedido.subPedidosBebida.items).then(lista => {
+        await this.buscarBebidas(pedido.subPedidosBebida.items).then(lista => {
           this.bebidas = lista;
 
-          if (pedido.subPedidosCocina.items != null) {
-            this.buscarPlatos(pedido.subPedidosCocina.items)
-              .then(lista => {
-                this.cocina = lista;
-                resolve();
-              })
-              .catch(() => reject());
-          } else {
-            this.cocina = null;
-            resolve();
-          }
+          new Promise(async (resolve,reject)=>{
+
+            if (pedido.subPedidosCocina.items != null) {
+
+              await this.buscarPlatos(pedido.subPedidosCocina.items)
+                .then(lista => {
+                  this.cocina = lista;
+                  resolve();
+                });
+            } else {
+              this.cocina = null;
+              resolve();
+            }
+          }).then(()=> resolve());
+
         });
       } else {
         this.bebidas = null;
@@ -219,6 +320,8 @@ export class PedidosPage {
         this._bebidas
           .traerBebida(itemBebida.bebidaID)
           .then((b: any) => {
+            console.log("bebida");
+            console.log(b);
             lbebidas.push({
               cantidad: itemBebida.cantidad,
               bebida: b,
@@ -244,11 +347,14 @@ export class PedidosPage {
         this._platos
           .traerPlato(itemPlato.platoID)
           .then((p: any) => {
+            console.log("plato");
+            console.log(p);
             lPlatos.push({
               cantidad: itemPlato.cantidad,
               plato: p,
               precio: Number(p.importe) * Number(itemPlato.cantidad)
             });
+
 
             resolve(lPlatos);
           })
@@ -269,22 +375,28 @@ export class PedidosPage {
   }
 
   cambiarEstadoPedido(event: any) {
+    this.automatico = false;
+    this._utils.presentLoading("Derivando pedido...");
+
     for (let i = 0; i < this.comanda.pedidos.length; i++) {
       if (this.comanda.pedidos[i].id == event.idPedido) {
         this.comanda.pedidos[i].estado = event.estadoPedido;
         this.comanda.pedidos[i].subPedidosBebida.estado = event.estadoPedido;
         this.comanda.pedidos[i].subPedidosCocina.estado = event.estadoPedido;
+
         break;
       }
     }
 
     this._comandas.actualizarComanda(this.comanda).then(
       () => {
-        this._utils.mostrarMensaje("Se derivó el pedido");
+        //this._utils.mostrarMensaje("Se derivó el pedido");
 
-        this._comandas.subs.unsubscribe();
+       //this.inicializar();
         setTimeout(() => {
-          this.navCtrl.pop();
+          this._utils.dismiss();
+          this.automatico = true;
+          //this.navCtrl.pop();
         }, 2000);
       },
       () => {
@@ -299,6 +411,9 @@ export class PedidosPage {
     // console.log(event.categoriaSubp);
     // console.log(event.idPedido);
 
+    this.automatico = false;
+    this._utils.presentLoading("Entregando pedido...");
+
     for (let i = 0; i < this.comanda.pedidos.length; i++) {
       if (this.comanda.pedidos[i].id == event.idPedido) {
         if (event.categoriaSubp == "cocina") {
@@ -306,6 +421,14 @@ export class PedidosPage {
         } else if (event.categoriaSubp == "bebida") {
           this.comanda.pedidos[i].subPedidosBebida.estado = event.estadoPedido;
         }
+
+        if(this.comanda.pedidos[i].subPedidosBebida.estado == "Entregado" && this.comanda.pedidos[i].subPedidosCocina.items == null) 
+          this.comanda.pedidos[i].estado = event.estadoPedido;
+
+
+        if(this.comanda.pedidos[i].subPedidosCocina.estado == "Entregado" && this.comanda.pedidos[i].subPedidosBebida.items == null) 
+          this.comanda.pedidos[i].estado = event.estadoPedido;
+
         if (
           this.comanda.pedidos[i].subPedidosBebida.estado == "Entregado" &&
           this.comanda.pedidos[i].subPedidosCocina.estado == "Entregado"
@@ -318,10 +441,15 @@ export class PedidosPage {
 
     this._comandas.actualizarComanda(this.comanda).then(
       () => {
-        this._utils.mostrarMensaje("Se entregó el pedido");
+        //this._utils.mostrarMensaje("Se entregó el pedido");
+
+       //this.inicializar();
 
         setTimeout(() => {
-          this.navCtrl.pop();
+          //this._comandas.subs.unsubscribe();
+          this._utils.dismiss();
+          this.automatico = true;
+          //this.navCtrl.pop();
         }, 2000);
       },
       () => {
@@ -331,16 +459,20 @@ export class PedidosPage {
   }
 
   cerrarComanda() {
+    this._utils.presentLoading("Cerrando mesa...");
+
     this.comanda.estado = "Cerrada";
 
     this._comandas.cerrarComanda(this.comanda, this.mesaKey).then(() => {
       this.todoEntregado = false;
       this.total = 0;
-      this._utils.mostrarMensaje("Se cerró la comanda");
+      //this._utils.mostrarMensaje("Se cerró la comanda");
 
-      this._comandas.subs.unsubscribe();
+      //this._comandas.subs.unsubscribe();
       setTimeout(() => {
-        this.navCtrl.pop();
+        this.subs.unsubscribe();
+        this._utils.dismiss().then(() => this.navCtrl.pop());
+        //this.navCtrl.pop();
       }, 2000);
     });
   }

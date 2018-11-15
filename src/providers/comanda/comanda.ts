@@ -12,8 +12,8 @@ import { Observable, Subscription } from "rxjs";
 @Injectable()
 export class ComandaProvider {
   public lista: AngularFireList<IComanda>;
-  public items: Observable<any[]>;
-  public subs: Subscription = null;
+  //public items: Observable<any[]>;
+  //public subs: Subscription = null;
 
   constructor(
     public afDB: AngularFireDatabase,
@@ -27,13 +27,13 @@ export class ComandaProvider {
 
     this.lista = this.afDB.list("/Mesa_Comandas");
 
-    this.items = this.lista
-      .snapshotChanges()
-      .pipe(
-        map(changes =>
-          changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
-        )
-      );
+    // this.items = this.lista
+    //   .snapshotChanges()
+    //   .pipe(
+    //     map(changes =>
+    //       changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
+    //     )
+    //   );
   }
 
   /** Guarda una comanda */
@@ -89,32 +89,46 @@ export class ComandaProvider {
     return promesa;
   }
 
+  // actualizarComanda(comanda: IComanda): Promise<Boolean> {
+  //   let promesa = new Promise<Boolean>((resolve, reject) => {
+  //     //Me devuelve una referencia al objeto de la lista, asi me aseguro de Updatear y no generar una nueva Comanda
+
+  //     this.subs = this.items.subscribe(data => {
+  //       for (let i = 0; i < data.length; i++) {
+  //         if (data[i].id == comanda.id) {
+  //           let ref = firebase.database().ref("/Mesa_Comandas/" + data[i].key);
+
+  //           ref.ref.update(comanda).then(
+  //             () => {
+  //               resolve(true);
+  //             },
+  //             err => {
+  //               reject(false);
+  //             }
+  //           );
+
+  //           break;
+  //         }
+  //       }
+  //     });
+  //   });
+
+  //   return promesa;
+  // }
+
   actualizarComanda(comanda: IComanda): Promise<Boolean> {
     let promesa = new Promise<Boolean>((resolve, reject) => {
       //Me devuelve una referencia al objeto de la lista, asi me aseguro de Updatear y no generar una nueva Comanda
 
-      this.subs = this.items.subscribe(data => {
-        for (let i = 0; i < data.length; i++) {
-          if (data[i].id == comanda.id) {
-            let ref = firebase.database().ref("/Mesa_Comandas/" + data[i].key);
 
-            ref.ref.update(comanda).then(
-              () => {
-                resolve(true);
-              },
-              err => {
-                reject(false);
-              }
-            );
-
-            break;
-          }
-        }
-      });
+      this.afDB.object("/Mesa_Comandas/" + comanda.id).update(comanda)
+      .then(()=>resolve(true))
+      .catch((err)=> reject(err));
     });
 
     return promesa;
   }
+
 
   private guardarComanda(
     comanda: IComanda,
@@ -125,7 +139,10 @@ export class ComandaProvider {
     if (url != null) comanda.fotoCliente = url; // Si tiene URL se la asigno
 
     let promesa = new Promise<Boolean>((resolve, reject) => {
-      this.lista.push(comanda).then(
+
+
+
+    this.afDB.object("/Mesa_Comandas/" + comanda.id).update(comanda).then(
         () => {
           //CAMBIO EL ESTADO DE LA MESA A OCUPADA
           //console.log(mesaKey);
@@ -144,6 +161,26 @@ export class ComandaProvider {
           reject(false);
         }
       );
+      
+      // // this.lista.push(comanda).then(
+      // //   () => {
+      // //     //CAMBIO EL ESTADO DE LA MESA A OCUPADA
+      // //     //console.log(mesaKey);
+      // //     let ref = firebase.database().ref("/mesas/" + mesaKey);
+
+      // //     ref.ref.update({ estado: "Ocupada", comanda: comanda.id }).then(
+      // //       () => {
+      // //         resolve(true);
+      // //       },
+      // //       err => {
+      // //         reject(false);
+      // //       }
+      // //     );
+      // //   },
+      // //   err => {
+      // //     reject(false);
+      // //   }
+      // // );
     });
 
     return promesa;

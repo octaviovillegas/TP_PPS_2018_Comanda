@@ -71,8 +71,8 @@ export class MesasProvider {
     .map(actions =>{
       return actions.map(a =>{
         const data = a.payload.val() as IMesa;
-        const idMesa = a.payload.key;
-        return {idMesa, ...data};
+        const key = a.payload.key;
+        return {key,...data};
       })
     })
   }

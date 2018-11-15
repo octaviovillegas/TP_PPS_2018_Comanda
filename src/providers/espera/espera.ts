@@ -21,7 +21,7 @@ export class EsperaProvider {
   constructor(public afDB:AngularFireDatabase) {
   }
 
-  public ponerseEnLista(uid:string, cantidad:string){
+  public ponerseEnLista(uid:string, cantidad:string, esAnonimo:boolean){
     let fecha = this.obtenerFecha();
     let hora = this.obtenerHora();
 
@@ -31,6 +31,7 @@ export class EsperaProvider {
       fecha:fecha,
       hora: hora,
       comensales: cantidad,
+      esAnonimo: esAnonimo
     })
   }
 

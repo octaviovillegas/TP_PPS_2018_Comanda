@@ -30,6 +30,7 @@ export class QrEsperaPage {
   esperando:boolean;
   espera:Observable<IEspera[]>;
   uidEspera:string;
+  esAnonimo:boolean;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -45,6 +46,12 @@ export class QrEsperaPage {
     this.escaneado = false;
     this.esperando = false;
     this.clienteUid = localStorage.getItem("userID");
+    if(localStorage.getItem('perfil') == "Anonimo"){
+      this.esAnonimo = true;
+    }
+    else{
+      this.esAnonimo = false;
+    }
   }
 
   ionViewDidLoad() {
@@ -75,7 +82,8 @@ export class QrEsperaPage {
         cargando.dismiss();
       }, 3000);
       this.escaneado = true;
-        this.proveedorEsperar.ponerseEnLista(this.clienteUid, this.esperaForm.controls['cantidad'].value)
+      if(this.esAnonimo){
+        this.proveedorEsperar.ponerseEnLista(this.clienteUid, this.esperaForm.controls['cantidad'].value, this.esAnonimo)
         .then(data =>{
           this.espera = this.proveedorEsperar.traerEnLista();
           
@@ -91,6 +99,10 @@ export class QrEsperaPage {
             });
           })
         })
+      }
+      else{
+        //AGREGAR CLIENTE COMUN
+      }
     }
     else{
       setTimeout(() => {
@@ -118,8 +130,9 @@ export class QrEsperaPage {
     localStorage.removeItem('perfil');
     localStorage.removeItem('usuario');
     this.auth.logout();
-    this.navCtrl.setRoot(LoginPage);
     this.proveedorEsperar.salirLista(this.uidEspera);
+    this.navCtrl.setRoot(LoginPage);
+    
   }
 
 

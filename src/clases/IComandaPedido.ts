@@ -7,4 +7,5 @@ export interface IComandaPedido {
   subPedidosCocina: ISubPedidoCocina;
   subPedidosBebida: ISubPedidoBebida;
   tiempoMayorEstimado?: number;
+  horaDerivado?: number;
 }

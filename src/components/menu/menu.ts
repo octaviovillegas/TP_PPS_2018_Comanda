@@ -53,14 +53,15 @@ export class MenuComponent {
 
       case 'Cocinero':
         this.pages = [
-          { title: 'Nuevo plato', component: "AltaPlatoPage"},
+          { title: 'Pedidos', component: "PedidosCocinaPage" },
+          { title: 'Nuevo plato', component: "AltaPlatoPage"}
+          
         ];
           break;
       case 'Bartender':
         this.pages = [
-          { title: 'Mesas', component: "MesasPage" },
-          { title: 'Nuevo Cliente', component: "AltaClientePage" },
-          { title: 'Nueva bebiba', component: "AltaBebidaPage"}
+          { title: 'Pedidos', component: "PedidosCocinaPage" },
+          { title: 'Nuevo bebida', component: "AltaBebidaPage"}
         ];
         break;
 

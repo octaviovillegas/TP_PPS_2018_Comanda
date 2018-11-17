@@ -6,17 +6,19 @@
       </ion-col>
 
       <ion-col text-right>
-        <button
-          ion-button
-          clear
-          small
-          color="danger"
-          icon-start
-          (click)="cambiarEstado('Derivado', itemPedido.id)"
-        >
-          <ion-icon name="share-alt"></ion-icon>
-          DERIVAR
-        </button>
+        <div *ngIf="perfil != 'Cliente'">
+          <button
+            ion-button
+            clear
+            small
+            color="danger"
+            icon-start
+            (click)="cambiarEstado('Derivado', itemPedido.id)"
+          >
+            <ion-icon name="share-alt"></ion-icon>
+            Derivar
+          </button>
+        </div>
       </ion-col>
     </ion-row>
 
@@ -121,7 +123,10 @@
 <ion-card *ngIf="itemPedido.estado == 'Derivado'" color="s_light">
   <ion-card-header style="padding-bottom: 0px; padding-top:5px">
     Tiempo de entrega:
-    {{ sumarMinutos(itemPedido.tiempoEstimado) | date: "hh:mm" }}
+    {{
+      sumarMinutos(itemPedido.horaDerivado, itemPedido.tiempoEstimado)
+        | date: "hh:mm"
+    }}
   </ion-card-header>
 
   <div *ngIf="itemPedido.estado == 'Derivado' && itemPedido.subpedidoBebidas">
@@ -136,6 +141,7 @@
         </ion-col>
 
         <ion-col text-right>
+            <div *ngIf="perfil != 'Cliente'">
           <button
             ion-button
             clear
@@ -148,6 +154,7 @@
             <ion-icon name="share-alt"></ion-icon>
             ENTREGAR
           </button>
+          </div>
         </ion-col>
       </ion-row>
       <ion-card-content>
@@ -180,6 +187,7 @@
         </ion-col>
 
         <ion-col text-right>
+            <div *ngIf="perfil != 'Cliente'">
           <button
             ion-button
             clear
@@ -192,6 +200,7 @@
             <ion-icon name="share-alt"></ion-icon>
             ENTREGAR
           </button>
+          </div>
         </ion-col>
       </ion-row>
       <ion-card-content>

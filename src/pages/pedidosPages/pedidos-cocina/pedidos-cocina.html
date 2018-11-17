@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-navbar no-border-bottom>
+    <ion-title> PEDIDOS PENDIENTES </ion-title>
+  </ion-navbar>
+
+  <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="estado">
+      <ion-segment-button value="pendiente"> PENDIENTE </ion-segment-button>
+      <ion-segment-button value="preparando"> PREPARANDO </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+ 
+  <div [ngSwitch]="estado">
+    <div *ngSwitchCase="'pendiente'">
+      <div *ngIf="listaPedidosPendientes">
+        <ion-list *ngFor="let item of listaPedidosPendientes">
+          <pedido-cocina 
+          [itemPedido]="item" 
+          [estado]="'pendiente'" 
+          (estadoCambiado)="cambiarEstadoPedido($event)"
+          ></pedido-cocina>
+        </ion-list>
+      </div>
+    </div>
+    <div *ngSwitchCase="'preparando'">
+      <div *ngIf="listaPedidosEnPreparacion">
+        <ion-list *ngFor="let item of listaPedidosEnPreparacion">
+          <pedido-cocina 
+          [itemPedido]="item" 
+          [estado]="'preparando'" 
+          (estadoCambiado)="cambiarEstadoPedido($event)"
+          ></pedido-cocina>
+        </ion-list>
+      </div>
+    </div>
+
+  </div>
+</ion-content>

@@ -12,6 +12,8 @@ import { Observable, Subscription } from "rxjs";
 @Injectable()
 export class ComandaProvider {
   public lista: AngularFireList<IComanda>;
+  public comandasAbiertas: AngularFireList<IComanda[]>;
+
   //public items: Observable<any[]>;
   //public subs: Subscription = null;
 
@@ -26,6 +28,12 @@ export class ComandaProvider {
     // );
 
     this.lista = this.afDB.list("/Mesa_Comandas");
+    this.comandasAbiertas = this.afDB.list("/Mesa_Comandas", ref =>
+    ref
+      .orderByChild("estado")
+      .equalTo("Abierta")
+    );
+
 
     // this.items = this.lista
     //   .snapshotChanges()
@@ -119,7 +127,6 @@ export class ComandaProvider {
   actualizarComanda(comanda: IComanda): Promise<Boolean> {
     let promesa = new Promise<Boolean>((resolve, reject) => {
       //Me devuelve una referencia al objeto de la lista, asi me aseguro de Updatear y no generar una nueva Comanda
-
 
       this.afDB.object("/Mesa_Comandas/" + comanda.id).update(comanda)
       .then(()=>resolve(true))

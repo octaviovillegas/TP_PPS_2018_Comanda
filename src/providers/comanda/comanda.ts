@@ -198,6 +198,10 @@ export class ComandaProvider {
     return promesa;
   }
 
+  public buscarComandas(){
+    return this.lista;
+  }
+
   verificarComandaPorUsuario(comandaID: number): Promise<IComanda> {
     let promesa = new Promise<IComanda>((resolve, reject) => {
       let userID: string = localStorage.getItem("userID");

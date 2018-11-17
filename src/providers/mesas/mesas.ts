@@ -77,12 +77,21 @@ export class MesasProvider {
     })
   }
 
-  buscarMesa(codigoQR: string) {
+  //**Busca la mesa por ID, y devuelve una promesa con el Numero */
+  buscarNroMesa(idMesa: number): Promise<string> {
 
-    return this.items;
+    return new Promise<string>((resolve,reject)=>{
 
-    // return this.afDB
-    //   .list("/mesas/", ref => ref.orderByChild("codigoQr").equalTo(codigoQR))
-    //   .valueChanges();
+      this.afDB
+      .list("/mesas/", ref => ref.orderByChild("idMesa").equalTo(idMesa))
+      .valueChanges().subscribe((data:IMesa[])=>{
+        if(data.length > 0) { //encontro una mesa
+          console.log(data[0].numero.toString());
+          resolve(data[0].numero.toString());
+        }else{
+          resolve("");
+        }
+      })
+    })
   }
 }

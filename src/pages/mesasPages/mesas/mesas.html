@@ -1,26 +1,3 @@
-<!--
-  <ion-header>
-
-
-
-    <ion-navbar>
-
-
-
-
-      <ion-title>GESTIÓN MESAS</ion-title>
-
-
-
-
-    </ion-navbar>
-
-
-
-
-  </ion-header>
--->
-
 <ion-header>
   <ion-navbar>
     <ion-title> MESAS </ion-title>
@@ -40,7 +17,7 @@
   </ion-fab>
   <ion-list class="chat-sliding-demo">
     <ion-list-header> MESAS OCUPADAS </ion-list-header>
-    <ion-item-sliding *ngFor="let mesa of _mesas.items | async" #item>
+    <ion-item-sliding *ngFor="let mesa of (_mesas.items | async)" #item>
       <ion-item
         *ngIf="mesa.estado != 'Libre'"
         (click)="agregarPedidos(mesa.numero, mesa.key, mesa.comanda)"
@@ -126,127 +103,40 @@
 
   <br />
 
-  <ion-list class="login-sliding-demo">
-    <ion-list-header> MESAS LIBRES </ion-list-header>
-    <ion-item-sliding *ngFor="let mesa of _mesas.items | async" #item>
-      <ion-item *ngIf="mesa.estado == 'Libre'">
-        <ion-avatar item-start class="imgColores" [ngSwitch]="mesa.estado">
-          <img
-            *ngSwitchCase="'Libre'"
-            [src]="'assets/imgs/coloresEstados/verde.png'"
-          />
-          <img
-            *ngSwitchCase="'Bloqueada'"
-            [src]="'assets/imgs/coloresEstados/rojo.png'"
-          />
-        </ion-avatar>
-        <p>MESA {{ mesa.numero }} - Capacidad: {{ mesa.capacidad }}</p>
-        <ion-note item-end> {{ mesa.estado }} </ion-note>
-      </ion-item>
-
-      <ion-item-options side="left" (ionSwipe)="abrirComandaConMesa(mesa, mesa.key)">
-        <button
-          ion-button
-          color="secondary"
-          click="abrirComandaConMesa(mesa, mesa.key)"
-          expandable
-        >
-          Abrir
-          <ion-icon name="arrow-round-forward"></ion-icon>
-        </button>
-      </ion-item-options>
-
-      <!--
-        <ion-item-options
-
-
-          (ionSwipe)="bloquear(mesa, item)"
-
-
-
-          icon-start
-
-
-
-          *ngIf="mesa.estado != 'Bloqueada'"
-
-
-
-        >
-
-
-
-          <button ion-button color="dark" (click)="bloquear(mesa, item)">
-
-
-
-            <ion-icon name="remove-circle"></ion-icon>
-
-
-
-          </button>
-
-
-
-        </ion-item-options>
-
-
-
+  <div *ngIf="perfil != 'Cliente'">
+    <ion-list class="login-sliding-demo">
+      <ion-list-header> MESAS LIBRES </ion-list-header>
+      <ion-item-sliding *ngFor="let mesa of (_mesas.items | async)" #item>
+        <ion-item *ngIf="mesa.estado == 'Libre'">
+          <ion-avatar item-start class="imgColores" [ngSwitch]="mesa.estado">
+            <img
+              *ngSwitchCase="'Libre'"
+              [src]="'assets/imgs/coloresEstados/verde.png'"
+            />
+            <img
+              *ngSwitchCase="'Bloqueada'"
+              [src]="'assets/imgs/coloresEstados/rojo.png'"
+            />
+          </ion-avatar>
+          <p>MESA {{ mesa.numero }} - Capacidad: {{ mesa.capacidad }}</p>
+          <ion-note item-end> {{ mesa.estado }} </ion-note>
+        </ion-item>
 
         <ion-item-options
-
-
-
-          (ionSwipe)="desbloquear(mesa, item)"
-
-
-
-          icon-start
-
-
-
-          *ngIf="mesa.estado == 'Bloqueada'"
-
-
-
+          side="left"
+          (ionSwipe)="abrirComandaConMesa(mesa, mesa.key)"
         >
-
-
-
           <button
-
-
-
             ion-button
-
-
-
-            color="light"
-
-
-
-            (click)="desbloquear(mesa, item)"
-
-
-
-            *ngIf="mesa.estado == 'Bloqueada'"
-
-
-
+            color="secondary"
+            click="abrirComandaConMesa(mesa, mesa.key)"
+            expandable
           >
-
-
-
-            <ion-icon name="radio-button-off"></ion-icon>
-
-
-
+            Abrir
+            <ion-icon name="arrow-round-forward"></ion-icon>
           </button>
-
-
-
         </ion-item-options>
-      -->
-    </ion-item-sliding>
-  </ion-list>
+      </ion-item-sliding>
+    </ion-list>
+  </div>
 </ion-content>

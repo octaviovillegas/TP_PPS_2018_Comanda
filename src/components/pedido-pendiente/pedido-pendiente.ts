@@ -5,14 +5,24 @@ import { Component, Input, Output, EventEmitter } from "@angular/core";
   templateUrl: "pedido-pendiente.html"
 })
 export class PedidoPendienteComponent {
+
+  perfil:string = "";
   @Input() public itemPedido: any;
   @Output() public derivarPedido: EventEmitter<any>;
   @Output() public entregarPedido: EventEmitter<any>;
+  @Output() public eliminarPedido: EventEmitter<any>;
 
   constructor() {
+    this.perfil = localStorage.getItem("perfil");
     this.itemPedido = {};
     this.derivarPedido = new EventEmitter();
     this.entregarPedido = new EventEmitter();
+    this.eliminarPedido = new EventEmitter();
+  }
+
+
+  ionViewWillEnter() {
+   // this.perfil = localStorage.getItem("perfil");
   }
 
   MostrarDatosConsola() {
@@ -20,14 +30,11 @@ export class PedidoPendienteComponent {
   }
 
   cambiarEstado(estado: string, id: string) {
-    // console.log("Derivar subpedido");
-    // console.log(id);
-    // console.log(estado);
     this.derivarPedido.emit({ estadoPedido: estado, idPedido: id});
   }
 
-  sumarMinutos(minutos: number): Date {
-    let tiempo = new Date();
+  sumarMinutos(horaDerivado: number, minutos: number): Date {
+    let tiempo = new Date(horaDerivado);
 
     return new Date(tiempo.getTime() + minutos*60000);
   }
@@ -37,6 +44,10 @@ export class PedidoPendienteComponent {
     // console.log(id);
     // console.log(estado);
     this.entregarPedido.emit({ estadoPedido: estado, idPedido: id, categoriaSubp: categoria});
+  }
+
+  quitarPedido( id: string) {
+    this.eliminarPedido.emit({idPedido: id});
   }
 
 }

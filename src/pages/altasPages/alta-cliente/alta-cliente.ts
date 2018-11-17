@@ -82,7 +82,12 @@ export class AltaClientePage {
           .then(() =>{
             this.ldg.dismiss();
             this.navCtrl.setRoot(LoginPage);
-          })
+          }).catch(err => {
+            this.ldg.dismiss().then(()=>{
+              this.util.mostrarMensaje(err);
+            })
+          });
+          
       }
       else{
         this._cliente

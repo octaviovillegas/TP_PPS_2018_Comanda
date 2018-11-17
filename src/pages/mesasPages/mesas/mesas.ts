@@ -22,9 +22,7 @@ import { IComanda } from "../../../clases/IComanda";
 })
 export class MesasPage {
   public listaMesas: IMesa[] = [];
-  //public items: Observable<any[]>;
-
-  
+  perfil: string = "";
 
   constructor(
     public navCtrl: NavController,
@@ -41,6 +39,31 @@ export class MesasPage {
       this.listaMesas = value;
     });
   }
+
+  ionViewWillEnter() {
+    this.perfil = localStorage.getItem("perfil");
+
+    //this.inicializarMesas();
+  }
+
+  // inicializarMesas() {
+  //   this._mesas.listaMesas.valueChanges().subscribe((value: IMesa[]) => {
+  //     if(this.perfil == "Cliente") {
+  //       this.listaMesas = [];
+  //       for (let i = 0; i < value.length; i++) {
+  //         if(value[i].estado == "Ocupada") {
+  //           console.log("MESA");
+  //           console.log(value[i]);
+  //           this._comandas.verificarComandaPorUsuario(value[i].comanda).then(()=>{
+  //             this.listaMesas.push(value[i]);
+  //           })
+  //         }
+  //       }
+  //     } else {
+  //       this.listaMesas = value;
+  //     }
+  //   });
+  // }
 
   cerrar(mesa: any, item: ItemSliding) {
     mesa.estado = "Libre";

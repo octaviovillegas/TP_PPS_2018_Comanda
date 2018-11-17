@@ -120,11 +120,11 @@ export class AltaClientePage {
 
   private crearFormulario() {
     return this.formBuilder.group({
-      nombre: ['', Validators.required],
-      apellido: ['', Validators.required],
+      nombre: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z]*'),Validators.required])],
+      apellido: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z]*'),Validators.required])],
       email: ['', Validators.compose([Validators.required, Validators.email])],
       tipoDocu: ['DNI', Validators.required],
-      numeroDocu: ['', Validators.required]
+      numeroDocu: ['', Validators.compose([Validators.pattern('[0-9]{8}'), Validators.required])]
     });
   }
 }

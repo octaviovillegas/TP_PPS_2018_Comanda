@@ -211,7 +211,7 @@ export class ComandaProvider {
         (comandas: IComanda[]) => {
           for (let i = 0; i < comandas.length; i++) {
             if (comandas[i].id == comandaID) {
-              if (comandas[i].userID == userID) {
+              if (comandas[i].MozoId == userID) {
                 resolve(comandas[i]);
                 encontro = true;
                 break;

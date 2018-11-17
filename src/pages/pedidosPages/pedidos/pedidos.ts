@@ -69,7 +69,8 @@ export class PedidosPage {
   }
 
   ionViewWillLeave() {
-    this.subs.unsubscribe();
+    if(!this.subs.closed)
+      this.subs.unsubscribe();
   }
 
   inicializar() {
@@ -383,19 +384,20 @@ export class PedidosPage {
   }
 
   cerrarComanda() {
+    this.subs.unsubscribe();
     this._utils.presentLoading("Cerrando mesa...");
 
     this.comanda.estado = "Cerrada";
-
+    
+    console.log("MESA KEY");
+    console.log(this.mesaKey);
     this._comandas.cerrarComanda(this.comanda, this.mesaKey).then(() => {
       this.todoEntregado = false;
       this.total = 0;
 
       setTimeout(() => {
-        this.subs.unsubscribe();
         this._utils.dismiss().then(() => 
-        this.navCtrl.pop());
-
+        this.navCtrl.setRoot("MesasPage"));
       }, 3000);
     });
   }

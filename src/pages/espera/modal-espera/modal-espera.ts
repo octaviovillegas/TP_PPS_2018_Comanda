@@ -110,7 +110,7 @@ export class ModalEsperaPage {
     }
     nueva.mesa = mesaAsignada.idMesa;
     nueva.id = new Date().valueOf();
-    nueva.userID = localStorage.getItem("userId");
+    nueva.userID = this.usuario.id;
     nueva.ClienteId = this.idCliente;
     nueva.MozoId = this.usuario.id;
     console.log(mesaAsignada);

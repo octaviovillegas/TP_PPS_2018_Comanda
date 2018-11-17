@@ -18,6 +18,7 @@ import { AltaClienteAnonimoPageModule } from "../pages/altasPages/alta-cliente-a
 import { QrEsperaPageModule } from "../pages/qr/qr-espera/qr-espera.module";
 import { EsperaPageModule } from "../pages/espera/espera.module";
 import { ModalEsperaPageModule } from "../pages/espera/modal-espera/modal-espera.module";
+import {TraspasoPedidoPageModule} from "../pages/qr/qr-espera/traspaso-pedido/traspaso-pedido.module";
 
 import { BrowserModule } from "@angular/platform-browser";
 import { ErrorHandler, NgModule } from "@angular/core";
@@ -121,7 +122,8 @@ export const firebaseConfig = {
     QrEsperaPageModule,
     EsperaPageModule,
     ModalEsperaPageModule,
-    PedidosCocinaPageModule
+    PedidosCocinaPageModule,
+    TraspasoPedidoPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [MyApp, HomePage, LoginPage, SplashPage, ModalPage],
@@ -146,7 +148,8 @@ export const firebaseConfig = {
     ComandaProvider,
     ClienteProvider,
     EsperaProvider,
-    ModalEsperaPageModule
+    ModalEsperaPageModule,
+    TraspasoPedidoPageModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })

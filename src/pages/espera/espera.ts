@@ -63,7 +63,7 @@ export class EsperaPage {
     });
     miModal.onDidDismiss(data =>{
       let loading = this.loadingCtrl.create({
-        spinner:'hide',
+        spinner:'hide', 
         content:`<ion-grid>
                     <ion-row>
                        <ion-col>

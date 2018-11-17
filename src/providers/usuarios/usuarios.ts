@@ -89,7 +89,6 @@ export class UsuariosProvider {
       .list("/usuarios/", ref => ref.orderByChild("id").equalTo(id))
       .valueChanges().subscribe((data:Iusuario[])=>{
         if(data.length > 0) { //encontro una mesa
-          console.log(data[0].nombre + ' ' + data[0].apellido);
           resolve(data[0].nombre + ' ' + data[0].apellido);
         }else{
           resolve("");

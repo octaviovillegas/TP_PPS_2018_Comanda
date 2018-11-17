@@ -6,6 +6,21 @@
       </ion-col>
 
       <ion-col text-right>
+            <button
+              ion-button
+              clear
+              small
+              color="dark"
+              icon-start
+              (click)="quitarPedido(itemPedido.id)"
+            >
+              <ion-icon name="backspace"></ion-icon>
+              Eliminar
+            </button>
+        </ion-col>
+
+
+      <ion-col text-right>
         <div *ngIf="perfil != 'Cliente'">
           <button
             ion-button

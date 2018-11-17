@@ -10,12 +10,14 @@ export class PedidoPendienteComponent {
   @Input() public itemPedido: any;
   @Output() public derivarPedido: EventEmitter<any>;
   @Output() public entregarPedido: EventEmitter<any>;
+  @Output() public eliminarPedido: EventEmitter<any>;
 
   constructor() {
     this.perfil = localStorage.getItem("perfil");
     this.itemPedido = {};
     this.derivarPedido = new EventEmitter();
     this.entregarPedido = new EventEmitter();
+    this.eliminarPedido = new EventEmitter();
   }
 
 
@@ -42,6 +44,10 @@ export class PedidoPendienteComponent {
     // console.log(id);
     // console.log(estado);
     this.entregarPedido.emit({ estadoPedido: estado, idPedido: id, categoriaSubp: categoria});
+  }
+
+  quitarPedido( id: string) {
+    this.eliminarPedido.emit({idPedido: id});
   }
 
 }

@@ -399,4 +399,43 @@ export class PedidosPage {
       }, 3000);
     });
   }
+
+  quitarPedido(event: any) {
+    let encontro:number = -1;
+    this.automatico = false;
+    this._utils.presentLoading("Eliminando pedido...");
+
+    for (let i = 0; i < this.comanda.pedidos.length; i++) {
+      if (this.comanda.pedidos[i].id == event.idPedido) {
+        encontro = i;
+        this.comanda.pedidos[i].estado = event.estadoPedido;
+        this.comanda.pedidos[i].horaDerivado = new Date().valueOf();
+        this.comanda.pedidos[i].subPedidosBebida.estado = event.estadoPedido;
+        this.comanda.pedidos[i].subPedidosCocina.estado = event.estadoPedido;
+
+        break;
+      }
+    }
+
+    if(encontro >- 1) {
+
+      this.comanda.pedidos.splice(encontro, 1);
+      this._comandas.actualizarComanda(this.comanda).then(
+        () => {
+          //this._utils.mostrarMensaje("Se derivó el pedido");
+  
+          //this.inicializar();
+          setTimeout(() => {
+            this._utils.dismiss();
+            this.automatico = true;
+            //this.navCtrl.pop();
+          }, 2000);
+        },
+        () => {
+          this._utils.mostrarMensaje("Reintente por favor");
+        }
+      );
+    }
+  }
+
 }

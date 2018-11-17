@@ -9,24 +9,22 @@
   </div>
 
   <ion-toolbar no-border-top>
+    <!-- <ng-template [ngIf]="perfil == 'Cliente'"> -->
+    <!--
+      <ion-segment [(ngModel)]="estado">
+        <ion-segment-button value="pendiente">Pendiente</ion-segment-button>
+      </ion-segment>
+    -->
+    <!-- </ng-template> -->
 
-      <!-- <ng-template [ngIf]="perfil == 'Cliente'"> -->
-          <!-- <ion-segment [(ngModel)]="estado">
-              <ion-segment-button value="pendiente">Pendiente</ion-segment-button>
-            </ion-segment> -->
-      <!-- </ng-template> -->
-
-      <!-- <ng-template [ngIf]="perfil != 'Cliente'"> -->
-          <ion-segment [(ngModel)]="estado">
-              <ion-segment-button value="pendiente">Pendiente</ion-segment-button>
-              <ion-segment-button value="derivado">Derivado</ion-segment-button>
-              <ion-segment-button value="entregado">Entregado</ion-segment-button>
-            </ion-segment>
-      <!-- </ng-template> -->
-
-
+    <!-- <ng-template [ngIf]="perfil != 'Cliente'"> -->
+    <ion-segment [(ngModel)]="estado">
+      <ion-segment-button value="pendiente">Pendiente</ion-segment-button>
+      <ion-segment-button value="derivado">Derivado</ion-segment-button>
+      <ion-segment-button value="entregado">Entregado</ion-segment-button>
+    </ion-segment>
+    <!-- </ng-template> -->
   </ion-toolbar>
-
 </ion-header>
 
 <ion-content>
@@ -44,6 +42,7 @@
           <pedido-pendiente
             [itemPedido]="item"
             (derivarPedido)="cambiarEstadoPedido($event)"
+            (eliminarPedido)="quitarPedido($event)"
           ></pedido-pendiente>
         </ion-list>
       </div>

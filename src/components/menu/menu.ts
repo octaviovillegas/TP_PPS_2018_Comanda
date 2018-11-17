@@ -50,6 +50,9 @@ export class MenuComponent {
           { title: 'Estadisticas', component: "MesasPage" },
           { title: 'Encuesta', component: "EncuestaEnstradaSalidaPage" },
           { title: 'Encuesta supervisor', component: "EncuestaSupervisorPage" },
+
+          // { title: 'Estadisticas', component: "MesasPage" },
+          { title: 'Encuesta e/s', component: "EncuestaEnstradaSalidaPage" }
         ];
         break;
 

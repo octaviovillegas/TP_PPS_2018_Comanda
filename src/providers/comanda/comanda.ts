@@ -48,29 +48,34 @@ export class ComandaProvider {
       let nombreArchivo: string = new Date().valueOf().toString(); // 1231231231
 
       if (comanda.fotoCliente != "") {
+        try{
         // Si tiene una imagen, la guardo y la asigno a la comanda
-        let uploadTask: firebase.storage.UploadTask = storeRef
-          .child(`comandas/${nombreArchivo}`)
-          .putString(comanda.fotoCliente, "base64", {
-            contentType: "image/jpeg"
-          });
-
-        uploadTask.on(
-          firebase.storage.TaskEvent.STATE_CHANGED,
-          () => {}, // saber el % de cuantos Mbs se han subido
-          error => {
-            // manejo de error
-            reject();
-          },
-          () => {
-            // Tomo la URL
-            uploadTask.snapshot.ref.getDownloadURL().then(url => {
-              this.guardarComanda(comanda, mesa, mesaKey, url);
+          let uploadTask: firebase.storage.UploadTask = storeRef
+            .child(`comandas/${nombreArchivo}`)
+            .putString(comanda.fotoCliente, "base64", {
+              contentType: "image/jpeg"
             });
 
-            resolve();
-          }
-        );
+          uploadTask.on(
+            firebase.storage.TaskEvent.STATE_CHANGED,
+            () => {}, // saber el % de cuantos Mbs se han subido
+            error => {
+              // manejo de error
+              reject();
+            },
+            () => {
+              // Tomo la URL
+              uploadTask.snapshot.ref.getDownloadURL().then(url => {
+                this.guardarComanda(comanda, mesa, mesaKey, url);
+              });
+
+              resolve();
+            }
+          );
+        }
+        catch{
+          this.guardarComanda(comanda,mesa, mesaKey, comanda.fotoCliente);
+        }
       } else {
         //No tiene imagen
 

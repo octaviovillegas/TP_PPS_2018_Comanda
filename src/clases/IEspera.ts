@@ -7,4 +7,6 @@ export interface IEspera {
     hora?:string;
     comensales:number;
     esAnonimo:boolean;
+    dni?:string;
+    nombre?:string;
 }

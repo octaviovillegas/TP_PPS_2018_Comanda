@@ -126,7 +126,7 @@ export class AuthProvider {
 
         break;
       case "Cliente":
-        destinoPage = "MesasPage";
+        destinoPage = "QrEsperaPage";
         break;
       case "Anonimo":
         destinoPage = "QrEsperaPage";
@@ -163,5 +163,9 @@ export class AuthProvider {
     ay = this.afAuth.auth.onAuthStateChanged(user =>{
       console.log(user);
     })
+  }
+
+  public obtenerEmailUsuarioActual(){
+    return this.afAuth.auth.currentUser.email;
   }
 }

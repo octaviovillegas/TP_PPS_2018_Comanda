@@ -33,7 +33,6 @@ export class MenuComponent {
         this.pages = [
           { title: 'Mesas', component: "MesasPage" },
           { title: 'Encuesta e/s', component: "EncuestaEnstradaSalidaPage" },
-          { title: 'Encuesta supervisor', component: "EncuestaSupervisorPage" },
           { title: 'Nuevo cliente', component: "AltaClientePage" }
         ];
         break;
@@ -46,6 +45,7 @@ export class MenuComponent {
           { title: 'Nuevo Supervisor', component: "AltaSupervisorPage" },
           { title: 'Nuevo Dueño', component:"AltaDueñoPage"},
           { title: 'Nueva Mesa', component:"AltaMesaPage"},
+
           // { title: 'Estadisticas', component: "MesasPage" },
           { title: 'Encuesta e/s', component: "EncuestaEnstradaSalidaPage" }
         ];
@@ -70,7 +70,7 @@ export class MenuComponent {
       case 'Cliente':
         this.pages = [
           { title: 'Reservar', component: "MesasPage" },
-          { title: 'Hacer pedido', component: "EncuestaEnstradaSalidaPage" },
+          { title: 'Hacer pedido', component: "PedidasPage" },
           { title: 'Encuesta satisfaccion', component: "EncuestaClientePage" },
           { title: 'Propina', component:'QrPropinaPage'}
         ];

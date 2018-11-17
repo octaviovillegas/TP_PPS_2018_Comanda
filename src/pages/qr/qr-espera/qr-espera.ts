@@ -6,9 +6,11 @@ import {EsperaProvider} from '../../../providers/espera/espera';
 import { Observable } from 'rxjs';
 import {IEspera} from '../../../clases/IEspera';
 import {MesasPage} from '../../mesasPages/mesas/mesas';
+import {TraspasoPedidoPage} from "../qr-espera/traspaso-pedido/traspaso-pedido";
 import {AuthProvider} from '../../../providers/auth/auth';
 import {UsuariosProvider} from '../../../providers/usuarios/usuarios';
 import { LoginPage } from '../../login/login';
+import {ComandaProvider} from '../../../providers/comanda/comanda';
 
 /**
  * Generated class for the QrEsperaPage page.
@@ -41,7 +43,8 @@ export class QrEsperaPage {
     public proveedorEsperar:EsperaProvider,
     public auth: AuthProvider,
     public proveedorUsuarios:UsuariosProvider,
-    public alertCtrl:AlertController) 
+    public alertCtrl:AlertController,
+    public proveedorComanda:ComandaProvider) 
   {
     this.esperaForm = this.formBuilder.group({
       cantidad: ['', Validators.required]
@@ -97,7 +100,7 @@ export class QrEsperaPage {
                 this.uidEspera = element.key;
               }
               if(element.uidCliente == this.clienteUid  && element.estado == 'asignado'){
-                this.navCtrl.setRoot(MesasPage);
+                this.navCtrl.setRoot(TraspasoPedidoPage);
               }
             });
           })
@@ -123,7 +126,7 @@ export class QrEsperaPage {
                     this.uidEspera = element.key;
                   }
                   if(element.uidCliente == this.clienteUid && element.estado == 'asignado'){
-                    this.navCtrl.setRoot(MesasPage);
+                    this.navCtrl.setRoot(TraspasoPedidoPage);
                   }
                 });
               })

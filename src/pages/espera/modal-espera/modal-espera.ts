@@ -29,6 +29,8 @@ export class ModalEsperaPage {
   esAnonimo:boolean;
   usuarios:Iusuario[];
   usuario:Iusuario;
+  nombre:string;
+  dni:string;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -46,6 +48,10 @@ export class ModalEsperaPage {
     this.idEspera = this.navParams.get('idEspera');
     this.idCliente = this.navParams.get('idCliente');
     this.esAnonimo = this.navParams.get('esAnonimo');
+    if(!this.esAnonimo){
+      this.dni = this.navParams.get('dni');
+      this.nombre = this.navParams.get('nombre');
+    }
     this.proveedorUsuarios.obtenerUsuarios()
     .subscribe(data =>{
       data.forEach(element => {
@@ -94,19 +100,19 @@ export class ModalEsperaPage {
     nueva.fechaHora = Date.now();
     if(this.esAnonimo){
       nueva.nombreCliente = localStorage.getItem('nombre');
-      //nueva.fotoCliente = localStorage.getItem('fotoAnonimo');
+      nueva.fotoCliente = localStorage.getItem('fotoAnonimo');
     }
     else{
-      //nueva.cliente = cliente
-      //nueva.nombreCliente = nombre
+      nueva.nombreCliente = this.nombre;
+      nueva.cliente = this.dni;
     }
-    nueva.mesa = mesaAsignada.numero;
+    nueva.mesa = mesaAsignada.idMesa;
     nueva.id = new Date().valueOf();
     nueva.userID = localStorage.getItem("userId");
     nueva.ClienteId = this.idCliente;
     nueva.MozoId = this.usuario.id;
     console.log(mesaAsignada);
-    
+    console.log(nueva);
     this.proveedorComanda.saveComanda(nueva, mesaAsignada, mesaAsignada.key)
     .then(data =>{
       this.viewCtrl.dismiss({

@@ -21,18 +21,31 @@ export class EsperaProvider {
   constructor(public afDB:AngularFireDatabase) {
   }
 
-  public ponerseEnLista(uid:string, cantidad:string, esAnonimo:boolean){
+  public ponerseEnLista(uid:string, cantidad:string, esAnonimo:boolean, dni?:string, nombre?:string){
     let fecha = this.obtenerFecha();
     let hora = this.obtenerHora();
-
-    return this.afDB.list('listaDeEspera').push({
-      estado: 'espera',
-      uidCliente: uid,
-      fecha:fecha,
-      hora: hora,
-      comensales: cantidad,
-      esAnonimo: esAnonimo
-    })
+    if(dni == null && nombre == null){
+      return this.afDB.list('listaDeEspera').push({
+        estado: 'espera',
+        uidCliente: uid,
+        fecha:fecha,
+        hora: hora,
+        comensales: cantidad,
+        esAnonimo: esAnonimo
+      })
+    }
+    else{
+      return this.afDB.list('listaDeEspera').push({
+        estado: 'espera',
+        uidCliente: uid,
+        fecha: fecha,
+        hora: hora,
+        comensales: cantidad,
+        esAnonimo: esAnonimo,
+        dni: dni,
+        nombre: nombre
+      })
+    }
   }
 
   public traerEnLista():Observable<IEspera[]>{

@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IonicPage, NavController, NavParams, Loading, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Loading, LoadingController,AlertController } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import {EsperaProvider} from '../../../providers/espera/espera';
 import { Observable } from 'rxjs';
 import {IEspera} from '../../../clases/IEspera';
 import {MesasPage} from '../../mesasPages/mesas/mesas';
 import {AuthProvider} from '../../../providers/auth/auth';
+import {UsuariosProvider} from '../../../providers/usuarios/usuarios';
 import { LoginPage } from '../../login/login';
 
 /**
@@ -30,6 +31,7 @@ export class QrEsperaPage {
   esperando:boolean;
   espera:Observable<IEspera[]>;
   uidEspera:string;
+  esAnonimo:boolean;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -37,14 +39,24 @@ export class QrEsperaPage {
     public scanner:BarcodeScanner,
     public loadingCtrl: LoadingController,
     public proveedorEsperar:EsperaProvider,
-    public auth: AuthProvider) 
+    public auth: AuthProvider,
+    public proveedorUsuarios:UsuariosProvider,
+    public alertCtrl:AlertController) 
   {
     this.esperaForm = this.formBuilder.group({
       cantidad: ['', Validators.required]
     })
+    let email = this.auth.obtenerEmailUsuarioActual();
+
     this.escaneado = false;
     this.esperando = false;
     this.clienteUid = localStorage.getItem("userID");
+    if(localStorage.getItem('perfil') == "Anonimo"){
+      this.esAnonimo = true;
+    }
+    else{
+      this.esAnonimo = false;
+    }
   }
 
   ionViewDidLoad() {
@@ -71,11 +83,10 @@ export class QrEsperaPage {
     cargando.present();
 
     if(this.codigo == 'ponerse'){
-      setTimeout(() => {
-        cargando.dismiss();
-      }, 3000);
       this.escaneado = true;
-        this.proveedorEsperar.ponerseEnLista(this.clienteUid, this.esperaForm.controls['cantidad'].value)
+      if(this.esAnonimo){
+        cargando.dismiss();
+        this.proveedorEsperar.ponerseEnLista(this.clienteUid, this.esperaForm.controls['cantidad'].value, this.esAnonimo)
         .then(data =>{
           this.espera = this.proveedorEsperar.traerEnLista();
           
@@ -91,6 +102,34 @@ export class QrEsperaPage {
             });
           })
         })
+      }
+      else{
+        cargando.dismiss();
+        let email = this.auth.obtenerEmailUsuarioActual();
+        this.proveedorUsuarios.buscarUsuarioxMail(email)
+        .then(usuario =>{
+          this.proveedorEsperar.ponerseEnLista(
+            this.clienteUid, 
+            this.esperaForm.controls['cantidad'].value, 
+            this.esAnonimo,
+            usuario.dni.toString(),
+            usuario.nombre )
+            .then(data =>{
+              this.espera = this.proveedorEsperar.traerEnLista();
+              this.esperando = true;
+              this.espera.subscribe(esperas =>{
+                esperas.forEach(element => {
+                  if(element.uidCliente == this.clienteUid){
+                    this.uidEspera = element.key;
+                  }
+                  if(element.uidCliente == this.clienteUid && element.estado == 'asignado'){
+                    this.navCtrl.setRoot(MesasPage);
+                  }
+                });
+              })
+            })
+        })
+      }
     }
     else{
       setTimeout(() => {
@@ -118,8 +157,9 @@ export class QrEsperaPage {
     localStorage.removeItem('perfil');
     localStorage.removeItem('usuario');
     this.auth.logout();
-    this.navCtrl.setRoot(LoginPage);
     this.proveedorEsperar.salirLista(this.uidEspera);
+    this.navCtrl.setRoot(LoginPage);
+    
   }
 
 

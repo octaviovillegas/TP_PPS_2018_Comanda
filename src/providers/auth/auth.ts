@@ -6,6 +6,7 @@ import {LoginPage} from '../../pages/login/login';
 import { Observable, BehaviorSubject } from "rxjs";
 import { Page } from "ionic-angular/umd/navigation/nav-util";
 import { of } from "rxjs/observable/of";
+
 import * as firebase from "firebase";
 
 @Injectable()
@@ -125,7 +126,7 @@ export class AuthProvider {
 
         break;
       case "Cliente":
-        destinoPage = "MesasPage";
+        destinoPage = "QrEsperaPage";
         break;
       case "Anonimo":
         destinoPage = "QrEsperaPage";
@@ -142,7 +143,7 @@ export class AuthProvider {
 
         break;
       case "Mestre":
-        destinoPage = "MesasPage";
+        destinoPage = "EsperaPage";
 
         break;
       default:
@@ -155,5 +156,16 @@ export class AuthProvider {
 
   public ingresoAnonimo() {
     return this.afAuth.auth.signInAnonymously();
+  }
+
+  public esAnonimo(){
+    let ay:any;
+    ay = this.afAuth.auth.onAuthStateChanged(user =>{
+      console.log(user);
+    })
+  }
+
+  public obtenerEmailUsuarioActual(){
+    return this.afAuth.auth.currentUser.email;
   }
 }

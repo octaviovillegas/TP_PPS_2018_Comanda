@@ -389,14 +389,15 @@ export class PedidosPage {
 
     this.comanda.estado = "Cerrada";
     
+    console.log("MESA KEY");
+    console.log(this.mesaKey);
     this._comandas.cerrarComanda(this.comanda, this.mesaKey).then(() => {
       this.todoEntregado = false;
       this.total = 0;
 
       setTimeout(() => {
         this._utils.dismiss().then(() => 
-        this.navCtrl.pop());
-
+        this.navCtrl.setRoot("MesasPage"));
       }, 3000);
     });
   }

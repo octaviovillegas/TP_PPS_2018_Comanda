@@ -216,6 +216,7 @@ export class AltaComandaPage {
       this.comanda.mesa = this.mesa.idMesa;
       this.comanda.id = new Date().valueOf();
       this.comanda.userID = localStorage.getItem("userID");
+      this.comanda.MozoId = localStorage.getItem("userID");
 
       setTimeout(() => {
         this._comanda.saveComanda(this.comanda, this.mesa, this.mesaKey).then(
@@ -224,7 +225,8 @@ export class AltaComandaPage {
               console.log(this.mesa.numero);
               this.navCtrl.push("PedidosPage", {
                 mesa: this.mesa.numero,
-                comanda: this.comanda
+                comanda: this.comanda,
+                mesaKey: this.mesaKey
               });
             });
           },

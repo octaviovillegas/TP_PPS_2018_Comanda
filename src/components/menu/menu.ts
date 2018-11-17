@@ -46,22 +46,24 @@ export class MenuComponent {
           { title: 'Nuevo Supervisor', component: "AltaSupervisorPage" },
           { title: 'Nuevo Dueño', component:"AltaDueñoPage"},
           { title: 'Nueva Mesa', component:"AltaMesaPage"},
-          { title: 'Estadisticas', component: "MesasPage" },
-          { title: 'Encuesta', component: "EncuestaEnstradaSalidaPage" }
+          // { title: 'Estadisticas', component: "MesasPage" },
+          { title: 'Encuesta e/s', component: "EncuestaEnstradaSalidaPage" }
         ];
         break;
 
       case 'Cocinero':
         this.pages = [
           { title: 'Pedidos', component: "PedidosCocinaPage" },
-          { title: 'Nuevo plato', component: "AltaPlatoPage"}
+          { title: 'Nuevo plato', component: "AltaPlatoPage"},
+          { title: 'Encuesta e/s', component: "EncuestaEnstradaSalidaPage" }
           
         ];
           break;
       case 'Bartender':
         this.pages = [
           { title: 'Pedidos', component: "PedidosCocinaPage" },
-          { title: 'Nuevo bebida', component: "AltaBebidaPage"}
+          { title: 'Nueva bebida', component: "AltaBebidaPage"},
+          { title: 'Encuesta e/s', component: "EncuestaEnstradaSalidaPage" }
         ];
         break;
 
@@ -73,6 +75,13 @@ export class MenuComponent {
           { title: 'Propina', component:'QrPropinaPage'}
         ];
         break;
+
+        case 'Mestre':
+        this.pages = [
+          { title: 'Reservar', component: "EsperaPage" },
+          { title: 'Encuesta e/s', component: "EncuestaEnstradaSalidaPage" }
+        ];
+        break; 
     }
   }
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, MenuController } from 'ionic-angular';
 import {MesasProvider} from '../../../providers/mesas/mesas';
 import {IMesa} from '../../../clases/IMesa';
 import {IComanda} from '../../../clases/IComanda';
@@ -38,8 +38,10 @@ export class ModalEsperaPage {
     public proveedorComanda:ComandaProvider,
     public proveedorEspera:EsperaProvider,
     public viewCtrl:ViewController,
+    public menuCtrl: MenuController,
     public proveedorUsuarios:UsuariosProvider) 
   {
+    this.menuCtrl.enable(true, "menu");
     this.usuarios = [];
     this.mesasLibres = [];
     

@@ -21,6 +21,7 @@ import {UsuariosProvider} from '../../providers/usuarios/usuarios';
 })
 export class EsperaPage {
   //public lista:Observable<IEspera[]>;
+  public perfil: string = "";
   public lista:IEspera[];
   public usuarios:Iusuario[];
   constructor(
@@ -41,7 +42,9 @@ export class EsperaPage {
     })
   }
 
-
+  ionViewWillEnter() {
+    this.perfil = localStorage.getItem("perfil");
+  }
 
   ngOnInit() {
     //this.lista = this.proveedorEspera.traerEnLista();

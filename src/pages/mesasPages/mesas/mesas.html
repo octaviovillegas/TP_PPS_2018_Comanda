@@ -1,15 +1,17 @@
 <ion-header>
   <ion-navbar>
-    <ion-title> MESAS </ion-title>
-    <ion-buttons right>
+    <ion-title> Mesas </ion-title>
+    <ion-buttons left>
       <button ion-button icon-only menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
     </ion-buttons>
+    <ion-buttons end><p class="tipoPerfil">{{ perfil }}</p></ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content class="outer-content">
+    
   <ion-fab right bottom>
     <button ion-fab color="secondary" (click)="irAltaComanda()">
       <ion-icon name="barcode"></ion-icon>

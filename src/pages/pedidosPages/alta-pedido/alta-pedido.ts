@@ -64,7 +64,7 @@ export class AltaPedidoPage {
     //console.log('ionViewDidLoad AltaPedidoPage');
   }
 
-  cargarLista(item: IPlato): ISubpedidoItem {
+  cargarLista(item: IPlato, cantidad: number): ISubpedidoItem {
     let pedido: ISubpedidoItem = {
       nombre: item.nombre,
       id: item.id,
@@ -76,7 +76,7 @@ export class AltaPedidoPage {
       preparacionFoto: item.preparacionFoto,
       preparadoFoto: item.preparadoFoto,
       idSubpedido: 0,
-      cantidad: 0
+      cantidad: cantidad
     };
     return pedido;
   }
@@ -120,28 +120,117 @@ export class AltaPedidoPage {
   traerMenuPorCategoria(categoria: string) {
     if (!this.existeMenu(categoria)) {
       this._platosProvider.traerPlatos(categoria).subscribe(dataPlatos => {
+        // console.log("CATEGORIA");
+        // console.log(categoria);
+        // console.log(dataPlatos);
+
         switch (categoria) {
           case "Minutas":
-            dataPlatos.forEach((item: IPlato) => {
-              if (!this.lMinutas.some(p => p.id === item.id)) {
-                this.lMinutas.push(this.cargarLista(item));
-              }
-            });
+            if (this.lMinutas.length > 0) {
+              let listaAux: ISubpedidoItem[] = this.lMinutas;
+              let itemAux: ISubpedidoItem = null;
+
+              this.lMinutas = [];
+              dataPlatos.forEach((item: IPlato) => {
+                itemAux = listaAux.find(i => i.id == item.id);
+
+                if (itemAux != null)
+                  //ya estaba en la lista
+                  this.lMinutas.push(this.cargarLista(item, itemAux.cantidad));
+                else this.lMinutas.push(this.cargarLista(item, 0));
+
+                if (!this.lMinutas.some(p => p.id === item.id)) {
+                  this.lMinutas.push(this.cargarLista(item, 0));
+                }
+              });
+            } else {
+              dataPlatos.forEach((item: IPlato) => {
+                if (!this.lMinutas.some(p => p.id === item.id)) {
+                  this.lMinutas.push(this.cargarLista(item, 0));
+                }
+              });
+            }
+
             break;
           case "Calientes":
-            dataPlatos.forEach((item: IPlato) => {
-              this.lCalientes.push(this.cargarLista(item));
-            });
+            if (this.lCalientes.length > 0) {
+              let listaAux: ISubpedidoItem[] = this.lCalientes;
+              let itemAux: ISubpedidoItem = null;
+
+              this.lCalientes = [];
+              dataPlatos.forEach((item: IPlato) => {
+                itemAux = listaAux.find(i => i.id == item.id);
+
+                if (itemAux != null)
+                  this.lCalientes.push(
+                    this.cargarLista(item, itemAux.cantidad)
+                  );
+                else this.lCalientes.push(this.cargarLista(item, 0));
+
+                if (!this.lCalientes.some(p => p.id === item.id)) {
+                  this.lCalientes.push(this.cargarLista(item, 0));
+                }
+              });
+            } else {
+              dataPlatos.forEach((item: IPlato) => {
+                if (!this.lCalientes.some(p => p.id === item.id)) {
+                  this.lCalientes.push(this.cargarLista(item, 0));
+                }
+              });
+            }
+
             break;
           case "Frios":
-            dataPlatos.forEach((item: IPlato) => {
-              this.lFrios.push(this.cargarLista(item));
-            });
+            if (this.lFrios.length > 0) {
+              let listaAux: ISubpedidoItem[] = this.lFrios;
+              let itemAux: ISubpedidoItem = null;
+
+              this.lFrios = [];
+              dataPlatos.forEach((item: IPlato) => {
+                itemAux = listaAux.find(i => i.id == item.id);
+
+                if (itemAux != null)
+                  this.lFrios.push(this.cargarLista(item, itemAux.cantidad));
+                else this.lFrios.push(this.cargarLista(item, 0));
+
+                if (!this.lFrios.some(p => p.id === item.id)) {
+                  this.lFrios.push(this.cargarLista(item, 0));
+                }
+              });
+            } else {
+              dataPlatos.forEach((item: IPlato) => {
+                if (!this.lFrios.some(p => p.id === item.id)) {
+                  this.lFrios.push(this.cargarLista(item, 0));
+                }
+              });
+            }
+
             break;
           case "Postres":
-            dataPlatos.forEach((item: IPlato) => {
-              this.lPostres.push(this.cargarLista(item));
-            });
+            if (this.lPostres.length > 0) {
+              let listaAux: ISubpedidoItem[] = this.lPostres;
+              let itemAux: ISubpedidoItem = null;
+
+              this.lPostres = [];
+              dataPlatos.forEach((item: IPlato) => {
+                itemAux = listaAux.find(i => i.id == item.id);
+
+                if (itemAux != null)
+                  this.lPostres.push(this.cargarLista(item, itemAux.cantidad));
+                else this.lPostres.push(this.cargarLista(item, 0));
+
+                if (!this.lPostres.some(p => p.id === item.id)) {
+                  this.lPostres.push(this.cargarLista(item, 0));
+                }
+              });
+            } else {
+              dataPlatos.forEach((item: IPlato) => {
+                if (!this.lPostres.some(p => p.id === item.id)) {
+                  this.lPostres.push(this.cargarLista(item, 0));
+                }
+              });
+            }
+
             break;
         }
       });
@@ -151,9 +240,29 @@ export class AltaPedidoPage {
   traerMenuBebidas() {
     if (!this.existeMenu("Bebidas")) {
       this._bebidasProvider.traerBebidas().subscribe(dataBebidas => {
-        dataBebidas.forEach((item: IPlato) => {
-          this.lBebidas.push(this.cargarLista(item));
-        });
+        if (this.lBebidas.length > 0) {
+          let listaAux: ISubpedidoItem[] = this.lBebidas;
+          let itemAux: ISubpedidoItem = null;
+
+          this.lBebidas = [];
+          dataBebidas.forEach((item: IPlato) => {
+            itemAux = listaAux.find(i => i.id == item.id);
+
+            if (itemAux != null)
+              this.lBebidas.push(this.cargarLista(item, itemAux.cantidad));
+            else this.lBebidas.push(this.cargarLista(item, 0));
+
+            if (!this.lBebidas.some(p => p.id === item.id)) {
+              this.lBebidas.push(this.cargarLista(item, 0));
+            }
+          });
+        } else {
+          dataBebidas.forEach((item: IPlato) => {
+            if (!this.lBebidas.some(p => p.id === item.id)) {
+              this.lBebidas.push(this.cargarLista(item, 0));
+            }
+          });
+        }
       });
     }
   }
@@ -195,9 +304,9 @@ export class AltaPedidoPage {
     fotoPreparacion: any,
     fotoPreparado: any
   ) {
-    console.log(fotoIngredientes);
-    console.log(fotoPreparacion);
-    console.log(fotoPreparado);
+    // console.log(fotoIngredientes);
+    // console.log(fotoPreparacion);
+    // console.log(fotoPreparado);
 
     const popover = this.popCtrl.create(VerImagenPedidoPage, {
       fIngredientes: fotoIngredientes,
@@ -317,7 +426,7 @@ export class AltaPedidoPage {
       estado: estadoCocina,
       items: this.itemsCocina
     };
-    
+
     let subBebida: ISubPedidoBebida = {
       id: new Date().valueOf(),
       estado: estadoBebida,

@@ -1,16 +1,34 @@
-import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides, LoadingController, Loading } from 'ionic-angular';
-import { Camera, CameraOptions } from '@ionic-native/camera';
-import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage';
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { IPlato } from '../../../clases/IPlato';
-import { platosProvider } from '../../../providers/platos/plato';
+import { UtilProvider } from "./../../../providers/util/util";
+import { Component, ViewChild } from "@angular/core";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  Slides,
+  LoadingController,
+  Loading
+} from "ionic-angular";
+import {
+  Camera,
+  CameraOptions,
+  CameraPopoverOptions
+} from "@ionic-native/camera";
+import {
+  AngularFireStorage,
+  AngularFireUploadTask
+} from "angularfire2/storage";
+import {
+  AngularFirestore,
+  AngularFirestoreCollection
+} from "angularfire2/firestore";
+import { AngularFireDatabase } from "angularfire2/database";
+import { IPlato } from "../../../clases/IPlato";
+import { platosProvider } from "../../../providers/platos/plato";
 //import { Observable } from '@firebase/util';
-import { MesasPage } from '../../mesasPages/mesas/mesas'
-import { Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs/Observable';
+import { MesasPage } from "../../mesasPages/mesas/mesas";
+import { Subscription } from "rxjs";
+import { map } from "rxjs/operators";
+import { Observable } from "rxjs/Observable";
 
 /**
  * Generated class for the AltaPlatoPage page.
@@ -21,8 +39,8 @@ import { Observable } from 'rxjs/Observable';
 
 @IonicPage()
 @Component({
-  selector: 'page-alta-plato',
-  templateUrl: 'alta-plato.html',
+  selector: "page-alta-plato",
+  templateUrl: "alta-plato.html"
 })
 export class AltaPlatoPage {
   @ViewChild(Slides) slides: Slides;
@@ -52,7 +70,8 @@ export class AltaPlatoPage {
     public storage: AngularFireStorage,
     private db: AngularFirestore,
     public loadingCtrl: LoadingController,
-    public _platosProvider: platosProvider
+    public _platosProvider: platosProvider,
+    public _utils: UtilProvider
   ) {
     this.ingredientes = "assets/imgs/ingredientes.png";
     this.preparacion = "assets/imgs/cocinando.png";
@@ -60,16 +79,14 @@ export class AltaPlatoPage {
     this.fotoIngredientesTomada = false;
     this.fotoPreparacionTomada = false;
     this.fotoPreparadoTomada = false;
-
   }
 
-
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AltaPlatoPage');
+    console.log("ionViewDidLoad AltaPlatoPage");
   }
 
   public inicio() {
-    this.navCtrl.setRoot(MesasPage) // Cambiar por menu principal de cocinero
+    this.navCtrl.setRoot(MesasPage); // Cambiar por menu principal de cocinero
   }
   public siguiente() {
     this.slides.lockSwipes(false);
@@ -85,48 +102,147 @@ export class AltaPlatoPage {
   }
 
   public captureImage(cual: string) {
+    let popoverOptions: CameraPopoverOptions = {
+      x: 0,
+      y: 0,
+      width: 640,
+      height: 640,
+      arrowDir: this.camera.PopoverArrowDirection.ARROW_DOWN
+    };
     const options: CameraOptions = {
-      quality: 100,
+      quality: 40,
+      targetWidth: 640,
+      targetHeight: 640,
+      allowEdit: false,
+      correctOrientation: true,
+      saveToPhotoAlbum: false,
+      cameraDirection: this.camera.Direction.BACK,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
-      correctOrientation: true,
+      popoverOptions: popoverOptions,
       sourceType: this.camera.PictureSourceType.CAMERA
-    }
-
+    };
 
     switch (cual) {
-      case 'ingredientes':
-        this.camera.getPicture(options)
-          .then(data => {
-            this.ingredientes = 'data:image/jpg;base64,' + data;
-          })
+      case "ingredientes":
+        this.camera.getPicture(options).then(data => {
+          this.ingredientes = "data:image/jpg;base64," + data;
+        });
         this.fotoIngredientesTomada = true;
         break;
-      case 'preparacion':
-        this.camera.getPicture(options)
-          .then(data => {
-            this.preparacion = 'data:image/jpg;base64,' + data;
-          })
+      case "preparacion":
+        this.camera.getPicture(options).then(data => {
+          this.preparacion = "data:image/jpg;base64," + data;
+        });
         this.fotoPreparacionTomada = true;
         break;
-      case 'preparado':
-        this.camera.getPicture(options)
-          .then(data => {
-            this.preparado = 'data:image/jpg;base64,' + data;
-          })
+      case "preparado":
+        this.camera.getPicture(options).then(data => {
+          this.preparado = "data:image/jpg;base64," + data;
+        });
         this.fotoPreparadoTomada = true;
-        break;
-      default:
         break;
     }
   }
 
-  public subir() {
+  // public subir() {
+  //   let loading = this.loadingCtrl.create({
+  //     content: `Cargando plato`
+  //   });
+  //   this.idPlato = new Date().valueOf();
+  //   let nuevo: IPlato = {
+  //     nombre: this.nombre,
+  //     id: this.idPlato,
+  //     tiempoEstimado: this.tiempoEstimado,
+  //     importe: this.importe,
+  //     categoria: this.categoria,
+  //     descripcion: this.descripcion,
+  //     ingredientesFoto: "",
+  //     preparacionFoto: "",
+  //     preparadoFoto: ""
+  //   };
 
+  //   // ingredientesFoto: "https://firebasestorage.googleapis.com/v0/b/equipo3-74752.appspot.com/o/platos%2F1542488525936%2F1542488525937.jpg?alt=media&token=68dbf3c3-9593-47c2-b0d1-3cc7a4d95fb3",
+  //   // preparacionFoto: "https://firebasestorage.googleapis.com/v0/b/equipo3-74752.appspot.com/o/platos%2F1542488525936%2F1542488686312.jpg?alt=media&token=81243cf4-c2d1-49ae-ab4f-371aa1388380",
+  //   // preparadoFoto: "https://firebasestorage.googleapis.com/v0/b/equipo3-74752.appspot.com/o/platos%2F1542488525936%2F1542488686312.jpg?alt=media&token=81243cf4-c2d1-49ae-ab4f-371aa1388380"
+
+
+  //   loading.present();
+
+  //   Promise.all([
+  //     this.createUploadTask(this.ingredientes).then(res => {
+  //       this._utils.mostrarMensaje(res.downloadURL);
+  //       this.storage
+  //         .ref(this.rutaArchivo)
+  //         .getDownloadURL()
+  //         .toPromise();
+  //     }),
+
+  //     this.createUploadTask(this.preparacion).then(res => {
+  //       this._utils.mostrarMensaje(res.downloadURL);
+  //       this.storage
+  //         .ref(this.rutaArchivo)
+  //         .getDownloadURL()
+  //         .toPromise();
+  //     }),
+
+  //     this.createUploadTask(this.preparado).then(res => {
+  //       this._utils.mostrarMensaje(res.downloadURL);
+  //       this.storage
+  //         .ref(this.rutaArchivo)
+  //         .getDownloadURL()
+  //         .toPromise();
+  //     })
+  //   ]).then(urlImagenes => {
+  //     //this._utils.mostrarMensaje("PROMISE ALL TERMINADO");
+  //     nuevo.ingredientesFoto = urlImagenes[0];
+  //     nuevo.preparacionFoto = urlImagenes[1];
+  //     nuevo.preparadoFoto = urlImagenes[2];
+
+  //     setTimeout(() => {
+  //       this._platosProvider.guardarPlato(nuevo).then(res => {
+  //         //this._utils.mostrarMensaje('TERMINO GUARDAR PLATO');
+  //         loading.dismiss().then(()=>{
+
+  //           let platoCargado = this.esperar(
+  //             this.creaFondo("¡Plato Cargado!", "assets/imgs/icono_restaurant.png")
+  //           );
+  //           platoCargado.present();
+  //           setTimeout(() => {
+  //             platoCargado.dismiss();
+    
+  //             this.inicio();
+  //           }, 2500);
+
+
+  //         });
+          
+          
+  //       });  
+  //     }, 4000);
+      
+
+  //   });
+  // }
+
+  public guardarPlato(nuevo) {
+    this._platosProvider.guardarPlato(nuevo).then(res => {
+      let platoCargado = this.esperar(
+        this.creaFondo("¡Plato Cargado!", "assets/imgs/icono_restaurant.png")
+      );
+      platoCargado.present();
+      setTimeout(() => {
+        platoCargado.dismiss();
+        this.inicio();
+      }, 2500);
+    });
+  }
+
+  public subir() {
     let loading = this.loadingCtrl.create({
       content: `Cargando plato`
-    })
+    });
     this.idPlato = new Date().valueOf();
     let nuevo: IPlato = {
       nombre: this.nombre,
@@ -137,48 +253,60 @@ export class AltaPlatoPage {
       descripcion: this.descripcion,
       ingredientesFoto: "",
       preparacionFoto: "",
-      preparadoFoto: "",
-    }
+      preparadoFoto: ""
+    };
     loading.present();
-    this.createUploadTask(this.ingredientes)
-      .then(res => {
-        this.storage.ref(this.rutaArchivo).getDownloadURL().toPromise()
-          .then(urlImagen => {
-            nuevo.ingredientesFoto = urlImagen;
-            this.createUploadTask(this.preparacion)
-              .then(res => {
-                this.storage.ref(this.rutaArchivo).getDownloadURL().toPromise()
-                  .then(urlImagen => {
-                    nuevo.preparacionFoto = urlImagen;
-                    this.createUploadTask(this.preparado)
-                      .then(res => {
-                        this.storage.ref(this.rutaArchivo).getDownloadURL().toPromise()
-                          .then(urlImagen => {
-                            nuevo.preparadoFoto = urlImagen;
-                            this._platosProvider.guardarPlato(nuevo)
-                              .then(res => {
-                                loading.dismiss();
-                                let platoCargado = this.esperar(this.creaFondo("¡Plato Cargado!", "assets/imgs/icono_restaurant.png"))
-                                platoCargado.present();
-                                setTimeout(() => {
-                                  platoCargado.dismiss();
-                                  this.inicio();
-                                }, 4000);
-                              })
-                          })
-                      })
-                  })
-              })
-          })
-      })
+    this.createUploadTask(this.ingredientes).then(res => {
+      this.storage
+        .ref(this.rutaArchivo)
+        .getDownloadURL()
+        .toPromise()
+        .then(urlImagen => {
+          nuevo.ingredientesFoto = urlImagen;
+          this.createUploadTask(this.preparacion).then(res => {
+            this.storage
+              .ref(this.rutaArchivo)
+              .getDownloadURL()
+              .toPromise()
+              .then(urlImagen => {
+                nuevo.preparacionFoto = urlImagen;
+                this.createUploadTask(this.preparado).then(res => {
+                  this.storage
+                    .ref(this.rutaArchivo)
+                    .getDownloadURL()
+                    .toPromise()
+                    .then(urlImagen =>
+                    {
+                      nuevo.preparadoFoto = urlImagen;
+
+                      this._platosProvider.guardarPlato(nuevo).then(res => {
+                        loading.dismiss();
+
+                        let platoCargado = this.esperar(
+                          this.creaFondo(
+                            "¡Plato Cargado!",
+                            "assets/imgs/icono_restaurant.png"
+                          )
+                        );
+                        platoCargado.present();
+                        setTimeout(() => {
+                          platoCargado.dismiss();
+                          this.inicio();
+                        }, 3000);
+                      });
+                    });
+                });
+              });
+          });
+        });
+    });
   }
 
   public createUploadTask(file: string) {
-
     this.rutaArchivo = `platos/${this.idPlato}/${new Date().getTime()}.jpg`;
-    this.image = 'data:image/jpg;base64,' + file;
+    this.image = "data:image/jpg;base64," + file;
 
-    this.task = this.storage.ref(this.rutaArchivo).putString(file, 'data_url');
+    this.task = this.storage.ref(this.rutaArchivo).putString(file, "data_url");
 
     return this.task;
   }
@@ -196,23 +324,19 @@ export class AltaPlatoPage {
             </ion-row> 
           </div> `;
     return fondo;
-
   }
   esperar(personalizado?: string): Loading {
     let loading;
     if (!personalizado) {
       loading = this.loadingCtrl.create({
-
-        content: 'Por favor, espere...'
+        content: "Por favor, espere..."
       });
-    }
-    else {
+    } else {
       loading = this.loadingCtrl.create({
-        spinner: 'hide',
-        content: personalizado,
-      })
+        spinner: "hide",
+        content: personalizado
+      });
     }
     return loading;
   }
-
 }

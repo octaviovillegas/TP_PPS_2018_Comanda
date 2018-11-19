@@ -37,8 +37,8 @@ export class TraspasoPedidoPage {
             this.proveedorMesa.buscarNroMesa(element.mesa)
             .then(data =>{
               this.nroMesa = data;
-              console.log(this.comanda)
-              
+              //console.log(this.comanda)
+              //aosd
               this.navCtrl.setRoot(PedidosPage,{
                 mesa:this.nroMesa,
                 comanda:this.comanda

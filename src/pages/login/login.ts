@@ -50,9 +50,9 @@ export class LoginPage {
   valido: Boolean = false;
   perfil: string;
 
-  ionViewDidLoad() {}
+  ionViewDidLoad() { }
 
-  creaFondo(mensaje, imagen) {
+  public creaFondo(mensaje, imagen) {
     let fondo = `
           <div>
             <ion-row>
@@ -67,7 +67,7 @@ export class LoginPage {
     return fondo;
   }
 
-  ingresar(user: string) {
+  public ingresar(user: string) {
     if (user) {
       this.nombre = user;
     }
@@ -111,7 +111,7 @@ export class LoginPage {
     this.navCtrl.setRoot(AltaClienteAnonimoPage);
   }
 
-  login() {
+  public login() {
     let destinoPage: string;
 
     let logueado: Loading = this.esperar();
@@ -140,7 +140,33 @@ export class LoginPage {
     );
   }
 
-  // async login2() {
+  public mostrarMensaje(mensaje: string) {
+    const toast = this.toastCtrl.create({
+      message: mensaje,
+      duration: 3000
+    });
+
+    toast.present();
+  }
+
+  public esperar(personalizado?: string): Loading {
+    let loading;
+    if (!personalizado) {
+      loading = this.loadingCtrl.create({
+        content: "Por favor, espere..."
+      });
+    } else {
+      loading = this.loadingCtrl.create({
+        spinner: "hide",
+        content: personalizado
+      });
+    }
+    return loading;
+  }
+}
+
+
+ // async login2() {
   //   //let esperador = this.esperar();
   //   //esperador.present();
   //   let destinoPage: string;
@@ -231,28 +257,3 @@ export class LoginPage {
   //     this.mostrarMensaje("Verifique el mail para confirmar");
   //   });
   // }
-
-  mostrarMensaje(mensaje: string) {
-    const toast = this.toastCtrl.create({
-      message: mensaje,
-      duration: 3000
-    });
-
-    toast.present();
-  }
-
-  esperar(personalizado?: string): Loading {
-    let loading;
-    if (!personalizado) {
-      loading = this.loadingCtrl.create({
-        content: "Por favor, espere..."
-      });
-    } else {
-      loading = this.loadingCtrl.create({
-        spinner: "hide",
-        content: personalizado
-      });
-    }
-    return loading;
-  }
-}

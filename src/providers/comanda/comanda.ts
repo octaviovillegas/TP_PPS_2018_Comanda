@@ -42,7 +42,7 @@ export class ComandaProvider {
   }
 
   /** Guarda una comanda */
-  saveComanda(comanda: IComanda, mesa: IMesa, mesaKey: string): Promise<any> {
+  public saveComanda(comanda: IComanda, mesa: IMesa, mesaKey: string): Promise<any> {
     //let userID: String = localStorage.getItem("userID");
     //let fecha: Date = new Date();
     //let fechaS: String;
@@ -63,7 +63,7 @@ export class ComandaProvider {
 
           uploadTask.on(
             firebase.storage.TaskEvent.STATE_CHANGED,
-            () => {}, // saber el % de cuantos Mbs se han subido
+            () => { }, // saber el % de cuantos Mbs se han subido
             error => {
               // manejo de error
               reject();
@@ -126,7 +126,7 @@ export class ComandaProvider {
   //   return promesa;
   // }
 
-  actualizarComanda(comanda: IComanda): Promise<Boolean> {
+  public actualizarComanda(comanda: IComanda): Promise<Boolean> {
     let promesa = new Promise<Boolean>((resolve, reject) => {
       //Me devuelve una referencia al objeto de la lista, asi me aseguro de Updatear y no generar una nueva Comanda
 
@@ -200,7 +200,7 @@ export class ComandaProvider {
     return this.lista;
   }
 
-  verificarComandaPorUsuario(comandaID: number): Promise<IComanda> {
+  public verificarComandaPorUsuario(comandaID: number): Promise<IComanda> {
     let promesa = new Promise<IComanda>((resolve, reject) => {
       let userID: string = localStorage.getItem("userID");
       let encontro: boolean = false;
@@ -236,20 +236,21 @@ export class ComandaProvider {
     return promesa;
   }
 
-  cerrarComanda(comanda: IComanda, mesaKey: string): Promise<Boolean> {
+  public cerrarComanda(comanda: IComanda, mesaKey: string): Promise<Boolean> {
     let promesa = new Promise<Boolean>((resolve, reject) => {
       this.actualizarComanda(comanda).then((actualizo: Boolean) => {
         if (actualizo) {
           let ref = firebase.database().ref("/mesas/" + mesaKey);
 
-          ref.ref.update({ estado: "Libre", comanda: 0 }).then(
-            () => {
-              resolve(true);
-            },
-            err => {
-              reject(false);
-            }
-          );
+          ref.ref.update({ estado: "Libre", comanda: 0 })
+            .then(
+              () => {
+                resolve(true);
+              },
+              err => {
+                reject(err);
+              }
+            );
         } else {
           reject();
         }
@@ -258,7 +259,23 @@ export class ComandaProvider {
     return promesa;
   }
 
-  pedirCuenta(mesaKey: string): Promise<Boolean> {
+  public guardarPropina(comanda: IComanda): Promise<Boolean> {
+    let promesa = new Promise<Boolean>((resolve, reject) => {
+      this.actualizarComanda(comanda)
+        .then(
+          (actualizo: Boolean) => {
+            if (actualizo) {
+              resolve(true);
+            }
+          }),
+        err => {
+          reject(err);
+        }
+    });
+    return promesa;
+  }
+
+  public pedirCuenta(mesaKey: string): Promise<Boolean> {
     let promesa = new Promise<Boolean>((resolve, reject) => {
       let ref = firebase.database().ref("/mesas/" + mesaKey);
       ref.ref.update({ estado: "Esperando cobro" }).then(

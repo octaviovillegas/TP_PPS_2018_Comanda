@@ -1,12 +1,12 @@
-import { Component,  } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { Component, } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams, LoadingController, Loading } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AuthProvider } from '../../../providers/auth/auth';
 import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage';
-import {Camera, CameraOptions} from '@ionic-native/camera';
-import {QrEsperaPage} from '../../qr/qr-espera/qr-espera';
-import {LoginPage} from '../../login/login';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { QrEsperaPage } from '../../qr/qr-espera/qr-espera';
+import { LoginPage } from '../../login/login';
 /**
  * Generated class for the AltaClienteAnonimoPage page.
  *
@@ -20,23 +20,22 @@ import {LoginPage} from '../../login/login';
   templateUrl: 'alta-cliente-anonimo.html',
 })
 export class AltaClienteAnonimoPage {
-  rutaArchivo:string;
-  image:string;
-  uid:string;
+  rutaArchivo: string;
+  image: string;
+  uid: string;
   fotoTomada: boolean;
-  anonimoForm:FormGroup;
-  fotoAnonimo:string;
-  urlAnonimo:string;
-  task:any;
+  anonimoForm: FormGroup;
+  fotoAnonimo: string;
+  urlAnonimo: string;
+  task: any;
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     public formbuilder: FormBuilder,
     public afAuth: AuthProvider,
     public storage: AngularFireStorage,
     public camera: Camera,
-    public loadingCtrl:LoadingController) 
-  {
+    public loadingCtrl: LoadingController) {
     this.presentacion();
     this.fotoTomada = false;
     this.anonimoForm = this.formbuilder.group({
@@ -45,7 +44,7 @@ export class AltaClienteAnonimoPage {
     this.fotoAnonimo = "assets/imgs/cliente.png";
   }
 
-  tomarFoto(){
+  tomarFoto() {
     this.fotoTomada = true;
   }
 
@@ -53,45 +52,45 @@ export class AltaClienteAnonimoPage {
     console.log('ionViewDidLoad AltaClienteAnonimoPage');
   }
 
-  public volver(){
+  public volver() {
     this.navCtrl.setRoot(LoginPage);
   }
-  public subir(){
+  public subir() {
     let loading = this.loadingCtrl.create({
       content: "Cargando..."
     })
     loading.present();
 
     this.afAuth.ingresoAnonimo()
-    .then( data =>{
-      this.uid = data.uid;
-      this.createUploadTask(this.fotoAnonimo)
-      .then(res =>{
-        this.storage.ref(this.rutaArchivo).getDownloadURL().toPromise()
-        .then(urlImagen =>{
-          this.urlAnonimo = urlImagen;
-          loading.dismiss();
-          localStorage.setItem("perfil", "Anonimo");
-          localStorage.setItem("userID", this.uid);
-          localStorage.setItem("nombre", this.anonimoForm.controls['nombre'].value);
-          localStorage.setItem("fotoAnonimo", this.urlAnonimo);
-          this.navCtrl.setRoot(QrEsperaPage);
-        })
+      .then(data => {
+        this.uid = data.uid;
+        this.createUploadTask(this.fotoAnonimo)
+          .then(res => {
+            this.storage.ref(this.rutaArchivo).getDownloadURL().toPromise()
+              .then(urlImagen => {
+                this.urlAnonimo = urlImagen;
+                loading.dismiss();
+                localStorage.setItem("perfil", "Anonimo");
+                localStorage.setItem("userID", this.uid);
+                localStorage.setItem("nombre", this.anonimoForm.controls['nombre'].value);
+                localStorage.setItem("fotoAnonimo", this.urlAnonimo);
+                this.navCtrl.setRoot(QrEsperaPage);
+              })
+          })
       })
-    })
   }
 
   public createUploadTask(file: string) {
 
-    this.rutaArchivo = `anonimos/${this.uid}_${ new Date().getTime() }.jpg`;
+    this.rutaArchivo = `anonimos/${this.uid}_${new Date().getTime()}.jpg`;
     this.image = 'data:image/jpg;base64,' + file;
-    
+
     this.task = this.storage.ref(this.rutaArchivo).putString(file, 'data_url');
 
     return this.task;
-  } 
+  }
 
-  public captureImage(cual:string){
+  public captureImage(cual: string) {
     const options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -101,13 +100,13 @@ export class AltaClienteAnonimoPage {
       sourceType: this.camera.PictureSourceType.CAMERA
     }
     this.camera.getPicture(options)
-    .then(data =>{
-      this.fotoAnonimo = 'data:image/jpg;base64,' + data;
-      this.fotoTomada = true;
-    })
+      .then(data => {
+        this.fotoAnonimo = 'data:image/jpg;base64,' + data;
+        this.fotoTomada = true;
+      })
   }
 
-  public presentacion(){
+  public presentacion() {
     let inicio = this.esperar(this.creaFondo("¡Registrate como un cliente anonimo!", "assets/imgs/icono_restaurant.png"));
     inicio.present();
     setTimeout(() => {
@@ -147,11 +146,9 @@ export class AltaClienteAnonimoPage {
     return loading;
   }
 
-  public mostrar(){
-    this.afAuth.ingresoAnonimo().then(data =>{
-      console.log(data.uid);
+  public mostrar() {
+    this.afAuth.ingresoAnonimo().then(data => {
       this.uid = data.uid;
-      console.log(this.uid);
     })
   }
 

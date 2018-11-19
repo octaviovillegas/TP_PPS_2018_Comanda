@@ -1,7 +1,11 @@
+import { ComandaProvider } from './../../../providers/comanda/comanda';
+import { LoginPage } from './../../login/login';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Loading, LoadingController } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { MesasPage } from '../../mesasPages/mesas/mesas';
+import { IComanda } from '../../../clases/IComanda';
+import { EncuestaClientePage } from '../../encuestasPages/encuesta-cliente/encuesta-cliente';
 
 /**
  * Generated class for the QrPropinaPage page.
@@ -16,101 +20,149 @@ import { MesasPage } from '../../mesasPages/mesas/mesas';
   templateUrl: 'qr-propina.html',
 })
 export class QrPropinaPage {
-  codigo:string;
+
+  codigo: string;
+  mesa: number;
+  mesaKey: string;
+  comanda: IComanda;
+
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
-    public scanner:BarcodeScanner,
-    public loadingCtrl:LoadingController) 
-  {
+    public scanner: BarcodeScanner,
+    public loadingCtrl: LoadingController,
+    public _comandas: ComandaProvider
+  ) {
     this.codigo = "";
+    this.mesa = parseInt(this.navParams.get("mesa"));
+    this.mesaKey = this.navParams.get("mesaKey");
+    this.comanda = this.navParams.get("comanda");
+
+    console.log(this.mesa);
+    console.log(this.mesaKey);
+    console.log(this.comanda);
+
+
   }
 
-  escanear(){
+  escanear() {
     this.scanner.scan()
-    .then(barcodeData =>{
-      this.codigo = barcodeData.text;
-      this.cargarCodigo();
-    })  
+      .then(barcodeData => {
+        this.codigo = barcodeData.text;
+        this.cargarCodigo();
+      })
   }
-  public cargarCodigo(){
+
+  public cargarCodigo() {
     switch (this.codigo) {
+
       case '20porciento':
         let loading20 = this.loadingCtrl.create({
           content: 'Por favor espere...'
         })
         loading20.present();
-        setTimeout(() => {
-          loading20.dismiss();
-          this.codigo = "a" + this.codigo + "a";
-          let cargado20 = this.esperar(this.creaFondo(this.codigo, "assets/imgs/icono_restaurant.png"));
-          cargado20.present();
-          setTimeout(() => {
-            cargado20.dismiss();
-            this.navCtrl.push(MesasPage);
-          }, 20000);
-        }, 7000);
+
+        this.comanda.porcentajePropina = 20;
+        this._comandas.guardarPropina(this.comanda)
+          .then(() => {
+            setTimeout(() => {
+              loading20.dismiss().then(() => {
+                let cargado20 = this.esperar(this.creaFondo('"Dejaste 20% de propina ¡GRACIAS!"', "assets/imgs/icono_restaurant.png"));
+                cargado20.present();
+                setTimeout(() => {
+                  cargado20.dismiss().then(() => { this.navCtrl.setRoot(EncuestaClientePage); })
+                }, 2000);
+              })
+            }, 4000);
+          });
         break;
+
       case '15porciento':
         let loading15 = this.loadingCtrl.create({
           content: 'Por favor espere...'
         })
         loading15.present();
-        setTimeout(() => {
-          loading15.dismiss();
-          let cargado15 = this.esperar(this.creaFondo("Se dejo 15% de propina", "assets/imgs/icono_restaurant.png"));
-          cargado15.present();
-          setTimeout(() => {
-            cargado15.dismiss();
-            this.navCtrl.setRoot(MesasPage);
-          }, 3000);
-        }, 7000);
+
+        this.comanda.porcentajePropina = 15;
+        this._comandas.guardarPropina(this.comanda)
+          .then(() => {
+            setTimeout(() => {
+              loading15.dismiss().then(() => {
+                let cargado15 = this.esperar(this.creaFondo('"Dejaste 15% de propina ¡GRACIAS!"', "assets/imgs/icono_restaurant.png"));
+                cargado15.present();
+                setTimeout(() => {
+                  cargado15.dismiss().then(() => { this.navCtrl.setRoot(EncuestaClientePage); })
+                }, 2000);
+              })
+            }, 4000);
+          });
         break;
+
       case '10porciento':
         let loading10 = this.loadingCtrl.create({
           content: 'Por favor espere...'
         })
         loading10.present();
-        setTimeout(() => {
-          loading10.dismiss();
-          let cargado10 = this.esperar(this.creaFondo("Se dejo 10% de propina", "assets/imgs/icono_restaurant.png"));
-          cargado10.present();
-          setTimeout(() => {
-            cargado10.dismiss();
-            this.navCtrl.setRoot(MesasPage);
-          }, 3000);
-        }, 7000);
+
+        this.comanda.porcentajePropina = 10;
+        this._comandas.guardarPropina(this.comanda)
+          .then(() => {
+            setTimeout(() => {
+              loading10.dismiss().then(() => {
+                let cargado10 = this.esperar(this.creaFondo('"Dejaste 10% de propina ¡GRACIAS!"', "assets/imgs/icono_restaurant.png"));
+                cargado10.present();
+                setTimeout(() => {
+                  cargado10.dismiss().then(() => { this.navCtrl.setRoot(EncuestaClientePage); })
+                }, 2000);
+              })
+            }, 4000);
+          });
         break;
+
       case '5porciento':
         let loading5 = this.loadingCtrl.create({
           content: 'Por favor espere...'
         })
         loading5.present();
-        setTimeout(() => {
-          loading5.dismiss();
-          let cargado5 = this.esperar(this.creaFondo("Se dejo 5% de propina", "assets/imgs/icono_restaurant.png"));
-          cargado5.present();
-          setTimeout(() => {
-            cargado5.dismiss();
-            this.navCtrl.setRoot(MesasPage);
-          }, 3000);
-        }, 7000);
+
+        this.comanda.porcentajePropina = 5;
+        this._comandas.guardarPropina(this.comanda)
+          .then(() => {
+            setTimeout(() => {
+              loading5.dismiss().then(() => {
+                let cargado5 = this.esperar(this.creaFondo('"Dejaste 5% de propina ¡GRACIAS!"', "assets/imgs/icono_restaurant.png"));
+                cargado5.present();
+                setTimeout(() => {
+                  cargado5.dismiss().then(() => { this.navCtrl.setRoot(EncuestaClientePage); })
+                }, 2000);
+              })
+            }, 4000);
+          });
         break;
+
       case '0porciento':
         let loading0 = this.loadingCtrl.create({
           content: 'Por favor espere...'
         })
         loading0.present();
-        setTimeout(() => {
-          loading0.dismiss();
-          let cargado0 = this.esperar(this.creaFondo("Se dejo 0% de propina", "assets/imgs/icono_restaurant.png"));
-          cargado0.present();
-          setTimeout(() => {
-            cargado0.dismiss();
-            this.navCtrl.setRoot(MesasPage);
-          }, 3000);
-        }, 7000);
+
+        this.comanda.porcentajePropina = 0;
+        this._comandas.guardarPropina(this.comanda)
+          .then(() => {
+            setTimeout(() => {
+              loading0.dismiss().then(() => {
+                let cargado0 = this.esperar(this.creaFondo('"Dejaste 0% de propina"', "assets/imgs/icono_restaurant.png"));
+                cargado0.present();
+                setTimeout(() => {
+                  cargado0.dismiss().then(() => {
+                    this.navCtrl.setRoot(EncuestaClientePage);
+                  })
+                }, 2000);
+              })
+            }, 4000);
+          });
         break;
+
       default:
         let error = this.loadingCtrl.create({
           content: 'Por favor espere...'
@@ -118,14 +170,14 @@ export class QrPropinaPage {
         error.present();
         setTimeout(() => {
           error.dismiss();
-          
+
           let cargadoError = this.esperar(this.creaFondo("Error, codigo no identificado", "assets/imgs/error.png"));
           cargadoError.present();
           setTimeout(() => {
             cargadoError.dismiss();
-            this.navCtrl.setRoot(MesasPage);
-          }, 20000);
-        }, 7000);
+            this.navCtrl.setRoot(LoginPage);
+          }, 2000);
+        }, 4000);
         break;
     }
   }
@@ -133,7 +185,6 @@ export class QrPropinaPage {
     let loading;
     if (!personalizado) {
       loading = this.loadingCtrl.create({
-
         content: 'Por favor, espere...'
       });
     }

@@ -1,6 +1,9 @@
 <ion-header>
   <ion-navbar no-border-bottom>
-    <ion-title> MESA {{ mesa }} - PEDIDOS </ion-title>
+    <ion-title>
+      <ion-icon color="secondary" small name="restaurant"></ion-icon>
+      {{ mesa }} | PEDIDOS
+    </ion-title>
   </ion-navbar>
   <div class="col md-12">
     <button ion-button block color="secondary" (click)="nuevoPedido()">
@@ -9,41 +12,20 @@
   </div>
 
   <ion-toolbar no-border-top>
-    <!-- <ng-template [ngIf]="perfil == 'Cliente'"> -->
-    <!--
-      <ion-segment [(ngModel)]="estado">
-        <ion-segment-button value="pendiente">Pendiente</ion-segment-button>
-      </ion-segment>
-    -->
-    <!-- </ng-template> -->
-
-    <!-- <ng-template [ngIf]="perfil != 'Cliente'"> -->
     <ion-segment [(ngModel)]="estado">
       <ion-segment-button value="pendiente">Pendiente</ion-segment-button>
       <ion-segment-button value="derivado">Derivado</ion-segment-button>
       <ion-segment-button value="entregado">Entregado</ion-segment-button>
     </ion-segment>
-    <!-- </ng-template> -->
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <!--
-    <ion-fab right bottom>
-      <button ion-fab color="danger">
-        <ion-icon name="arrow-round-forward"></ion-icon>
-      </button>
-    </ion-fab>
-  -->
   <div [ngSwitch]="estado">
     <div *ngSwitchCase="'pendiente'">
       <div *ngIf="listaPedidosPendientes">
         <ion-list *ngFor="let item of listaPedidosPendientes">
-          <pedido-pendiente
-            [itemPedido]="item"
-            (derivarPedido)="cambiarEstadoPedido($event)"
-            (eliminarPedido)="quitarPedido($event)"
-          ></pedido-pendiente>
+          <pedido-pendiente [itemPedido]="item" (derivarPedido)="cambiarEstadoPedido($event)" (eliminarPedido)="quitarPedido($event)"></pedido-pendiente>
         </ion-list>
       </div>
     </div>
@@ -52,10 +34,7 @@
       <div *ngSwitchCase="'derivado'">
         <div *ngIf="listaPedidosDerivados">
           <ion-list *ngFor="let item of listaPedidosDerivados">
-            <pedido-pendiente
-              [itemPedido]="item"
-              (entregarPedido)="entregarPedido($event)"
-            ></pedido-pendiente>
+            <pedido-pendiente [itemPedido]="item" (entregarPedido)="entregarPedido($event)"></pedido-pendiente>
           </ion-list>
         </div>
       </div>
@@ -66,27 +45,15 @@
         <div *ngIf="listaPedidosEntregados">
           <ion-row style="text-align: center; background: rgb(177, 224, 252)">
             <ion-col align-self-center>
-              <div
-                style="font-size: 22px; text-align: right; font-weight: bold;"
-              >
+              <div style="font-size: 22px; text-align: right; font-weight: bold;">
                 {{ total | currency }}
               </div>
             </ion-col>
             <ion-col>
-              <button
-                *ngIf="perfil != 'Cliente' && perfil != 'Anonimo'"
-                ion-button
-                [disabled]="!todoEntregado"
-                (click)="cerrarComanda()"
-              >
+              <button *ngIf="perfil != 'Cliente' && perfil != 'Anonimo'" ion-button [disabled]="!todoEntregado" (click)="cerrarComanda()">
                 Cerrar mesa
               </button>
-              <button
-                *ngIf="perfil == 'Cliente' || perfil == 'Anonimo'"
-                ion-button
-                [disabled]="!todoEntregado"
-                (click)="pedirCuenta()"
-              >
+              <button *ngIf="perfil == 'Cliente' || perfil == 'Anonimo'" ion-button [disabled]="!todoEntregado" (click)="pedirCuenta()">
                 Pedir cuenta
               </button>
             </ion-col>

@@ -1,31 +1,22 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>MESA {{ mesa.numero }} - NUEVO PEDIDO</ion-title>
+    <ion-title>
+      <ion-icon color="secondary" small name="restaurant"></ion-icon>
+      {{ mesa }} - NUEVO PEDIDO
+    </ion-title>
   </ion-navbar>
   <ion-toolbar no-border-top>
     <ion-segment [(ngModel)]="tipomenu">
-      <ion-segment-button
-        value="Minutas"
-        (click)="traerMenuPorCategoria('Minutas')"
-      >
+      <ion-segment-button value="Minutas" (click)="traerMenuPorCategoria('Minutas')">
         Minutas
       </ion-segment-button>
-      <ion-segment-button
-        value="Frios"
-        (click)="traerMenuPorCategoria('Frios')"
-      >
+      <ion-segment-button value="Frios" (click)="traerMenuPorCategoria('Frios')">
         Fríos
       </ion-segment-button>
-      <ion-segment-button
-        value="Calientes"
-        (click)="traerMenuPorCategoria('Calientes')"
-      >
+      <ion-segment-button value="Calientes" (click)="traerMenuPorCategoria('Calientes')">
         Calientes
       </ion-segment-button>
-      <ion-segment-button
-        value="Postres"
-        (click)="traerMenuPorCategoria('Postres')"
-      >
+      <ion-segment-button value="Postres" (click)="traerMenuPorCategoria('Postres')">
         Postres
       </ion-segment-button>
       <ion-segment-button value="Bebidas" (click)="traerMenuBebidas()">
@@ -39,228 +30,141 @@
   <button ion-button block color="secondary" (click)="agregarPedido()">
     AGREGAR
   </button>
-
-  <ion-searchbar
-    (ionInput)="getItems($event)"
-    [placeholder]="'Buscar por nombre'"
-  ></ion-searchbar>
-
-
-
+  <ion-searchbar (ionInput)="getItems($event)" [placeholder]="'Buscar por nombre'"></ion-searchbar>
   <ion-grid *ngSwitchCase="'Minutas'">
     <div *ngIf="lMinutas">
-      <ion-row
-        align-items-center
-        *ngFor="let item of lMinutas"
-        class="itemsMenu"
-      >
-        <ion-col
-          col-6
-          (click)="
+      <ion-row align-items-center *ngFor="let item of lMinutas" class="itemsMenu">
+        <ion-col col-6 (click)="
             mostrarImagenes(
               item.ingredientesFoto,
               item.preparacionFoto,
               item.preparadoFoto
             )
-          "
-        >
+          ">
           {{ item.nombre | uppercase }}
         </ion-col>
         <ion-col col-2> {{ item.importe }} </ion-col>
         <ion-col col-1 text-center>
           <div>
-            <ion-icon
-              name="remove-circle"
-              color="grey"
-              (click)="restarCantidad(item, -1)"
-            ></ion-icon>
+            <ion-icon name="remove-circle" color="grey" (click)="restarCantidad(item, -1)"></ion-icon>
           </div>
         </ion-col>
         <ion-col col-1 text-center> {{ item.cantidad }} </ion-col>
         <ion-col col-2 text-center class="addItem">
           <div>
-            <ion-icon
-              name="add-circle"
-              color="primary"
-              (click)="sumarCantidad(item, 1)"
-            ></ion-icon>
+            <ion-icon name="add-circle" color="primary" (click)="sumarCantidad(item, 1)"></ion-icon>
           </div>
         </ion-col>
       </ion-row>
     </div>
   </ion-grid>
-
-
 
   <ion-grid *ngSwitchCase="'Frios'">
     <div *ngIf="lFrios">
       <ion-row align-items-center *ngFor="let item of lFrios" class="itemsMenu">
-        <ion-col
-          col-6
-          (click)="
+        <ion-col col-6 (click)="
             mostrarImagenes(
               item.ingredientesFoto,
               item.preparacionFoto,
               item.preparadoFoto
             )
-          "
-        >
+          ">
           {{ item.nombre | uppercase }}
         </ion-col>
         <ion-col col-2> {{ item.importe }} </ion-col>
         <ion-col col-1 text-center>
           <div>
-            <ion-icon
-              name="remove-circle"
-              color="grey"
-              (click)="restarCantidad(item, -1)"
-            ></ion-icon>
+            <ion-icon name="remove-circle" color="grey" (click)="restarCantidad(item, -1)"></ion-icon>
           </div>
         </ion-col>
         <ion-col col-1 text-center> {{ item.cantidad }} </ion-col>
         <ion-col col-2 text-center class="addItem">
           <div>
-            <ion-icon
-              name="add-circle"
-              color="primary"
-              (click)="sumarCantidad(item, 1)"
-            ></ion-icon>
+            <ion-icon name="add-circle" color="primary" (click)="sumarCantidad(item, 1)"></ion-icon>
           </div>
         </ion-col>
       </ion-row>
     </div>
   </ion-grid>
-
 
   <ion-grid *ngSwitchCase="'Calientes'">
     <div *ngIf="lCalientes">
-      <ion-row
-        align-items-center
-        *ngFor="let item of lCalientes"
-        class="itemsMenu"
-      >
-        <ion-col
-          col-6
-          (click)="
+      <ion-row align-items-center *ngFor="let item of lCalientes" class="itemsMenu">
+        <ion-col col-6 (click)="
             mostrarImagenes(
               item.ingredientesFoto,
               item.preparacionFoto,
               item.preparadoFoto
             )
-          "
-        >
+          ">
           {{ item.nombre | uppercase }}
         </ion-col>
         <ion-col col-2> {{ item.importe }} </ion-col>
         <ion-col col-1 text-center>
           <div>
-            <ion-icon
-              name="remove-circle"
-              color="grey"
-              (click)="restarCantidad(item, -1)"
-            ></ion-icon>
+            <ion-icon name="remove-circle" color="grey" (click)="restarCantidad(item, -1)"></ion-icon>
           </div>
         </ion-col>
         <ion-col col-1 text-center> {{ item.cantidad }} </ion-col>
         <ion-col col-2 text-center class="addItem">
           <div>
-            <ion-icon
-              name="add-circle"
-              color="primary"
-              (click)="sumarCantidad(item, 1)"
-            ></ion-icon>
+            <ion-icon name="add-circle" color="primary" (click)="sumarCantidad(item, 1)"></ion-icon>
           </div>
         </ion-col>
       </ion-row>
     </div>
   </ion-grid>
-
-
-
 
   <ion-grid *ngSwitchCase="'Postres'">
     <div *ngIf="lPostres">
-      <ion-row
-        align-items-center
-        *ngFor="let item of lPostres"
-        class="itemsMenu"
-      >
-        <ion-col
-          col-6
-          (click)="
+      <ion-row align-items-center *ngFor="let item of lPostres" class="itemsMenu">
+        <ion-col col-6 (click)="
             mostrarImagenes(
               item.ingredientesFoto,
               item.preparacionFoto,
               item.preparadoFoto
             )
-          "
-        >
+          ">
           {{ item.nombre | uppercase }}
         </ion-col>
         <ion-col col-2> {{ item.importe }} </ion-col>
         <ion-col col-1 text-center>
           <div>
-            <ion-icon
-              name="remove-circle"
-              color="grey"
-              (click)="restarCantidad(item, -1)"
-            ></ion-icon>
+            <ion-icon name="remove-circle" color="grey" (click)="restarCantidad(item, -1)"></ion-icon>
           </div>
         </ion-col>
         <ion-col col-1 text-center> {{ item.cantidad }} </ion-col>
         <ion-col col-2 text-center class="addItem">
           <div>
-            <ion-icon
-              name="add-circle"
-              color="primary"
-              (click)="sumarCantidad(item, 1)"
-            ></ion-icon>
+            <ion-icon name="add-circle" color="primary" (click)="sumarCantidad(item, 1)"></ion-icon>
           </div>
         </ion-col>
       </ion-row>
     </div>
   </ion-grid>
 
-
-
-
   <ion-grid *ngSwitchCase="'Bebidas'">
     <div *ngIf="lBebidas">
-      <ion-row
-        align-items-center
-        *ngFor="let item of lBebidas"
-        class="itemsMenu"
-      >
-        <ion-col
-          col-6
-          (click)="
+      <ion-row align-items-center *ngFor="let item of lBebidas" class="itemsMenu">
+        <ion-col col-6 (click)="
             mostrarImagenes(
               item.ingredientesFoto,
               item.preparacionFoto,
               item.preparadoFoto
             )
-          "
-        >
+          ">
           {{ item.nombre | uppercase }}
         </ion-col>
         <ion-col col-2> {{ item.importe }} </ion-col>
         <ion-col col-1 text-center>
           <div>
-            <ion-icon
-              name="remove-circle"
-              color="grey"
-              (click)="restarCantidad(item, -1)"
-            ></ion-icon>
+            <ion-icon name="remove-circle" color="grey" (click)="restarCantidad(item, -1)"></ion-icon>
           </div>
         </ion-col>
         <ion-col col-1 text-center> {{ item.cantidad }} </ion-col>
         <ion-col col-2 text-center class="addItem">
           <div>
-            <ion-icon
-              name="add-circle"
-              color="primary"
-              (click)="sumarCantidad(item, 1)"
-            ></ion-icon>
+            <ion-icon name="add-circle" color="primary" (click)="sumarCantidad(item, 1)"></ion-icon>
           </div>
         </ion-col>
       </ion-row>

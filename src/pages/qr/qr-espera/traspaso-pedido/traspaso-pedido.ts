@@ -20,6 +20,7 @@ import { PedidosPage } from '../../../pedidosPages/pedidos/pedidos';
 export class TraspasoPedidoPage {
   comanda:IComanda;
   nroMesa:string;
+  mesaKey:string;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -34,16 +35,19 @@ export class TraspasoPedidoPage {
           console.log(data);
           if(element.ClienteId == localStorage.getItem('userID') && element.estado == 'Abierta'){
             this.comanda = element;
-            this.proveedorMesa.buscarNroMesa(element.mesa)
-            .then(data =>{
-              this.nroMesa = data;
-              //console.log(this.comanda)
-              //aosd
-              this.navCtrl.setRoot(PedidosPage,{
-                mesa:this.nroMesa,
-                comanda:this.comanda
-              })
-              
+            this.proveedorMesa.traerMesasconId()
+            .subscribe(data =>{
+              data.forEach(mesa => {
+                if(this.comanda.mesa == mesa.idMesa){
+                  this.nroMesa = mesa.numero.toString();
+                  this.mesaKey = mesa.key;
+                  this.navCtrl.setRoot(PedidosPage,{
+                    mesa:this.nroMesa,
+                    comanda:this.comanda,
+                    mesaKey: this.mesaKey
+                  })
+                }
+              });
             })
           }
         });

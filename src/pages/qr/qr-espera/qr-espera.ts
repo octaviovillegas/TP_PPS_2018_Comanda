@@ -39,6 +39,7 @@ export class QrEsperaPage {
   esAnonimo:boolean;
   comanda:IComanda;
   nroMesa:string;
+  mesaKey:string;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -58,14 +59,18 @@ export class QrEsperaPage {
       data.forEach(element => {
         if(element.ClienteId == this.clienteUid && element.estado == 'Abierta'){
           this.comanda = element;
-          this.proveedorMesa.buscarNroMesa(this.comanda.mesa)
-          .then(data =>{
-            this.nroMesa = data;
-            console.log(this.comanda);
-            console.log(this.nroMesa);
-            this.navCtrl.setRoot(PedidosPage,{
-              mesa:this.nroMesa,
-              comanda:this.comanda,
+          this.proveedorMesa.traerMesasconId()
+          .subscribe(data =>{
+            data.forEach(mesa => {
+              if(this.comanda.mesa == mesa.idMesa){
+                this.nroMesa = mesa.numero.toString();
+                this.mesaKey = mesa.key;
+                this.navCtrl.setRoot(PedidosPage,{
+                  mesa:this.nroMesa,
+                  comanda:this.comanda,
+                  mesaKey: this.mesaKey
+                })
+              }
             });
           })
         }

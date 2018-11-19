@@ -3,8 +3,8 @@ import { AuthProvider } from "./../../providers/auth/auth";
 import { usuario, Iusuario } from "./../../clases/usuario";
 // import { MesasPage } from './../mesasPages/mesas/mesas';
 import { Component } from "@angular/core";
-import { AltaClienteAnonimoPage } from '../altasPages/alta-cliente-anonimo/alta-cliente-anonimo';
-import { AltaClientePage} from '../altasPages/alta-cliente/alta-cliente';
+import { AltaClienteAnonimoPage } from "../altasPages/alta-cliente-anonimo/alta-cliente-anonimo";
+import { AltaClientePage } from "../altasPages/alta-cliente/alta-cliente";
 import { Events } from "ionic-angular";
 import {
   NavController,
@@ -93,6 +93,9 @@ export class LoginPage {
       case "mestre@gmail.com":
         this.clave = "777777";
         break;
+      case "sebillac@hotmail.com":
+        this.clave = "123456";
+        break;
       default:
         this.clave = this.pass;
         break;
@@ -100,11 +103,11 @@ export class LoginPage {
     this.login();
   }
 
-  public registro(){
+  public registro() {
     this.navCtrl.push(AltaClientePage);
   }
 
-  public anonimo(){
+  public anonimo() {
     this.navCtrl.setRoot(AltaClienteAnonimoPage);
   }
 

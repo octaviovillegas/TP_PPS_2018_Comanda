@@ -25,6 +25,7 @@ import { AltaSupervisorPage } from '../pages/altasPages/alta-supervisor/alta-sup
 import { PedidosPage } from "../pages/pedidosPages/pedidos/pedidos";
 import {AltaPedidoPage} from "../pages/pedidosPages/alta-pedido/alta-pedido";
 import {TraspasoPedidoPage} from '../pages/qr/qr-espera/traspaso-pedido/traspaso-pedido';
+import {SplashPage} from '../pages/splash/splash';
 // import { EncuestaEnstradaSalidaPage } from '../pages/encuestasPages/encuesta-enstrada-salida/encuesta-enstrada-salida';
 
 @Component({
@@ -64,10 +65,10 @@ export class MyApp {
     this.auth.Session.subscribe(_session => {
 
       if (!_session) { //si no esta logueado
-        this.rootPage = LoginPage ;
+        this.rootPage = SplashPage ;
       }else {
         if(localStorage.getItem("perfil") == null){
-          this.rootPage = LoginPage ;
+          this.rootPage = SplashPage ;
         }else{
           this.rootPage = this.auth.buscarDestino(localStorage.getItem("perfil"));
         }

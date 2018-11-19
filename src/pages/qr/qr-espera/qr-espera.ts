@@ -11,6 +11,9 @@ import {AuthProvider} from '../../../providers/auth/auth';
 import {UsuariosProvider} from '../../../providers/usuarios/usuarios';
 import { LoginPage } from '../../login/login';
 import {ComandaProvider} from '../../../providers/comanda/comanda';
+import {MesasProvider} from '../../../providers/mesas/mesas';
+import {IComanda} from '../../../clases/IComanda';
+import {PedidosPage} from '../../../pages/pedidosPages/pedidos/pedidos';
 
 /**
  * Generated class for the QrEsperaPage page.
@@ -34,6 +37,8 @@ export class QrEsperaPage {
   espera:Observable<IEspera[]>;
   uidEspera:string;
   esAnonimo:boolean;
+  comanda:IComanda;
+  nroMesa:string;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -44,8 +49,28 @@ export class QrEsperaPage {
     public auth: AuthProvider,
     public proveedorUsuarios:UsuariosProvider,
     public alertCtrl:AlertController,
-    public proveedorComanda:ComandaProvider) 
+    public proveedorComanda:ComandaProvider,
+    public proveedorMesa: MesasProvider) 
   {
+    this.clienteUid = localStorage.getItem("userID");
+    this.proveedorComanda.buscarComandas().valueChanges()
+    .subscribe(data =>{
+      data.forEach(element => {
+        if(element.ClienteId == this.clienteUid && element.estado == 'Abierta'){
+          this.comanda = element;
+          this.proveedorMesa.buscarNroMesa(this.comanda.mesa)
+          .then(data =>{
+            this.nroMesa = data;
+            console.log(this.comanda);
+            console.log(this.nroMesa);
+            this.navCtrl.setRoot(PedidosPage,{
+              mesa:this.nroMesa,
+              comanda:this.comanda,
+            });
+          })
+        }
+      });
+    })
     this.esperaForm = this.formBuilder.group({
       cantidad: ['', Validators.required]
     })

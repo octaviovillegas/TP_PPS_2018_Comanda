@@ -45,6 +45,11 @@ export class MenuComponent {
           { title: 'Nuevo Supervisor', component: "AltaSupervisorPage" },
           { title: 'Nuevo Dueño', component:"AltaDueñoPage"},
           { title: 'Nueva Mesa', component:"AltaMesaPage"},
+          // { title: 'Estadisticas', component: "MesasPage" },
+          { title: 'Encuesta e/s', component: "EncuestaEnstradaSalidaPage" },
+          { title: 'Estadisticas', component: "MesasPage" },
+          { title: 'Encuesta', component: "EncuestaEnstradaSalidaPage" },
+          { title: 'Encuesta supervisor', component: "EncuestaSupervisorPage" },
 
           // { title: 'Estadisticas', component: "MesasPage" },
           { title: 'Encuesta e/s', component: "EncuestaEnstradaSalidaPage" }

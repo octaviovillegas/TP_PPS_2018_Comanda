@@ -1,3 +1,4 @@
+import { UtilProvider } from "./../util/util";
 import { Observable } from "rxjs/Observable";
 import { AngularFireDatabase, AngularFireList } from "angularfire2/database";
 import { Injectable } from "@angular/core";
@@ -6,32 +7,41 @@ import { map } from "rxjs/operators";
 @Injectable()
 export class platosProvider {
   private platoListRef = this.afDB.list<IPlato>("platos");
-  constructor(public afDB: AngularFireDatabase) {}
+  constructor(public afDB: AngularFireDatabase, public _utils: UtilProvider) {}
 
-  guardarPlato(nuevo: IPlato) {
-    return this.afDB.list("platos").push({
-      id: nuevo.id,
-      nombre: nuevo.nombre,
-      importe: nuevo.importe,
-      categoria: nuevo.categoria,
-      descripcion: nuevo.descripcion,
-      ingredientesFoto: nuevo.ingredientesFoto,
-      preparacionFoto: nuevo.preparacionFoto,
-      preparadoFoto: nuevo.preparacionFoto,
-      tiempoEstimado: nuevo.tiempoEstimado
+  guardarPlato(nuevo: IPlato): Promise<any> {
+    //this._utils.mostrarMensaje('PLATO PROVIDER');
+    // this._utils.mostrarMensaje(nuevo.nombre);
+    // this._utils.mostrarMensaje(nuevo.preparacionFoto);
+
+    
+    let promesa = new Promise((resolve,reject)=>{
+      this.platoListRef.push(nuevo)
+      .then(()=> resolve());
     });
-  }
 
-  // obtenerPlatos() {
-  //     return this.afDB.list<IPlato[]>('platos').snapshotChanges()
-  //         .map(actions => {
-  //             return actions.map(a => {
-  //                 const data = a.payload.val() as IPlato;
-  //                 const key = a.payload.key;
-  //                 return { key, ...data };
-  //             })
-  //         })
-  // }
+    //   this.afDB.list("platos").push(nuevo)
+    //   .then(()=> resolve());
+    // });
+
+
+    // let promesa = new Promise((resolve,reject)=>{
+    //   this.afDB.list("platos").push({
+    //     id: nuevo.id,
+    //     nombre: nuevo.nombre,
+    //     importe: nuevo.importe,
+    //     categoria: nuevo.categoria,
+    //     descripcion: nuevo.descripcion,
+    //     ingredientesFoto: nuevo.ingredientesFoto,
+    //     preparacionFoto: nuevo.preparacionFoto,
+    //     preparadoFoto: nuevo.preparacionFoto,
+    //     tiempoEstimado: nuevo.tiempoEstimado
+    //   })
+    //   .then(()=> resolve());
+    // });
+
+    return promesa;
+  }
 
   traerPlatos(categoria: string) {
     return this.afDB

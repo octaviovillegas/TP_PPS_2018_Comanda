@@ -79,6 +79,7 @@ export class ComandaProvider {
           );
         } catch {
           this.guardarComanda(comanda, mesa, mesaKey, comanda.fotoCliente);
+          resolve();
         }
       } else {
         //No tiene imagen

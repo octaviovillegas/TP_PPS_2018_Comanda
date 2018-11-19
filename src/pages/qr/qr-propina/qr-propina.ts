@@ -35,7 +35,7 @@ export class QrPropinaPage {
   }
   public cargarCodigo(){
     switch (this.codigo) {
-      case 'njbnkjjkvzkxcvnjkxzcvnjzxcv':
+      case '20porciento':
         let loading20 = this.loadingCtrl.create({
           content: 'Por favor espere...'
         })
@@ -51,7 +51,7 @@ export class QrPropinaPage {
           }, 20000);
         }, 7000);
         break;
-      case 'sdfsafsdfasdfasdfavxcvb':
+      case '15porciento':
         let loading15 = this.loadingCtrl.create({
           content: 'Por favor espere...'
         })
@@ -66,7 +66,7 @@ export class QrPropinaPage {
           }, 3000);
         }, 7000);
         break;
-      case 'sionfgbiobiuasdiasgdfgs':
+      case '10porciento':
         let loading10 = this.loadingCtrl.create({
           content: 'Por favor espere...'
         })
@@ -81,7 +81,7 @@ export class QrPropinaPage {
           }, 3000);
         }, 7000);
         break;
-      case 'mbkclvmbdnfgidfngjdifid':
+      case '5porciento':
         let loading5 = this.loadingCtrl.create({
           content: 'Por favor espere...'
         })
@@ -96,7 +96,7 @@ export class QrPropinaPage {
           }, 3000);
         }, 7000);
         break;
-      case 'poipuoiyuituyryetvhvcctft':
+      case '0porciento':
         let loading0 = this.loadingCtrl.create({
           content: 'Por favor espere...'
         })

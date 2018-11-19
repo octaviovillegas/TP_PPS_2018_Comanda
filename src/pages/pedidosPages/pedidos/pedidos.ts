@@ -120,24 +120,17 @@ export class PedidosPage {
 
               break;
             case "Entregado":
+              console.log(this.mesaKey);
               await this.armarListas(this.comanda.pedidos[i]).then(() => {
                 if (this.bebidas != null) {
                   for (let j = 0; j < this.bebidas.length; j++) {
-                    importeTotal =
-                      importeTotal +
-                      this.bebidas[j].precio *
-                        this.comanda.pedidos[i].subPedidosBebida.items[j]
-                          .cantidad;
+                    importeTotal = importeTotal + this.bebidas[j].precio;
                   }
                 }
 
                 if (this.cocina != null) {
                   for (let j = 0; j < this.cocina.length; j++) {
-                    importeTotal =
-                      importeTotal +
-                      this.cocina[j].precio *
-                        this.comanda.pedidos[i].subPedidosCocina.items[j]
-                          .cantidad;
+                    importeTotal = importeTotal + this.cocina[j].precio;
                   }
                 }
 
@@ -326,7 +319,6 @@ export class PedidosPage {
   }
 
   entregarPedido(event: any) {
-
     this.automatico = false;
     this._utils.presentLoading("Entregando pedido...");
 

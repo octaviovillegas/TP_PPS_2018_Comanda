@@ -74,7 +74,7 @@
             </ion-col>
             <ion-col>
               <button
-                *ngIf="perfil != 'Cliente'"
+                *ngIf="perfil != 'Cliente' && perfil != 'Anonimo'"
                 ion-button
                 [disabled]="!todoEntregado"
                 (click)="cerrarComanda()"
@@ -82,7 +82,7 @@
                 Cerrar mesa
               </button>
               <button
-                *ngIf="perfil == 'Cliente'"
+                *ngIf="perfil == 'Cliente' || perfil == 'Anonimo'"
                 ion-button
                 [disabled]="!todoEntregado"
                 (click)="pedirCuenta()"

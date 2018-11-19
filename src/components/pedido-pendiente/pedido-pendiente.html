@@ -6,22 +6,20 @@
       </ion-col>
 
       <ion-col text-right>
-            <button
-              ion-button
-              clear
-              small
-              color="dark"
-              icon-start
-              (click)="quitarPedido(itemPedido.id)"
-            >
-              <ion-icon name="backspace"></ion-icon>
-              Eliminar
-            </button>
-        </ion-col>
-
+        <button
+          ion-button
+          clear
+          small
+          color="dark"
+          icon-start
+          (click)="quitarPedido(itemPedido.id)"
+        >
+          <ion-icon color="grey" name="trash"></ion-icon>Eliminar
+        </button>
+      </ion-col>
 
       <ion-col text-right>
-        <div *ngIf="perfil != 'Cliente'">
+        <div *ngIf="perfil != 'Cliente' && perfil != 'Anonimo'">
           <button
             ion-button
             clear
@@ -156,19 +154,19 @@
         </ion-col>
 
         <ion-col text-right>
-            <div *ngIf="perfil != 'Cliente'">
-          <button
-            ion-button
-            clear
-            small
-            color="danger"
-            icon-start
-            [disabled]="itemPedido.estadoSubpedidosBebida != 'Preparado'"
-            (click)="entregarSubpedido('Entregado', itemPedido.id, 'bebida')"
-          >
-            <ion-icon name="share-alt"></ion-icon>
-            ENTREGAR
-          </button>
+          <div *ngIf="perfil != 'Cliente' && perfil != 'Anonimo'">
+            <button
+              ion-button
+              clear
+              small
+              color="danger"
+              icon-start
+              [disabled]="itemPedido.estadoSubpedidosBebida != 'Preparado'"
+              (click)="entregarSubpedido('Entregado', itemPedido.id, 'bebida')"
+            >
+              <ion-icon name="share-alt"></ion-icon>
+              ENTREGAR
+            </button>
           </div>
         </ion-col>
       </ion-row>
@@ -202,19 +200,19 @@
         </ion-col>
 
         <ion-col text-right>
-            <div *ngIf="perfil != 'Cliente'">
-          <button
-            ion-button
-            clear
-            small
-            color="danger"
-            icon-start
-            [disabled]="itemPedido.estadoSubpedidosCocina != 'Preparado'"
-            (click)="entregarSubpedido('Entregado', itemPedido.id, 'cocina')"
-          >
-            <ion-icon name="share-alt"></ion-icon>
-            ENTREGAR
-          </button>
+          <div *ngIf="perfil != 'Cliente'">
+            <button
+              ion-button
+              clear
+              small
+              color="danger"
+              icon-start
+              [disabled]="itemPedido.estadoSubpedidosCocina != 'Preparado'"
+              (click)="entregarSubpedido('Entregado', itemPedido.id, 'cocina')"
+            >
+              <ion-icon name="share-alt"></ion-icon>
+              ENTREGAR
+            </button>
           </div>
         </ion-col>
       </ion-row>

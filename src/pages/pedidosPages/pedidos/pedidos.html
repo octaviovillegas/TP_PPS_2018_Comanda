@@ -48,7 +48,7 @@
       </div>
     </div>
 
-    <div *ngIf="perfil != 'Cliente'">
+    <div>
       <div *ngSwitchCase="'derivado'">
         <div *ngIf="listaPedidosDerivados">
           <ion-list *ngFor="let item of listaPedidosDerivados">
@@ -61,7 +61,7 @@
       </div>
     </div>
 
-    <div *ngIf="perfil != 'Cliente'">
+    <div>
       <div *ngSwitchCase="'entregado'">
         <div *ngIf="listaPedidosEntregados">
           <ion-row style="text-align: center; background: rgb(177, 224, 252)">
@@ -74,11 +74,20 @@
             </ion-col>
             <ion-col>
               <button
+                *ngIf="perfil != 'Cliente'"
                 ion-button
                 [disabled]="!todoEntregado"
                 (click)="cerrarComanda()"
               >
                 Cerrar mesa
+              </button>
+              <button
+                *ngIf="perfil == 'Cliente'"
+                ion-button
+                [disabled]="!todoEntregado"
+                (click)="pedirCuenta()"
+              >
+                Pedir cuenta
               </button>
             </ion-col>
           </ion-row>

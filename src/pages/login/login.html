@@ -1,8 +1,8 @@
-<ion-content padding class="login" >
+<ion-content padding class="login">
   <ion-grid>
     <ion-row>
       <ion-col text-center>
-        <img class="imgLogin" src="assets/imgs/icono_restaurant.png">
+        <img class="imgLogin" src="assets/imgs/icono_restaurant.png" />
       </ion-col>
     </ion-row>
 
@@ -12,34 +12,62 @@
           <form (ngSubmit)="ingresar()" #loginForm="ngForm">
             <ion-item class="rounded">
               <ion-label stacked> Nombre</ion-label>
-              <ion-input  type="text" [(ngModel)]="nombre" name="Nombre" class="item" required >  <ion-icon name="person"></ion-icon></ion-input>
+              <ion-input
+                type="text"
+                [(ngModel)]="nombre"
+                name="Nombre"
+                class="item"
+                required
+              >
+                <ion-icon name="person"></ion-icon
+              ></ion-input>
             </ion-item>
             <ion-item class="rounded">
-              <ion-label stacked> Contraseña  </ion-label>
-              <ion-input type="password" [(ngModel)]="pass" name="Contrasena" class="item" required ></ion-input>
+              <ion-label stacked> Contraseña </ion-label>
+              <ion-input
+                type="password"
+                [(ngModel)]="pass"
+                name="Contrasena"
+                class="item"
+                required
+              ></ion-input>
             </ion-item>
-            <button ion-button color="light" style="color:black" round type="submit" block [disabled]="!loginForm.form.valid" >Ingresar</button>
-           
+            <button
+              ion-button
+              color="light"
+              style="color:black"
+              round
+              type="submit"
+              block
+              [disabled]="!loginForm.form.valid"
+            >
+              Ingresar
+            </button>
           </form>
         </div>
-        <!-- <button ion-button color="light" style="color:black" round  block (click)="registrar()" >Registrar</button> -->
+        <!--
+          <button ion-button color="light" style="color:black" round  block (click)="registrar()" >Registrar</button>
+        -->
       </ion-col>
     </ion-row>
   </ion-grid>
-  <ion-fab  middle left>
+  <ion-fab middle left>
     <button ion-fab><ion-icon name="log-in"></ion-icon></button>
     <ion-fab-list side="right">
-      <button ion-fab (click)="ingresar('admin@gmail.com')" >Du</button>
-      <button ion-fab (click)="ingresar('supervisor@gmail.com')" >Su</button>
-      <button ion-fab (click)="ingresar('gustavopetruzzi19@gmail.com')" >Cl</button>
-      <button ion-fab (click)="ingresar('cocinero@gmail.com')" >Co</button>
+      <button ion-fab (click)="ingresar('admin@gmail.com')">Du</button>
+      <button ion-fab (click)="ingresar('supervisor@gmail.com')">Su</button>
+      <!--
+        <button ion-fab (click)="ingresar('gustavopetruzzi19@gmail.com')" >Cl</button>
+      -->
+      <button ion-fab (click)="ingresar('sebillac@hotmail.com')">Cl</button>
+      <button ion-fab (click)="ingresar('cocinero@gmail.com')">Co</button>
     </ion-fab-list>
     <ion-fab-list side="top">
-      <button ion-fab (click)="ingresar('bartender@gmail.com')" >Ba</button>
-      <button ion-fab (click)="ingresar('mozo@gmail.com')" >Mo</button>
-      <button ion-fab (click)="ingresar('mestre@gmail.com')" >Me</button>
+      <button ion-fab (click)="ingresar('bartender@gmail.com')">Ba</button>
+      <button ion-fab (click)="ingresar('mozo@gmail.com')">Mo</button>
+      <button ion-fab (click)="ingresar('mestre@gmail.com')">Me</button>
     </ion-fab-list>
-  </ion-fab>  
+  </ion-fab>
   <ion-fab top right>
     <button ion-fab><ion-icon name="add-circle"></ion-icon></button>
     <ion-fab-list side="bottom">
@@ -50,4 +78,3 @@
     </ion-fab-list>
   </ion-fab>
 </ion-content>
-

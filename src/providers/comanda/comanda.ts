@@ -29,11 +29,8 @@ export class ComandaProvider {
 
     this.lista = this.afDB.list("/Mesa_Comandas");
     this.comandasAbiertas = this.afDB.list("/Mesa_Comandas", ref =>
-    ref
-      .orderByChild("estado")
-      .equalTo("Abierta")
+      ref.orderByChild("estado").equalTo("Abierta")
     );
-
 
     // this.items = this.lista
     //   .snapshotChanges()
@@ -56,8 +53,8 @@ export class ComandaProvider {
       let nombreArchivo: string = new Date().valueOf().toString(); // 1231231231
 
       if (comanda.fotoCliente != "") {
-        try{
-        // Si tiene una imagen, la guardo y la asigno a la comanda
+        try {
+          // Si tiene una imagen, la guardo y la asigno a la comanda
           let uploadTask: firebase.storage.UploadTask = storeRef
             .child(`comandas/${nombreArchivo}`)
             .putString(comanda.fotoCliente, "base64", {
@@ -80,9 +77,8 @@ export class ComandaProvider {
               resolve();
             }
           );
-        }
-        catch{
-          this.guardarComanda(comanda,mesa, mesaKey, comanda.fotoCliente);
+        } catch {
+          this.guardarComanda(comanda, mesa, mesaKey, comanda.fotoCliente);
         }
       } else {
         //No tiene imagen
@@ -133,14 +129,15 @@ export class ComandaProvider {
     let promesa = new Promise<Boolean>((resolve, reject) => {
       //Me devuelve una referencia al objeto de la lista, asi me aseguro de Updatear y no generar una nueva Comanda
 
-      this.afDB.object("/Mesa_Comandas/" + comanda.id).update(comanda)
-      .then(()=>resolve(true))
-      .catch((err)=> reject(err));
+      this.afDB
+        .object("/Mesa_Comandas/" + comanda.id)
+        .update(comanda)
+        .then(() => resolve(true))
+        .catch(err => reject(err));
     });
 
     return promesa;
   }
-
 
   private guardarComanda(
     comanda: IComanda,
@@ -151,29 +148,29 @@ export class ComandaProvider {
     if (url != null) comanda.fotoCliente = url; // Si tiene URL se la asigno
 
     let promesa = new Promise<Boolean>((resolve, reject) => {
+      this.afDB
+        .object("/Mesa_Comandas/" + comanda.id)
+        .update(comanda)
+        .then(
+          () => {
+            //CAMBIO EL ESTADO DE LA MESA A OCUPADA
+            //console.log(mesaKey);
+            let ref = firebase.database().ref("/mesas/" + mesaKey);
 
+            ref.ref.update({ estado: "Ocupada", comanda: comanda.id }).then(
+              () => {
+                resolve(true);
+              },
+              err => {
+                reject(false);
+              }
+            );
+          },
+          err => {
+            reject(false);
+          }
+        );
 
-
-    this.afDB.object("/Mesa_Comandas/" + comanda.id).update(comanda).then(
-        () => {
-          //CAMBIO EL ESTADO DE LA MESA A OCUPADA
-          //console.log(mesaKey);
-          let ref = firebase.database().ref("/mesas/" + mesaKey);
-
-          ref.ref.update({ estado: "Ocupada", comanda: comanda.id }).then(
-            () => {
-              resolve(true);
-            },
-            err => {
-              reject(false);
-            }
-          );
-        },
-        err => {
-          reject(false);
-        }
-      );
-      
       // // this.lista.push(comanda).then(
       // //   () => {
       // //     //CAMBIO EL ESTADO DE LA MESA A OCUPADA
@@ -198,7 +195,7 @@ export class ComandaProvider {
     return promesa;
   }
 
-  public buscarComandas(){
+  public buscarComandas() {
     return this.lista;
   }
 
@@ -211,7 +208,10 @@ export class ComandaProvider {
         (comandas: IComanda[]) => {
           for (let i = 0; i < comandas.length; i++) {
             if (comandas[i].id == comandaID) {
-              if (comandas[i].MozoId == userID) {
+              if (
+                comandas[i].MozoId == userID ||
+                comandas[i].ClienteId == userID
+              ) {
                 resolve(comandas[i]);
                 encontro = true;
                 break;
@@ -254,7 +254,21 @@ export class ComandaProvider {
         }
       });
     });
+    return promesa;
+  }
 
+  pedirCuenta(mesaKey: string): Promise<Boolean> {
+    let promesa = new Promise<Boolean>((resolve, reject) => {
+      let ref = firebase.database().ref("/mesas/" + mesaKey);
+      ref.ref.update({ estado: "Esperando cobro" }).then(
+        () => {
+          resolve(true);
+        },
+        err => {
+          reject(false);
+        }
+      );
+    });
     return promesa;
   }
 }

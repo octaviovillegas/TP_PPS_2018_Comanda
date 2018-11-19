@@ -42,7 +42,7 @@ export class PedidosPage {
   todoEntregado: Boolean = false;
   subs: Subscription;
   automatico: Boolean = true; //Indica si la actualizacion de la pantalla es automatica. Esto sirve para cuando el bartender o cocinero cambian un estado.
-  perfil:string = "";
+  perfil: string = "";
 
   constructor(
     public navCtrl: NavController,
@@ -69,8 +69,7 @@ export class PedidosPage {
   }
 
   ionViewWillLeave() {
-    if(!this.subs.closed)
-      this.subs.unsubscribe();
+    if (!this.subs.closed) this.subs.unsubscribe();
   }
 
   inicializar() {
@@ -108,8 +107,10 @@ export class PedidosPage {
                   id: this.comanda.pedidos[i].id,
                   hora: hora,
                   estado: this.comanda.pedidos[i].estado,
-                  estadoSubpedidosBebida: this.comanda.pedidos[i].subPedidosBebida.estado,
-                  estadoSubpedidosCocina: this.comanda.pedidos[i].subPedidosCocina.estado,
+                  estadoSubpedidosBebida: this.comanda.pedidos[i]
+                    .subPedidosBebida.estado,
+                  estadoSubpedidosCocina: this.comanda.pedidos[i]
+                    .subPedidosCocina.estado,
                   tiempoEstimado: this.comanda.pedidos[i].tiempoMayorEstimado,
                   horaDerivado: this.comanda.pedidos[i].horaDerivado,
                   subpedidoBebidas: this.bebidas,
@@ -120,16 +121,23 @@ export class PedidosPage {
               break;
             case "Entregado":
               await this.armarListas(this.comanda.pedidos[i]).then(() => {
-
                 if (this.bebidas != null) {
                   for (let j = 0; j < this.bebidas.length; j++) {
-                    importeTotal = importeTotal + (this.bebidas[j].precio * this.comanda.pedidos[i].subPedidosBebida.items[j].cantidad);
+                    importeTotal =
+                      importeTotal +
+                      this.bebidas[j].precio *
+                        this.comanda.pedidos[i].subPedidosBebida.items[j]
+                          .cantidad;
                   }
                 }
 
                 if (this.cocina != null) {
                   for (let j = 0; j < this.cocina.length; j++) {
-                    importeTotal = importeTotal + (this.cocina[j].precio * this.comanda.pedidos[i].subPedidosCocina.items[j].cantidad);
+                    importeTotal =
+                      importeTotal +
+                      this.cocina[j].precio *
+                        this.comanda.pedidos[i].subPedidosCocina.items[j]
+                          .cantidad;
                   }
                 }
 
@@ -155,7 +163,6 @@ export class PedidosPage {
   }
 
   buscarComanda() {
-
     this.subs = this._comandas.lista.valueChanges().subscribe(data => {
       if (this.automatico)
         this._utils.presentLoading("Actualizando pedidos...");
@@ -165,7 +172,10 @@ export class PedidosPage {
       this.listaPedidosPendientes = [];
 
       for (let i = 0; i < data.length; i++) {
-        if (data[i].userID == this.userID && data[i].id == this.comanda.id) {
+        if (
+          (data[i].MozoId == this.userID || data[i].ClienteId == this.userID) &&
+          data[i].id == this.comanda.id
+        ) {
           //resolve(data[i] as IComanda);
           this.comanda = data[i];
           this.total = 0;
@@ -214,11 +224,10 @@ export class PedidosPage {
         this.buscarPlatos(pedido.subPedidosCocina.items),
         this.buscarBebidas(pedido.subPedidosBebida.items)
       ]).then(res => {
-
         setTimeout(() => {
           this.cocina = res[0];
           this.bebidas = res[1];
-          
+
           resolve(true);
         }, 1000);
       });
@@ -241,7 +250,6 @@ export class PedidosPage {
                 bebida: b,
                 precio: Number(b.importe) * Number(itemBebida.cantidad)
               });
-
             })
             .catch(() => {
               reject();
@@ -271,7 +279,6 @@ export class PedidosPage {
                 plato: p,
                 precio: Number(p.importe) * Number(itemPlato.cantidad)
               });
-
             })
             .catch(() => {
               reject();
@@ -388,22 +395,29 @@ export class PedidosPage {
     this._utils.presentLoading("Cerrando mesa...");
 
     this.comanda.estado = "Cerrada";
-    
-    console.log("MESA KEY");
-    console.log(this.mesaKey);
+
     this._comandas.cerrarComanda(this.comanda, this.mesaKey).then(() => {
       this.todoEntregado = false;
       this.total = 0;
 
       setTimeout(() => {
-        this._utils.dismiss().then(() => 
-        this.navCtrl.setRoot("MesasPage"));
+        this._utils.dismiss().then(() => this.navCtrl.setRoot("MesasPage"));
       }, 3000);
     });
   }
 
+  pedirCuenta() {
+    this._utils.presentLoading("Solicitando cuenta...");
+    this._comandas.pedirCuenta(this.mesaKey).then(() => {
+
+      setTimeout(() => {
+        this._utils.dismiss();
+      }, 2000);
+    });
+  }
+
   quitarPedido(event: any) {
-    let encontro:number = -1;
+    let encontro: number = -1;
     this.automatico = false;
     this._utils.presentLoading("Eliminando pedido...");
 
@@ -419,13 +433,12 @@ export class PedidosPage {
       }
     }
 
-    if(encontro >- 1) {
-
+    if (encontro > -1) {
       this.comanda.pedidos.splice(encontro, 1);
       this._comandas.actualizarComanda(this.comanda).then(
         () => {
           //this._utils.mostrarMensaje("Se derivó el pedido");
-  
+
           //this.inicializar();
           setTimeout(() => {
             this._utils.dismiss();
@@ -439,5 +452,4 @@ export class PedidosPage {
       );
     }
   }
-
 }

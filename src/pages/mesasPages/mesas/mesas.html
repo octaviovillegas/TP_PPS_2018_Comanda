@@ -6,12 +6,13 @@
         <ion-icon name="menu"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-buttons end><p class="tipoPerfil">{{ perfil }}</p></ion-buttons>
+    <ion-buttons end>
+      <p class="tipoPerfil">{{ perfil }}</p></ion-buttons
+    >
   </ion-navbar>
 </ion-header>
 
 <ion-content class="outer-content">
-    
   <ion-fab right bottom>
     <button ion-fab color="secondary" (click)="irAltaComanda()">
       <ion-icon name="barcode"></ion-icon>
@@ -26,28 +27,23 @@
       >
         <ion-avatar item-start class="imgColores" [ngSwitch]="mesa.estado">
           <img
-            *ngSwitchCase="'Rota'"
-            [src]="'assets/imgs/coloresEstados/azul.png'"
-          />
-          <img
             *ngSwitchCase="'Ocupada'"
             [src]="'assets/imgs/coloresEstados/rojo.png'"
           />
           <img
             *ngSwitchCase="'Reservada'"
-            [src]="'assets/imgs/coloresEstados/amarillo.png'"
+            [src]="'assets/imgs/coloresEstados/azul.png'"
           />
           <img
             *ngSwitchCase="'Esperando cobro'"
             [src]="'assets/imgs/coloresEstados/amarillo.png'"
           />
         </ion-avatar>
-        <p>MESA {{ mesa.numero }} - Capacidad: {{ mesa.capacidad }}</p>
+        <p>MESA {{ mesa.numero }}</p>
         <!-- <p>MESA {{ mesa.numero }} - Capacidad: {{ mesa.capacidad }}</p> -->
-
         <ion-note item-end> {{ mesa.estado }} </ion-note>
+        <h6><ion-icon name="people" small></ion-icon> {{ mesa.capacidad }} </h6>
       </ion-item>
-
       <!--
         <ion-item-options side="right">
 

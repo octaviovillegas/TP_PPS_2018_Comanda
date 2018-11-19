@@ -2,7 +2,7 @@ import { Iusuario } from "./../../clases/usuario";
 import { UsuariosProvider } from "./../usuarios/usuarios";
 import { AngularFireAuth } from "angularfire2/auth";
 import { Injectable } from "@angular/core";
-import {LoginPage} from '../../pages/login/login';
+import { LoginPage } from "../../pages/login/login";
 import { Observable, BehaviorSubject } from "rxjs";
 import { Page } from "ionic-angular/umd/navigation/nav-util";
 import { of } from "rxjs/observable/of";
@@ -12,7 +12,7 @@ import * as firebase from "firebase";
 @Injectable()
 export class AuthProvider {
   //public perfilLogueado: string;
-  uid:string;
+  uid: string;
   public perfil$ = new BehaviorSubject("");
 
   constructor(
@@ -46,30 +46,32 @@ export class AuthProvider {
     let promesa = new Promise((resolve, reject) => {
       console.log(email);
       console.log(password);
-      this.afAuth.auth.signInWithEmailAndPassword(email, password).then((data) => {
-        console.log(data.uid);
-        this.uid = data.uid;
-        let user = firebase.auth().currentUser;
-        // Busco el usuario x mail y lo devuelvo
-        this._usuario
-          .buscarUsuarioxMail(user.email)
-          .catch(() => {
-            reject("Usuario inexistente");
-          })
-          .then((u: Iusuario) => {
-            if (u.perfil == "Cliente") {
-              if (user.emailVerified) {
-                u.id = this.uid;
-                resolve(u);
-                ``;
+      this.afAuth.auth
+        .signInWithEmailAndPassword(email, password)
+        .then(data => {
+          console.log(data.uid);
+          this.uid = data.uid;
+          let user = firebase.auth().currentUser;
+          // Busco el usuario x mail y lo devuelvo
+          this._usuario
+            .buscarUsuarioxMail(user.email)
+            .catch(() => {
+              reject("Usuario inexistente");
+            })
+            .then((u: Iusuario) => {
+              if (u.perfil == "Cliente") {
+                if (user.emailVerified) {
+                  u.id = this.uid;
+                  resolve(u);
+                  ``;
+                } else {
+                  reject("Email no verificado");
+                }
               } else {
-                reject("Email no verificado");
+                resolve(u);
               }
-            } else {
-              resolve(u);
-            }
-          });
-      });
+            });
+        });
     });
 
     return promesa;
@@ -125,9 +127,13 @@ export class AuthProvider {
         destinoPage = "MesasPage";
 
         break;
+      // case "Cliente":
+      //   destinoPage = "QrEsperaPage";
+      //   break;
       case "Cliente":
-        destinoPage = "QrEsperaPage";
+        destinoPage = "MesasPage";
         break;
+
       case "Anonimo":
         destinoPage = "QrEsperaPage";
         break;
@@ -158,14 +164,14 @@ export class AuthProvider {
     return this.afAuth.auth.signInAnonymously();
   }
 
-  public esAnonimo(){
-    let ay:any;
-    ay = this.afAuth.auth.onAuthStateChanged(user =>{
+  public esAnonimo() {
+    let ay: any;
+    ay = this.afAuth.auth.onAuthStateChanged(user => {
       console.log(user);
-    })
+    });
   }
 
-  public obtenerEmailUsuarioActual(){
+  public obtenerEmailUsuarioActual() {
     return this.afAuth.auth.currentUser.email;
   }
 }

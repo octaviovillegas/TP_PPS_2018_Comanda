@@ -9,17 +9,7 @@ export class bebidasProvider {
   constructor(public afDB: AngularFireDatabase) {}
 
   guardarBebida(nuevo: IPlato) {
-    return this.afDB.list("bebidas").push({
-      id: nuevo.id,
-      nombre: nuevo.nombre,
-      importe: nuevo.importe,
-      descripcion: nuevo.descripcion,
-      ingredientesFoto: nuevo.ingredientesFoto,
-      preparacionFoto: nuevo.preparacionFoto,
-      preparadoFoto: nuevo.preparacionFoto,
-      tiempoEstimado: nuevo.tiempoEstimado,
-      categoria: nuevo.categoria
-    });
+    return this.afDB.list("bebidas").push(nuevo);
   }
 
   traerBebidas() {

@@ -26,7 +26,11 @@
         </ion-item>
         <ion-item>
           <ion-icon name="camera" item-start></ion-icon>
-          <img style="height: 50vh !important" *ngIf="imagenPreview"   [src]="imagenPreview" />
+          <img
+            style="height: 50vh !important"
+            *ngIf="imagenPreview"
+            [src]="imagenPreview"
+          />
         </ion-item>
         <ion-item>
           <button
@@ -40,7 +44,15 @@
           >
             <ion-icon name="camera"></ion-icon>
           </button>
-          <button ion-button color="primary" full round  (click)="guardarComanda()">Guardar Comanda</button> 
+          <button
+            ion-button
+            color="primary"
+            full
+            round
+            (click)="guardarComanda()"
+          >
+            Guardar Comanda
+          </button>
         </ion-item>
       </ng-template>
       <ng-template [ngIf]="!esAnonimo">
@@ -64,9 +76,16 @@
           </button>
         </ion-item>
         <ion-item>
-          <ion-icon name="person" item-start></ion-icon>
-          <ion-label stacked>Nombres: {{ nombreEncontrado }}</ion-label>
-          <ion-label stacked>Apellido: {{ apellidoEncontrado }}</ion-label>
+          <ion-label stacked
+            ><ion-icon name="person" small></ion-icon> Nombre:
+            {{ nombreEncontrado }}</ion-label
+          >
+        </ion-item>
+        <ion-item>
+          <ion-label stacked
+            ><ion-icon name="person" small></ion-icon> Apellido:
+            {{ apellidoEncontrado }}</ion-label
+          >
         </ion-item>
 
         <ion-item>
@@ -82,7 +101,15 @@
           >
             <ion-icon name="person-add"></ion-icon>
           </button>
-          <button ion-button color="primary" full round  (click)="guardarComanda()">Guardar Comanda</button> 
+          <button
+            ion-button
+            color="primary"
+            full
+            round
+            (click)="guardarComanda()"
+          >
+            Guardar Comanda
+          </button>
         </ion-item>
       </ng-template>
     </ion-slide>
@@ -97,14 +124,24 @@
         <ion-item>
           <ion-card *ngIf="mesa">
             <img style="height: 50vh !important" [src]="mesa.img" />
-            <div class="card-title">Mesa: {{mesa.numero}}</div>
-            <div class="card-subtitle">Capacidad: {{mesa.capacidad}}</div>
+            <div class="card-title">Mesa: {{ mesa.numero }}</div>
+            <div class="card-subtitle">Capacidad: {{ mesa.capacidad }}</div>
           </ion-card>
         </ion-item>
         <ion-item>
-          <button ion-button color="primary" full round  (click)="guardarComanda()">Guardar Comanda</button> 
-          <!-- <button ion-button color="primary" full round  (click)="buscarMesaLibre('Mesa_numero_7')">MESA</button>  -->
-            <!-- *ngIf="codigoQR" -->
+          <button
+            ion-button
+            color="primary"
+            full
+            round
+            (click)="guardarComanda()"
+          >
+            Guardar Comanda
+          </button>
+          <!--
+            <button ion-button color="primary" full round  (click)="buscarMesaLibre('Mesa_numero_7')">MESA</button>
+          -->
+          <!-- *ngIf="codigoQR" -->
         </ion-item>
       </ion-list>
     </ion-slide>

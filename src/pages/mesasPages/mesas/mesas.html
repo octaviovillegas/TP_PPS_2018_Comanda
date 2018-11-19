@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      <ion-icon color="secondary" small name="restaurant"></ion-icon> MESAS
+      <ion-icon color="secondary" small name="restaurant"></ion-icon>  MESAS
     </ion-title>
     <ion-buttons left>
       <button ion-button icon-only menuToggle>
@@ -38,7 +38,7 @@
     </ion-item-sliding>
   </ion-list>
   <br />
-  <div *ngIf="perfil != 'Cliente'">
+  <div *ngIf="perfil != 'Cliente' && perfil != 'Anonimo'">
     <ion-list class="login-sliding-demo">
       <ion-list-header> MESAS LIBRES </ion-list-header>
       <ion-item-sliding *ngFor="let mesa of (_mesas.items | async)" #item>

@@ -83,6 +83,7 @@ export class MyApp {
   salir(page: any) {
     localStorage.removeItem("perfil");
     localStorage.removeItem("usuario");
+    localStorage.removeItem("userID");
     this.auth.logout();
     this.nav.setRoot(page);
   }

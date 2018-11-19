@@ -1,3 +1,4 @@
+import { ClienteProvider } from './../../../providers/cliente/cliente';
 import { forEach } from "@firebase/util";
 import { bebidasProvider } from "./../../../providers/bebidas/bebidas";
 import { Component } from "@angular/core";
@@ -50,7 +51,8 @@ export class PedidosPage {
     public _utils: UtilProvider,
     public _comandas: ComandaProvider,
     public _bebidas: bebidasProvider,
-    public _platos: platosProvider
+    public _platos: platosProvider,
+    public _cliente: ClienteProvider
   ) {
     this.mesa = parseInt(this.navParams.get("mesa"));
     this.mesaKey = this.navParams.get("mesaKey");
@@ -174,27 +176,18 @@ export class PedidosPage {
           this.total = 0;
           this.todoEntregado = false;
 
-          if (
-            this.comanda.estado == "Cerrada" &&
-            (this.perfil == "Cliente" || this.perfil == "Anonimo")
-          ) {
-            this.subs.unsubscribe();
-            this._utils.presentLoading("Esperamos volver a verte!");
-            setTimeout(() => {
-              this._utils.dismiss().then(() => this.navCtrl.setRoot("Login"));
-            }, 3000);
-          }
-
           this.armarListasEstados().then(() => {
-            if (this.listaPedidosPendientes.length == 0)
-              if (this.listaPedidosDerivados.length == 0)
-                if (this.listaPedidosEntregados.length > 0)
-                  this.todoEntregado = true;
+            if (this.listaPedidosPendientes.length == 0 && this.listaPedidosDerivados.length == 0 && this.listaPedidosEntregados.length > 0) {
+              this.todoEntregado = true;
+              if (this.comanda.estado == "Cerrada" && (this.perfil == "Cliente" || this.perfil == "Anonimo")) {
+                this.redirigirCliente();
+              }
+            }
           });
 
           if (this.automatico) {
             setTimeout(() => {
-              this._utils.dismiss().then(() => {});
+              this._utils.dismiss().then(() => { });
             }, 2000);
           }
 
@@ -202,6 +195,14 @@ export class PedidosPage {
         }
       }
     });
+  }
+
+  redirigirCliente() {
+    this.subs.unsubscribe();
+    localStorage.removeItem('userID');
+    localStorage.removeItem('perfil');
+    
+    this.navCtrl.setRoot("QrPropinaPage", { mesa: this.mesa, mesaKey: this.mesaKey, comanda: this.comanda });
   }
 
   armarListas(pedido: IComandaPedido): Promise<Boolean> {
@@ -370,6 +371,7 @@ export class PedidosPage {
     this._utils.presentLoading("Cerrando mesa...");
 
     this.comanda.estado = "Cerrada";
+    this.comanda.importeTotal = this.total;
 
     this._comandas.cerrarComanda(this.comanda, this.mesaKey).then(() => {
       this.todoEntregado = false;

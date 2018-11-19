@@ -12,7 +12,8 @@ export interface IComanda {
     userID: string;
     estado:string; //ABIERTA, CERRADA
     pedidos?: IComandaPedido[];
-
     ClienteId:string;
     MozoId:string;
+    importeTotal? : number;
+    porcentajePropina? : number;
 }

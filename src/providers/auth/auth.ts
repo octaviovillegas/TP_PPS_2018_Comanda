@@ -18,7 +18,7 @@ export class AuthProvider {
   constructor(
     private afAuth: AngularFireAuth,
     public _usuario: UsuariosProvider
-  ) {}
+  ) { }
 
   //**Registro de usuario. Si logra crear el usuario envia el mail de verificacion */
   registerUser(email: string, password: string) {
@@ -115,7 +115,6 @@ export class AuthProvider {
 
   buscarDestino(perfil: string): string {
     let destinoPage: string;
-
     this.perfil$.next(perfil);
 
     switch (perfil) {
@@ -125,33 +124,32 @@ export class AuthProvider {
 
       case "Supervisor":
         destinoPage = "MesasPage";
-
         break;
-      // case "Cliente":
-      //   destinoPage = "QrEsperaPage";
-      //   break;
+
       case "Cliente":
-        destinoPage = "MesasPage";
+        destinoPage = "QrEsperaPage";
         break;
 
       case "Anonimo":
         destinoPage = "QrEsperaPage";
         break;
+
       case "Cocinero":
         destinoPage = "PedidosCocinaPage";
         break;
+
       case "Bartender":
         destinoPage = "PedidosCocinaPage";
 
         break;
       case "Mozo":
         destinoPage = "MesasPage";
-
         break;
+
       case "Mestre":
         destinoPage = "EsperaPage";
-
         break;
+
       default:
         destinoPage = "LoginPage";
         break;

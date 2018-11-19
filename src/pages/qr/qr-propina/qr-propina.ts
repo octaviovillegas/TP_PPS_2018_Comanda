@@ -5,6 +5,7 @@ import { IonicPage, NavController, NavParams, Loading, LoadingController } from 
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { MesasPage } from '../../mesasPages/mesas/mesas';
 import { IComanda } from '../../../clases/IComanda';
+import { EncuestaClientePage } from '../../encuestasPages/encuesta-cliente/encuesta-cliente';
 
 /**
  * Generated class for the QrPropinaPage page.
@@ -69,7 +70,7 @@ export class QrPropinaPage {
                 let cargado20 = this.esperar(this.creaFondo('"Dejaste 20% de propina ¡GRACIAS!"', "assets/imgs/icono_restaurant.png"));
                 cargado20.present();
                 setTimeout(() => {
-                  cargado20.dismiss().then(() => { this.navCtrl.setRoot(LoginPage); })
+                  cargado20.dismiss().then(() => { this.navCtrl.setRoot(EncuestaClientePage); })
                 }, 2000);
               })
             }, 4000);
@@ -90,7 +91,7 @@ export class QrPropinaPage {
                 let cargado15 = this.esperar(this.creaFondo('"Dejaste 15% de propina ¡GRACIAS!"', "assets/imgs/icono_restaurant.png"));
                 cargado15.present();
                 setTimeout(() => {
-                  cargado15.dismiss().then(() => { this.navCtrl.setRoot(LoginPage); })
+                  cargado15.dismiss().then(() => { this.navCtrl.setRoot(EncuestaClientePage); })
                 }, 2000);
               })
             }, 4000);
@@ -111,7 +112,7 @@ export class QrPropinaPage {
                 let cargado10 = this.esperar(this.creaFondo('"Dejaste 10% de propina ¡GRACIAS!"', "assets/imgs/icono_restaurant.png"));
                 cargado10.present();
                 setTimeout(() => {
-                  cargado10.dismiss().then(() => { this.navCtrl.setRoot(LoginPage); })
+                  cargado10.dismiss().then(() => { this.navCtrl.setRoot(EncuestaClientePage); })
                 }, 2000);
               })
             }, 4000);
@@ -132,7 +133,7 @@ export class QrPropinaPage {
                 let cargado5 = this.esperar(this.creaFondo('"Dejaste 5% de propina ¡GRACIAS!"', "assets/imgs/icono_restaurant.png"));
                 cargado5.present();
                 setTimeout(() => {
-                  cargado5.dismiss().then(() => { this.navCtrl.setRoot(LoginPage); })
+                  cargado5.dismiss().then(() => { this.navCtrl.setRoot(EncuestaClientePage); })
                 }, 2000);
               })
             }, 4000);
@@ -154,7 +155,7 @@ export class QrPropinaPage {
                 cargado0.present();
                 setTimeout(() => {
                   cargado0.dismiss().then(() => {
-                    this.navCtrl.setRoot(LoginPage);
+                    this.navCtrl.setRoot(EncuestaClientePage);
                   })
                 }, 2000);
               })

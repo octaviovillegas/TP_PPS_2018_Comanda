@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable, ViewChild } from "@angular/core";
-import {LoginPage} from '../../pages/login/login';
+import { LoginPage } from '../../pages/login/login';
 import {
   App,
   LoadingController,
@@ -22,14 +22,6 @@ export class UtilProvider {
   }
 
   public ldg: Loading = null;
-
-  presentLoading(mensaje: string) {
-    this.ldg = this.loadingCtrl.create({
-      spinner: "dots",
-      content: mensaje
-    });
-    this.ldg.present();
-  }
 
   dismiss() {
     return this.ldg.dismiss();
@@ -59,9 +51,54 @@ export class UtilProvider {
     var temp = "" + (hour > 12 ? hour - 12 : hour);
     if (hour == 0) temp = "12";
     temp += (minute < 10 ? ":0" : ":") + minute;
-    // temp += (second < 10 ? ":0" : ":") + second;
-    // temp += hour >= 12 ? " P.M." : " A.M.";
-    //console.log(temp);
     return temp;
+  }
+
+
+
+  // cargadoError = this.esperar(this.creaFondo("Error, codigo no identificado", "assets/imgs/error.png"));
+  // cargadoError.present();
+
+  public presentLoading(mensaje: string) {
+    this.ldg = this.loadingCtrl.create({
+      spinner: "dots",
+      content: mensaje
+    });
+    this.ldg.present();
+  }
+
+
+
+  public esperar(personalizado?: string) {
+
+    if (!personalizado) {
+      this.ldg = this.loadingCtrl.create({
+        content: 'Por favor, espere...'
+      });
+    }
+    else {
+      this.ldg = this.loadingCtrl.create({
+        spinner: 'hide',
+        content: personalizado,
+      })
+    }
+    this.ldg.present();
+  }
+
+  public creaFondo(mensaje, imagen) {
+    let fondo = `
+          <div>
+            <ion-row>
+              <ion-col>
+                <div style:'height:50% !important;'>
+                  <img src="${imagen}">
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <h3> ${mensaje} </h3>
+            </ion-row> 
+          </div> `;
+    return fondo;
   }
 }

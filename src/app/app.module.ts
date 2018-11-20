@@ -1,3 +1,4 @@
+import { ReservaClientePageModule } from '../pages/reservas/reserva-cliente/reserva-cliente.module';
 import { PedidosCocinaPageModule } from "./../pages/pedidosPages/pedidos-cocina/pedidos-cocina.module";
 import { AltaComandaPageModule } from "./../pages/pedidosPages/alta-comanda/alta-comanda.module";
 import { EncuestaEnstradaSalidaPageModule } from "../pages/encuestasPages/encuesta-enstrada-salida/encuesta-enstrada-salida.module";
@@ -18,7 +19,7 @@ import { AltaClienteAnonimoPageModule } from "../pages/altasPages/alta-cliente-a
 import { QrEsperaPageModule } from "../pages/qr/qr-espera/qr-espera.module";
 import { EsperaPageModule } from "../pages/espera/espera.module";
 import { ModalEsperaPageModule } from "../pages/espera/modal-espera/modal-espera.module";
-import {TraspasoPedidoPageModule} from "../pages/qr/qr-espera/traspaso-pedido/traspaso-pedido.module";
+import { TraspasoPedidoPageModule } from "../pages/qr/qr-espera/traspaso-pedido/traspaso-pedido.module";
 
 import { BrowserModule } from "@angular/platform-browser";
 import { ErrorHandler, NgModule } from "@angular/core";
@@ -78,6 +79,7 @@ import { UtilProvider } from "../providers/util/util";
 import { ComandaProvider } from "../providers/comanda/comanda";
 import { ClienteProvider } from "../providers/cliente/cliente";
 import { EsperaProvider } from "../providers/espera/espera";
+import { ReservaProvider } from '../providers/reserva/reserva';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDsDUoXfo8kvkYOm9Q8DzWHF82QVGltwo4",
@@ -123,7 +125,8 @@ export const firebaseConfig = {
     EsperaPageModule,
     ModalEsperaPageModule,
     PedidosCocinaPageModule,
-    TraspasoPedidoPageModule
+    TraspasoPedidoPageModule,
+    ReservaClientePageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [MyApp, HomePage, LoginPage, SplashPage, ModalPage],
@@ -149,8 +152,9 @@ export const firebaseConfig = {
     ClienteProvider,
     EsperaProvider,
     ModalEsperaPageModule,
-    TraspasoPedidoPageModule
+    TraspasoPedidoPageModule,
+    ReservaProvider
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
-export class AppModule {}
+export class AppModule { }

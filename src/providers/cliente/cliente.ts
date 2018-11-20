@@ -15,6 +15,7 @@ export class ClienteProvider {
 
   /** Guarda una cliente */
   saveCliente(cliente: ICliente): Promise<any> {
+    cliente.email = cliente.email.toLowerCase();
     let promesa = new Promise((resolve, reject) => {
       this.buscarEmail(cliente.email).then(existe => {
         if (existe) {

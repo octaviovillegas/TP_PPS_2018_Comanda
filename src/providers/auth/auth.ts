@@ -43,11 +43,12 @@ export class AuthProvider {
 
   //**Login al sistema. Valida que el mail haya sido verificado. Si encuentra el usuario lo envia como respuesta */
   loginUser(email: string, password: string): Promise<any> {
+    
     let promesa = new Promise((resolve, reject) => {
       console.log(email);
       console.log(password);
       this.afAuth.auth
-        .signInWithEmailAndPassword(email, password)
+        .signInWithEmailAndPassword(email.toLowerCase(), password)
         .then(data => {
           console.log(data.uid);
           this.uid = data.uid;

@@ -119,7 +119,10 @@ export class EncuestaClientePage {
   }
 
   volverRoot() {
-    this.navCtrl.setRoot(this.auth.buscarDestino(localStorage.getItem("perfil")));
+    let perfil = localStorage.getItem('perfil');
+    localStorage.removeItem('userID');
+    localStorage.removeItem('perfil');
+    this.navCtrl.setRoot(this.auth.buscarDestino(perfil));
   }
 
   private crearFormulario() {

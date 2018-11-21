@@ -4,6 +4,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
 import { ReservaProvider } from '../../../providers/reserva/reserva';
+import {AuthProvider} from '../../../providers/auth/auth';
+import {UsuariosProvider} from '../../../providers/usuarios/usuarios';
 
 @IonicPage()
 @Component({
@@ -20,18 +22,20 @@ export class ReservaClientePage {
   public fecha: string;
   public fechaSeleccionada: string;
   public reserva: IReserva;
-
+  public email:string;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
     public menuCtrl: MenuController,
     public _util: UtilProvider,
-    public _reserva: ReservaProvider
+    public _reserva: ReservaProvider,
+    public auth: AuthProvider,
+    public proveedorUsuarios:UsuariosProvider
   ) {
     this.menuCtrl.enable(true, 'menu');
     this.formGroup = this.crearFormulario();
-
+    this.email = this.auth.obtenerEmailUsuarioActual();
     this.currentEvents = [
       {
         year: 2018,
@@ -81,21 +85,28 @@ export class ReservaClientePage {
         turno: this.formGroup.value.turno,
         fecha: this.fechaSeleccionada,
         comensales: this.formGroup.value.comensales,
-        estado: 'pendiente'
+        estado: 'pendiente',
+        dni: "",
+        nombreCliente: ""
       };
       this._util.presentLoading('Enviando reserva...');
-      setTimeout(() => {
-        this._reserva.guardarReserva(reserva).then(() => {
-          this._util.dismiss().then(() => {
-            this._util.esperar(this._util.creaFondo("Le enviaremos la confirmación de su reserva", "assets/imgs/icono_rest.png"));
-            setTimeout(() => {
-              this._util.dismiss().then(() => {
-                this._util.volverRoot();
-              })
-            }, 3000);
+      this.proveedorUsuarios.buscarUsuarioxMail(this.email)
+      .then(usuario =>{
+        setTimeout(() => {
+          reserva.nombreCliente = usuario.nombre;
+          reserva.dni = usuario.dni.toString();
+          this._reserva.guardarReserva(reserva).then(() => {
+            this._util.dismiss().then(() => {
+              this._util.esperar(this._util.creaFondo("Le enviaremos la confirmación de su reserva", "assets/imgs/icono_rest.png"));
+              setTimeout(() => {
+                this._util.dismiss().then(() => {
+                  this._util.volverRoot();
+                })
+              }, 3000);
+            });
           });
-        });
-      }, 2000);
+        }, 2000);
+      })
     }
   }
 

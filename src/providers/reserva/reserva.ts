@@ -58,7 +58,7 @@ export class ReservaProvider {
   }
 
   public traerReservasConfirmadas() {
-    return this.afDB.list("/reservas/", ref => ref.orderByChild('estado').equalTo('confirmada')).valueChanges();
+    return this.afDB.list<IReserva>("/reservas/", ref => ref.orderByChild('estado').equalTo('confirmada')).valueChanges();
   }
 
 

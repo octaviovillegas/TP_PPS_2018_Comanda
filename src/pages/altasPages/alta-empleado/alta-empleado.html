@@ -53,10 +53,41 @@
     <ion-row>
       <ion-col>
         <form [formGroup]="altaEmpleadoForm1">
+
           <ion-item>
             <ion-label floating>Nombre</ion-label>
             <ion-input [formControlName]="nombre" type="text" required></ion-input>
           </ion-item>
+          <div *ngIf="!altaEmpleadoForm1.controls.nombre.valid && altaEmpleadoForm1.controls.nombre.dirty" class="validator-error">
+            El nombre es requerido
+          </div>
+
+          <ion-item>
+            <ion-label floating>Apellido</ion-label>
+            <ion-input [formControlName]="apellido" type="text" required></ion-input>
+          </ion-item>
+          <div *ngIf="!altaEmpleadoForm1.controls.apellido.valid && altaEmpleadoForm1.controls.apellido.dirty" class="validator-error">
+            El apellido es requerido
+          </div>
+
+          <ion-item>
+            <ion-label floating>Dni</ion-label>
+            <ion-input [formControlName]="dni" type="number" required></ion-input>
+          </ion-item>
+          <div *ngIf="!altaEmpleadoForm1.controls.dni.valid && altaEmpleadoForm1.controls.dni.dirty" class="validator-error">
+            El dni es requerido
+          </div>
+
+          <ion-item>
+            <ion-label floating>Cuil</ion-label>
+            <ion-input [formControlName]="cuil" type="number" required></ion-input>
+          </ion-item>
+          <div *ngIf="!altaEmpleadoForm1.controls.cuil.valid && altaEmpleadoForm1.controls.cuil.dirty" class="validator-error">
+            El cuil es requerido
+          </div>
+          <button class="" block round color="primary" (click)="anterior()" ion-button>Volver</button>
+          <button class="" block round color="secondary" (click)="siguiente()" [disabled]="altaEmpleadoForm1.valid" ion-button>Siguiente</button>
+
         </form>
       </ion-col>
     </ion-row>

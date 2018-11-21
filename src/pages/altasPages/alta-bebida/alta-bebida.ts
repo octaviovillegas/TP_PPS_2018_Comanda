@@ -8,6 +8,7 @@ import { IComestible } from '../../../clases/IComestible';
 import { bebidasProvider } from '../../../providers/bebidas/bebidas';
 import { Observable } from 'rxjs/Observable';
 import { MesasPage } from '../../mesasPages/mesas/mesas'
+import {PedidosCocinaPage} from '../../pedidosPages/pedidos-cocina/pedidos-cocina';
 
 /**
  * Generated class for the AltaBebidaPage page.
@@ -76,7 +77,7 @@ export class AltaBebidaPage {
   }
 
   public inicio() {
-    this.navCtrl.setRoot(MesasPage) // Cambiar por menu principal de cocinero
+    this.navCtrl.setRoot(PedidosCocinaPage) // Cambiar por menu principal de cocinero
   }
 
   public captureImage(cual: string) {

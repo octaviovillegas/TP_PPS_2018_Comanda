@@ -26,6 +26,7 @@ import { PedidosPage } from "../pages/pedidosPages/pedidos/pedidos";
 import {AltaPedidoPage} from "../pages/pedidosPages/alta-pedido/alta-pedido";
 import {TraspasoPedidoPage} from '../pages/qr/qr-espera/traspaso-pedido/traspaso-pedido';
 import {SplashPage} from '../pages/splash/splash';
+import {AltaEmpleadoPage} from '../pages/altasPages/alta-empleado/alta-empleado';
 // import { EncuestaEnstradaSalidaPage } from '../pages/encuestasPages/encuesta-enstrada-salida/encuesta-enstrada-salida';
 
 @Component({
@@ -65,10 +66,10 @@ export class MyApp {
     this.auth.Session.subscribe(_session => {
 
       if (!_session) { //si no esta logueado
-        this.rootPage = SplashPage ;
+        this.rootPage = LoginPage ;
       }else {
         if(localStorage.getItem("perfil") == null){
-          this.rootPage = SplashPage ;
+          this.rootPage = LoginPage ;
         }else{
           this.rootPage = this.auth.buscarDestino(localStorage.getItem("perfil"));
         }

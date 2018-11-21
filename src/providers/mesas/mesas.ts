@@ -97,9 +97,9 @@ export class MesasProvider {
     })
   }
 
-  //**Busca mesas libres */
+  //**Busca mesas libres, dependiendo de la reserva */
   buscarMesasLibres(reserva: IReserva): Observable<IMesa[]> {
-    let listaMesas: IMesa[];
+    let listaMesas: IMesa[] = [];
 
     this.traerMesasUtilizadasXFechaTUrno
 
@@ -108,13 +108,19 @@ export class MesasProvider {
       .valueChanges().subscribe((data: IMesa[]) => {
 
         this.traerMesasUtilizadasXFechaTUrno(reserva.fecha, reserva.turno).then((lista: number[]) => {
-          
+
           //Si la mesa no esta en la lista de las mesas usadas la agrego a listaMesas que sera la lista definitiva
-          data.map(val=> {
-            if(lista != null)
-              if(lista.indexOf(val.idMesa) > -1)
-                if(parseInt(val.capacidad) >= reserva.comensales)
-                  listaMesas.push(val);  
+          data.map(val => {
+            if (lista != null) {
+
+              if (lista.indexOf(val.idMesa) == -1) { // Si no la encuentra en la lista la agrego
+                if (parseInt(val.capacidad) >= reserva.comensales)
+                  listaMesas.push(val);
+              }
+            } else {
+              if (parseInt(val.capacidad) >= reserva.comensales)
+                listaMesas.push(val);
+            }
           })
         })
       });
@@ -133,20 +139,19 @@ export class MesasProvider {
 
       subs = this._reservas.traerReservasConfirmadas()
         .subscribe((lista: IReserva[]) => {
-
           for (let i = 0; i < lista.length; i++) {
             if (lista[i].fecha == fecha && lista[i].turno == turno) {
               mesas.push(lista[i].mesaID);
             }
           }
 
-          resolve();
+          resolve(mesas);
         });
     })
 
-    setTimeout(() => {
-      subs.unsubscribe();
-    }, 3000);
+    // setTimeout(() => {
+    //   subs.unsubscribe();
+    // }, 3000);
 
     return promesa;
   }

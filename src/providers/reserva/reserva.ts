@@ -1,7 +1,7 @@
+import { IReserva } from './../../clases/IReserva';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { IReserva } from '../../clases/IReserva';
 import { IMesa } from '../../clases/IMesa';
 
 @Injectable()
@@ -59,6 +59,19 @@ export class ReservaProvider {
 
   public traerReservasConfirmadas() {
     return this.afDB.list("/reservas/", ref => ref.orderByChild('estado').equalTo('confirmada')).valueChanges();
+  }
+
+  public actualizarReserva(reserva: IReserva): Promise<Boolean> {
+    let promesa = new Promise<Boolean>((resolve, reject) => {
+
+      this.afDB
+        .object("/reservas/" + reserva.id)
+        .update(reserva)
+        .then(() => resolve(true))
+        .catch(err => reject(err));
+    });
+
+    return promesa;
   }
 
 

@@ -26,6 +26,7 @@ import { IPlato } from "../../../clases/IPlato";
 import { platosProvider } from "../../../providers/platos/plato";
 //import { Observable } from '@firebase/util';
 import { MesasPage } from "../../mesasPages/mesas/mesas";
+import {PedidosCocinaPage} from '../../pedidosPages/pedidos-cocina/pedidos-cocina';
 import { Subscription } from "rxjs";
 import { map } from "rxjs/operators";
 import { Observable } from "rxjs/Observable";
@@ -86,7 +87,7 @@ export class AltaPlatoPage {
   }
 
   public inicio() {
-    this.navCtrl.setRoot(MesasPage); // Cambiar por menu principal de cocinero
+    this.navCtrl.setRoot(PedidosCocinaPage);
   }
   public siguiente() {
     this.slides.lockSwipes(false);

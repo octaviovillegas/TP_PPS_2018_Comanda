@@ -24,8 +24,9 @@ export class AltaEmpleadoPage {
     public formBuilder:FormBuilder) {
     this.altaEmpleadoForm1 = this.formBuilder.group({
       nombre: ['', Validators.required],
-      apellido: ['', Validators.required]
-      
+      apellido: ['', Validators.required],
+      dni: ['', Validators.required],
+      cuil: ['', Validators.required],
     })
   }
 

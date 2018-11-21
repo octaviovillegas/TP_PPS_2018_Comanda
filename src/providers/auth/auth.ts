@@ -119,11 +119,11 @@ export class AuthProvider {
 
     switch (perfil) {
       case "Dueño":
-        destinoPage = "MesasPage";
+        destinoPage = "ReservasPage";
         break;
 
       case "Supervisor":
-        destinoPage = "MesasPage";
+        destinoPage = "ReservasPage";
         break;
 
       case "Cliente":

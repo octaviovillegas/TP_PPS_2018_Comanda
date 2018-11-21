@@ -1,4 +1,5 @@
 import { ReservaClientePageModule } from '../pages/reservas/reserva-cliente/reserva-cliente.module';
+import { ReservasPageModule } from '../pages/reservas/reservas.module'
 import { PedidosCocinaPageModule } from "./../pages/pedidosPages/pedidos-cocina/pedidos-cocina.module";
 import { AltaComandaPageModule } from "./../pages/pedidosPages/alta-comanda/alta-comanda.module";
 import { EncuestaEnstradaSalidaPageModule } from "../pages/encuestasPages/encuesta-enstrada-salida/encuesta-enstrada-salida.module";
@@ -126,7 +127,8 @@ export const firebaseConfig = {
     ModalEsperaPageModule,
     PedidosCocinaPageModule,
     TraspasoPedidoPageModule,
-    ReservaClientePageModule
+    ReservaClientePageModule,
+    ReservasPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [MyApp, HomePage, LoginPage, SplashPage, ModalPage],

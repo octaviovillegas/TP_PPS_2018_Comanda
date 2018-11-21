@@ -1,0 +1,33 @@
+<ion-card>
+    <ion-card-content>
+      <ion-row no-padding>
+        <ion-col>
+          <ion-card-title>
+            <ion-icon color="secondary" small name='restaurant'></ion-icon> {{reserva.fecha | date:'short'}}
+          </ion-card-title>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+            <ion-select block [(ngModel)]="mesa" interface="popover">
+                <ion-option *ngFor="let mesa of listaMesas" [value]="mesa">Mesa: {{mesa.numero}} - Capacidad: {{mesa.capacidad}}</ion-option>
+              </ion-select>
+        </ion-col>
+      </ion-row>
+      <div style="font-size: 15px; font-weight: bold" color='grey'> Cant. Comensales: {{reserva.comensales}}</div>
+    </ion-card-content>
+
+    <!-- <div *ngFor="let item of itemPedido.items">
+      <ion-item>
+        <ion-avatar item-start>
+          <img style="height: 7vh !important; width: 7vh !important;" src="{{devolverUrlImg(item)}}" />
+        </ion-avatar>
+        <p style="font-size: 17px; font-weight: bold">
+          Turno: {{ item.turno }}
+        </p>
+      </ion-item>
+    </div> -->
+
+    <button ion-button block color="danger" (click)="rechazarReserva()">Rechazar</button>
+    <button ion-button block color="secondary" (click)="confirmarReserva()">Confirmar</button>
+  </ion-card>

@@ -40,19 +40,15 @@ export class MenuComponent {
       case 'Supervisor':
       case 'Dueño':
         this.pages = [
-          { title: 'Reservas', component: "MesasPage" },
+          { title: 'Reservas', component: "ReservasPage" },
           { title: 'Nuevo Empleado', component: "MesasPage" },
           { title: 'Nuevo Supervisor', component: "AltaSupervisorPage" },
           { title: 'Nuevo Dueño', component:"AltaDueñoPage"},
           { title: 'Nueva Mesa', component:"AltaMesaPage"},
-          // { title: 'Estadisticas', component: "MesasPage" },
           { title: 'Encuesta e/s', component: "EncuestaEnstradaSalidaPage" },
           { title: 'Estadisticas', component: "MesasPage" },
           { title: 'Encuesta', component: "EncuestaEnstradaSalidaPage" },
-          { title: 'Encuesta supervisor', component: "EncuestaSupervisorPage" },
-
-          // { title: 'Estadisticas', component: "MesasPage" },
-          { title: 'Encuesta e/s', component: "EncuestaEnstradaSalidaPage" }
+          { title: 'Encuesta supervisor', component: "EncuestaSupervisorPage" },   
         ];
         break;
 
@@ -60,8 +56,7 @@ export class MenuComponent {
         this.pages = [
           { title: 'Pedidos', component: "PedidosCocinaPage" },
           { title: 'Nuevo plato', component: "AltaPlatoPage"},
-          { title: 'Encuesta e/s', component: "EncuestaEnstradaSalidaPage" }
-          
+          { title: 'Encuesta e/s', component: "EncuestaEnstradaSalidaPage" }     
         ];
           break;
       case 'Bartender':

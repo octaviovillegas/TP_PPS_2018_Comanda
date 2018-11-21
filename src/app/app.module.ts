@@ -1,3 +1,5 @@
+import { ReservaClientePageModule } from '../pages/reservas/reserva-cliente/reserva-cliente.module';
+import { ReservasPageModule } from '../pages/reservas/reservas.module'
 import { PedidosCocinaPageModule } from "./../pages/pedidosPages/pedidos-cocina/pedidos-cocina.module";
 import { AltaComandaPageModule } from "./../pages/pedidosPages/alta-comanda/alta-comanda.module";
 import { EncuestaEnstradaSalidaPageModule } from "../pages/encuestasPages/encuesta-enstrada-salida/encuesta-enstrada-salida.module";
@@ -79,6 +81,7 @@ import { UtilProvider } from "../providers/util/util";
 import { ComandaProvider } from "../providers/comanda/comanda";
 import { ClienteProvider } from "../providers/cliente/cliente";
 import { EsperaProvider } from "../providers/espera/espera";
+import { ReservaProvider } from '../providers/reserva/reserva';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDsDUoXfo8kvkYOm9Q8DzWHF82QVGltwo4",
@@ -125,6 +128,8 @@ export const firebaseConfig = {
     ModalEsperaPageModule,
     PedidosCocinaPageModule,
     TraspasoPedidoPageModule,
+    ReservaClientePageModule,
+    ReservasPageModule,
     AltaEmpleadoPageModule
   ],
   bootstrap: [IonicApp],
@@ -151,8 +156,9 @@ export const firebaseConfig = {
     ClienteProvider,
     EsperaProvider,
     ModalEsperaPageModule,
-    TraspasoPedidoPageModule
+    TraspasoPedidoPageModule,
+    ReservaProvider
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
-export class AppModule {}
+export class AppModule { }

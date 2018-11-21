@@ -1,10 +1,12 @@
+import { IReserva } from './../../clases/IReserva';
 import { map } from 'rxjs/operators';
 import { AngularFireDatabase, AngularFireList } from "angularfire2/database";
 import { IMesa } from "./../../clases/IMesa";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import * as firebase from "firebase";
-import { Observable } from "rxjs";
+import { Observable, Observer, Subscription } from "rxjs";
+import { ReservaProvider } from '../reserva/reserva';
 
 @Injectable()
 export class MesasProvider {
@@ -13,13 +15,13 @@ export class MesasProvider {
   public items: Observable<any[]>;
   //public listaMesas: FirebaseListObservable<any>;
 
-  constructor(public afDB: AngularFireDatabase) {
+  constructor(public afDB: AngularFireDatabase, public _reservas: ReservaProvider) {
     //Traigo las Comandas por usuario
 
     this.listaMesas = this.afDB.list('/mesas');
 
     this.items = this.listaMesas.snapshotChanges().pipe(
-      map(changes => 
+      map(changes =>
         changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
       )
     );
@@ -41,7 +43,7 @@ export class MesasProvider {
 
       uploadTask.on(
         firebase.storage.TaskEvent.STATE_CHANGED,
-        next => {}, // saber el % de cuantos Mbs se han subido
+        next => { }, // saber el % de cuantos Mbs se han subido
         error => {
           // manejo de error
           reject();
@@ -65,33 +67,87 @@ export class MesasProvider {
   traerMesas() {
     return this.afDB.list("/mesas/").valueChanges();
   }
-  
-  public traerMesasconId(){
+
+  public traerMesasconId() {
     return this.afDB.list<IMesa[]>("/mesas/").snapshotChanges()
-    .map(actions =>{
-      return actions.map(a =>{
-        const data = a.payload.val() as IMesa;
-        const key = a.payload.key;
-        return {key,...data};
+      .map(actions => {
+        return actions.map(a => {
+          const data = a.payload.val() as IMesa;
+          const key = a.payload.key;
+          return { key, ...data };
+        })
       })
-    })
   }
 
   //**Busca la mesa por ID, y devuelve una promesa con el Numero */
   buscarNroMesa(idMesa: number): Promise<string> {
 
-    return new Promise<string>((resolve,reject)=>{
+    return new Promise<string>((resolve, reject) => {
 
       this.afDB
-      .list("/mesas/", ref => ref.orderByChild("idMesa").equalTo(idMesa))
-      .valueChanges().subscribe((data:IMesa[])=>{
-        if(data.length > 0) { //encontro una mesa
-          console.log(data[0].numero.toString());
-          resolve(data[0].numero.toString());
-        }else{
-          resolve("");
-        }
-      })
+        .list("/mesas/", ref => ref.orderByChild("idMesa").equalTo(idMesa))
+        .valueChanges().subscribe((data: IMesa[]) => {
+          if (data.length > 0) { //encontro una mesa
+            console.log(data[0].numero.toString());
+            resolve(data[0].numero.toString());
+          } else {
+            resolve("");
+          }
+        })
     })
+  }
+
+  //**Busca mesas libres */
+  buscarMesasLibres(reserva: IReserva): Observable<IMesa[]> {
+    let listaMesas: IMesa[];
+
+    this.traerMesasUtilizadasXFechaTUrno
+
+    this.afDB
+      .list("/mesas/")
+      .valueChanges().subscribe((data: IMesa[]) => {
+
+        this.traerMesasUtilizadasXFechaTUrno(reserva.fecha, reserva.turno).then((lista: number[]) => {
+          
+          //Si la mesa no esta en la lista de las mesas usadas la agrego a listaMesas que sera la lista definitiva
+          data.map(val=> {
+            if(lista != null)
+              if(lista.indexOf(val.idMesa) > -1)
+                if(parseInt(val.capacidad) >= reserva.comensales)
+                  listaMesas.push(val);  
+          })
+        })
+      });
+
+    return Observable.create((observer: Observer<IMesa[]>) => {
+      observer.next(listaMesas);
+    });
+  }
+
+  //**Devuelve las mesas que fueron utilizadas para una fecha y turno en particular */
+  public traerMesasUtilizadasXFechaTUrno(fecha: string, turno: number): Promise<number[]> {
+    let mesas: number[] = [];
+    let subs: Subscription;
+
+    let promesa = new Promise<number[]>((resolve, reject) => {
+
+      subs = this._reservas.traerReservasConfirmadas()
+        .subscribe((lista: IReserva[]) => {
+
+          for (let i = 0; i < lista.length; i++) {
+            if (lista[i].fecha == fecha && lista[i].turno == turno) {
+              mesas.push(lista[i].mesaID);
+            }
+          }
+
+          resolve();
+        });
+    })
+
+    setTimeout(() => {
+      subs.unsubscribe();
+    }, 3000);
+
+    return promesa;
   }
 }

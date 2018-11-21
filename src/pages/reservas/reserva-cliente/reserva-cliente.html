@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title> NUEVA RESERVA </ion-title>
+    <ion-buttons right>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="formGroup" (ngSubmit)="guardarReserva()">
+    <ion-list>
+      <ion-grid>
+        <ion-row>
+
+          <ion-col>
+            <ion-item style='background-color: transparent !important'>
+              <ion-icon name="calendar" small color="black"></ion-icon>
+              <ion-input [readonly]=true  value="{{fecha}}" formControlName="fechaCalendario"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col>
+            <ion-buttons right>
+              <button ion-button color='secondary' id="hoy" (click)="calendar.today()">HOY</button>
+            </ion-buttons>
+          </ion-col>
+
+        </ion-row>
+      </ion-grid>
+      <ion-item>
+        <ion-calendar #calendar lang="es" (onDaySelect)="seleccionarDia($event)" (onMonthSelect)="seleccionarMes($event)"
+          [events]="currentEvents"></ion-calendar>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="time" item-start></ion-icon>
+        <ion-label>Turno</ion-label>
+        <ion-select formControlName="turno" interface="popover">
+          <ion-option value="12">12 - 14</ion-option>
+          <ion-option value="14">14 - 16</ion-option>
+          <ion-option value="20">20 - 22</ion-option>
+          <ion-option value="22">22 - 24</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="people" item-start></ion-icon>
+        <ion-input formControlName="comensales" placeholder="Cantidad de comensales"></ion-input>
+      </ion-item>
+
+    </ion-list>
+    <div padding>
+      <button ion-button block type="submit" [disabled]='!formGroup.valid'>
+        Guardar
+      </button>
+    </div>
+  </form>
+</ion-content>

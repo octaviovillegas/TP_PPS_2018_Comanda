@@ -199,8 +199,8 @@ export class PedidosPage {
 
   redirigirCliente() {
     this.subs.unsubscribe();
-    localStorage.removeItem('userID');
-    localStorage.removeItem('perfil');
+    //localStorage.removeItem('userID');
+    //localStorage.removeItem('perfil');
     
     this.navCtrl.setRoot("QrPropinaPage", { mesa: this.mesa, mesaKey: this.mesaKey, comanda: this.comanda });
   }

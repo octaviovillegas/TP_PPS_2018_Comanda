@@ -1,0 +1,64 @@
+<!--
+  Generated template for the AltaEmpleadoPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->}
+<!--
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>altaEmpleado</ion-title>
+  </ion-navbar>
+
+</ion-header>
+-->
+
+<ion-content padding>
+  <ion-slides #Slides style="height: auto" (ionSlideDrag)="onIonDrag()">
+    <ion-slide>
+      <ion-row>
+        <ion-col>
+          <h1>Da de alta a un nuevo empleado</h1>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <img class="imgPersona" src="assets/imgs/empleado.png">
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <button class="boton" round color="danger" (click)="inicio()" ion-button>Volver</button>
+          <button class="boton" round color="secondary" (click)="siguiente()" ion-button>Siguiente</button>
+        </ion-col>
+      </ion-row>
+    </ion-slide>
+    <ion-slide>
+      
+    </ion-slide>
+  </ion-slides>
+  <ion-slide>
+    <ion-label>Tipo:</ion-label>
+    <ion-select [(ngModel)]="perfil">
+      <ion-option [value]="Mozo">Mozo</ion-option>
+      <ion-option [value]="Bartender">Bartender</ion-option>
+      <ion-option [value]="Cocinero">Cocinero</ion-option>
+      <ion-option [value]="Mestre">Mestre</ion-option>
+    </ion-select>
+    <button class="boton" round color="danger" (click)="anterior()" ion-button>Volver</button>
+    <button class="boton" round color="secondary" (click)="siguiente()" [disabled]="!perfil" ion-button>Siguiente</button>
+  </ion-slide>
+  <ion-slide>
+    <ion-row>
+      <ion-col>
+        <form [formGroup]="altaEmpleadoForm1">
+          <ion-item>
+            <ion-label floating>Nombre</ion-label>
+            <ion-input [formControlName]="nombre" type="text" required></ion-input>
+          </ion-item>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-slide>
+</ion-content>

@@ -6,7 +6,7 @@
 -->
 <ion-header>
   <ion-navbar>
-    <ion-title> Lista de Espera </ion-title>
+    <ion-title> Principal </ion-title>
     <ion-buttons left>
       <button ion-button icon-only menuToggle>
         <ion-icon name="menu"></ion-icon>
@@ -18,38 +18,81 @@
 
 
 <ion-content padding>
-  <div *ngIf="lista.length > 0">
-    <ion-card *ngFor="let espera of lista">
-      <ion-item>
-        <p class="color" item-start><font size="5">Comensales: </font></p>
-        <p class="color" item-end>
-          <font size="5"> {{ espera.comensales }}</font>
-        </p>
-      </ion-item>
-      <ion-item>
-        <p class="color" item-start>
-          <font size="4.5">{{ espera.fecha }} </font>
-        </p>
-        <p class="color" item-end>
-          <font size="4.5"> {{ espera.hora }}</font>
-        </p>
-      </ion-item>
-      <!--
-        <ion-item (click)="informacion(espera)" color="secondary">
-          <ion-icon item-start name="contact"></ion-icon>
-          <p class="color" item-end><font size="5.5"> Info </font></p>
-        </ion-item>
-      -->
-      <ion-item (click)="asignarMesa(espera)" color="green">
-        <ion-icon item-start name="square"></ion-icon>
-        <p class="color" item-end><font size="5"> Asignar mesa </font></p>
-      </ion-item>
-    </ion-card>
-  </div>
+  <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="estado">
+      <ion-segment-button value="espera">Espera</ion-segment-button>
+      <ion-segment-button value="reservas">Reservas</ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+  <div [ngSwitch]="estado">
+    <div *ngSwitchCase="'espera'">
+      <div *ngIf="lista.length > 0">
+        <ion-card *ngFor="let espera of lista">
+          <ion-item>
+            <p class="color" item-start><font size="5">Comensales: </font></p>
+            <p class="color" item-end>
+              <font size="5"> {{ espera.comensales }}</font>
+            </p>
+          </ion-item>
+          <ion-item>
+            <p class="color" item-start>
+              <font size="4.5">{{ espera.fecha }} </font>
+            </p>
+            <p class="color" item-end>
+              <font size="4.5"> {{ espera.hora }}</font>
+            </p>
+          </ion-item>
+          <ion-item (click)="asignarMesa(espera)" color="green">
+            <ion-icon item-start name="square"></ion-icon>
+            <p class="color" item-end><font size="5"> Asignar mesa </font></p>
+          </ion-item>
+        </ion-card>
+      </div>
 
-  <div *ngIf="lista.length < 1">
-    <ion-row>
-      <ion-col> <h1>NO HAY NADIE</h1> </ion-col>
-    </ion-row>
+      <div *ngIf="lista.length < 1">
+        <ion-row>
+          <ion-col> <h1>NO HAY NADIE EN ESPERA</h1> </ion-col>
+        </ion-row>
+      </div>
+    </div>
+    <div *ngSwitchCase="'reservas'">
+      <div *ngIf="listaReserva.length > 0">
+        <ion-item>
+          <ion-label>Empleados:</ion-label>
+          <ion-select [(ngModel)]="mozo">
+            <ion-option *ngFor="let mozo of mozos" [value]="mozo">{{mozo.nombre}}  {{mozo.apellido}}</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-card *ngFor="let reserva of listaReserva">
+        <ion-item>
+          <p class="color" item-start><font size="5">Comensales:</font></p>
+          <p class="color" item-end>
+            <font size="5">{{reserva.comensales}}</font>
+          </p>
+        </ion-item>
+        
+        <ion-item>
+          <p class="color" item-start>
+            <font size="4.5">{{reserva.fecha}}</font>
+          </p>
+          <p class="color" item-end>
+            <font size="4.5">{{espera.hora}}</font>
+          </p>
+        </ion-item>
+        <ion-item (click)="asignarComanda(reserva)" color="green">
+          <ion-icon item-start name="list"></ion-icon>
+          <p class="color" item-end><font size="5"> Abrir Comanda</font></p>
+        </ion-item>
+        </ion-card>
+      </div>
+      <div *ngIf="listaReserva.length < 1">
+        <ion-row>
+          <ion-col>
+            <h1> NO HAY RESERVAS</h1>
+          </ion-col>
+        </ion-row>
+      </div>
+    </div>
   </div>
 </ion-content>

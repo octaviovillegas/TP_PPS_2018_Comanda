@@ -30,8 +30,6 @@ export class ReservaItemComponent {
 
 
     setTimeout(() => {
-      console.log("RESERVA");
-      console.log(this.reserva);
       this.buscarMesasLibres(this.reserva);         
     }, 1000);
 

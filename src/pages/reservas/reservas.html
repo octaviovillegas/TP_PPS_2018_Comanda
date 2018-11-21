@@ -14,7 +14,7 @@
 <ion-content>
 
   <ion-list *ngFor="let item of reservas">
-    <reserva-item [reserva]=item (rechazoReserva)="rechazarReserva()" (confirmoReserva)="confirmarReserva()"></reserva-item>
+    <reserva-item [reserva]=item (rechazoReserva)="rechazarReserva($event)" (confirmoReserva)="confirmarReserva($event)"></reserva-item>
   </ion-list>
 
 

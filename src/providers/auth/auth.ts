@@ -128,7 +128,7 @@ export class AuthProvider {
         break;
 
       case "Cliente":
-        destinoPage = "ReservaClientePage";
+        destinoPage = "InicioClientePage";
         break;
 
       case "Anonimo":

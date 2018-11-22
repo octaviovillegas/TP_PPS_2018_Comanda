@@ -104,14 +104,14 @@ export class ReservasMestrePage {
       ClienteId:"",
       MozoId:"",
     }
-    nueva.fechaHora = Date.now();
-    nueva.mesa = reserva.mesaId;
-    nueva.id = new Date().valueOf();
-    nueva.userID = this.mozo.id;
+    nueva.fechaHora = Date.now();//
+    nueva.mesa = reserva.mesaId; //
+    nueva.id = new Date().valueOf(); //
+    nueva.userID = this.mozo.id; //
     nueva.ClienteId = reserva.clienteId;
-    nueva.MozoId = this.mozo.id;
-    nueva.nombreCliente = reserva.nombreCliente;
-    nueva.cliente = reserva.dni;
+    nueva.MozoId = this.mozo.id; //
+    nueva.nombreCliente = reserva.nombreCliente; //
+    nueva.cliente = reserva.dni; //
     this.proveedorMesa.traerMesasconId()
     .subscribe(mesas =>{
       let cargando = this.loadingCtrl.create({

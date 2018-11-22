@@ -1,0 +1,45 @@
+<ion-card>
+  <ion-card-content>
+    <ion-row no-padding>
+      <ion-col text-center>
+        <ion-card-title>
+          <ion-icon color="secondary" small name='calendar'></ion-icon> {{reserva.fecha.substr(0,2) + '/' +
+          reserva.fecha.substr(2,2) + '/' + reserva.fecha.substr(4,4)}}
+        </ion-card-title>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center>
+        <ng-template [ngIf]="mesa != null">
+          <ion-item>
+            <ion-avatar class="avatar">
+              <img class="avatar" style="height: 20vh !important; width: 20vh !important;" src="{{mesa.img}}" />
+            </ion-avatar>
+          </ion-item>
+          <p style="font-size: 17px; font-weight: bold">
+            Mesa: {{ mesa.numero }} - Capacidad: {{ mesa.capacidad }}
+          </p>
+        </ng-template>
+        <ng-template [ngIf]="mesa == null">
+            <p style="font-size: 17px; font-weight: bold">
+              Mesa: Sin asignación
+            </p>
+        </ng-template>
+
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center>
+          <div style="font-size: 15px; font-weight: bold" color='grey'>
+              <ion-icon color="secondary" small name='people' item-start></ion-icon> Comensales: {{reserva.comensales}}
+            </div>
+      </ion-col>
+    </ion-row>
+  </ion-card-content>
+  <ion-col text-center>
+    <div [style.background]="buscarColor()">
+      <h1> {{reserva.estado | uppercase}} </h1>
+    </div>
+  </ion-col>
+
+</ion-card>

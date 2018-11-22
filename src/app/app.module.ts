@@ -1,3 +1,4 @@
+import { VerReservasPageModule } from '../pages/reservas/ver-reservas/ver-reservas.module';
 import { ReservaClientePageModule } from '../pages/reservas/reserva-cliente/reserva-cliente.module';
 import { ReservasPageModule } from '../pages/reservas/reservas.module'
 import { PedidosCocinaPageModule } from "./../pages/pedidosPages/pedidos-cocina/pedidos-cocina.module";
@@ -132,7 +133,8 @@ export const firebaseConfig = {
     ReservaClientePageModule,
     ReservasPageModule,
     AltaEmpleadoPageModule,
-    InicioClientePageModule
+    InicioClientePageModule,
+    VerReservasPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [MyApp, HomePage, LoginPage, SplashPage, ModalPage],

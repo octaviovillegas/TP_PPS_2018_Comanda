@@ -23,11 +23,11 @@ export class InicioClientePage {
     console.log('ionViewDidLoad InicioClientePage');
   }
   public reservas(){
-    this.navCtrl.setRoot(ReservaClientePage);
+    this.navCtrl.push(ReservaClientePage);
   }
   
   public qrEspera(){
-    this.navCtrl.setRoot(QrEsperaPage);
+    this.navCtrl.push(QrEsperaPage);
   }
 
 

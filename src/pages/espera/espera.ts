@@ -150,7 +150,43 @@ export class EsperaPage {
     })
   }
 
-
+  public abrirComanda(reserva:IReserva){
+    let nueva:IComanda = {
+      id: 0,
+      cliente: "",
+      fechaHora:0,
+      mesa: 0,
+      nombreCliente:"",
+      fotoCliente:"",
+      userID: "",
+      estado: "Abierta",
+      ClienteId:"",
+      MozoId:"",
+    }
+    nueva.fechaHora = Date.now();
+    nueva.mesa = reserva.mesaId;
+    nueva.id = new Date().valueOf();
+    nueva.userID = this.mozo.id;
+    nueva.ClienteId = reserva.clienteId;
+    nueva.MozoId = this.mozo.id;
+    nueva.nombreCliente = reserva.nombreCliente;
+    nueva.cliente = reserva.dni;
+    this.proveedorMesa.traerMesasconId()
+    .subscribe(mesas =>{
+      let cargando = this.loadingCtrl.create({
+        content:'Abriendo comanda...'
+      });
+      cargando.present();
+      mesas.forEach(element => {
+        if(element.idMesa == nueva.mesa){
+          this.proveedorComanda.saveComanda(nueva, element, nueva.mesa.toString())
+          .then(data =>{
+            cargando.dismiss();
+          })
+        }
+      });
+    })
+  }
 
 
   private hoy(){

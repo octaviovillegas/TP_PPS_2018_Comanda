@@ -5,13 +5,16 @@ import { MenuComponent } from "./menu/menu";
 import { PedidoPendienteComponent } from "./pedido-pendiente/pedido-pendiente";
 import { PedidoCocinaComponent } from "./pedido-cocina/pedido-cocina";
 import { ReservaItemComponent } from './reserva-item/reserva-item';
+import { VerReservaItemComponent } from './ver-reserva-item/ver-reserva-item';
 
 @NgModule({
   declarations: [MenuComponent, PedidoPendienteComponent, PedidoCocinaComponent,
-    ReservaItemComponent],
+    ReservaItemComponent,
+    VerReservaItemComponent],
   imports: [CommonModule, IonicModule],
   exports: [MenuComponent, PedidoPendienteComponent, PedidoCocinaComponent,
-    ReservaItemComponent],
+    ReservaItemComponent,
+    VerReservaItemComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ComponentsModule {}

@@ -39,11 +39,6 @@ export class ReservasPage {
   cargarReservas() {
       this._reserva.traerReservasPendientes().subscribe((lista: IReserva[])=>{
         this.reservas = lista;
-
-        // for (let i = 0; i < this.reservas.length; i++) {
-        //   let fecha:string = this.reservas[i].fecha;
-        //   this.reservas[i].fecha = fecha.substr(0,2) + '/' + fecha.substr(2,2) + '/' + fecha.substr(4,4);
-        // }
       })
   }
 

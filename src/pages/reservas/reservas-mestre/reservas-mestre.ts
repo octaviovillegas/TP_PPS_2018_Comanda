@@ -7,6 +7,7 @@ import {ComandaProvider} from '../../../providers/comanda/comanda';
 import {MesasProvider} from '../../../providers/mesas/mesas';
 import {IReserva} from '../../../clases/IReserva';
 import {IComanda} from '../../../clases/IComanda';
+import {IMesa} from '../../../clases/IMesa';
 
 /**
  * Generated class for the ReservasMestrePage page.
@@ -28,6 +29,7 @@ export class ReservasMestrePage {
   public mozo:Iusuario;
   public estado:string;
   public fecha:string;
+  public mesas:IMesa[] = [];
   public listaReserva:IReserva[]=[];
   constructor(
     public navCtrl: NavController, 
@@ -44,6 +46,10 @@ export class ReservasMestrePage {
     this.mozos = [];
     this.buscarReservas();
     this.menuCtrl.enable(true, "menu");
+    this.proveedorMesa.traerMesasconId()
+    .subscribe(data =>{
+      this.mesas = data;
+    })
     this.proveedorUsuario.obtenerUsuarios().subscribe(data =>{
       this.usuarios = data;
       data.forEach(element => {
@@ -104,6 +110,7 @@ export class ReservasMestrePage {
       ClienteId:"",
       MozoId:"",
     }
+    console.log("list");
     nueva.fechaHora = Date.now();//
     nueva.mesa = reserva.mesaId; //
     nueva.id = new Date().valueOf(); //
@@ -112,24 +119,19 @@ export class ReservasMestrePage {
     nueva.MozoId = this.mozo.id; //
     nueva.nombreCliente = reserva.nombreCliente; //
     nueva.cliente = reserva.dni; //
-    this.proveedorMesa.traerMesasconId()
-    .subscribe(mesas =>{
-      let cargando = this.loadingCtrl.create({
-        content:'Abriendo comanda...'
-      });
-      cargando.present();
-      mesas.forEach(element => {
-        
-        if(element.idMesa == nueva.mesa){
-          console.log(element);
-          this.proveedorComanda.saveComanda(nueva, element, nueva.mesa.toString())
-          .then(data =>{
-            cargando.dismiss();
-          })
-        }
-      });
-    })
-
+    let cargando = this.loadingCtrl.create({
+      content:'Abriendo comanda...'
+    });
+    cargando.present();
+    this.mesas.forEach(element => {      
+      if(element.idMesa == nueva.mesa){
+        console.log(element);
+        this.proveedorComanda.saveComanda(nueva, element, nueva.mesa.toString())
+        .then(data =>{
+          cargando.dismiss();
+        })
+      }
+    });
   }
 
 }

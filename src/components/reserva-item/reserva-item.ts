@@ -55,7 +55,7 @@ export class ReservaItemComponent {
 
   confirmarReserva() {
     this.reserva.estado = "confirmada";
-    this.reserva.mesaID = this.mesa.idMesa;
+    this.reserva.mesaId = this.mesa.idMesa;
     this.confirmoReserva.emit({reserva: this.reserva});
   }
 }

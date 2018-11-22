@@ -148,7 +148,7 @@ export class AuthProvider {
         break;
 
       case "Mestre":
-        destinoPage = "EsperaPage";
+        destinoPage = "ReservasMestrePage";
         break;
 
       default:

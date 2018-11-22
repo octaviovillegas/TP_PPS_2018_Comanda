@@ -65,25 +65,25 @@
         </ion-item>
 
         <ion-card *ngFor="let reserva of listaReserva">
-        <ion-item>
-          <p class="color" item-start><font size="5">Comensales:</font></p>
-          <p class="color" item-end>
-            <font size="5">{{reserva.comensales}}</font>
-          </p>
-        </ion-item>
-        
-        <ion-item>
-          <p class="color" item-start>
-            <font size="4.5">{{reserva.fecha}}</font>
-          </p>
-          <p class="color" item-end>
-            <font size="4.5">{{espera.hora}}</font>
-          </p>
-        </ion-item>
-        <ion-item (click)="asignarComanda(reserva)" color="green">
-          <ion-icon item-start name="list"></ion-icon>
-          <p class="color" item-end><font size="5"> Abrir Comanda</font></p>
-        </ion-item>
+          <ion-item>
+            <p class="color" item-start><font size="5">Comensales:</font></p>
+            <p class="color" item-end>
+              <font size="5">{{reserva.comensales}}</font>
+            </p>
+          </ion-item>
+          
+          <ion-item>
+            <p class="color" item-start>
+              <font size="4.5">{{reserva.fecha}}</font>
+            </p>
+            <p class="color" item-end>
+              <font size="4.5">{{reserva.hora}}</font>
+            </p>
+          </ion-item>
+          <ion-item (click)="asignarComanda(reserva)" color="green">
+            <ion-icon item-start name="list"></ion-icon>
+            <p class="color" item-end><font size="5"> Abrir Comanda</font></p>
+          </ion-item>
         </ion-card>
       </div>
       <div *ngIf="listaReserva.length < 1">

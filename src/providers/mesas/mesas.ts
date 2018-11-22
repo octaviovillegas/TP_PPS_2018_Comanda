@@ -141,7 +141,7 @@ export class MesasProvider {
         .subscribe((lista: IReserva[]) => {
           for (let i = 0; i < lista.length; i++) {
             if (lista[i].fecha == fecha && lista[i].turno == turno) {
-              mesas.push(lista[i].mesaID);
+              mesas.push(lista[i].mesaId);
             }
           }
 

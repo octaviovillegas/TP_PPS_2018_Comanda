@@ -5,8 +5,15 @@ import {IEspera} from '../../clases/IEspera';
 import {ModalEsperaPage} from '../espera/modal-espera/modal-espera';
 import {Observable} from 'rxjs';
 import { EncuestaEnstradaSalidaPageModule } from '../encuestasPages/encuesta-enstrada-salida/encuesta-enstrada-salida.module';
-import { Iusuario, usuario} from '../../clases/usuario';
+import { Iusuario} from '../../clases/usuario';
 import {UsuariosProvider} from '../../providers/usuarios/usuarios';
+import {ReservaProvider} from '../../providers/reserva/reserva';
+import {ComandaProvider} from '../../providers/comanda/comanda';
+import {MesasProvider} from '../../providers/mesas/mesas';
+import {IReserva} from '../../clases/IReserva';
+import {IComanda} from '../../clases/IComanda';
+import { messaging } from 'firebase';
+
 /**
  * Generated class for the EsperaPage page.
  *
@@ -24,21 +31,46 @@ export class EsperaPage {
   public perfil: string = "";
   public lista:IEspera[];
   public usuarios:Iusuario[];
+  public mozos:Iusuario[];
+  public mozo:Iusuario;
+  public estado:string;
+  public fecha:string;
+  public listaReserva:IReserva[];
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     public proveedorEspera:EsperaProvider,
     public proveedorUsuario:UsuariosProvider,
+    public proveedorReservas:ReservaProvider,
     public modalCtrl:ModalController,
     public menuCtrl: MenuController,
-    public loadingCtrl: LoadingController) 
+    public loadingCtrl: LoadingController,
+    public proveedorComanda:ComandaProvider,
+    public proveedorMesa:MesasProvider) 
   {
+    this.mozos = [];
+    this.estado = "reservas";
     this.menuCtrl.enable(true, "menu");
     this.lista = [];
+    this.listaReserva = [];
     this.buscarListaEspera();
 
     this.proveedorUsuario.obtenerUsuarios().subscribe(data =>{
       this.usuarios = data;
+      data.forEach(element => {
+        if(element.perfil == 'Mozo'){
+          this.mozos.push(element);
+        }
+      });
+    })
+    this.proveedorReservas.traerReservasConfirmadas().subscribe(data =>{
+      let hoy = this.hoy();
+      let hora = this.horaAntes();
+      data.forEach(element => {
+        if(element.fecha == hoy && element.turno == hora){
+          this.listaReserva.push(element);
+        }
+      });
     })
   }
 
@@ -107,5 +139,66 @@ export class EsperaPage {
         }
       });
     })
+  }
+
+  public abrirComanda(reserva:IReserva){
+    let nueva:IComanda = {
+      id: 0,
+      cliente: "",
+      fechaHora:0,
+      mesa: 0,
+      nombreCliente:"",
+      fotoCliente:"",
+      userID: "",
+      estado: "Abierta",
+      ClienteId:"",
+      MozoId:"",
+    }
+    nueva.fechaHora = Date.now();
+    nueva.mesa = reserva.mesaID;
+    nueva.id = new Date().valueOf();
+    nueva.userID = this.mozo.id;
+    nueva.ClienteId = reserva.clienteId;
+    nueva.MozoId = this.mozo.id;
+    nueva.nombreCliente = reserva.nombreCliente;
+    nueva.cliente = reserva.dni;
+    this.proveedorMesa.traerMesasconId()
+    .subscribe(mesas =>{
+      let cargando = this.loadingCtrl.create({
+        content:'Abriendo comanda...'
+      });
+      cargando.present();
+      mesas.forEach(element => {
+        if(element.idMesa == nueva.mesa){
+          this.proveedorComanda.saveComanda(nueva, element, nueva.mesa.toString())
+          .then(data =>{
+            cargando.dismiss();
+          })
+        }
+      });
+    })
+
+  }
+
+
+  private hoy(){
+    let today = new Date();
+    let dd:any = today.getDate()
+    let mm:any = today.getMonth() + 1; //Enero es 0!
+
+    let yyyy = today.getFullYear();
+    if (dd < 10) {
+      dd = '0' + dd;
+    } 
+    if (mm < 10) {
+      mm = '0' + mm;
+    } 
+     return dd + mm + yyyy;
+  }
+
+  private horaAntes(){
+    let fecha = new Date();
+    let hora = fecha.getHours();
+    return hora -1;
   }
 }

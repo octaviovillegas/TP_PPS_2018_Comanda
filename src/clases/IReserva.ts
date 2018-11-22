@@ -6,4 +6,6 @@ export interface IReserva {
     comensales: number;
     estado: string;
     mesaID?: number;
+    nombreCliente:string;
+    dni:string;
 }

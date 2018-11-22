@@ -15,24 +15,30 @@
       <ion-grid>
         <ion-row>
 
-          <ion-col>
-            <ion-item style='background-color: transparent !important'>
-              <ion-icon name="calendar" small color="black"></ion-icon>
-              <ion-input [readonly]=true  value="{{fecha}}" formControlName="fechaCalendario"></ion-input>
+          <ion-col text-center>
+            <ion-item>
+              <ion-icon name="calendar" color="black"  item-start></ion-icon>
+              <h1 item-end>{{fecha}}</h1>
             </ion-item>
+
+            <!-- <ion-item style='background-color: transparent !important'>
+              <ion-icon name="calendar" small color="black"></ion-icon>
+              <h1>{{fecha}}</h1> -->
+              <!-- <ion-input [readonly]=true  value="{{fecha}}" formControlName="fechaCalendario"></ion-input> -->
+            <!-- </ion-item> -->
           </ion-col>
 
-          <ion-col>
+          <!-- <ion-col>
             <ion-buttons right>
               <button ion-button color='secondary' id="hoy" (click)="calendar.today()">HOY</button>
             </ion-buttons>
-          </ion-col>
+          </ion-col> -->
 
         </ion-row>
       </ion-grid>
       <ion-item>
         <ion-calendar #calendar lang="es" (onDaySelect)="seleccionarDia($event)" (onMonthSelect)="seleccionarMes($event)"
-          [events]="currentEvents"></ion-calendar>
+          ></ion-calendar>
       </ion-item>
       <ion-item>
         <ion-icon name="time" item-start></ion-icon>
@@ -51,8 +57,11 @@
 
     </ion-list>
     <div padding>
-      <button ion-button block type="submit" [disabled]='!formGroup.valid'>
+      <button ion-button block type="submit" [disabled]="!formGroup.valid || fecha == ''">
         Guardar
+      </button>
+      <button ion-button block color="secondary" (click)="verReservas()">
+        Ver reservas
       </button>
     </div>
   </form>

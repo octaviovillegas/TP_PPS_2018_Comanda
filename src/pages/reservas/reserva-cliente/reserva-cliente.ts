@@ -36,44 +36,18 @@ export class ReservaClientePage {
     this.menuCtrl.enable(true, 'menu');
     this.formGroup = this.crearFormulario();
     this.email = this.auth.obtenerEmailUsuarioActual();
-    this.currentEvents = [
-      {
-        year: 2018,
-        month: 11,
-        date: 25
-      },
-      {
-        year: 2018,
-        month: 11,
-        date: 31
-      },
-      {
-        year: 2018,
-        month: 11,
-        date: 24
-      },
-      {
-        year: 2019,
-        month: 0,
-        date: 1
-      },
-      {
-        year: 2018,
-        month: 11,
-        date: 8
-      },
-      {
-        year: 2018,
-        month: 11,
-        date: 31
-      },
-      {
-        year: 2019,
-        month: 0,
-        date: 6
-      }
+    
+    let f: Date = new Date();
 
-    ];
+    this.seleccionarDia({
+      date: f.getDate(),
+      hasEvent:false,
+      isSelect: true,
+      isThisMonth: true,
+      isToday:true,
+      month: f.getMonth(),
+      year: f.getFullYear()
+    });
   }
 
   guardarReserva() {
@@ -113,7 +87,7 @@ export class ReservaClientePage {
   private crearFormulario() {
     return this.formBuilder.group({
       turno: ['', Validators.required],
-      fechaCalendario: ['', Validators.required],
+      //fechaCalendario: ['', Validators.required],
       comensales: ['', Validators.compose([Validators.pattern('[0-9]{1,2}'), Validators.required])]
     });
   }
@@ -134,6 +108,10 @@ export class ReservaClientePage {
   }
 
   public seleccionarMes(e) {
-    console.log(e);
+    //console.log(e);
+  }
+
+  verReservas() {
+    this.navCtrl.push('VerReservasPage');
   }
 }

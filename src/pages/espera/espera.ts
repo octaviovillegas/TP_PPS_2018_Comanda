@@ -164,7 +164,7 @@ export class EsperaPage {
       MozoId:"",
     }
     nueva.fechaHora = Date.now();
-    nueva.mesa = reserva.mesaID;
+    nueva.mesa = reserva.mesaId;
     nueva.id = new Date().valueOf();
     nueva.userID = this.mozo.id;
     nueva.ClienteId = reserva.clienteId;

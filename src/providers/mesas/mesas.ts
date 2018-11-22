@@ -97,11 +97,34 @@ export class MesasProvider {
     })
   }
 
+  //**Busca la mesa por ID, y devuelve una promesa con la mesa */
+  buscarMesa(idMesa: number): Promise<IMesa> {
+
+    return new Promise<IMesa>((resolve, reject) => {
+
+      let sub =
+        this.afDB
+          .list("/mesas/", ref => ref.orderByChild("idMesa").equalTo(idMesa))
+          .valueChanges().subscribe((data: IMesa[]) => {
+            if (data.length > 0) { //encontro una mesa
+
+              resolve(data[0]);
+            } else {
+              resolve(null);
+            }
+          });
+
+      setTimeout(() => {
+        sub.unsubscribe();
+      }, 2000);
+    })
+  }
+
+
   //**Busca mesas libres, dependiendo de la reserva */
   buscarMesasLibres(reserva: IReserva): Observable<IMesa[]> {
     let listaMesas: IMesa[] = [];
 
-    this.traerMesasUtilizadasXFechaTUrno
 
     this.afDB
       .list("/mesas/")
@@ -141,7 +164,7 @@ export class MesasProvider {
         .subscribe((lista: IReserva[]) => {
           for (let i = 0; i < lista.length; i++) {
             if (lista[i].fecha == fecha && lista[i].turno == turno) {
-              mesas.push(lista[i].mesaID);
+              mesas.push(lista[i].mesaId);
             }
           }
 

@@ -5,16 +5,17 @@
   Ionic pages and navigation.
 -->
 <ion-content class="home" padding>
+  <button round block large (click)="salir()" ion-button>Salir</button>
   <ion-grid>
     <ion-row>
-      <ion-col (click)="reservas()"text-center style="background-color: white" margin-bottom margin-left margin-right>
+      <ion-col (click)="reservas()"text-center style="background-color: white"  margin-bottom margin-left margin-right>
         <h1>Reservas</h1>
         <img class="img" src="assets/imgs/reservas.png">
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col (click)="qrEspera()" text-center style="background-color: white" margin-bottom margin-left margin-right>
-        <h1>Ponerse en lista de espera</h1>
+        <h1>Ingresar</h1>
         <img class="img" src="assets/imgs/iconoQr.png">
       </ion-col>
     </ion-row>

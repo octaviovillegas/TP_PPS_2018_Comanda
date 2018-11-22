@@ -8,6 +8,7 @@ import {MesasProvider} from '../../../providers/mesas/mesas';
 import {IReserva} from '../../../clases/IReserva';
 import {IComanda} from '../../../clases/IComanda';
 import {IMesa} from '../../../clases/IMesa';
+import {EsperaPage} from '../../espera/espera';
 
 /**
  * Generated class for the ReservasMestrePage page.
@@ -73,6 +74,8 @@ export class ReservasMestrePage {
     let hora = this.horaAntes();
     this.proveedorReservas.traerReservasConfirmadas().subscribe(data =>{
       console.log(this.hoy());
+      console.log(this.horaAntes());
+
       this.listaReserva=[];
       data.forEach(element => {
         if(element.fecha == this.hoy()){
@@ -99,7 +102,7 @@ export class ReservasMestrePage {
   private horaAntes(){
     let fecha = new Date();
     let hora = fecha.getHours();
-    return hora -1;
+    return hora + 1;
   }
   public abrirComanda(reserva:IReserva){
     if(this.mozo == null || this.mozo.id == ""){
@@ -140,7 +143,11 @@ export class ReservasMestrePage {
         if(element.idMesa == nueva.mesa){
           this.proveedorComanda.saveComanda(nueva, element, element.key)
           .then(data =>{
-            cargando.dismiss();
+            reserva.estado="Finalizada";
+            this.proveedorReservas.actualizarReserva(reserva)
+            .then(data =>{
+              cargando.dismiss();
+            })
           })
         }
       });
@@ -179,6 +186,10 @@ export class ReservasMestrePage {
           </div> `;
     return fondo;
 
+  }
+
+  public verEspera(){
+    this.navCtrl.setRoot(EsperaPage);
   }
 
 }

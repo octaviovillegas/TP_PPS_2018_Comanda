@@ -32,7 +32,8 @@ export class AltaClientePage {
   mostrar: boolean = false;
   ldg: Loading = null;
   vieneDeComanda: boolean = false;
-
+  passwordType: string = 'password';
+  passwordIcon: string = 'eye-off';
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -72,7 +73,8 @@ export class AltaClientePage {
       apellido: this.formGroup.value.apellido,
       email: this.formGroup.value.email,
       tipoDocu: this.formGroup.value.tipoDocu,
-      numeroDocu: this.formGroup.value.numeroDocu
+      numeroDocu: this.formGroup.value.numeroDocu,
+      password: this.formGroup.value.password
     };
 
     setTimeout(() => {
@@ -124,7 +126,14 @@ export class AltaClientePage {
       apellido: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z]*'),Validators.required])],
       email: ['', Validators.compose([Validators.required, Validators.email])],
       tipoDocu: ['DNI', Validators.required],
-      numeroDocu: ['', Validators.compose([Validators.pattern('[0-9]{8}'), Validators.required])]
+      numeroDocu: ['', Validators.compose([Validators.pattern('[0-9]{8}'), Validators.required])],
+      password: ['', Validators.compose([Validators.minLength(6), Validators.required])]
     });
+  }
+
+
+  hideShowPassword() {
+    this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
+    this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
   }
 }

@@ -4,4 +4,5 @@ export class ICliente{
     email:string;
     tipoDocu:number;
     numeroDocu:string;
+    password?:string;
 }

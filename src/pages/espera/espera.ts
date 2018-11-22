@@ -11,6 +11,7 @@ import {ReservaProvider} from '../../providers/reserva/reserva';
 import {ComandaProvider} from '../../providers/comanda/comanda';
 import {MesasProvider} from '../../providers/mesas/mesas';
 import {IReserva} from '../../clases/IReserva';
+import {ReservasMestrePage} from '../reservas/reservas-mestre/reservas-mestre';
 import {IComanda} from '../../clases/IComanda';
 import { messaging } from 'firebase';
 
@@ -54,7 +55,7 @@ export class EsperaPage {
     this.lista = [];
     this.listaReserva = [];
     this.buscarListaEspera();
-    this.buscarReservas();
+    
     this.proveedorUsuario.obtenerUsuarios().subscribe(data =>{
       this.usuarios = data;
       data.forEach(element => {
@@ -134,79 +135,7 @@ export class EsperaPage {
       });
     })
   }
-
-  public buscarReservas(){
-    this.listaReserva = [];
-    let hoy = this.hoy();
-    let hora = this.horaAntes();
-    this.proveedorReservas.traerReservasConfirmadas().subscribe(data =>{
-      console.log(data);
-      this.listaReserva=[];
-      data.forEach(element => {
-        if(element.fecha == hoy){
-          this.listaReserva.push(element);
-        }
-      });
-    })
-  }
-
-  public abrirComanda(reserva:IReserva){
-    let nueva:IComanda = {
-      id: 0,
-      cliente: "",
-      fechaHora:0,
-      mesa: 0,
-      nombreCliente:"",
-      fotoCliente:"",
-      userID: "",
-      estado: "Abierta",
-      ClienteId:"",
-      MozoId:"",
-    }
-    nueva.fechaHora = Date.now();
-    nueva.mesa = reserva.mesaId;
-    nueva.id = new Date().valueOf();
-    nueva.userID = this.mozo.id;
-    nueva.ClienteId = reserva.clienteId;
-    nueva.MozoId = this.mozo.id;
-    nueva.nombreCliente = reserva.nombreCliente;
-    nueva.cliente = reserva.dni;
-    this.proveedorMesa.traerMesasconId()
-    .subscribe(mesas =>{
-      let cargando = this.loadingCtrl.create({
-        content:'Abriendo comanda...'
-      });
-      cargando.present();
-      mesas.forEach(element => {
-        if(element.idMesa == nueva.mesa){
-          this.proveedorComanda.saveComanda(nueva, element, nueva.mesa.toString())
-          .then(data =>{
-            cargando.dismiss();
-          })
-        }
-      });
-    })
-  }
-
-
-  private hoy(){
-    let today = new Date();
-    let dd:any = today.getDate()
-    let mm:any = today.getMonth() + 1; //Enero es 0!
-
-    let yyyy = today.getFullYear();
-    if (dd < 10) {
-      dd = '0' + dd;
-    } 
-    if (mm < 10) {
-      mm = '0' + mm;
-    } 
-     return dd + mm + yyyy;
-  }
-
-  private horaAntes(){
-    let fecha = new Date();
-    let hora = fecha.getHours();
-    return hora -1;
-  }
+  public verReservas(){
+    this.navCtrl.setRoot(ReservasMestrePage);
+  }  
 }

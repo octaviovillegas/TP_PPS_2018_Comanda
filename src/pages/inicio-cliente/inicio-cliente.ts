@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {ReservaClientePage} from '../reservas/reserva-cliente/reserva-cliente';
 import {QrEsperaPage} from '../qr/qr-espera/qr-espera';
+import {LoginPage} from '../../pages/login/login';
 /**
  * Generated class for the InicioClientePage page.
  *
@@ -28,6 +29,11 @@ export class InicioClientePage {
   
   public qrEspera(){
     this.navCtrl.push(QrEsperaPage);
+  }
+  public salir(){
+    localStorage.removeItem('userID');
+    localStorage.removeItem('perfil');
+    this.navCtrl.setRoot(LoginPage);
   }
 
 

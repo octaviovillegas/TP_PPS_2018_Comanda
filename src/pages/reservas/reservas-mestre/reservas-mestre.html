@@ -18,7 +18,8 @@
 
 
 <ion-content padding>
-    <div *ngIf="listaReserva.length > 0">
+  <button large round block (click)="verEspera()" ion-button>Lista de espera</button>
+  <div *ngIf="listaReserva.length > 0">
         <ion-item>
           <ion-label>Empleados:</ion-label>
           <ion-select [(ngModel)]="mozo">
@@ -47,12 +48,12 @@
             <p class="color" item-end><font size="5"> Abrir Comanda</font></p>
           </ion-item>
         </ion-card>
-      </div>
-      <div *ngIf="listaReserva.length < 1">
-        <ion-row>
-          <ion-col>
-            <h1> NO HAY RESERVAS</h1>
-          </ion-col>
-        </ion-row>
-      </div>
+  </div>
+  <div *ngIf="listaReserva.length < 1">
+    <ion-row>
+      <ion-col>
+        <h1> NO HAY RESERVAS</h1>
+      </ion-col>
+    </ion-row>
+  </div>
 </ion-content>

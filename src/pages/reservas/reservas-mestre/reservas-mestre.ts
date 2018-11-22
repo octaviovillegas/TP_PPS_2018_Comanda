@@ -72,9 +72,13 @@ export class ReservasMestrePage {
     let hoy = this.hoy();
     let hora = this.horaAntes();
     this.proveedorReservas.traerReservasConfirmadas().subscribe(data =>{
-      console.log(data);
+      console.log(this.hoy());
       this.listaReserva=[];
-      this.listaReserva = data;
+      data.forEach(element => {
+        if(element.fecha == this.hoy()){
+          this.listaReserva.push(element);
+        }
+      });
     })
   }
   private hoy(){
@@ -89,7 +93,7 @@ export class ReservasMestrePage {
     if (mm < 10) {
       mm = '0' + mm;
     } 
-     return dd + mm + yyyy;
+     return dd.toString() + mm.toString() + yyyy.toString();
   }
 
   private horaAntes(){

@@ -126,7 +126,7 @@ export class ReservasMestrePage {
     this.mesas.forEach(element => {      
       if(element.idMesa == nueva.mesa){
         console.log(element);
-        this.proveedorComanda.saveComanda(nueva, element, nueva.mesa.toString())
+        this.proveedorComanda.saveComanda(nueva, element, element.key)
         .then(data =>{
           cargando.dismiss();
         })

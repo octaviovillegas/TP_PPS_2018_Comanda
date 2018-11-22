@@ -5,7 +5,7 @@ export interface IReserva {
     fecha: string;
     comensales: number;
     estado: string;
-    mesaID?: number;
+    mesaId?: number;
     nombreCliente:string;
     dni:string;
 }

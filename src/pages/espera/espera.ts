@@ -49,26 +49,18 @@ export class EsperaPage {
     public proveedorMesa:MesasProvider) 
   {
     this.mozos = [];
-    this.estado = "reservas";
+    this.estado = "espera";
     this.menuCtrl.enable(true, "menu");
     this.lista = [];
     this.listaReserva = [];
     this.buscarListaEspera();
-
+    this.buscarReservas();
     this.proveedorUsuario.obtenerUsuarios().subscribe(data =>{
       this.usuarios = data;
       data.forEach(element => {
         if(element.perfil == 'Mozo'){
-          this.mozos.push(element);
-        }
-      });
-    })
-    this.proveedorReservas.traerReservasConfirmadas().subscribe(data =>{
-      let hoy = this.hoy();
-      let hora = this.horaAntes();
-      data.forEach(element => {
-        if(element.fecha == hoy && element.turno == hora){
-          this.listaReserva.push(element);
+          console.log(this.mozos);
+          this.mozos = data;
         }
       });
     })
@@ -133,9 +125,26 @@ export class EsperaPage {
     this.proveedorEspera.traerEnLista()
     .subscribe(data =>{
       this.lista = [];
+      console.log(data);
       data.forEach(element => {
         if(element.estado == 'espera'){
+          
           this.lista.push(element);
+        }
+      });
+    })
+  }
+
+  public buscarReservas(){
+    this.listaReserva = [];
+    let hoy = this.hoy();
+    let hora = this.horaAntes();
+    this.proveedorReservas.traerReservasConfirmadas().subscribe(data =>{
+      console.log(data);
+      this.listaReserva=[];
+      data.forEach(element => {
+        if(element.fecha == hoy){
+          this.listaReserva.push(element);
         }
       });
     })

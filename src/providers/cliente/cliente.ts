@@ -23,7 +23,7 @@ export class ClienteProvider {
           reject("El e-mail ya existe");
         } else {
           this.auth
-            .registerUser(cliente.email, "123456")
+            .registerUser(cliente.email, cliente.password)
             .catch(() => reject("El e-mail es inválido"))
             .then(user => {
               // Si el mail no existe y es valido, guardo el CLIENTE

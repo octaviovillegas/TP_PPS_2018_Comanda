@@ -36,6 +36,14 @@
         <ion-input formControlName="email" placeholder="Email"></ion-input>
       </ion-item>
       <ion-item>
+        <ion-icon name="key" item-start></ion-icon>
+        <ion-label stacked>Password</ion-label>
+        <ion-input formControlName="password" [type]="passwordType" placeholder="Password"></ion-input>
+        <button ion-button clear item-end (click)='hideShowPassword()' type="button" style="height: 32px;">
+          <ion-icon [name]="passwordIcon" style="font-size:32px;"></ion-icon>
+        </button>
+      </ion-item>
+      <ion-item>
         <ion-icon name="arrow-dropright" item-start></ion-icon>
         <ion-label>Tipo documento</ion-label>
         <ion-select formControlName="tipoDocu" interface="popover">

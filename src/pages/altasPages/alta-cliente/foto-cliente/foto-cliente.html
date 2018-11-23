@@ -1,0 +1,23 @@
+<!--
+  Generated template for the FotoClientePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col text-center>
+        <h1>¡Agrega una foto tuya para tu cuenta!</h1>
+        <img class="img" [src]="imagen">
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center>
+        <button  ion-button round color="danger" class="boton" (click)="captureImage()"><ion-icon name="camera" class="camara"></ion-icon></button>
+        <button  ion-button round color="secondary" class="boton"  (click)="subir()">Subir</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -24,6 +24,7 @@ import { ModalEsperaPageModule } from "../pages/espera/modal-espera/modal-espera
 import {TraspasoPedidoPageModule} from "../pages/qr/qr-espera/traspaso-pedido/traspaso-pedido.module";
 import {AltaEmpleadoPageModule} from '../pages/altasPages/alta-empleado/alta-empleado.module';
 import {InicioClientePageModule} from '../pages/inicio-cliente/inicio-cliente.module';
+import {FotoClientePageModule} from '../pages/altasPages/alta-cliente/foto-cliente/foto-cliente.module';
 
 import { BrowserModule } from "@angular/platform-browser";
 import { ErrorHandler, NgModule } from "@angular/core";
@@ -134,7 +135,8 @@ export const firebaseConfig = {
     ReservasPageModule,
     AltaEmpleadoPageModule,
     InicioClientePageModule,
-    VerReservasPageModule
+    VerReservasPageModule,
+    FotoClientePageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [MyApp, HomePage, LoginPage, SplashPage, ModalPage],

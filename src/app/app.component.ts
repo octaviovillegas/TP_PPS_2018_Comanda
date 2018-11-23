@@ -27,6 +27,7 @@ import {AltaPedidoPage} from "../pages/pedidosPages/alta-pedido/alta-pedido";
 import {TraspasoPedidoPage} from '../pages/qr/qr-espera/traspaso-pedido/traspaso-pedido';
 import {SplashPage} from '../pages/splash/splash';
 import {AltaEmpleadoPage} from '../pages/altasPages/alta-empleado/alta-empleado';
+import {FotoClientePage} from '../pages/altasPages/alta-cliente/foto-cliente/foto-cliente';
 // import { EncuestaEnstradaSalidaPage } from '../pages/encuestasPages/encuesta-enstrada-salida/encuesta-enstrada-salida';
 
 @Component({

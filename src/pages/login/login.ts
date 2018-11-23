@@ -1,3 +1,4 @@
+import { PushProvider } from './../../providers/push/push';
 import { ToastController } from "ionic-angular";
 import { AuthProvider } from "./../../providers/auth/auth";
 import { usuario, Iusuario } from "./../../clases/usuario";
@@ -36,7 +37,8 @@ export class LoginPage {
     private firestore: AngularFirestore,
     public menuCtrl: MenuController,
     public events1: Events,
-    public toastCtrl: ToastController
+    public toastCtrl: ToastController,
+    private _push: PushProvider
   ) {
     firestore.firestore.settings({ timestampsInSnapshots: true });
     this.menuCtrl.enable(false, "menu");
@@ -124,6 +126,12 @@ export class LoginPage {
         //console.log(user);
         localStorage.setItem("userID", user.id.toString());
         //console.log(user.id);
+
+        ////////////////PUSH/////////////////////////
+        this._push.escucharMensajes(user.id.toString());
+        ////////////////PUSH/////////////////////////
+
+
         destinoPage = this.auth.buscarDestino(user.perfil);
         this.events1.publish("usuario", user);
 

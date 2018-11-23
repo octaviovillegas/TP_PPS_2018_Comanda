@@ -127,7 +127,7 @@ export class AltaComandaPage {
   }
 
   buscarMesaLibre(barcode: string) {
-    this._mesa.items.subscribe(data => {
+    let subs = this._mesa.items.subscribe(data => {
       let encontro: Boolean = false;
 
       for (let i = 0; i < data.length; i++) {
@@ -150,6 +150,10 @@ export class AltaComandaPage {
         this.utilProvider.mostrarMensaje("Código QR incorrecto");
       }
     });
+
+    setTimeout(() => {
+      subs.unsubscribe();
+    }, 2000);
   }
 
   // mostrarMensaje(mensaje: string) {
@@ -199,8 +203,8 @@ export class AltaComandaPage {
         fotoCliente: "",
         userID: "",
         estado: "Abierta",
-        ClienteId:"",
-        MozoId:"",
+        ClienteId: "",
+        MozoId: "",
       };
 
       this.comanda.fechaHora = Date.now();

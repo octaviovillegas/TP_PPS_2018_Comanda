@@ -66,7 +66,7 @@ export class ReservaProvider {
   public traerReservasXCliente(clienteID: string): Promise<IReserva[]> {
     let listaReservas: IReserva[] = [];
     let promesa = new Promise<IReserva[]>((resolve) => {
-      this.afDB.list<IReserva>("/reservas/", ref => ref.orderByChild('clienteId').equalTo(clienteID))
+      let subs = this.afDB.list<IReserva>("/reservas/", ref => ref.orderByChild('clienteId').equalTo(clienteID))
         .valueChanges()
         .subscribe((data: IReserva[]) => {
           let hoy: Date = new Date();
@@ -77,13 +77,17 @@ export class ReservaProvider {
             let anio: string = res.fecha.substr(4, 4);
             let fecha: Date = new Date(`${mes}/${dia}/${anio} 23:59`);
 
-            if (fecha >= hoy) {
+            if (fecha >= hoy && res.estado.toLocaleUpperCase() != "FINALIZADA") {
               listaReservas.push(res);
             }
           })
 
           resolve(listaReservas);
         });
+
+        // setTimeout(() => {
+        //   subs.unsubscribe();
+        // }, 2000);
     });
 
     return promesa;

@@ -1,7 +1,7 @@
 import { IPlato } from './../../../clases/IPlato';
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides, LoadingController, Loading } from 'ionic-angular';
-import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Camera, CameraOptions, CameraPopoverOptions } from '@ionic-native/camera';
 import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { IComestible } from '../../../clases/IComestible';
@@ -81,14 +81,28 @@ export class AltaBebidaPage {
   }
 
   public captureImage(cual: string) {
+
+    let popoverOptions: CameraPopoverOptions = {
+      x: 0,
+      y: 0,
+      width: 640,
+      height: 640,
+      arrowDir: this.camera.PopoverArrowDirection.ARROW_DOWN
+    };
     const options: CameraOptions = {
-      quality: 100,
+      quality: 40,
+      targetWidth: 640,
+      targetHeight: 640,
+      allowEdit: false,
+      correctOrientation: true,
+      saveToPhotoAlbum: false,
+      cameraDirection: this.camera.Direction.BACK,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
-      correctOrientation: true,
+      popoverOptions: popoverOptions,
       sourceType: this.camera.PictureSourceType.CAMERA
-    }
+    };
 
 
     switch (cual) {

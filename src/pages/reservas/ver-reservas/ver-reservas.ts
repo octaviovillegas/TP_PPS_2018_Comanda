@@ -32,6 +32,7 @@ export class VerReservasPage {
   ionViewDidLoad() {
 
     this._reserva.traerReservasXCliente(localStorage.getItem('userID')).then((lista) => {
+      this.listaReservas = [];
       this.listaReservas = lista;
 
       this.listaReservas.sort((a, b) => {

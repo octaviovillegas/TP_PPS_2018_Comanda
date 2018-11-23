@@ -4,6 +4,11 @@
       <ion-icon color="secondary" small name="restaurant"></ion-icon>
       {{ mesa }} | PEDIDOS
     </ion-title>
+    <ion-buttons left>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
   <div class="col md-12">
     <button ion-button block color="secondary" (click)="nuevoPedido()">

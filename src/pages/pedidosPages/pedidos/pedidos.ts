@@ -2,7 +2,7 @@ import { ClienteProvider } from './../../../providers/cliente/cliente';
 import { forEach } from "@firebase/util";
 import { bebidasProvider } from "./../../../providers/bebidas/bebidas";
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { IonicPage, NavController, NavParams, MenuController } from "ionic-angular";
 import { AltaPedidoPage } from "../alta-pedido/alta-pedido";
 import { IComanda } from "../../../clases/IComanda";
 import { ComandaProvider } from "../../../providers/comanda/comanda";
@@ -52,8 +52,10 @@ export class PedidosPage {
     public _comandas: ComandaProvider,
     public _bebidas: bebidasProvider,
     public _platos: platosProvider,
+    public menuCtrl: MenuController,
     public _cliente: ClienteProvider
   ) {
+    this.menuCtrl.enable(true, "menu");
     this.mesa = parseInt(this.navParams.get("mesa"));
     this.mesaKey = this.navParams.get("mesaKey");
     this.comanda = this.navParams.get("comanda");

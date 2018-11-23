@@ -4,8 +4,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
 import { ReservaProvider } from '../../../providers/reserva/reserva';
-import {AuthProvider} from '../../../providers/auth/auth';
-import {UsuariosProvider} from '../../../providers/usuarios/usuarios';
+import { AuthProvider } from '../../../providers/auth/auth';
+import { UsuariosProvider } from '../../../providers/usuarios/usuarios';
 
 @IonicPage()
 @Component({
@@ -22,7 +22,7 @@ export class ReservaClientePage {
   public fecha: string;
   public fechaSeleccionada: string;
   public reserva: IReserva;
-  public email:string;
+  public email: string;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -31,20 +31,25 @@ export class ReservaClientePage {
     public _util: UtilProvider,
     public _reserva: ReservaProvider,
     public auth: AuthProvider,
-    public proveedorUsuarios:UsuariosProvider
+    public proveedorUsuarios: UsuariosProvider
   ) {
     this.menuCtrl.enable(true, 'menu');
     this.formGroup = this.crearFormulario();
     this.email = this.auth.obtenerEmailUsuarioActual();
-    
+
+
+   this.seleccionarHoy();
+  }
+
+  seleccionarHoy() {
     let f: Date = new Date();
 
     this.seleccionarDia({
       date: f.getDate(),
-      hasEvent:false,
+      hasEvent: false,
       isSelect: true,
       isThisMonth: true,
-      isToday:true,
+      isToday: true,
       month: f.getMonth(),
       year: f.getFullYear()
     });
@@ -65,22 +70,22 @@ export class ReservaClientePage {
       };
       this._util.presentLoading('Enviando reserva...');
       this.proveedorUsuarios.buscarUsuarioxMail(this.email)
-      .then(usuario =>{
-        setTimeout(() => {
-          reserva.nombreCliente = usuario.nombre;
-          reserva.dni = usuario.dni.toString();
-          this._reserva.guardarReserva(reserva).then(() => {
-            this._util.dismiss().then(() => {
-              this._util.esperar(this._util.creaFondo("Le enviaremos la confirmación de su reserva", "assets/imgs/icono_rest.png"));
-              setTimeout(() => {
-                this._util.dismiss().then(() => {
-                  this._util.volverRoot();
-                })
-              }, 3000);
+        .then(usuario => {
+          setTimeout(() => {
+            reserva.nombreCliente = usuario.nombre;
+            reserva.dni = usuario.dni.toString();
+            this._reserva.guardarReserva(reserva).then(() => {
+              this._util.dismiss().then(() => {
+                this._util.esperar(this._util.creaFondo("Le enviaremos la confirmación de su reserva", "assets/imgs/icono_rest.png"));
+                setTimeout(() => {
+                  this._util.dismiss().then(() => {
+                    this._util.volverRoot();
+                  })
+                }, 3000);
+              });
             });
-          });
-        }, 2000);
-      })
+          }, 2000);
+        })
     }
   }
 
@@ -93,18 +98,31 @@ export class ReservaClientePage {
   }
 
   public seleccionarDia(e) {
-    let dia = (e.date).toString();
-    if (dia.length == 1) {
-      dia = `0${dia}`;
+    let fecha: Date = new Date((e.month + 1).toString() + "/" + e.date.toString() + "/" + e.year.toString());
+    let hoy: Date = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+
+
+    if (fecha < hoy) {
+      this._util.mostrarMensaje("La fecha debe ser mayor a hoy");
+      this.seleccionarHoy();
+    } else {
+      console.log(fecha);
+      console.log(hoy);
+      console.log(e);
+      let dia = (e.date).toString();
+      if (dia.length == 1) {
+        dia = `0${dia}`;
+      }
+      let mes = e.month + 1;
+      mes = (mes).toString();
+      if (mes.length == 1) {
+        mes = `0${mes}`;
+      }
+      let anio = e.year;
+      this.fecha = `${dia}/${mes}/${anio}`;
+      this.fechaSeleccionada = `${dia}${mes}${anio}`;
     }
-    let mes = e.month + 1;
-    mes = (mes).toString();
-    if (mes.length == 1) {
-      mes = `0${mes}`;
-    }
-    let anio = e.year;
-    this.fecha = `${dia}/${mes}/${anio}`;
-    this.fechaSeleccionada = `${dia}${mes}${anio}`;
+
   }
 
   public seleccionarMes(e) {

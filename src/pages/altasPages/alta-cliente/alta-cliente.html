@@ -10,76 +10,94 @@
 </ion-header>
 
 <ion-content>
-  <form [formGroup]="formGroup" (ngSubmit)="saveData()">
-    <ion-list>
-      <ion-item>
-        <ion-icon name="person" item-start></ion-icon>
-        <ion-label stacked>Nombres:</ion-label>
-        <ion-input
-          formControlName="nombre"
-          type="text"
-          placeholder="Nombre"
-        ></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-icon name="person" item-start></ion-icon>
-        <ion-label stacked>Apellidos:</ion-label>
-        <ion-input
-          formControlName="apellido"
-          type="text"
-          placeholder="Apellidos"
-        ></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-icon name="at" item-start></ion-icon>
-        <ion-label stacked>Correo electronico:</ion-label>
-        <ion-input formControlName="email" placeholder="Email"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-icon name="key" item-start></ion-icon>
-        <ion-label stacked>Password</ion-label>
-        <ion-input formControlName="password" [type]="passwordType" placeholder="Password"></ion-input>
-        <button ion-button clear item-end (click)='hideShowPassword()' type="button" style="height: 32px;">
-          <ion-icon [name]="passwordIcon" style="font-size:32px;"></ion-icon>
-        </button>
-      </ion-item>
-      <ion-item>
-        <ion-icon name="arrow-dropright" item-start></ion-icon>
-        <ion-label>Tipo documento</ion-label>
-        <ion-select formControlName="tipoDocu" interface="popover">
-          <ion-option value="dni">DNI</ion-option>
-          <ion-option value="pasaporte">Pasaporte</ion-option>
-        </ion-select>
-      </ion-item>
-      <ion-item>
-        <ion-icon name="finger-print" item-start></ion-icon>
-        <ion-label stacked>Numero:</ion-label>
-        <ion-input
-          formControlName="numeroDocu"
-          placeholder="numero"
-        ></ion-input>
-      </ion-item>
-      <!--
+  <div *ngIf="!cargado">
+    <form [formGroup]="formGroup" (ngSubmit)="infoCargada()">
+      <ion-list>
         <ion-item>
-
-          <ion-icon name="barcode" item-start></ion-icon>
-
-
-          <ion-label stacked>Código QR:</ion-label>
-
-
-          <ion-input placeholder=""></ion-input>
-
-
+          <ion-icon name="person" item-start></ion-icon>
+          <ion-label stacked>Nombres:</ion-label>
+          <ion-input
+            formControlName="nombre"
+            type="text"
+            placeholder="Nombre"
+          ></ion-input>
         </ion-item>
-      -->
-    </ion-list>
-    <div padding>
-      <button ion-button block type="submit" [disabled]="!formGroup.valid">
-        Guardar
-      </button>
-    </div>
-  </form>
+        <ion-item>
+          <ion-icon name="person" item-start></ion-icon>
+          <ion-label stacked>Apellidos:</ion-label>
+          <ion-input
+            formControlName="apellido"
+            type="text"
+            placeholder="Apellidos"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="at" item-start></ion-icon>
+          <ion-label stacked>Correo electronico:</ion-label>
+          <ion-input formControlName="email" placeholder="Email"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="key" item-start></ion-icon>
+          <ion-label stacked>Password</ion-label>
+          <ion-input formControlName="password" [type]="passwordType" placeholder="Password"></ion-input>
+          <button ion-button clear item-end (click)='hideShowPassword()' type="button" style="height: 32px;">
+            <ion-icon [name]="passwordIcon" style="font-size:32px;"></ion-icon>
+          </button>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="arrow-dropright" item-start></ion-icon>
+          <ion-label>Tipo documento</ion-label>
+          <ion-select formControlName="tipoDocu" interface="popover">
+            <ion-option value="dni">DNI</ion-option>
+            <ion-option value="pasaporte">Pasaporte</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="finger-print" item-start></ion-icon>
+          <ion-label stacked>Numero:</ion-label>
+          <ion-input
+            formControlName="numeroDocu"
+            placeholder="numero"
+          ></ion-input>
+        </ion-item>
+        <!--
+          <ion-item>
+
+            <ion-icon name="barcode" item-start></ion-icon>
+
+
+            <ion-label stacked>Código QR:</ion-label>
+
+
+            <ion-input placeholder=""></ion-input>
+
+
+          </ion-item>
+        -->
+      </ion-list>
+      <div padding>
+        <button ion-button block type="submit" [disabled]="!formGroup.valid">
+          Guardar
+        </button>
+      </div>
+    </form>
+  </div>
+  <div *ngIf="cargado">
+    <ion-grid>
+      <ion-row>
+        <ion-col text-center>
+          <h1>¡Agrega una foto tuya para tu cuenta!</h1>
+          <img class="img" [src]="imagen">
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col text-center>
+          <button  ion-button round color="danger" class="boton" (click)="captureImage()"><ion-icon name="camera" class="camara"></ion-icon></button>
+          <button  ion-button round color="secondary" class="boton"  (click)="subir()">Subir</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 
   <!--
     <ion-grid>
@@ -149,8 +167,8 @@
 
     </ion-grid>
   -->
-
-  <ion-fab center bottom #fab>
+  <div *ngIf="!cargado">
+    <ion-fab center bottom #fab>
     <button ion-fab color="primary"><ion-icon name="expand"></ion-icon></button>
     <ion-fab-list side="top">
       <button ion-fab color="s-light" (click)="fab.close();">
@@ -167,7 +185,8 @@
         <ion-icon name="checkmark"></ion-icon>
       </button>
     </ion-fab-list>
-  </ion-fab>
+    </ion-fab>
+  </div>
 </ion-content>
 
 <!--

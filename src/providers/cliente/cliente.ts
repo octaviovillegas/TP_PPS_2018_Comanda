@@ -100,4 +100,29 @@ export class ClienteProvider {
 
     return promesa;
   }
+  public buscarClienteEmail(email:string){
+    return this.afDB.list<ICliente[]>('clientes', ref => ref.orderByChild("email").equalTo(email)).snapshotChanges()
+    .map(actions =>{
+      return actions.map(a =>{
+        const data = a.payload.val() as ICliente;
+        const key = a.payload.key;
+        return {key, ... data};
+      })
+    })
+    
+  }
+
+  public actualizarCliente(cliente: ICliente): Promise<Boolean> {
+    let promesa = new Promise<Boolean>((resolve, reject) => {
+      //Me devuelve una referencia al objeto de la lista, asi me aseguro de Updatear y no generar una nueva Comanda
+
+      this.afDB
+        .object("/clientes/" + cliente.key)
+        .update(cliente)
+        .then(() => resolve(true))
+        .catch(err => reject(err));
+    });
+
+    return promesa;
+  }
 }

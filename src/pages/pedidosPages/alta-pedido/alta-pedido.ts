@@ -292,6 +292,7 @@ export class AltaPedidoPage {
 
   sumarCantidad(item: ISubpedidoItem, value: number) {
     item.cantidad = item.cantidad + value;
+    console.log(item.cantidad);
   }
   restarCantidad(item: ISubpedidoItem, value: number) {
     if (item.cantidad > 0) {

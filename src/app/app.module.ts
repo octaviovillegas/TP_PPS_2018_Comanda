@@ -84,6 +84,8 @@ import { ComandaProvider } from "../providers/comanda/comanda";
 import { ClienteProvider } from "../providers/cliente/cliente";
 import { EsperaProvider } from "../providers/espera/espera";
 import { ReservaProvider } from '../providers/reserva/reserva';
+import { PushProvider } from '../providers/push/push';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDsDUoXfo8kvkYOm9Q8DzWHF82QVGltwo4",
@@ -161,7 +163,9 @@ export const firebaseConfig = {
     EsperaProvider,
     ModalEsperaPageModule,
     TraspasoPedidoPageModule,
-    ReservaProvider
+    ReservaProvider,
+    PushProvider,
+     LocalNotifications
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })

@@ -1,8 +1,9 @@
+import { PushProvider } from './../../../providers/push/push';
 import { ClienteProvider } from './../../../providers/cliente/cliente';
 import { forEach } from "@firebase/util";
 import { bebidasProvider } from "./../../../providers/bebidas/bebidas";
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, MenuController } from "ionic-angular";
+import { IonicPage, NavController, NavParams, MenuController, Platform } from "ionic-angular";
 import { AltaPedidoPage } from "../alta-pedido/alta-pedido";
 import { IComanda } from "../../../clases/IComanda";
 import { ComandaProvider } from "../../../providers/comanda/comanda";
@@ -11,6 +12,9 @@ import { platosProvider } from "../../../providers/platos/plato";
 import { ISubPedido } from "../../../clases/ISubPedido";
 import { IComandaPedido } from "../../../clases/IComandaPedido";
 import { Subscription } from "rxjs";
+import { IMensaje } from '../../../clases/IMensaje';
+import { TipoPush } from '../../../clases/EnumTipoPush';
+import { dateDataSortValue } from 'ionic-angular/umd/util/datetime-util';
 
 /**
  * Generated class for the PedidosPage page.
@@ -53,7 +57,9 @@ export class PedidosPage {
     public _bebidas: bebidasProvider,
     public _platos: platosProvider,
     public menuCtrl: MenuController,
-    public _cliente: ClienteProvider
+    public _cliente: ClienteProvider,
+    public _push: PushProvider,
+    public platform: Platform,
   ) {
     this.menuCtrl.enable(true, "menu");
     this.mesa = parseInt(this.navParams.get("mesa"));
@@ -203,7 +209,7 @@ export class PedidosPage {
     this.subs.unsubscribe();
     //localStorage.removeItem('userID');
     //localStorage.removeItem('perfil');
-    
+
     this.navCtrl.setRoot("QrPropinaPage", { mesa: this.mesa, mesaKey: this.mesaKey, comanda: this.comanda });
   }
 
@@ -389,9 +395,32 @@ export class PedidosPage {
     this._utils.presentLoading("Solicitando cuenta...");
     this._comandas.pedirCuenta(this.mesaKey).then(() => {
       setTimeout(() => {
+
+        // if (this.platform.is("cordova")) {
+        this.crearPush();
+        //}
+
         this._utils.dismiss();
       }, 2000);
     });
+  }
+
+  crearPush() {
+    let sms: IMensaje = {
+
+      id: new Date().getTime(),
+      userID: this.comanda.MozoId, //receptor del mensaje
+      tipoMensaje: TipoPush.PEDIR_CUENTA,
+      titulo: 'Pedido de cuenta',
+      texto: `La Mesa: ${this.mesa} desea la cuenta`,
+      data: {
+        mesa: this.mesa,
+        mesaKey: this.mesaKey,
+        comanda: this.comanda.id,
+      }
+    }
+
+    this._push.guardarMensaje(this.comanda.MozoId, sms).then();
   }
 
   quitarPedido(event: any) {

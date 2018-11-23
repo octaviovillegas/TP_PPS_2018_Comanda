@@ -5,4 +5,6 @@ export class ICliente{
     tipoDocu:number;
     numeroDocu:string;
     password?:string;
+    foto?:string;
+    key?:string;
 }

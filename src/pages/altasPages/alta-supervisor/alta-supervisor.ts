@@ -27,6 +27,7 @@ export class AltaSupervisorPage {
   fotoTomada:Boolean;
   image:string;
   task:any;
+  uid:any;
   rutaArchivo:string;
   perfil:string;
   constructor(
@@ -126,6 +127,8 @@ export class AltaSupervisorPage {
     cargandoFoto.present();
     this.angAut.auth.createUserWithEmailAndPassword(nuevo.email, nuevo.dni.toString())
     .then(result =>{
+      this.uid = result.uid;
+      nuevo.id = this.uid;
       this.createUploadTask(this.fotoNuevo)
       .then(result =>{
         this.storage.ref(this.rutaArchivo).getDownloadURL().toPromise()
@@ -139,9 +142,6 @@ export class AltaSupervisorPage {
             setTimeout(() => {
               usuarioGuardado.dismiss();
             }, 7000);
-          })
-          .catch(error =>{
-            cargandoFoto.dismiss();
           })
         })
         .catch(error =>{

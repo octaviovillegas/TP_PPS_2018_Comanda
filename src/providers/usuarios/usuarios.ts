@@ -53,14 +53,15 @@ export class UsuariosProvider {
   }
 
   public guardarSupervisor(guardado: Iusuario) {
-    return this.afDB.object("usuarios").set({
+    return this.afDB.list("usuarios").push({
       apellido: guardado.apellido,
       cuil: guardado.cuil,
       dni: guardado.dni,
       email: guardado.email,
       foto: guardado.foto,
       nombre: guardado.nombre,
-      perfil: guardado.perfil
+      perfil: guardado.perfil,
+      id: guardado.id,
     });
   }
 

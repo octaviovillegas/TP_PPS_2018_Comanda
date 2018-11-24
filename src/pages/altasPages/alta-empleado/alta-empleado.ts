@@ -113,6 +113,7 @@ export class AltaEmpleadoPage {
     cargandoFoto.present();
     this.angAut.auth.createUserWithEmailAndPassword(nuevo.email, nuevo.dni.toString())
     .then(result =>{
+      nuevo.id = result.uid;
       this.createUploadTask(this.fotoNuevo)
       .then(result =>{
         this.storage.ref(this.rutaArchivo).getDownloadURL().toPromise()
@@ -127,9 +128,6 @@ export class AltaEmpleadoPage {
               usuarioGuardado.dismiss();
               this.navCtrl.setRoot(this.auth.buscarDestino(localStorage.getItem('perfil')));
             }, 7000);
-          })
-          .catch(error =>{
-            cargandoFoto.dismiss();
           })
         })
         .catch(error =>{

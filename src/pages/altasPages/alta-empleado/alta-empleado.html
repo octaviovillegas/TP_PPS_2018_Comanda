@@ -48,6 +48,10 @@
             </ion-select>
           </ion-item>
           <ion-item>
+            <ion-label floating>Email</ion-label>
+            <ion-input [formControl]="altaEmpleadoForm1.controls['email']" type="email" required></ion-input>
+          </ion-item>
+          <ion-item>
             <ion-label floating>Nombre</ion-label>
             <ion-input [formControl]="altaEmpleadoForm1.controls['nombre']" type="text" required></ion-input>
           </ion-item>
@@ -79,14 +83,26 @@
             El cuil es requerido
           </div>
           <button class="" block round color="primary" (click)="anterior()" ion-button>Volver</button>
-          <button class="" block round color="secondary" (click)="siguiente()" [disabled]="altaEmpleadoForm1.valid" ion-button>Siguiente</button>
+          <button class="" block round color="secondary" (click)="siguiente()" [disabled]="!altaEmpleadoForm1.valid" ion-button>Siguiente</button>
 
         </form>
       </ion-col>
     </ion-row>
     </ion-slide>
     <ion-slide>
-      
+      <ion-row>
+          <ion-col>
+            <h1>Toma una foto</h1>
+            <img class="imgPersona" [src]="fotoNuevo"> 
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <button class="" round large block color="green" (click)="captureImage()" ion-button> <ion-icon name="camera"></ion-icon>  Tomar Foto </button>
+            <button class="boton" round color="primary" (click)="anterior()" ion-button>Volver</button>
+            <button class="boton" round color="secondary" (click)="subir()" [disabled]="!fotoTomada" ion-button>crear</button>
+          </ion-col>
+        </ion-row>
     </ion-slide>
   </ion-slides>
 </ion-content>

@@ -1,6 +1,6 @@
 import { IReserva } from './../../clases/IReserva';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
 import { ReservaProvider } from '../../providers/reserva/reserva';
 import { IMesa } from '../../clases/IMesa';
 import { UtilProvider } from '../../providers/util/util';
@@ -25,32 +25,34 @@ export class ReservasPage {
   public mesas: IMesa[] = [];
 
   constructor(
-    public navCtrl: NavController, 
-    public navParams: NavParams, 
+    public navCtrl: NavController,
+    public navParams: NavParams,
     public _reserva: ReservaProvider,
-    public _utils: UtilProvider) {
+    public _utils: UtilProvider,
+    public menuCtrl: MenuController) {
+    this.menuCtrl.enable(true, 'menu');
     this.perfil = localStorage.getItem('perfil');
   }
 
   ionViewDidLoad() {
-   this.cargarReservas(); 
+    this.cargarReservas();
   }
 
   cargarReservas() {
-      this._reserva.traerReservasPendientes().subscribe((lista: IReserva[])=>{
-        this.reservas = lista;
-      })
+    this._reserva.traerReservasPendientes().subscribe((lista: IReserva[]) => {
+      this.reservas = lista;
+    })
   }
 
   confirmarReserva(event: any) {
-    this._reserva.actualizarReserva(event.reserva as IReserva).then((resul)=>{
+    this._reserva.actualizarReserva(event.reserva as IReserva).then((resul) => {
 
       this._utils.mostrarMensaje("Se confirmó la reserva");
     })
   }
 
   rechazarReserva(event: any) {
-    this._reserva.actualizarReserva(event.reserva as IReserva).then((resul)=>{
+    this._reserva.actualizarReserva(event.reserva as IReserva).then((resul) => {
 
       this._utils.mostrarMensaje("Se rechazó la reserva");
     })

@@ -25,16 +25,7 @@ export class PushProvider {
       id: sms.id,
       title: sms.titulo,
       text: sms.texto,
-      data: { 
-        id: new Date().getTime(),
-        userID: sms.userID, //receptor del mensaje
-        tipoMensaje: 1, //sms.tipoMensaje
-        titulo: 'Pedido de cuenta',
-        texto: sms.texto,
-        mesa: sms.data.mesa,
-        mesaKey: sms.data.mesaKey,
-        comanda: sms.data.comanda
-      }
+      data: { mensaje: sms }
     });
 
 

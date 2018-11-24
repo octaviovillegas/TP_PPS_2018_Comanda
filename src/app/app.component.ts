@@ -80,7 +80,7 @@ export class MyApp {
   }
 
   esperarPush() {
-    this.subs = this.localNoti.on("click").subscribe((noti) => {
+    this.subs = this.localNoti.on("schedule").subscribe((noti) => {
 
       //this.utilProvider.mostrarMensaje("ESPERAR PUSH");
       //Tomo la decision de que hacer con la notificacion dependiendo del tipo
@@ -89,34 +89,21 @@ export class MyApp {
   }
 
 
-  /*
-          id: new Date().getTime(),
-        userID: sms.userID, //receptor del mensaje
-        tipoMensaje: 1, //sms.tipoMensaje
-        titulo: 'Pedido de cuenta',
-        texto: sms.texto,
-        mesa: sms.data.mesa,
-        mesaKey: sms.data.mesaKey,
-        comanda: sms.data.comanda 
-  
-   */
-
   ejecutarPush(notificacion: any) {
-    //let push: IMensaje = notificacion.data as IMensaje;
-    let push: any = notificacion.data;
+    let push: IMensaje = notificacion.data as IMensaje;
 
 
-    switch (push.tipoMensaje) {
+    switch (notificacion.tipoMensaje) {
       case TipoPush.PEDIR_CUENTA:
         this.pedirCuenta(push);
         break;
     }
   }
 
-  pedirCuenta(sms: any) {
-    let mesa = sms.mesa;
-    let mesaKey = sms.mesaKey;
-    let comandaID = sms.comanda;
+  pedirCuenta(sms: IMensaje) {
+    let mesa = sms.data.mesa;
+    let mesaKey = sms.data.mesaKey;
+    let comandaID = sms.data.comanda;
 
     //this.utilProvider.mostrarMensaje("PEDIR CUENTA");
     this._comanda.verificarComandaPorUsuario(comandaID).then((comanda: IComanda) => {

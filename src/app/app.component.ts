@@ -34,7 +34,7 @@ import { TipoPush } from '../clases/EnumTipoPush';
 // import {AltaPedidoPage} from "../pages/pedidosPages/alta-pedido/alta-pedido";
 // import {TraspasoPedidoPage} from '../pages/qr/qr-espera/traspaso-pedido/traspaso-pedido';
 // import {SplashPage} from '../pages/splash/splash';
-// import {AltaEmpleadoPage} from '../pages/altasPages/alta-empleado/alta-empleado';
+ import {AltaEmpleadoPage} from '../pages/altasPages/alta-empleado/alta-empleado';
 // import {FotoClientePage} from '../pages/altasPages/alta-cliente/foto-cliente/foto-cliente';
 // import { EncuestaEnstradaSalidaPage } from '../pages/encuestasPages/encuesta-enstrada-salida/encuesta-enstrada-salida';
 
@@ -126,7 +126,7 @@ export class MyApp {
     this.auth.Session.subscribe(_session => {
 
       if (!_session) { //si no esta logueado
-        this.rootPage = LoginPage;
+        this.rootPage = AltaEmpleadoPage;
       } else {
 
         ////////////////PUSH/////////////////////////
@@ -135,7 +135,7 @@ export class MyApp {
 
 
         if (localStorage.getItem("perfil") == null) {
-          this.rootPage = LoginPage;
+          this.rootPage = AltaEmpleadoPage;
         } else {
           this.rootPage = this.auth.buscarDestino(localStorage.getItem("perfil"));
         }

@@ -127,8 +127,8 @@ export class AltaSupervisorPage {
     cargandoFoto.present();
     this.angAut.auth.createUserWithEmailAndPassword(nuevo.email, nuevo.dni.toString())
     .then(result =>{
-      this.uid = result.uid;
-      nuevo.id = this.uid;
+      //this.uid = result.uid;
+      //nuevo.id = this.uid;
       this.createUploadTask(this.fotoNuevo)
       .then(result =>{
         this.storage.ref(this.rutaArchivo).getDownloadURL().toPromise()
@@ -143,6 +143,9 @@ export class AltaSupervisorPage {
               usuarioGuardado.dismiss();
             }, 7000);
           })
+          // .catch(error =>{
+          //   cargandoFoto.dismiss();
+          // })
         })
         .catch(error =>{
           cargandoFoto.dismiss();

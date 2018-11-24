@@ -113,7 +113,7 @@ export class AltaEmpleadoPage {
     cargandoFoto.present();
     this.angAut.auth.createUserWithEmailAndPassword(nuevo.email, nuevo.dni.toString())
     .then(result =>{
-      nuevo.id = result.uid;
+      //nuevo.id = result.uid;
       this.createUploadTask(this.fotoNuevo)
       .then(result =>{
         this.storage.ref(this.rutaArchivo).getDownloadURL().toPromise()

@@ -3,6 +3,8 @@ import { AngularFireAuth } from "angularfire2/auth";
 import { Injectable } from "@angular/core";
 import { AngularFireDatabase, AngularFireList } from "angularfire2/database";
 import { Iusuario } from "../../clases/usuario";
+
+import * as firebase from "firebase";
 /*
   Generated class for the UsuariosProvider provider.
 
@@ -53,6 +55,7 @@ export class UsuariosProvider {
   }
 
   public guardarSupervisor(guardado: Iusuario) {
+    let uid = firebase.auth().currentUser.uid;
     return this.afDB.list("usuarios").push({
       apellido: guardado.apellido,
       cuil: guardado.cuil,
@@ -61,7 +64,7 @@ export class UsuariosProvider {
       foto: guardado.foto,
       nombre: guardado.nombre,
       perfil: guardado.perfil,
-      id: guardado.id,
+      id: uid
     });
   }
 

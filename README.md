@@ -53,9 +53,9 @@ _El proyecto se va a estar orientada a dispositivos moviles, desarrollada a trav
 |  Alta de Cliente |![verde](/images/verde.png)   |
 |  Encuesta entrada-salida | ![verde](/images/verde.png)   |
 |  Encuesta Satisfaccion |  ![verde](/images/verde.png)   |
-|  Gestion de mesas |  ![verde](/images/amarillo.png)   |
+|  Gestion de mesas |  ![verde](/images/verde.png)   |
 |  Alta de pedido |  ![verde](/images/verde.png)   |
-|  Gestion de pedidos  |  ![verde](/images/amarillo.png)   |
+|  Gestion de pedidos  |  ![verde](/images/verde.png)   |
 |  Qr de la mesa  |  ![verde](/images/verde.png)   |
 |  Alta de mesa  |  ![verde](/images/verde.png)   |
 |  Reservas(cliente)  |  ![verde](/images/verde.png)   |
@@ -84,6 +84,11 @@ _El proyecto se va a estar orientada a dispositivos moviles, desarrollada a trav
 ### 20%
 ![20](images/qr/20.png)
 
+
+## Mesas
+
+![mesas](images/qr/mesas.jpeg)
+![mesas-2](images/qr/mesas-2.jpeg)
 
 
 

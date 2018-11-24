@@ -41,12 +41,11 @@ export class MenuComponent {
       case 'Dueño':
         this.pages = [
           { title: 'Reservas', component: "ReservasPage" },
-          { title: 'Nuevo Empleado', component: "MesasPage" },
+          { title: 'Nuevo Empleado', component: "AltaEmpleadoPage" },
           { title: 'Nuevo Supervisor', component: "AltaSupervisorPage" },
           { title: 'Nuevo Dueño', component:"AltaDueñoPage"},
           { title: 'Nueva Mesa', component:"AltaMesaPage"},
           { title: 'Encuesta e/s', component: "EncuestaEnstradaSalidaPage" },
-          { title: 'Estadisticas', component: "MesasPage" },
           { title: 'Encuesta', component: "EncuestaEnstradaSalidaPage" },
           { title: 'Encuesta supervisor', component: "EncuestaSupervisorPage" },   
         ];
@@ -72,7 +71,6 @@ export class MenuComponent {
           { title: 'Reservar', component: "MesasPage" },
           { title: 'Hacer pedido', component: "PedidosPage" },
           { title: 'Encuesta satisfaccion', component: "EncuestaClientePage" },
-          { title: 'Propina', component:'QrPropinaPage'}
         ];
         break;
 

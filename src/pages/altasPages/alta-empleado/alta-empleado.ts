@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides, Slide } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Slides,  } from 'ionic-angular';
 import {FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
 
 /**
@@ -27,11 +27,26 @@ export class AltaEmpleadoPage {
       apellido: ['', Validators.required],
       dni: ['', Validators.required],
       cuil: ['', Validators.required],
+      perfil: ['',Validators.required]
     })
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AltaEmpleadoPage');
+  }
+
+  public siguiente(){
+    this.slides.lockSwipes(false);
+    this.slides.slideNext();
+  }
+
+  onIonDrag(event){
+    this.slides.lockSwipes(true);
+  }
+
+  public anterior(){
+    this.slides.lockSwipes(false);
+    this.slides.slidePrev();
   }
 
 }

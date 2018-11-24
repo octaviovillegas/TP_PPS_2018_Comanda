@@ -35,28 +35,21 @@
       </ion-row>
     </ion-slide>
     <ion-slide>
-      
-    </ion-slide>
-  </ion-slides>
-  <ion-slide>
-    <ion-label>Tipo:</ion-label>
-    <ion-select [(ngModel)]="perfil">
-      <ion-option [value]="Mozo">Mozo</ion-option>
-      <ion-option [value]="Bartender">Bartender</ion-option>
-      <ion-option [value]="Cocinero">Cocinero</ion-option>
-      <ion-option [value]="Mestre">Mestre</ion-option>
-    </ion-select>
-    <button class="boton" round color="danger" (click)="anterior()" ion-button>Volver</button>
-    <button class="boton" round color="secondary" (click)="siguiente()" [disabled]="!perfil" ion-button>Siguiente</button>
-  </ion-slide>
-  <ion-slide>
     <ion-row>
       <ion-col>
         <form [formGroup]="altaEmpleadoForm1">
-
+          <ion-item>
+            <ion-label floating>Tipo</ion-label>
+            <ion-select [formControl]="altaEmpleadoForm1.controls['perfil']">
+              <ion-option [value]="Mozo">Mozo</ion-option>
+              <ion-option [value]="Bartender">Bartender</ion-option>
+              <ion-option [value]="Cocinero">Cocinero</ion-option>
+              <ion-option [value]="Mestre">Mestre</ion-option>
+            </ion-select>
+          </ion-item>
           <ion-item>
             <ion-label floating>Nombre</ion-label>
-            <ion-input [formControlName]="nombre" type="text" required></ion-input>
+            <ion-input [formControl]="altaEmpleadoForm1.controls['nombre']" type="text" required></ion-input>
           </ion-item>
           <div *ngIf="!altaEmpleadoForm1.controls.nombre.valid && altaEmpleadoForm1.controls.nombre.dirty" class="validator-error">
             El nombre es requerido
@@ -64,7 +57,7 @@
 
           <ion-item>
             <ion-label floating>Apellido</ion-label>
-            <ion-input [formControlName]="apellido" type="text" required></ion-input>
+            <ion-input [formControl]="altaEmpleadoForm1.controls['apellido']" type="text" required></ion-input>
           </ion-item>
           <div *ngIf="!altaEmpleadoForm1.controls.apellido.valid && altaEmpleadoForm1.controls.apellido.dirty" class="validator-error">
             El apellido es requerido
@@ -72,7 +65,7 @@
 
           <ion-item>
             <ion-label floating>Dni</ion-label>
-            <ion-input [formControlName]="dni" type="number" required></ion-input>
+            <ion-input [formControl]="altaEmpleadoForm1.controls['dni']" type="number" required></ion-input>
           </ion-item>
           <div *ngIf="!altaEmpleadoForm1.controls.dni.valid && altaEmpleadoForm1.controls.dni.dirty" class="validator-error">
             El dni es requerido
@@ -80,7 +73,7 @@
 
           <ion-item>
             <ion-label floating>Cuil</ion-label>
-            <ion-input [formControlName]="cuil" type="number" required></ion-input>
+            <ion-input [formControl]="altaEmpleadoForm1.controls['cuil']" type="number" required></ion-input>
           </ion-item>
           <div *ngIf="!altaEmpleadoForm1.controls.cuil.valid && altaEmpleadoForm1.controls.cuil.dirty" class="validator-error">
             El cuil es requerido
@@ -91,5 +84,9 @@
         </form>
       </ion-col>
     </ion-row>
-  </ion-slide>
+    </ion-slide>
+    <ion-slide>
+      
+    </ion-slide>
+  </ion-slides>
 </ion-content>

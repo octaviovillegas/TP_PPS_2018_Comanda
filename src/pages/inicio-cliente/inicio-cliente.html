@@ -5,7 +5,14 @@
   Ionic pages and navigation.
 -->
 <ion-content class="home" padding>
-  <button round block large (click)="salir()" ion-button>Salir</button>
+  <!-- <button round block large (click)="salir()" ion-button>Salir</button> -->
+
+  <ion-fab right top>
+    <button ion-fab mini color="primary" (click)="salir()">
+      <ion-icon name="log-out"></ion-icon>
+    </button>
+  </ion-fab>
+
   <ion-grid>
     <ion-row>
       <ion-col (click)="reservas()"text-center style="background-color: white"  margin-bottom margin-left margin-right>

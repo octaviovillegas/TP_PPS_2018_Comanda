@@ -21,8 +21,8 @@
   <button large round block (click)="verEspera()" ion-button>Lista de espera</button>
   <div *ngIf="listaReserva.length > 0">
         <ion-item>
-          <ion-label>Empleados:</ion-label>
-          <ion-select [(ngModel)]="mozo">
+          <ion-label>Mozos:</ion-label>
+          <ion-select [(ngModel)]="mozo" interface="popover">
             <ion-option *ngFor="let mozo of mozos" [value]="mozo">{{mozo.nombre}}  {{mozo.apellido}}</ion-option>
           </ion-select>
         </ion-item>

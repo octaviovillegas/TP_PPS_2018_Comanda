@@ -38,29 +38,51 @@ _El proyecto se va a estar orientada a dispositivos moviles, desarrollada a trav
 |  Alta de bebida |![verde](/images/verde.png)   |
 |  Alta de supervisor |![verde](/images/verde.png)   |
 |  Alta de dueño |![verde](/images/verde.png)   |
-|  Qr de propina |![amarillo](/images/amarillo.png)   |
+|  Qr de propina |![verde](/images/verde.png)   |
 |  Splash | ![verde](/images/verde.png)  |
 |  Login |  ![verde](/images/verde.png) |
 |  Encuesta Supervisor  |  ![verde](/images/verde.png)   |
 |  Alta cliente anonimo  |  ![verde](/images/verde.png)   |
-|  Qr lista espera  |  ![amarillo](/images/amarillo.png)   |
- # Responsabilidades por Integrante:
+|  Qr lista espera  |  ![verde](/images/verde.png)   |
+ 
 ##  - Veiga
 ##  - Sabrina
 |   Responsabilidad | Estado   |
 | :------------: | :------------: |
 |  Menu Principal| ![verde](/images/verde.png)  |
-|  Alta de Cliente |![amarillo](/images/verde.png)   |
+|  Alta de Cliente |![verde](/images/verde.png)   |
 |  Encuesta entrada-salida | ![verde](/images/verde.png)   |
 |  Encuesta Satisfaccion |  ![verde](/images/verde.png)   |
-|  Gestion de mesas |  ![amarillo](/images/amarillo.png)   |
+|  Gestion de mesas |  ![verde](/images/amarillo.png)   |
 |  Alta de pedido |  ![verde](/images/verde.png)   |
-|  Pedidos  |  ![amarillo](/images/amarillo.png)   |
+|  Gestion de pedidos  |  ![verde](/images/amarillo.png)   |
 |  Qr de la mesa  |  ![verde](/images/verde.png)   |
 |  Alta de mesa  |  ![verde](/images/verde.png)   |
-|  Validacion por mail  |  ![verde](/images/verde.png)   |
+|  Reservas(cliente)  |  ![verde](/images/verde.png)   |
+|  Push notification (pedir cuenta)  |  ![verde](/images/verde.png)   | 
 
+# Codigos qr
 
+## lista de espera (cliente)
+
+![espera](/images/qr/espera.png)
+
+## Propinas
+
+### 0%
+![0](images/qr/0porciento.png)
+
+### 5%
+![5](images/qr/5porciento.png)
+
+### 10%
+![10](images/qr/10porciento.png)
+
+### 15%
+![15](images/qr/15.png)
+
+### 20%
+![20](images/qr/20.png)
 
 
 

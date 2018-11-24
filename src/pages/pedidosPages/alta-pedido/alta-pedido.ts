@@ -44,6 +44,8 @@ export class AltaPedidoPage {
   public itemsBebida: { cantidad: number; bebidaID: number }[] = [];
   public tiemposEstimadosDelPedido = [];
 
+  public subTotal: number = 0;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -292,11 +294,13 @@ export class AltaPedidoPage {
 
   sumarCantidad(item: ISubpedidoItem, value: number) {
     item.cantidad = item.cantidad + value;
-    console.log(item.cantidad);
+    this.subTotal = parseInt(this.subTotal.toString()) + parseInt(item.importe.toString());
+    //console.log(item.cantidad);
   }
   restarCantidad(item: ISubpedidoItem, value: number) {
     if (item.cantidad > 0) {
       item.cantidad = item.cantidad + value;
+      this.subTotal = parseInt(this.subTotal.toString()) - parseInt(item.importe.toString());
     }
   }
 
@@ -467,7 +471,7 @@ export class AltaPedidoPage {
     );
   }
 
-  cargarSubpedidos() {}
+  cargarSubpedidos() { }
 
   cargarItemsSubpedidos(itemsSeleccionados: ISubpedidoItem[]) {
     itemsSeleccionados

@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { AngularFireDatabase } from "angularfire2/database";
+import { Subscription } from 'rxjs';
 
 @Injectable()
 export class PushProvider {
@@ -15,6 +16,8 @@ export class PushProvider {
     //this.obtenerUsuarios();
   }
 
+  public subs: Subscription;
+
   // private listaMensajes: IMensaje[] = [];
 
   setupPush(sms: IMensaje) {
@@ -22,7 +25,16 @@ export class PushProvider {
       id: sms.id,
       title: sms.titulo,
       text: sms.texto,
-      data: { mensaje: sms }
+      data: { 
+        id: new Date().getTime(),
+        userID: sms.userID, //receptor del mensaje
+        tipoMensaje: 1, //sms.tipoMensaje
+        titulo: 'Pedido de cuenta',
+        texto: sms.texto,
+        mesa: sms.data.mesa,
+        mesaKey: sms.data.mesaKey,
+        comanda: sms.data.comanda
+      }
     });
 
 
@@ -40,7 +52,7 @@ export class PushProvider {
 
   //**Me subscribo a los mensajes de un usuario en particular. Si encuentra mensajes creo el PUSH */
   public escucharMensajes(userID: string) {
-    return this.afDB.list<IMensaje>('mensajes/' + userID).valueChanges().subscribe((mensajes: IMensaje[]) => {
+    this.subs = this.afDB.list<IMensaje>('mensajes/' + userID).valueChanges().subscribe((mensajes: IMensaje[]) => {
 
       for (let i = 0; i < mensajes.length; i++) {
         this.setupPush(mensajes[i]);

@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 import { UtilProvider } from './../providers/util/util';
 import { IComanda } from './../clases/IComanda';
 import { ComandaProvider } from './../providers/comanda/comanda';
@@ -46,6 +47,7 @@ export class MyApp {
   //rootPage: any = LoginPage;
   //rootPage: any = LoginPage;
   rootPage: any;
+  subs: Subscription;
 
   constructor(
     platform: Platform,
@@ -78,35 +80,48 @@ export class MyApp {
   }
 
   esperarPush() {
-    this.localNoti.on("schedule").subscribe((noti) => {
+    this.subs = this.localNoti.on("click").subscribe((noti) => {
 
-      this.utilProvider.mostrarMensaje("ESPERAR PUSH");
+      //this.utilProvider.mostrarMensaje("ESPERAR PUSH");
       //Tomo la decision de que hacer con la notificacion dependiendo del tipo
       this.ejecutarPush(noti);
     });
   }
 
 
+  /*
+          id: new Date().getTime(),
+        userID: sms.userID, //receptor del mensaje
+        tipoMensaje: 1, //sms.tipoMensaje
+        titulo: 'Pedido de cuenta',
+        texto: sms.texto,
+        mesa: sms.data.mesa,
+        mesaKey: sms.data.mesaKey,
+        comanda: sms.data.comanda 
+  
+   */
+
   ejecutarPush(notificacion: any) {
-    let push: IMensaje = notificacion.data as IMensaje;
+    //let push: IMensaje = notificacion.data as IMensaje;
+    let push: any = notificacion.data;
 
 
-    switch (notificacion.tipoMensaje) {
+    switch (push.tipoMensaje) {
       case TipoPush.PEDIR_CUENTA:
         this.pedirCuenta(push);
         break;
     }
   }
 
-  pedirCuenta(sms: IMensaje) {
-    let mesa = sms.data.mesa;
-    let mesaKey = sms.data.mesaKey;
-    let comandaID = sms.data.comanda;
+  pedirCuenta(sms: any) {
+    let mesa = sms.mesa;
+    let mesaKey = sms.mesaKey;
+    let comandaID = sms.comanda;
 
-    this.utilProvider.mostrarMensaje("PEDIR CUENTA");
+    //this.utilProvider.mostrarMensaje("PEDIR CUENTA");
     this._comanda.verificarComandaPorUsuario(comandaID).then((comanda: IComanda) => {
 
-      this.utilProvider.mostrarMensaje("ENTRA A VERIFICAR");
+      //this.utilProvider.mostrarMensaje("ENTRA A VERIFICAR");
       //La comanda le pertenece al usuario
       if (comanda != null) {
         this.nav.setRoot(PedidosPage, { mesa: mesa, mesaKey: mesaKey, comanda: comanda });
@@ -146,6 +161,13 @@ export class MyApp {
   }
 
   salir(page: any) {
+
+    if(!this.subs.closed)
+      this.subs.unsubscribe();
+
+    if(!this._push.subs.closed)
+      this._push.subs.unsubscribe();
+    
     localStorage.removeItem("perfil");
     localStorage.removeItem("usuario");
     localStorage.removeItem("userID");

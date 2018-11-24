@@ -30,7 +30,15 @@
   <button ion-button block color="secondary" (click)="agregarPedido()">
     AGREGAR
   </button>
-  <ion-searchbar (ionInput)="getItems($event)" [placeholder]="'Buscar por nombre'"></ion-searchbar>
+  <ion-row>
+    <ion-col text-center>
+      <h1>{{subTotal | currency}}</h1>
+    </ion-col>
+  </ion-row>
+  <!-- <ion-searchbar (ionInput)="getItems($event)" [placeholder]="'Buscar por nombre'"></ion-searchbar> -->
+  <div>
+    <h1></h1>
+  </div>
   <ion-grid *ngSwitchCase="'Minutas'">
     <div *ngIf="lMinutas">
       <ion-row align-items-center *ngFor="let item of lMinutas" class="itemsMenu">

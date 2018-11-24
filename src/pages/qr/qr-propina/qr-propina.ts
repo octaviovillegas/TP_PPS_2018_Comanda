@@ -175,7 +175,6 @@ export class QrPropinaPage {
           cargadoError.present();
           setTimeout(() => {
             cargadoError.dismiss();
-            this.navCtrl.setRoot(LoginPage);
           }, 2000);
         }, 4000);
         break;

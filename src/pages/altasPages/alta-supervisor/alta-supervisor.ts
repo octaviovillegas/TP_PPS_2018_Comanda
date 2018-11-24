@@ -140,9 +140,9 @@ export class AltaSupervisorPage {
               usuarioGuardado.dismiss();
             }, 7000);
           })
-          .catch(error =>{
-            cargandoFoto.dismiss();
-          })
+          // .catch(error =>{
+          //   cargandoFoto.dismiss();
+          // })
         })
         .catch(error =>{
           cargandoFoto.dismiss();

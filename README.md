@@ -87,8 +87,8 @@ _El proyecto se va a estar orientada a dispositivos moviles, desarrollada a trav
 
 ## Mesas
 
-![mesas](images/qr/mesas.jpeg)
-![mesas-2](images/qr/mesas-2.jpeg)
+![mesas](images/qr/mesas.png)
+![mesas-2](images/qr/mesas-2.png)
 
 
 

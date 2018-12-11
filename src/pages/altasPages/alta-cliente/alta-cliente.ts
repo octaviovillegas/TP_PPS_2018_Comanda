@@ -45,6 +45,7 @@ export class AltaClientePage {
   cliente:ICliente
   //
   imagen:string;
+  fotoTomada:boolean =false;
   rutaArchivo:string;
   task:any;
   image:string;
@@ -174,6 +175,7 @@ export class AltaClientePage {
     };
     this.camera.getPicture(options).then(data => {
       this.imagen = "data:image/jpg;base64," + data;
+      this.fotoTomada = true;
     });
   }
 

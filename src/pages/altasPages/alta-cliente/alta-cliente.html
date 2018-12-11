@@ -93,7 +93,7 @@
       <ion-row>
         <ion-col text-center>
           <button  ion-button round color="danger" class="boton" (click)="captureImage()"><ion-icon name="camera" class="camara"></ion-icon></button>
-          <button  ion-button round color="secondary" class="boton"  (click)="subir()">Subir</button>
+          <button  ion-button round color="secondary" class="boton" [disabled]="!fotoTomada"  (click)="subir()">Subir</button>
         </ion-col>
       </ion-row>
     </ion-grid>

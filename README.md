@@ -63,6 +63,12 @@ _El proyecto se va a estar orientada a dispositivos moviles, desarrollada a trav
 
 # Codigos qr
 
+# Tutoriales
+
+## Cargar un nuevo plato
+
+[![Mira el video](/images/videos/altaPlato.png)](https://www.youtube.com/watch?v=Iu20DZEYdQ0)
+
 ## lista de espera (cliente)
 
 ![espera](/images/qr/espera.png)

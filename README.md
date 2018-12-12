@@ -61,13 +61,19 @@ _El proyecto se va a estar orientada a dispositivos moviles, desarrollada a trav
 |  Reservas(cliente)  |  ![verde](/images/verde.png)   |
 |  Push notification (pedir cuenta)  |  ![verde](/images/verde.png)   | 
 
-# Codigos qr
-
 # Tutoriales
 
 ## Cargar un nuevo plato
 
 [![Mira el video](/images/videos/altaPlato.png)](https://www.youtube.com/watch?v=Iu20DZEYdQ0)
+
+## El cliente hace una reserva
+[![Mira el video](/images/videos/reservaCliente.png)](https://www.youtube.com/watch?v=tRj2sYrNjVU)
+
+## El cocinero prepara un pedido
+[![Mira el video](/images/videos/cocineroPrepara.png)](https://www.youtube.com/watch?v=PJwMgvndOqY)
+
+# Codigos qr
 
 ## lista de espera (cliente)
 

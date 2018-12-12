@@ -68,7 +68,7 @@ _El proyecto se va a estar orientada a dispositivos moviles, desarrollada a trav
 [![Mira el video](/images/videos/altaPlato.png)](https://www.youtube.com/watch?v=Iu20DZEYdQ0)
 
 ## El cliente hace una reserva
-[![Mira el video](/images/videos/reservaCliente.png)](https://www.youtube.com/watch?v=tRj2sYrNjVU)
+[![Mira el video](/images/videos/reservaMesa.png)](https://www.youtube.com/watch?v=tRj2sYrNjVU)
 
 ## El cocinero prepara un pedido
 [![Mira el video](/images/videos/cocineroPrepara.png)](https://www.youtube.com/watch?v=PJwMgvndOqY)

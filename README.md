@@ -73,6 +73,12 @@ _El proyecto se va a estar orientada a dispositivos moviles, desarrollada a trav
 ## El cocinero prepara un pedido
 [![Mira el video](/images/videos/cocineroPrepara.png)](https://www.youtube.com/watch?v=PJwMgvndOqY)
 
+## El mestre le asigna a un cliente en lista de espera
+[![Mira el video](/images/videos/mestreMesa.png)](https://www.youtube.com/watch?v=nToykyyWQ3k)
+
+## El mozo entrega un pedido
+[![Mira el video](/images/videos/entregaPedido.png)](https://www.youtube.com/watch?v=5kpkWhmdFIY)
+
 # Codigos qr
 
 ## lista de espera (cliente)

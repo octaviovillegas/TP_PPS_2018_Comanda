@@ -1,0 +1,44 @@
+page-reserva-cliente {
+
+     ion-calendar {
+        font-family: "Microsoft YaHei";
+        .center {
+          text-align: center;
+        }
+        .calendar-header-col {
+          font-size: 1rem;
+          color: #666;
+        }
+        .calendar-row {
+          &:last-child {
+            border-bottom: 1px solid #eee;
+          }
+          .calendar-col {
+            display: flex;
+            justify-content: center;
+            padding: 0.8rem;
+            font-size: 1.2rem;
+            border-left: 1px solid #eee;
+            border-top: 1px solid #eee;
+            &:last-child {
+              border-right: 1px solid #eee;
+            }
+          }
+          .not-this-month {
+            color: rgb(90, 90, 90) !important;
+            background: linear-gradient(#e5e5e5, #dfdfdf);
+          }
+          .today {
+            color: rgb(255, 255, 255) !important;
+            box-shadow: inset 0 0 10px rgb(81, 173, 212) !important;
+            background: radial-gradient(#87bce4, #6eb2e2, #69ace4) !important;
+          }
+          .select {
+            box-shadow: none;
+            color: #fff;
+            background: radial-gradient(#5ca1da, #5eacec, #5e90ec);
+          }
+      }
+
+    }
+}

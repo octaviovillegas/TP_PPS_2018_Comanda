@@ -1,0 +1,25 @@
+<ion-content color=primary>
+
+    <!-- <div id="custom-overlay" [style.display]="showSplash ? 'flex': 'none'">
+        
+        <div class="flb">
+            <div class="Aligner-item Aligner-item--top"></div>
+            <img src="assets/splashIcon.png">
+            <div class="Aligner-item Aligner-item--bottom"></div>
+        </div>
+    </div> -->
+
+    <ion-menu id='menu' [content]="content">
+        <ion-header>
+            <ion-toolbar color="secondary">
+                <ion-title menuClose>MENU</ion-title>
+            </ion-toolbar>
+        </ion-header>
+        <ion-content>
+                <menu (openPage)="abrirPage($event)" (cerrarSesion)="salir($event)"></menu>
+        </ion-content>
+    </ion-menu>
+
+    <ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
+
+</ion-content>

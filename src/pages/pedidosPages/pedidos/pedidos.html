@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-navbar no-border-bottom>
+    <ion-title>
+      <ion-icon color="secondary" small name="restaurant"></ion-icon>
+      {{ mesa }} | PEDIDOS
+    </ion-title>
+    <ion-buttons left>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+  <div class="col md-12">
+    <button ion-button block color="secondary" (click)="nuevoPedido()">
+      NUEVO PEDIDO
+    </button>
+  </div>
+
+  <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="estado">
+      <ion-segment-button value="pendiente">Pendiente</ion-segment-button>
+      <ion-segment-button value="derivado">Derivado</ion-segment-button>
+      <ion-segment-button value="entregado">Entregado</ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div [ngSwitch]="estado">
+    <div *ngSwitchCase="'pendiente'">
+      <div *ngIf="listaPedidosPendientes">
+        <ion-list *ngFor="let item of listaPedidosPendientes">
+          <pedido-pendiente [itemPedido]="item" (derivarPedido)="cambiarEstadoPedido($event)" (eliminarPedido)="quitarPedido($event)"></pedido-pendiente>
+        </ion-list>
+      </div>
+    </div>
+
+    <div>
+      <div *ngSwitchCase="'derivado'">
+        <div *ngIf="listaPedidosDerivados">
+          <ion-list *ngFor="let item of listaPedidosDerivados">
+            <pedido-pendiente [itemPedido]="item" (entregarPedido)="entregarPedido($event)"></pedido-pendiente>
+          </ion-list>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div *ngSwitchCase="'entregado'">
+        <div *ngIf="listaPedidosEntregados">
+          <ion-row style="text-align: center; background: rgb(177, 224, 252)">
+            <ion-col align-self-center>
+              <div style="font-size: 22px; text-align: right; font-weight: bold;">
+                {{ total | currency }}
+              </div>
+            </ion-col>
+            <ion-col>
+              <button *ngIf="perfil != 'Cliente' && perfil != 'Anonimo'" ion-button [disabled]="!todoEntregado" (click)="cerrarComanda()">
+                Cerrar mesa
+              </button>
+              <button *ngIf="perfil == 'Cliente' || perfil == 'Anonimo'" ion-button [disabled]="!todoEntregado" (click)="pedirCuenta()">
+                Pedir cuenta
+              </button>
+            </ion-col>
+          </ion-row>
+
+          <ion-list *ngFor="let item of listaPedidosEntregados">
+            <pedido-pendiente [itemPedido]="item"></pedido-pendiente>
+          </ion-list>
+        </div>
+      </div>
+    </div>
+
+    <ion-list *ngSwitchCase="'entregado'"> </ion-list>
+  </div>
+</ion-content>

@@ -1,0 +1,50 @@
+<!--
+  Generated template for the QrEsperaPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-content padding>
+<ion-grid *ngIf="!esperando">
+  <ion-row>
+    <ion-col text-center>
+      <img src="assets/imgs/iconoQr.png" class="imgQr">
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col text-center>
+      <h5>¡Escanea el codigo para ponerte en lista de espera!</h5>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col text-center>
+      <form [formGroup]="esperaForm">
+        <ion-item>
+          <ion-label>Cantidad de comensales:</ion-label>
+          <ion-input type="number" maxLength="6" formControlName="cantidad"></ion-input>
+        </ion-item>
+      </form>
+      <button round ion-button color="green" large block (click)="escanear()">Escanear</button>
+      <button  ion-button round color="danger" class="boton" (click)="salir()">Volver</button>
+      <button ion-button round  color="secondary" class="boton" [disabled]="!esperaForm.valid || !escaneado" (click)="cargarCodigo()">Siguiente</button>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+<ion-grid *ngIf="esperando">
+  <ion-row>
+    <ion-col text-center>
+      <img src="assets/imgs/icono_restaurant.png" class="esperando">
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col text-center>
+      <h1>¡Aguarda hasta que te asignen una mesa!</h1>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col text-center>
+      <button  ion-button round color="danger" class="boton" (click)="salirEspera()">Volver</button>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+</ion-content>

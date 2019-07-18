@@ -1,0 +1,25 @@
+page-inicio-cliente {
+
+}
+.home{
+     
+    scroll-content {
+        display: flex;
+        flex-direction: column;
+    }
+ 
+    ion-grid {
+        padding: 0;
+        height: 90% !important;
+    }
+ 
+    ion-row {
+        flex: 1;
+    }
+ 
+
+}
+.img{
+    height:30vh !important;
+    width: auto !important;
+}

@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      <ion-icon color="secondary" small name="restaurant"></ion-icon>  MESAS
+    </ion-title>
+    <ion-buttons left>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
+      <p class="tipoPerfil">{{ perfil }}</p>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="outer-content">
+  <ion-fab right bottom>
+    <button ion-fab color="secondary" (click)="irAltaComanda()">
+      <ion-icon name="barcode"></ion-icon>
+    </button>
+  </ion-fab>
+  <ion-list class="chat-sliding-demo">
+    <ion-list-header> MESAS OCUPADAS </ion-list-header>
+    <ion-item-sliding *ngFor="let mesa of (_mesas.items | async)" #item>
+      <ion-item *ngIf="mesa.estado != 'Libre'" (click)="agregarPedidos(mesa.numero, mesa.key, mesa.comanda)">
+        <ion-avatar item-start class="imgColores" [ngSwitch]="mesa.estado">
+          <img *ngSwitchCase="'Ocupada'" [src]="'assets/imgs/coloresEstados/rojo.png'" />
+          <img *ngSwitchCase="'Reservada'" [src]="'assets/imgs/coloresEstados/azul.png'" />
+          <img *ngSwitchCase="'Esperando cobro'" [src]="'assets/imgs/coloresEstados/amarillo.png'" />
+        </ion-avatar>
+        <p>MESA {{ mesa.numero }}</p>
+        <ion-note item-end> {{ mesa.estado }} </ion-note>
+        <h6>
+          <ion-icon name="people" small></ion-icon> {{ mesa.capacidad }}
+        </h6>
+      </ion-item>
+    </ion-item-sliding>
+  </ion-list>
+  <br />
+  <div *ngIf="perfil != 'Cliente' && perfil != 'Anonimo'">
+    <ion-list class="login-sliding-demo">
+      <ion-list-header> MESAS LIBRES </ion-list-header>
+      <ion-item-sliding *ngFor="let mesa of (_mesas.items | async)" #item>
+        <ion-item *ngIf="mesa.estado == 'Libre'">
+          <ion-avatar item-start class="imgColores" [ngSwitch]="mesa.estado">
+            <img *ngSwitchCase="'Libre'" [src]="'assets/imgs/coloresEstados/verde.png'" />
+            <img *ngSwitchCase="'Bloqueada'" [src]="'assets/imgs/coloresEstados/rojo.png'" />
+          </ion-avatar>
+          <p>MESA {{ mesa.numero }}</p>
+          <ion-note item-end> {{ mesa.estado }} </ion-note>
+          <h6>
+            <ion-icon name="people" small></ion-icon> {{ mesa.capacidad }}
+          </h6>
+        </ion-item>
+        <ion-item-options side="left" (ionSwipe)="abrirComandaConMesa(mesa, mesa.key)">
+          <button ion-button color="secondary" click="abrirComandaConMesa(mesa, mesa.key)" expandable>
+            Abrir
+            <ion-icon name="arrow-round-forward"></ion-icon>
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </div>
+</ion-content>
+
+<!--
+  <ion-item-options side="right">
+    <button *ngIf="mesa.estado=='Esperando cobro' || mesa.estado=='Abierta'" ion-button color="danger" (click)="cerrar(mesa, item)">
+      <ion-icon name="close" class="expand-hide"></ion-icon>
+    </button>
+  </ion-item-options>
+  <ion-item-options *ngIf="mesa.estado != 'Esperando cobro'" side="left" (ionSwipe)="abrirPedidos(mesa, item)">
+    <button ion-button color="s_light" (click)="abrirPedidos(mesa, item)" expandable>
+      <ion-icon name="share-alt" class="expand-hide"></ion-icon>
+      <div class="expand-hide"></div>
+    </button>
+  </ion-item-options>
+-->

@@ -1,0 +1,38 @@
+page-home {
+    @media all and (orientation:portrait){
+        ion-row {
+            flex: 1;
+            width: 100%;
+            flex-direction: column;
+            
+            //flex-grow: 3;
+        }        
+    }
+    
+    @media all and (orientation:landscape){
+        ion-row {
+            flex: 1;
+            width: 100%;
+            flex-direction: row;
+            
+            //flex-grow: 3;
+        }
+    }
+}
+.home{
+    ion-grid {
+        padding: 0;
+        
+        height: 100%;
+        width: 100%;
+        flex-wrap: nowrap;
+    }
+
+}
+
+
+
+img{
+    height: 70% !important;
+    width: 70% !important;
+}

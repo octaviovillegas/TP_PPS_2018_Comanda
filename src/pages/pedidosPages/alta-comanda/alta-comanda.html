@@ -1,0 +1,149 @@
+<ion-header>
+  <ion-navbar> <ion-title>Alta Comanda</ion-title> </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <!-- style="height: auto" -->
+  <ion-slides loop effect="cube">
+    <ion-slide style="background-color: rgb(255, 255, 255)">
+      <ion-list>
+        <ion-list-header> Ingreso de Cliente </ion-list-header>
+        <ion-item>
+          <ion-label>Cliente Anónimo</ion-label>
+          <ion-checkbox [(ngModel)]="esAnonimo"></ion-checkbox>
+        </ion-item>
+      </ion-list>
+
+      <ng-template [ngIf]="esAnonimo">
+        <ion-item>
+          <ion-icon name="person" item-start></ion-icon>
+          <ion-label stacked>Nombres:</ion-label>
+          <ion-input
+            type="text"
+            [(ngModel)]="nombreCliente"
+            placeholder="Nombre"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="camera" item-start></ion-icon>
+          <img
+            style="height: 50vh !important"
+            *ngIf="imagenPreview"
+            [src]="imagenPreview"
+          />
+        </ion-item>
+        <ion-item>
+          <button
+            ion-button
+            full
+            round
+            block
+            type="button"
+            color="primary"
+            (click)="mostrarCamara()"
+          >
+            <ion-icon name="camera"></ion-icon>
+          </button>
+          <button
+            ion-button
+            color="primary"
+            full
+            round
+            (click)="guardarComanda()"
+          >
+            Guardar Comanda
+          </button>
+        </ion-item>
+      </ng-template>
+      <ng-template [ngIf]="!esAnonimo">
+        <ion-item>
+          <ion-icon name="search" item-start></ion-icon>
+          <ion-input
+            type="text"
+            placeholder="Ingrese DNI"
+            [(ngModel)]="dniABuscar"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
+          <button
+            ion-button
+            block
+            type="button"
+            color="secondary"
+            (click)="BuscarCliente()"
+          >
+            Buscar
+          </button>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked
+            ><ion-icon name="person" small></ion-icon> Nombre:
+            {{ nombreEncontrado }}</ion-label
+          >
+        </ion-item>
+        <ion-item>
+          <ion-label stacked
+            ><ion-icon name="person" small></ion-icon> Apellido:
+            {{ apellidoEncontrado }}</ion-label
+          >
+        </ion-item>
+
+        <ion-item>
+          <button
+            ion-button
+            full
+            round
+            block
+            type="button"
+            color="primary"
+            *ngIf="clienteEncontrado.length == 0"
+            (click)="nuevoCliente()"
+          >
+            <ion-icon name="person-add"></ion-icon>
+          </button>
+          <button
+            ion-button
+            color="primary"
+            full
+            round
+            (click)="guardarComanda()"
+          >
+            Guardar Comanda
+          </button>
+        </ion-item>
+      </ng-template>
+    </ion-slide>
+
+    <ion-slide style="background-color: rgb(110, 97, 228)">
+      <ion-list>
+        <ion-item>
+          <button ion-button color="primary" full round (click)="scan()">
+            Scanear Código QR
+          </button>
+        </ion-item>
+        <ion-item>
+          <ion-card *ngIf="mesa">
+            <img style="height: 50vh !important" [src]="mesa.img" />
+            <div class="card-title">Mesa: {{ mesa.numero }}</div>
+            <div class="card-subtitle">Capacidad: {{ mesa.capacidad }}</div>
+          </ion-card>
+        </ion-item>
+        <ion-item>
+          <button
+            ion-button
+            color="primary"
+            full
+            round
+            (click)="guardarComanda()"
+          >
+            Guardar Comanda
+          </button>
+          <!--
+            <button ion-button color="primary" full round  (click)="buscarMesaLibre('Mesa_numero_7')">MESA</button>
+          -->
+          <!-- *ngIf="codigoQR" -->
+        </ion-item>
+      </ion-list>
+    </ion-slide>
+  </ion-slides>
+</ion-content>

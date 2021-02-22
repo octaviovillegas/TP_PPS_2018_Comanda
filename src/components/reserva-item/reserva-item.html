@@ -1,0 +1,32 @@
+<ion-card>
+  <ion-card-content>
+    <ion-row no-padding>
+      <ion-col text-center>
+        <ion-card-title>
+          <ion-icon color="secondary" small name='calendar'></ion-icon> {{reserva.fecha.substr(0,2) + '/' +
+          reserva.fecha.substr(2,2) + '/' + reserva.fecha.substr(4,4)}}
+        </ion-card-title>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-icon color="secondary" small name='restaurant' item-start></ion-icon>
+          <ion-label>Seleccione mesa</ion-label>
+          <ion-select style="max-width: 100% !important;" block [(ngModel)]="mesa" interface="popover">
+            <ion-option block *ngFor="let mesa of listaMesas" [value]="mesa">Mesa: {{mesa.numero}} - Capacidad:
+              {{mesa.capacidad}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-item>
+      <div style="font-size: 15px; font-weight: bold" color='grey'>
+        <ion-icon color="secondary" small name='people' item-start></ion-icon> {{reserva.comensales}}
+      </div>
+    </ion-item>
+  </ion-card-content>
+
+  <button ion-button block color="secondary" [disabled]="!mesa" (click)="confirmarReserva()">Confirmar</button>
+  <button ion-button block color="primary" (click)="rechazarReserva()">Rechazar</button>
+</ion-card>

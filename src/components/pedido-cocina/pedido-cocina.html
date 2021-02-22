@@ -1,0 +1,25 @@
+<ion-card>
+  <ion-card-content>
+    <ion-row no-padding [ngStyle]="{'background-color':sumarMinutos() < 3 ? 'orangered' : 'white' }">
+      <ion-col>
+        <ion-card-title>
+          <ion-icon color="secondary" small name='restaurant'></ion-icon> {{itemPedido.mesa}} | restan {{sumarMinutos()}} min
+        </ion-card-title>
+      </ion-col>
+    </ion-row>
+    <div style="font-size: 15px; font-weight: bold" color='grey'> {{itemPedido.mozo}}</div>
+  </ion-card-content>
+
+  <div *ngFor="let item of itemPedido.items">
+    <ion-item>
+      <ion-avatar item-start>
+        <img style="height: 7vh !important; width: 7vh !important;" src="{{devolverUrlImg(item)}}" />
+      </ion-avatar>
+      <p style="font-size: 17px; font-weight: bold">
+        {{ item.cantidad }} {{ devolverNombre(item) }}
+      </p>
+    </ion-item>
+  </div>
+
+  <button ion-button block color="secondary" (click)="cambiarEstado()">{{cambiarNombreBoton()}}</button>
+</ion-card>
